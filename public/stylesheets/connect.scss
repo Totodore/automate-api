@@ -1,0 +1,14 @@
+@import "../../node_modules/materialize-css/sass/materialize.scss";
+.connect-window { 
+    @extend .scale-out, .scale-transition;
+    max-width: 500px;
+    margin: auto !important;
+    margin-top: 100px !important;
+    font-size: 1.2em;
+}
+.connect-window > .card-action {
+    text-align: right;
+} 
+.connect-btn {
+    @extend .btn, .waves-light, .grey, .darken-3, .grey-text, .text-lighten-3, .hoverable;
+}

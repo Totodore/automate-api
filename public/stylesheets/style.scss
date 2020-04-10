@@ -1,0 +1,19 @@
+@import "../../node_modules/materialize-css/sass/materialize.scss";
+
+
+body {
+    @extend .grey-text, .text-lighten-3;
+    font-weight: 600;
+    min-height: 100vh;
+}
+
+.body-wrapper {
+    @extend .section,
+    .card,
+    .grey,
+    .darken-4;
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 25px;
+    margin-top: 25px;
+}

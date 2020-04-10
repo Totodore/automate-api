@@ -1,0 +1,18 @@
+<!-- <?php
+    if (isset($_SESSION["user_id"])) {
+        $user = json_decode(file_get_contents(__DATA__."/users.json"), true)[$_SESSION["user_id"]];
+        $user_data = json_decode(sendRequestGET("/users/@me", $user["access_token"]), true);
+    }
+?> -->
+<header>
+    <nav>
+        <div class="nav-wrapper grey darken-4">
+            <a href="/" class="brand-logo center grey-text text-lighten-2">Programmateur de messages Discord</a>
+            <!-- <?php if (isset($_SESSION["user_id"])) { ?> -->
+            <!-- <div class="header_user right">
+                <img src="<?php echo __CDN__."avatars/".$user_data["id"]."/".$user_data["avatar"].".png?size=64"; ?>" class="discord-avatar tooltipped" data-position="left" data-tooltip="<?php echo $user_data['username'];?>">
+            </div> -->
+            <!-- <?php } ?> -->
+        </div>
+    </nav>
+</header>
