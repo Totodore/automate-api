@@ -9030,4 +9030,14 @@ input[type=range]::-ms-thumb {
 .connect-window > .card-action {
   text-align: right;
 }
+
+.connect-btn {
+  -webkit-transition: all 250ms !important;
+  transition: all 250ms !important;
+}
+
+.card-action {
+  padding: 0 !important;
+  padding-top: 15px !important;
+}
 /*# sourceMappingURL=connect.css.map */

@@ -1,11 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <% include partials/head.ejs %>
+    <link rel="stylesheet" href="/stylesheets/index.css">
+    <script src="/js/viewIndex.js"></script>
   </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+  <body class="black">
+    <% include partials/header.ejs %> 
+    <div class="body-wrapper">
+      <h5>Ou veux tu installer ce super bot ?</h5>
+      <div class="guilds-wrapper">
+        <% if (locals.guilds) { guilds.forEach((guild) => { %>
+          <a class="guild waves-effect" id="<%= guild.id %>">
+            <% if(guild.icon) { %>
+              <img src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon %>.png?size=256">
+            <% } else { %>
+              <img src="/images/discord-base-icon.png">
+            <% } %>
+            <span><p><%= guild.name %> </p></span>
+          </a>
+        <% });} else { %>
+          <h5><%= error %></h5>
+        <% } %>
+      </div>
+    </div>
   </body>
 </html>

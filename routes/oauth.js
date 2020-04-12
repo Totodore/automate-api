@@ -1,84 +1,72 @@
 const express = require('express');
 const router = express.Router();
-const https = require("https");
-const fs = require('fs');
+const fetch = require('node-fetch');
+const FormData = require("form-data");
+const fs = require("fs");
 
 const CLIENT_ID = "697112502378561586";
 const CLIENT_SECRET = "njBmC06amOPhzEsVN6STN9VhMFybGwe2";
 
-router.get('/', function(req, res, next) {
+router.get('/', async (req, res, next) => {
     console.log("oauth requested");
     //Si on a pas recu le code on redirige avec un msg d'erreur
     if (!req.query.code) {
+        console.log("Error getting oauth code");
         res.redirect("../connect?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de te connecter à Discord"));
-        return;
     }
     //On fait la requete pour avoir le token
-    const formData = JSON.stringify({
-        client_id: CLIENT_ID,
-        client_secret: CLIENT_SECRET,
-        grant_type: "authorization_code",
-        redirect_uri: "http://localhost/oauth",
-        code: req.query.code,
-        scope: ""
-    });
-    const query = https.request({
-        hostname: "discordapp.com",
-        path: "/api/oauth2/token",
+    const dataToSend = {
+        'client_id': CLIENT_ID,
+        'client_secret': CLIENT_SECRET,
+        'grant_type': "authorization_code",
+        'redirect_uri': "http://localhost:3000/oauth",
+        'code': req.query.code,
+        'scope': "identify email connections"
+    };
+    const formData = new FormData();
+    Object.entries(dataToSend).forEach(el => formData.append(el[0], el[1]));
+    const reqToken = await fetch("https://discordapp.com/api/oauth2/token", {
         method: "POST",
-        headers: { 
+        body: formData
+    }); 
+    if (reqToken.status != 200) {
+        console.log(`Error : ${reqToken.status} ${reqToken.statusText}`);
+        res.redirect("../connect?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de te connecter à Discord"));
+    }
+    const resToken = JSON.parse(await reqToken.text());
+    // console.log(`Token response : ${JSON.stringify(resToken)}`);
+    //On fait une requete pour avoir l'id de la personne discord
+    const reqUser = await fetch("https://discordapp.com/api/users/@me", {
+        headers: {
             'Content-Type': 'application/json',
-            'Content-Length': formData.length
+            'Authorization': `Bearer ${resToken.access_token}`
         }
-    }, authRes => {
-        authRes.on("data", data => {
-            const tokenResponse = JSON.parse(data);
-            console.log("auth data received");
-
-            //On fait une requete pour avoir l'id de la personne discord
-            https.get({
-                hostname: "discordapp.com",
-                path: "/api/users/@me",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${tokenResponse.access_token}`
-                }
-            }, userRes => {
-                userRes.on("data", data => {
-                    //Si l'id existe déjà dans la bdd on affiche juste un msg de reconnexion sinon on 
-                    //écrit les donnée dans la db
-                    const userResponse = JSON.parse(data); 
-                    let userDB = JSON.parse(fs.readFileSync(__dirname+"/../data/users.json"));
-                    if (Object.keys(userDB).includes(userResponse.id)) {
-                        // writeSessionAndCookies(userResponse.id, req, res);
-                        res.end();
-                        // res.redirect("../?msg="+encodeURI("Super ! tu t'es reconnecté !"));
-                    } else {
-                        console.log(`data user : ${JSON.stringify(userResponse)}`);
-                        userDB[userResponse.id] = {
-                            access_token: tokenResponse.access_token,
-                            token_expires: tokenResponse.expires_in,
-                            refresh_token: tokenResponse.refresh_token,
-                            username: userResponse.username,
-                            avatar: userResponse.avatar,
-                            schedules: {},
-                        };
-                        fs.writeFileSync(__dirname+"/../data/users.json",JSON.stringify(userDB));
-                        console.log("db saved");
-                        // writeSessionAndCookies(userResponse.id, req, res);
-                        console.log("test 1");
-                        res.end();
-                        // res.redirect("../?msg="+encodeURI("Ton compte discord à été relié avec succès !"));
-                    }
-                });
-            }).on("error", error => console.log(error)).on("timeout", error => console.log(error));
-        });
     });
-    query.on("error", (error) => {
-        console.log(error);
-    });
-    query.write(formData);
-    query.end();
+    if (reqUser.status != 200) {
+        console.log(`Error : ${reqUser.status} ${reqUser.statusText}`);
+        res.redirect("../connect?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de te connecter à Discord"));
+    }
+    const resUser = JSON.parse(await reqUser.text());
+    //Si l'id existe déjà dans la bdd on affiche juste un msg de reconnexion sinon on 
+    //écrit les donnée dans la db
+    let userDB = JSON.parse(fs.readFileSync(__dirname+"/../data/users.json"));
+    if (Object.keys(userDB).includes(resUser.id)) {
+        writeSessionAndCookies(resUser.id, req, res);
+        res.redirect("../?msg="+encodeURI("Super ! tu t'es reconnecté !"));
+    } else {
+        // console.log(`data user : ${JSON.stringify(resUser)}`);
+        userDB[resUser.id] = {
+            access_token: resToken.access_token,
+            token_expires: resToken.expires_in,
+            refresh_token: resToken.refresh_token,
+            username: resUser.username,
+            avatar: resUser.avatar,
+            schedules: {},
+        };
+        fs.writeFileSync(__dirname+"/../data/users.json", JSON.stringify(userDB));
+        writeSessionAndCookies(resUser.id, req, res);
+        res.redirect("../?msg="+encodeURI("Ton compte discord à été relié avec succès !"));
+    }
 });
 
 

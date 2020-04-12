@@ -11,4 +11,9 @@
 } 
 .connect-btn {
     @extend .btn, .waves-light, .grey, .darken-3, .grey-text, .text-lighten-3, .hoverable;
+    transition: all 250ms !important;
+}
+.card-action {
+    padding: 0 !important;
+    padding-top: 15px !important;
 }

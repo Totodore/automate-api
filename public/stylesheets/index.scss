@@ -1,0 +1,31 @@
+@import "../../node_modules/materialize-css/sass/materialize.scss";
+
+.body-wrapper {
+    margin-left: 20px;
+    margin-right: 20px;
+    text-align: center;
+}
+
+.guilds-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.guild {
+    @extend .card,
+    .transparent,
+    .hoverable, .grey-text, .text-lighten-2, .waves-light;
+    width: 200px;
+    height: 200px;
+    margin-left: 50px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.guild img {
+    width: 60%;
+    height: auto;
+    border-radius: 50%;
+}

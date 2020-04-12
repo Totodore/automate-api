@@ -17,3 +17,25 @@ body {
     padding: 25px;
     margin-top: 25px;
 }
+
+.discord-avatar {
+    @extend .z-depth-2;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    margin-top: 7px;
+    margin-right: 7px;
+    cursor: pointer;
+}
+.modal {
+    @extend .grey, .darken-3, .grey-text, .text-lighten-2;
+}
+.modal-footer {
+    @extend .grey, .darken-4, .grey-text, .text-lighten-2;
+}
+.btn {
+    @extend .waves-light, .btn, .grey-text, .text-lighten-2, .grey, .darken-3;
+}
+.btn-flat {
+    @extend .waves-light, .grey-text, .text-lighten-2;
+}

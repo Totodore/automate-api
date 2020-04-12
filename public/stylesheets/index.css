@@ -26,7 +26,7 @@
   background-color: #f3989b !important;
 }
 
-.materialize-red-text.text-lighten-3, body.materialize-red-text {
+.materialize-red-text.text-lighten-3 {
   color: #f3989b !important;
 }
 
@@ -34,7 +34,7 @@
   background-color: #ee6e73 !important;
 }
 
-.materialize-red-text.text-lighten-2, .materialize-red-text.modal, .materialize-red-text.modal-footer, .materialize-red-text.btn-large, .materialize-red-text.btn-small, .materialize-red-text.btn, .materialize-red-text.btn-flat {
+.materialize-red-text.text-lighten-2, .materialize-red-text.guild {
   color: #ee6e73 !important;
 }
 
@@ -62,7 +62,7 @@
   color: #b9151b !important;
 }
 
-.materialize-red.darken-3, .materialize-red.modal, .materialize-red.btn-large, .materialize-red.btn-small, .materialize-red.btn {
+.materialize-red.darken-3 {
   background-color: #a21318 !important;
 }
 
@@ -70,7 +70,7 @@
   color: #a21318 !important;
 }
 
-.materialize-red.darken-4, .materialize-red.body-wrapper, .materialize-red.modal-footer {
+.materialize-red.darken-4 {
   background-color: #8b1014 !important;
 }
 
@@ -106,7 +106,7 @@
   background-color: #EF9A9A !important;
 }
 
-.red-text.text-lighten-3, body.red-text {
+.red-text.text-lighten-3 {
   color: #EF9A9A !important;
 }
 
@@ -114,7 +114,7 @@
   background-color: #E57373 !important;
 }
 
-.red-text.text-lighten-2, .red-text.modal, .red-text.modal-footer, .red-text.btn-large, .red-text.btn-small, .red-text.btn, .red-text.btn-flat {
+.red-text.text-lighten-2, .red-text.guild {
   color: #E57373 !important;
 }
 
@@ -142,7 +142,7 @@
   color: #D32F2F !important;
 }
 
-.red.darken-3, .red.modal, .red.btn-large, .red.btn-small, .red.btn {
+.red.darken-3 {
   background-color: #C62828 !important;
 }
 
@@ -150,7 +150,7 @@
   color: #C62828 !important;
 }
 
-.red.darken-4, .red.body-wrapper, .red.modal-footer {
+.red.darken-4 {
   background-color: #B71C1C !important;
 }
 
@@ -218,7 +218,7 @@
   background-color: #f48fb1 !important;
 }
 
-.pink-text.text-lighten-3, body.pink-text {
+.pink-text.text-lighten-3 {
   color: #f48fb1 !important;
 }
 
@@ -226,7 +226,7 @@
   background-color: #f06292 !important;
 }
 
-.pink-text.text-lighten-2, .pink-text.modal, .pink-text.modal-footer, .pink-text.btn-large, .pink-text.btn-small, .pink-text.btn, .pink-text.btn-flat {
+.pink-text.text-lighten-2, .pink-text.guild {
   color: #f06292 !important;
 }
 
@@ -254,7 +254,7 @@
   color: #c2185b !important;
 }
 
-.pink.darken-3, .pink.modal, .pink.btn-large, .pink.btn-small, .pink.btn {
+.pink.darken-3 {
   background-color: #ad1457 !important;
 }
 
@@ -262,7 +262,7 @@
   color: #ad1457 !important;
 }
 
-.pink.darken-4, .pink.body-wrapper, .pink.modal-footer {
+.pink.darken-4 {
   background-color: #880e4f !important;
 }
 
@@ -330,7 +330,7 @@
   background-color: #ce93d8 !important;
 }
 
-.purple-text.text-lighten-3, body.purple-text {
+.purple-text.text-lighten-3 {
   color: #ce93d8 !important;
 }
 
@@ -338,7 +338,7 @@
   background-color: #ba68c8 !important;
 }
 
-.purple-text.text-lighten-2, .purple-text.modal, .purple-text.modal-footer, .purple-text.btn-large, .purple-text.btn-small, .purple-text.btn, .purple-text.btn-flat {
+.purple-text.text-lighten-2, .purple-text.guild {
   color: #ba68c8 !important;
 }
 
@@ -366,7 +366,7 @@
   color: #7b1fa2 !important;
 }
 
-.purple.darken-3, .purple.modal, .purple.btn-large, .purple.btn-small, .purple.btn {
+.purple.darken-3 {
   background-color: #6a1b9a !important;
 }
 
@@ -374,7 +374,7 @@
   color: #6a1b9a !important;
 }
 
-.purple.darken-4, .purple.body-wrapper, .purple.modal-footer {
+.purple.darken-4 {
   background-color: #4a148c !important;
 }
 
@@ -442,7 +442,7 @@
   background-color: #b39ddb !important;
 }
 
-.deep-purple-text.text-lighten-3, body.deep-purple-text {
+.deep-purple-text.text-lighten-3 {
   color: #b39ddb !important;
 }
 
@@ -450,7 +450,7 @@
   background-color: #9575cd !important;
 }
 
-.deep-purple-text.text-lighten-2, .deep-purple-text.modal, .deep-purple-text.modal-footer, .deep-purple-text.btn-large, .deep-purple-text.btn-small, .deep-purple-text.btn, .deep-purple-text.btn-flat {
+.deep-purple-text.text-lighten-2, .deep-purple-text.guild {
   color: #9575cd !important;
 }
 
@@ -478,7 +478,7 @@
   color: #512da8 !important;
 }
 
-.deep-purple.darken-3, .deep-purple.modal, .deep-purple.btn-large, .deep-purple.btn-small, .deep-purple.btn {
+.deep-purple.darken-3 {
   background-color: #4527a0 !important;
 }
 
@@ -486,7 +486,7 @@
   color: #4527a0 !important;
 }
 
-.deep-purple.darken-4, .deep-purple.body-wrapper, .deep-purple.modal-footer {
+.deep-purple.darken-4 {
   background-color: #311b92 !important;
 }
 
@@ -554,7 +554,7 @@
   background-color: #9fa8da !important;
 }
 
-.indigo-text.text-lighten-3, body.indigo-text {
+.indigo-text.text-lighten-3 {
   color: #9fa8da !important;
 }
 
@@ -562,7 +562,7 @@
   background-color: #7986cb !important;
 }
 
-.indigo-text.text-lighten-2, .indigo-text.modal, .indigo-text.modal-footer, .indigo-text.btn-large, .indigo-text.btn-small, .indigo-text.btn, .indigo-text.btn-flat {
+.indigo-text.text-lighten-2, .indigo-text.guild {
   color: #7986cb !important;
 }
 
@@ -590,7 +590,7 @@
   color: #303f9f !important;
 }
 
-.indigo.darken-3, .indigo.modal, .indigo.btn-large, .indigo.btn-small, .indigo.btn {
+.indigo.darken-3 {
   background-color: #283593 !important;
 }
 
@@ -598,7 +598,7 @@
   color: #283593 !important;
 }
 
-.indigo.darken-4, .indigo.body-wrapper, .indigo.modal-footer {
+.indigo.darken-4 {
   background-color: #1a237e !important;
 }
 
@@ -666,7 +666,7 @@
   background-color: #90CAF9 !important;
 }
 
-.blue-text.text-lighten-3, body.blue-text {
+.blue-text.text-lighten-3 {
   color: #90CAF9 !important;
 }
 
@@ -674,7 +674,7 @@
   background-color: #64B5F6 !important;
 }
 
-.blue-text.text-lighten-2, .blue-text.modal, .blue-text.modal-footer, .blue-text.btn-large, .blue-text.btn-small, .blue-text.btn, .blue-text.btn-flat {
+.blue-text.text-lighten-2, .blue-text.guild {
   color: #64B5F6 !important;
 }
 
@@ -702,7 +702,7 @@
   color: #1976D2 !important;
 }
 
-.blue.darken-3, .blue.modal, .blue.btn-large, .blue.btn-small, .blue.btn {
+.blue.darken-3 {
   background-color: #1565C0 !important;
 }
 
@@ -710,7 +710,7 @@
   color: #1565C0 !important;
 }
 
-.blue.darken-4, .blue.body-wrapper, .blue.modal-footer {
+.blue.darken-4 {
   background-color: #0D47A1 !important;
 }
 
@@ -778,7 +778,7 @@
   background-color: #81d4fa !important;
 }
 
-.light-blue-text.text-lighten-3, body.light-blue-text {
+.light-blue-text.text-lighten-3 {
   color: #81d4fa !important;
 }
 
@@ -786,7 +786,7 @@
   background-color: #4fc3f7 !important;
 }
 
-.light-blue-text.text-lighten-2, .light-blue-text.modal, .light-blue-text.modal-footer, .light-blue-text.btn-large, .light-blue-text.btn-small, .light-blue-text.btn, .light-blue-text.btn-flat {
+.light-blue-text.text-lighten-2, .light-blue-text.guild {
   color: #4fc3f7 !important;
 }
 
@@ -814,7 +814,7 @@
   color: #0288d1 !important;
 }
 
-.light-blue.darken-3, .light-blue.modal, .light-blue.btn-large, .light-blue.btn-small, .light-blue.btn {
+.light-blue.darken-3 {
   background-color: #0277bd !important;
 }
 
@@ -822,7 +822,7 @@
   color: #0277bd !important;
 }
 
-.light-blue.darken-4, .light-blue.body-wrapper, .light-blue.modal-footer {
+.light-blue.darken-4 {
   background-color: #01579b !important;
 }
 
@@ -890,7 +890,7 @@
   background-color: #80deea !important;
 }
 
-.cyan-text.text-lighten-3, body.cyan-text {
+.cyan-text.text-lighten-3 {
   color: #80deea !important;
 }
 
@@ -898,7 +898,7 @@
   background-color: #4dd0e1 !important;
 }
 
-.cyan-text.text-lighten-2, .cyan-text.modal, .cyan-text.modal-footer, .cyan-text.btn-large, .cyan-text.btn-small, .cyan-text.btn, .cyan-text.btn-flat {
+.cyan-text.text-lighten-2, .cyan-text.guild {
   color: #4dd0e1 !important;
 }
 
@@ -926,7 +926,7 @@
   color: #0097a7 !important;
 }
 
-.cyan.darken-3, .cyan.modal, .cyan.btn-large, .cyan.btn-small, .cyan.btn {
+.cyan.darken-3 {
   background-color: #00838f !important;
 }
 
@@ -934,7 +934,7 @@
   color: #00838f !important;
 }
 
-.cyan.darken-4, .cyan.body-wrapper, .cyan.modal-footer {
+.cyan.darken-4 {
   background-color: #006064 !important;
 }
 
@@ -1002,7 +1002,7 @@
   background-color: #80cbc4 !important;
 }
 
-.teal-text.text-lighten-3, body.teal-text {
+.teal-text.text-lighten-3 {
   color: #80cbc4 !important;
 }
 
@@ -1010,7 +1010,7 @@
   background-color: #4db6ac !important;
 }
 
-.teal-text.text-lighten-2, .teal-text.modal, .teal-text.modal-footer, .teal-text.btn-large, .teal-text.btn-small, .teal-text.btn, .teal-text.btn-flat {
+.teal-text.text-lighten-2, .teal-text.guild {
   color: #4db6ac !important;
 }
 
@@ -1038,7 +1038,7 @@
   color: #00796b !important;
 }
 
-.teal.darken-3, .teal.modal, .teal.btn-large, .teal.btn-small, .teal.btn {
+.teal.darken-3 {
   background-color: #00695c !important;
 }
 
@@ -1046,7 +1046,7 @@
   color: #00695c !important;
 }
 
-.teal.darken-4, .teal.body-wrapper, .teal.modal-footer {
+.teal.darken-4 {
   background-color: #004d40 !important;
 }
 
@@ -1114,7 +1114,7 @@
   background-color: #A5D6A7 !important;
 }
 
-.green-text.text-lighten-3, body.green-text {
+.green-text.text-lighten-3 {
   color: #A5D6A7 !important;
 }
 
@@ -1122,7 +1122,7 @@
   background-color: #81C784 !important;
 }
 
-.green-text.text-lighten-2, .green-text.modal, .green-text.modal-footer, .green-text.btn-large, .green-text.btn-small, .green-text.btn, .green-text.btn-flat {
+.green-text.text-lighten-2, .green-text.guild {
   color: #81C784 !important;
 }
 
@@ -1150,7 +1150,7 @@
   color: #388E3C !important;
 }
 
-.green.darken-3, .green.modal, .green.btn-large, .green.btn-small, .green.btn {
+.green.darken-3 {
   background-color: #2E7D32 !important;
 }
 
@@ -1158,7 +1158,7 @@
   color: #2E7D32 !important;
 }
 
-.green.darken-4, .green.body-wrapper, .green.modal-footer {
+.green.darken-4 {
   background-color: #1B5E20 !important;
 }
 
@@ -1226,7 +1226,7 @@
   background-color: #c5e1a5 !important;
 }
 
-.light-green-text.text-lighten-3, body.light-green-text {
+.light-green-text.text-lighten-3 {
   color: #c5e1a5 !important;
 }
 
@@ -1234,7 +1234,7 @@
   background-color: #aed581 !important;
 }
 
-.light-green-text.text-lighten-2, .light-green-text.modal, .light-green-text.modal-footer, .light-green-text.btn-large, .light-green-text.btn-small, .light-green-text.btn, .light-green-text.btn-flat {
+.light-green-text.text-lighten-2, .light-green-text.guild {
   color: #aed581 !important;
 }
 
@@ -1262,7 +1262,7 @@
   color: #689f38 !important;
 }
 
-.light-green.darken-3, .light-green.modal, .light-green.btn-large, .light-green.btn-small, .light-green.btn {
+.light-green.darken-3 {
   background-color: #558b2f !important;
 }
 
@@ -1270,7 +1270,7 @@
   color: #558b2f !important;
 }
 
-.light-green.darken-4, .light-green.body-wrapper, .light-green.modal-footer {
+.light-green.darken-4 {
   background-color: #33691e !important;
 }
 
@@ -1338,7 +1338,7 @@
   background-color: #e6ee9c !important;
 }
 
-.lime-text.text-lighten-3, body.lime-text {
+.lime-text.text-lighten-3 {
   color: #e6ee9c !important;
 }
 
@@ -1346,7 +1346,7 @@
   background-color: #dce775 !important;
 }
 
-.lime-text.text-lighten-2, .lime-text.modal, .lime-text.modal-footer, .lime-text.btn-large, .lime-text.btn-small, .lime-text.btn, .lime-text.btn-flat {
+.lime-text.text-lighten-2, .lime-text.guild {
   color: #dce775 !important;
 }
 
@@ -1374,7 +1374,7 @@
   color: #afb42b !important;
 }
 
-.lime.darken-3, .lime.modal, .lime.btn-large, .lime.btn-small, .lime.btn {
+.lime.darken-3 {
   background-color: #9e9d24 !important;
 }
 
@@ -1382,7 +1382,7 @@
   color: #9e9d24 !important;
 }
 
-.lime.darken-4, .lime.body-wrapper, .lime.modal-footer {
+.lime.darken-4 {
   background-color: #827717 !important;
 }
 
@@ -1450,7 +1450,7 @@
   background-color: #fff59d !important;
 }
 
-.yellow-text.text-lighten-3, body.yellow-text {
+.yellow-text.text-lighten-3 {
   color: #fff59d !important;
 }
 
@@ -1458,7 +1458,7 @@
   background-color: #fff176 !important;
 }
 
-.yellow-text.text-lighten-2, .yellow-text.modal, .yellow-text.modal-footer, .yellow-text.btn-large, .yellow-text.btn-small, .yellow-text.btn, .yellow-text.btn-flat {
+.yellow-text.text-lighten-2, .yellow-text.guild {
   color: #fff176 !important;
 }
 
@@ -1486,7 +1486,7 @@
   color: #fbc02d !important;
 }
 
-.yellow.darken-3, .yellow.modal, .yellow.btn-large, .yellow.btn-small, .yellow.btn {
+.yellow.darken-3 {
   background-color: #f9a825 !important;
 }
 
@@ -1494,7 +1494,7 @@
   color: #f9a825 !important;
 }
 
-.yellow.darken-4, .yellow.body-wrapper, .yellow.modal-footer {
+.yellow.darken-4 {
   background-color: #f57f17 !important;
 }
 
@@ -1562,7 +1562,7 @@
   background-color: #ffe082 !important;
 }
 
-.amber-text.text-lighten-3, body.amber-text {
+.amber-text.text-lighten-3 {
   color: #ffe082 !important;
 }
 
@@ -1570,7 +1570,7 @@
   background-color: #ffd54f !important;
 }
 
-.amber-text.text-lighten-2, .amber-text.modal, .amber-text.modal-footer, .amber-text.btn-large, .amber-text.btn-small, .amber-text.btn, .amber-text.btn-flat {
+.amber-text.text-lighten-2, .amber-text.guild {
   color: #ffd54f !important;
 }
 
@@ -1598,7 +1598,7 @@
   color: #ffa000 !important;
 }
 
-.amber.darken-3, .amber.modal, .amber.btn-large, .amber.btn-small, .amber.btn {
+.amber.darken-3 {
   background-color: #ff8f00 !important;
 }
 
@@ -1606,7 +1606,7 @@
   color: #ff8f00 !important;
 }
 
-.amber.darken-4, .amber.body-wrapper, .amber.modal-footer {
+.amber.darken-4 {
   background-color: #ff6f00 !important;
 }
 
@@ -1674,7 +1674,7 @@
   background-color: #ffcc80 !important;
 }
 
-.orange-text.text-lighten-3, body.orange-text {
+.orange-text.text-lighten-3 {
   color: #ffcc80 !important;
 }
 
@@ -1682,7 +1682,7 @@
   background-color: #ffb74d !important;
 }
 
-.orange-text.text-lighten-2, .orange-text.modal, .orange-text.modal-footer, .orange-text.btn-large, .orange-text.btn-small, .orange-text.btn, .orange-text.btn-flat {
+.orange-text.text-lighten-2, .orange-text.guild {
   color: #ffb74d !important;
 }
 
@@ -1710,7 +1710,7 @@
   color: #f57c00 !important;
 }
 
-.orange.darken-3, .orange.modal, .orange.btn-large, .orange.btn-small, .orange.btn {
+.orange.darken-3 {
   background-color: #ef6c00 !important;
 }
 
@@ -1718,7 +1718,7 @@
   color: #ef6c00 !important;
 }
 
-.orange.darken-4, .orange.body-wrapper, .orange.modal-footer {
+.orange.darken-4 {
   background-color: #e65100 !important;
 }
 
@@ -1786,7 +1786,7 @@
   background-color: #ffab91 !important;
 }
 
-.deep-orange-text.text-lighten-3, body.deep-orange-text {
+.deep-orange-text.text-lighten-3 {
   color: #ffab91 !important;
 }
 
@@ -1794,7 +1794,7 @@
   background-color: #ff8a65 !important;
 }
 
-.deep-orange-text.text-lighten-2, .deep-orange-text.modal, .deep-orange-text.modal-footer, .deep-orange-text.btn-large, .deep-orange-text.btn-small, .deep-orange-text.btn, .deep-orange-text.btn-flat {
+.deep-orange-text.text-lighten-2, .deep-orange-text.guild {
   color: #ff8a65 !important;
 }
 
@@ -1822,7 +1822,7 @@
   color: #e64a19 !important;
 }
 
-.deep-orange.darken-3, .deep-orange.modal, .deep-orange.btn-large, .deep-orange.btn-small, .deep-orange.btn {
+.deep-orange.darken-3 {
   background-color: #d84315 !important;
 }
 
@@ -1830,7 +1830,7 @@
   color: #d84315 !important;
 }
 
-.deep-orange.darken-4, .deep-orange.body-wrapper, .deep-orange.modal-footer {
+.deep-orange.darken-4 {
   background-color: #bf360c !important;
 }
 
@@ -1898,7 +1898,7 @@
   background-color: #bcaaa4 !important;
 }
 
-.brown-text.text-lighten-3, body.brown-text {
+.brown-text.text-lighten-3 {
   color: #bcaaa4 !important;
 }
 
@@ -1906,7 +1906,7 @@
   background-color: #a1887f !important;
 }
 
-.brown-text.text-lighten-2, .brown-text.modal, .brown-text.modal-footer, .brown-text.btn-large, .brown-text.btn-small, .brown-text.btn, .brown-text.btn-flat {
+.brown-text.text-lighten-2, .brown-text.guild {
   color: #a1887f !important;
 }
 
@@ -1934,7 +1934,7 @@
   color: #5d4037 !important;
 }
 
-.brown.darken-3, .brown.modal, .brown.btn-large, .brown.btn-small, .brown.btn {
+.brown.darken-3 {
   background-color: #4e342e !important;
 }
 
@@ -1942,7 +1942,7 @@
   color: #4e342e !important;
 }
 
-.brown.darken-4, .brown.body-wrapper, .brown.modal-footer {
+.brown.darken-4 {
   background-color: #3e2723 !important;
 }
 
@@ -1978,7 +1978,7 @@
   background-color: #b0bec5 !important;
 }
 
-.blue-grey-text.text-lighten-3, body.blue-grey-text {
+.blue-grey-text.text-lighten-3 {
   color: #b0bec5 !important;
 }
 
@@ -1986,7 +1986,7 @@
   background-color: #90a4ae !important;
 }
 
-.blue-grey-text.text-lighten-2, .blue-grey-text.modal, .blue-grey-text.modal-footer, .blue-grey-text.btn-large, .blue-grey-text.btn-small, .blue-grey-text.btn, .blue-grey-text.btn-flat {
+.blue-grey-text.text-lighten-2, .blue-grey-text.guild {
   color: #90a4ae !important;
 }
 
@@ -2014,7 +2014,7 @@
   color: #455a64 !important;
 }
 
-.blue-grey.darken-3, .blue-grey.modal, .blue-grey.btn-large, .blue-grey.btn-small, .blue-grey.btn {
+.blue-grey.darken-3 {
   background-color: #37474f !important;
 }
 
@@ -2022,7 +2022,7 @@
   color: #37474f !important;
 }
 
-.blue-grey.darken-4, .blue-grey.body-wrapper, .blue-grey.modal-footer {
+.blue-grey.darken-4 {
   background-color: #263238 !important;
 }
 
@@ -2030,83 +2030,83 @@
   color: #263238 !important;
 }
 
-.grey, .body-wrapper, .modal, .modal-footer, .btn-large, .btn-small, .btn {
+.grey {
   background-color: #9e9e9e !important;
 }
 
-.grey-text, body, .modal, .modal-footer, .btn, .btn-flat {
+.grey-text, .guild {
   color: #9e9e9e !important;
 }
 
-.grey.lighten-5, .lighten-5.body-wrapper, .lighten-5.modal, .lighten-5.modal-footer, .lighten-5.btn-large, .lighten-5.btn-small, .lighten-5.btn {
+.grey.lighten-5 {
   background-color: #fafafa !important;
 }
 
-.grey-text.text-lighten-5, body.text-lighten-5, .text-lighten-5.modal, .text-lighten-5.modal-footer, .text-lighten-5.btn-large, .text-lighten-5.btn-small, .text-lighten-5.btn, .text-lighten-5.btn-flat {
+.grey-text.text-lighten-5, .text-lighten-5.guild {
   color: #fafafa !important;
 }
 
-.grey.lighten-4, .lighten-4.body-wrapper, .lighten-4.modal, .lighten-4.modal-footer, .lighten-4.btn-large, .lighten-4.btn-small, .lighten-4.btn {
+.grey.lighten-4 {
   background-color: #f5f5f5 !important;
 }
 
-.grey-text.text-lighten-4, body.text-lighten-4, .text-lighten-4.modal, .text-lighten-4.modal-footer, .text-lighten-4.btn-large, .text-lighten-4.btn-small, .text-lighten-4.btn, .text-lighten-4.btn-flat {
+.grey-text.text-lighten-4, .text-lighten-4.guild {
   color: #f5f5f5 !important;
 }
 
-.grey.lighten-3, .lighten-3.body-wrapper, .lighten-3.modal, .lighten-3.modal-footer, .lighten-3.btn-large, .lighten-3.btn-small, .lighten-3.btn {
+.grey.lighten-3 {
   background-color: #eeeeee !important;
 }
 
-.grey-text.text-lighten-3, body, .text-lighten-3.modal, body.modal, .text-lighten-3.modal-footer, body.modal-footer, .text-lighten-3.btn-large, body.btn-large, .text-lighten-3.btn-small, body.btn-small, body.btn, .text-lighten-3.btn, .text-lighten-3.btn-flat, body.btn-flat {
+.grey-text.text-lighten-3, .text-lighten-3.guild {
   color: #eeeeee !important;
 }
 
-.grey.lighten-2, .lighten-2.body-wrapper, .lighten-2.modal, .lighten-2.modal-footer, .lighten-2.btn-large, .lighten-2.btn-small, .lighten-2.btn {
+.grey.lighten-2 {
   background-color: #e0e0e0 !important;
 }
 
-.grey-text.text-lighten-2, body.text-lighten-2, .modal, .modal-footer, .btn, .btn-flat {
+.grey-text.text-lighten-2, .guild {
   color: #e0e0e0 !important;
 }
 
-.grey.lighten-1, .lighten-1.body-wrapper, .lighten-1.modal, .lighten-1.modal-footer, .lighten-1.btn-large, .lighten-1.btn-small, .lighten-1.btn {
+.grey.lighten-1 {
   background-color: #bdbdbd !important;
 }
 
-.grey-text.text-lighten-1, body.text-lighten-1, .text-lighten-1.modal, .text-lighten-1.modal-footer, .text-lighten-1.btn-large, .text-lighten-1.btn-small, .text-lighten-1.btn, .text-lighten-1.btn-flat {
+.grey-text.text-lighten-1, .text-lighten-1.guild {
   color: #bdbdbd !important;
 }
 
-.grey.darken-1, .darken-1.body-wrapper, .darken-1.modal, .darken-1.modal-footer, .darken-1.btn-large, .darken-1.btn-small, .darken-1.btn {
+.grey.darken-1 {
   background-color: #757575 !important;
 }
 
-.grey-text.text-darken-1, body.text-darken-1, .text-darken-1.modal, .text-darken-1.modal-footer, .text-darken-1.btn-large, .text-darken-1.btn-small, .text-darken-1.btn, .text-darken-1.btn-flat {
+.grey-text.text-darken-1, .text-darken-1.guild {
   color: #757575 !important;
 }
 
-.grey.darken-2, .darken-2.body-wrapper, .darken-2.modal, .darken-2.modal-footer, .darken-2.btn-large, .darken-2.btn-small, .darken-2.btn {
+.grey.darken-2 {
   background-color: #616161 !important;
 }
 
-.grey-text.text-darken-2, body.text-darken-2, .text-darken-2.modal, .text-darken-2.modal-footer, .text-darken-2.btn-large, .text-darken-2.btn-small, .text-darken-2.btn, .text-darken-2.btn-flat {
+.grey-text.text-darken-2, .text-darken-2.guild {
   color: #616161 !important;
 }
 
-.grey.darken-3, .darken-3.body-wrapper, .body-wrapper.btn-large, .body-wrapper.btn-small, .modal, .darken-3.modal-footer, .modal-footer.btn-large, .modal-footer.btn-small, .btn {
+.grey.darken-3 {
   background-color: #424242 !important;
 }
 
-.grey-text.text-darken-3, body.text-darken-3, .text-darken-3.modal, .text-darken-3.modal-footer, .text-darken-3.btn-large, .text-darken-3.btn-small, .text-darken-3.btn, .text-darken-3.btn-flat {
+.grey-text.text-darken-3, .text-darken-3.guild {
   color: #424242 !important;
 }
 
-.grey.darken-4, .body-wrapper, .darken-4.modal, .modal-footer, .darken-4.btn-large, .darken-4.btn-small, .darken-4.btn {
+.grey.darken-4 {
   background-color: #212121 !important;
 }
 
-.grey-text.text-darken-4, body.text-darken-4, .text-darken-4.modal, .text-darken-4.modal-footer, .text-darken-4.btn-large, .text-darken-4.btn-small, .text-darken-4.btn, .text-darken-4.btn-flat {
+.grey-text.text-darken-4, .text-darken-4.guild {
   color: #212121 !important;
 }
 
@@ -2126,7 +2126,7 @@
   color: #FFFFFF !important;
 }
 
-.transparent {
+.transparent, .guild {
   background-color: transparent !important;
 }
 
@@ -2624,18 +2624,18 @@ a {
 }
 
 /* 2dp elevation modified*/
-.z-depth-1, nav, .card-panel, .card, .body-wrapper, .toast, .btn, .btn-floating, .dropdown-content, .collapsible, .sidenav {
+.z-depth-1, nav, .card-panel, .card, .guild, .toast, .btn, .btn-large, .btn-small, .btn-floating, .dropdown-content, .collapsible, .sidenav {
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
           box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
 
-.z-depth-1-half, .btn-large:hover, .btn-small:hover, .btn:hover, .btn-floating:hover {
+.z-depth-1-half, .btn:hover, .btn-large:hover, .btn-small:hover, .btn-floating:hover {
   -webkit-box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
           box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
 }
 
 /* 6dp elevation modified*/
-.z-depth-2, .discord-avatar {
+.z-depth-2 {
   -webkit-box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
           box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
 }
@@ -2658,14 +2658,14 @@ a {
           box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
 }
 
-.hoverable {
+.hoverable, .guild {
   -webkit-transition: -webkit-box-shadow .25s;
   transition: -webkit-box-shadow .25s;
   transition: box-shadow .25s;
   transition: box-shadow .25s, -webkit-box-shadow .25s;
 }
 
-.hoverable:hover {
+.hoverable:hover, .guild:hover {
   -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
           box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -3439,20 +3439,20 @@ table span.badge {
   margin-right: -0.75rem;
 }
 
-.section, .body-wrapper {
+.section {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
-.section.no-pad, .no-pad.body-wrapper {
+.section.no-pad {
   padding: 0;
 }
 
-.section.no-pad-bot, .no-pad-bot.body-wrapper {
+.section.no-pad-bot {
   padding-bottom: 0;
 }
 
-.section.no-pad-top, .no-pad-top.body-wrapper {
+.section.no-pad-top {
   padding-top: 0;
 }
 
@@ -4393,13 +4393,13 @@ nav ul a {
   cursor: pointer;
 }
 
-nav ul a.btn-large, nav ul a.btn-small, nav ul a.btn, nav ul a.btn-large, nav ul a.btn-flat, nav ul a.btn-floating {
+nav ul a.btn, nav ul a.btn-large, nav ul a.btn-small, nav ul a.btn-large, nav ul a.btn-flat, nav ul a.btn-floating {
   margin-top: -2px;
   margin-left: 15px;
   margin-right: 15px;
 }
 
-nav ul a.btn-large > .material-icons, nav ul a.btn-small > .material-icons, nav ul a.btn > .material-icons, nav ul a.btn-large > .material-icons, nav ul a.btn-flat > .material-icons, nav ul a.btn-floating > .material-icons {
+nav ul a.btn > .material-icons, nav ul a.btn-large > .material-icons, nav ul a.btn-small > .material-icons, nav ul a.btn-large > .material-icons, nav ul a.btn-flat > .material-icons, nav ul a.btn-floating > .material-icons {
   height: inherit;
   line-height: inherit;
 }
@@ -4730,7 +4730,7 @@ small {
   background-color: #fff;
 }
 
-.card, .body-wrapper {
+.card, .guild {
   position: relative;
   margin: 0.5rem 0 1rem 0;
   background-color: #fff;
@@ -4741,79 +4741,79 @@ small {
   border-radius: 2px;
 }
 
-.card .card-title, .body-wrapper .card-title {
+.card .card-title, .guild .card-title {
   font-size: 24px;
   font-weight: 300;
 }
 
-.card .card-title.activator, .body-wrapper .card-title.activator {
+.card .card-title.activator, .guild .card-title.activator {
   cursor: pointer;
 }
 
-.card.small, .small.body-wrapper, .card.medium, .medium.body-wrapper, .card.large, .large.body-wrapper {
+.card.small, .small.guild, .card.medium, .medium.guild, .card.large, .large.guild {
   position: relative;
 }
 
-.card.small .card-image, .small.body-wrapper .card-image, .card.medium .card-image, .medium.body-wrapper .card-image, .card.large .card-image, .large.body-wrapper .card-image {
+.card.small .card-image, .small.guild .card-image, .card.medium .card-image, .medium.guild .card-image, .card.large .card-image, .large.guild .card-image {
   max-height: 60%;
   overflow: hidden;
 }
 
-.card.small .card-image + .card-content, .small.body-wrapper .card-image + .card-content, .card.medium .card-image + .card-content, .medium.body-wrapper .card-image + .card-content, .card.large .card-image + .card-content, .large.body-wrapper .card-image + .card-content {
+.card.small .card-image + .card-content, .small.guild .card-image + .card-content, .card.medium .card-image + .card-content, .medium.guild .card-image + .card-content, .card.large .card-image + .card-content, .large.guild .card-image + .card-content {
   max-height: 40%;
 }
 
-.card.small .card-content, .small.body-wrapper .card-content, .card.medium .card-content, .medium.body-wrapper .card-content, .card.large .card-content, .large.body-wrapper .card-content {
+.card.small .card-content, .small.guild .card-content, .card.medium .card-content, .medium.guild .card-content, .card.large .card-content, .large.guild .card-content {
   max-height: 100%;
   overflow: hidden;
 }
 
-.card.small .card-action, .small.body-wrapper .card-action, .card.medium .card-action, .medium.body-wrapper .card-action, .card.large .card-action, .large.body-wrapper .card-action {
+.card.small .card-action, .small.guild .card-action, .card.medium .card-action, .medium.guild .card-action, .card.large .card-action, .large.guild .card-action {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
 }
 
-.card.small, .small.body-wrapper {
+.card.small, .small.guild {
   height: 300px;
 }
 
-.card.medium, .medium.body-wrapper {
+.card.medium, .medium.guild {
   height: 400px;
 }
 
-.card.large, .large.body-wrapper {
+.card.large, .large.guild {
   height: 500px;
 }
 
-.card.horizontal, .horizontal.body-wrapper {
+.card.horizontal, .horizontal.guild {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.card.horizontal.small .card-image, .horizontal.small.body-wrapper .card-image, .card.horizontal.medium .card-image, .horizontal.medium.body-wrapper .card-image, .card.horizontal.large .card-image, .horizontal.large.body-wrapper .card-image {
+.card.horizontal.small .card-image, .horizontal.small.guild .card-image, .card.horizontal.medium .card-image, .horizontal.medium.guild .card-image, .card.horizontal.large .card-image, .horizontal.large.guild .card-image {
   height: 100%;
   max-height: none;
   overflow: visible;
 }
 
-.card.horizontal.small .card-image img, .horizontal.small.body-wrapper .card-image img, .card.horizontal.medium .card-image img, .horizontal.medium.body-wrapper .card-image img, .card.horizontal.large .card-image img, .horizontal.large.body-wrapper .card-image img {
+.card.horizontal.small .card-image img, .horizontal.small.guild .card-image img, .card.horizontal.medium .card-image img, .horizontal.medium.guild .card-image img, .card.horizontal.large .card-image img, .horizontal.large.guild .card-image img {
   height: 100%;
 }
 
-.card.horizontal .card-image, .horizontal.body-wrapper .card-image {
+.card.horizontal .card-image, .horizontal.guild .card-image {
   max-width: 50%;
 }
 
-.card.horizontal .card-image img, .horizontal.body-wrapper .card-image img {
+.card.horizontal .card-image img, .horizontal.guild .card-image img {
   border-radius: 2px 0 0 2px;
   max-width: 100%;
   width: auto;
 }
 
-.card.horizontal .card-stacked, .horizontal.body-wrapper .card-stacked {
+.card.horizontal .card-stacked, .horizontal.guild .card-stacked {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4827,26 +4827,26 @@ small {
   position: relative;
 }
 
-.card.horizontal .card-stacked .card-content, .horizontal.body-wrapper .card-stacked .card-content {
+.card.horizontal .card-stacked .card-content, .horizontal.guild .card-stacked .card-content {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
 }
 
-.card.sticky-action .card-action, .sticky-action.body-wrapper .card-action {
+.card.sticky-action .card-action, .sticky-action.guild .card-action {
   z-index: 2;
 }
 
-.card.sticky-action .card-reveal, .sticky-action.body-wrapper .card-reveal {
+.card.sticky-action .card-reveal, .sticky-action.guild .card-reveal {
   z-index: 1;
   padding-bottom: 64px;
 }
 
-.card .card-image, .body-wrapper .card-image {
+.card .card-image, .guild .card-image {
   position: relative;
 }
 
-.card .card-image img, .body-wrapper .card-image img {
+.card .card-image img, .guild .card-image img {
   display: block;
   border-radius: 2px 2px 0 0;
   position: relative;
@@ -4857,7 +4857,7 @@ small {
   width: 100%;
 }
 
-.card .card-image .card-title, .body-wrapper .card-image .card-title {
+.card .card-image .card-title, .guild .card-image .card-title {
   color: #fff;
   position: absolute;
   bottom: 0;
@@ -4866,37 +4866,37 @@ small {
   padding: 24px;
 }
 
-.card .card-content, .body-wrapper .card-content {
+.card .card-content, .guild .card-content {
   padding: 24px;
   border-radius: 0 0 2px 2px;
 }
 
-.card .card-content p, .body-wrapper .card-content p {
+.card .card-content p, .guild .card-content p {
   margin: 0;
 }
 
-.card .card-content .card-title, .body-wrapper .card-content .card-title {
+.card .card-content .card-title, .guild .card-content .card-title {
   display: block;
   line-height: 32px;
   margin-bottom: 8px;
 }
 
-.card .card-content .card-title i, .body-wrapper .card-content .card-title i {
+.card .card-content .card-title i, .guild .card-content .card-title i {
   line-height: 32px;
 }
 
-.card .card-action, .body-wrapper .card-action {
+.card .card-action, .guild .card-action {
   background-color: inherit;
   border-top: 1px solid rgba(160, 160, 160, 0.2);
   position: relative;
   padding: 16px 24px;
 }
 
-.card .card-action:last-child, .body-wrapper .card-action:last-child {
+.card .card-action:last-child, .guild .card-action:last-child {
   border-radius: 0 0 2px 2px;
 }
 
-.card .card-action a:not(.btn-large):not(.btn-small):not(.btn):not(.btn-large):not(.btn-floating), .body-wrapper .card-action a:not(.btn-large):not(.btn-small):not(.btn):not(.btn-large):not(.btn-floating) {
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating), .guild .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
   color: #ffab40;
   margin-right: 24px;
   -webkit-transition: color .3s ease;
@@ -4904,11 +4904,11 @@ small {
   text-transform: uppercase;
 }
 
-.card .card-action a:not(.btn-large):not(.btn-small):not(.btn):not(.btn-large):not(.btn-floating):hover, .body-wrapper .card-action a:not(.btn-large):not(.btn-small):not(.btn):not(.btn-large):not(.btn-floating):hover {
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover, .guild .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover {
   color: #ffd8a6;
 }
 
-.card .card-reveal, .body-wrapper .card-reveal {
+.card .card-reveal, .guild .card-reveal {
   padding: 24px;
   position: absolute;
   background-color: #fff;
@@ -4921,7 +4921,7 @@ small {
   display: none;
 }
 
-.card .card-reveal .card-title, .body-wrapper .card-reveal .card-title {
+.card .card-reveal .card-title, .guild .card-reveal .card-title {
   cursor: pointer;
   display: block;
 }
@@ -5139,7 +5139,7 @@ small {
   visibility: hidden;
 }
 
-.btn-large, .btn-small, .btn,
+.btn, .btn-large, .btn-small,
 .btn-flat {
   border: none;
   border-radius: 2px;
@@ -5152,21 +5152,21 @@ small {
   -webkit-tap-highlight-color: transparent;
 }
 
-.disabled.btn-large, .disabled.btn-small, .disabled.btn,
+.btn.disabled, .disabled.btn-large, .disabled.btn-small,
 .btn-floating.disabled,
 .btn-large.disabled,
 .btn-small.disabled,
 .btn-flat.disabled,
+.btn:disabled,
 .btn-large:disabled,
 .btn-small:disabled,
-.btn:disabled,
 .btn-floating:disabled,
 .btn-large:disabled,
 .btn-small:disabled,
 .btn-flat:disabled,
+.btn[disabled],
 .btn-large[disabled],
 .btn-small[disabled],
-.btn[disabled],
 .btn-floating[disabled],
 .btn-large[disabled],
 .btn-small[disabled],
@@ -5179,21 +5179,21 @@ small {
   cursor: default;
 }
 
-.disabled.btn-large:hover, .disabled.btn-small:hover, .disabled.btn:hover,
+.btn.disabled:hover, .disabled.btn-large:hover, .disabled.btn-small:hover,
 .btn-floating.disabled:hover,
 .btn-large.disabled:hover,
 .btn-small.disabled:hover,
 .btn-flat.disabled:hover,
+.btn:disabled:hover,
 .btn-large:disabled:hover,
 .btn-small:disabled:hover,
-.btn:disabled:hover,
 .btn-floating:disabled:hover,
 .btn-large:disabled:hover,
 .btn-small:disabled:hover,
 .btn-flat:disabled:hover,
+.btn[disabled]:hover,
 .btn-large[disabled]:hover,
 .btn-small[disabled]:hover,
-.btn[disabled]:hover,
 .btn-floating[disabled]:hover,
 .btn-large[disabled]:hover,
 .btn-small[disabled]:hover,
@@ -5202,7 +5202,7 @@ small {
   color: #9F9F9F !important;
 }
 
-.btn-large, .btn-small, .btn,
+.btn, .btn-large, .btn-small,
 .btn-floating,
 .btn-large,
 .btn-small,
@@ -5211,7 +5211,7 @@ small {
   outline: 0;
 }
 
-.btn-large i, .btn-small i, .btn i,
+.btn i, .btn-large i, .btn-small i,
 .btn-floating i,
 .btn-large i,
 .btn-small i,
@@ -5220,12 +5220,12 @@ small {
   line-height: inherit;
 }
 
-.btn-large:focus, .btn-small:focus, .btn:focus,
+.btn:focus, .btn-large:focus, .btn-small:focus,
 .btn-floating:focus {
   background-color: #1d7d74;
 }
 
-.btn-large, .btn-small, .btn {
+.btn, .btn-large, .btn-small {
   text-decoration: none;
   color: #fff;
   background-color: #26a69a;
@@ -5236,7 +5236,7 @@ small {
   cursor: pointer;
 }
 
-.btn-large:hover, .btn-small:hover, .btn:hover {
+.btn:hover, .btn-large:hover, .btn-small:hover {
   background-color: #2bbbad;
 }
 
@@ -5638,7 +5638,7 @@ body.keyboard-focused .dropdown-content li:focus {
   pointer-events: none;
 }
 
-.waves-effect.waves-light .waves-ripple, .waves-effect.btn-large .waves-ripple, .waves-effect.btn-small .waves-ripple, .waves-effect.btn .waves-ripple, .waves-effect.btn-flat .waves-ripple {
+.waves-effect.waves-light .waves-ripple, .waves-effect.guild .waves-ripple {
   background-color: rgba(255, 255, 255, 0.45);
 }
 
@@ -5766,7 +5766,7 @@ body.keyboard-focused .dropdown-content li:focus {
   text-align: right;
 }
 
-.modal .modal-footer .btn-large, .modal .modal-footer .btn-small, .modal .modal-footer .btn, .modal .modal-footer .btn-flat {
+.modal .modal-footer .btn, .modal .modal-footer .btn-large, .modal .modal-footer .btn-small, .modal .modal-footer .btn-flat {
   margin: 6px 0;
 }
 
@@ -7269,7 +7269,7 @@ body.keyboard-focused .select-dropdown.dropdown-content li:focus {
   width: 100%;
 }
 
-.file-field .btn-large, .file-field .btn-small, .file-field .btn {
+.file-field .btn, .file-field .btn-large, .file-field .btn-small {
   float: left;
   height: 3rem;
   line-height: 3rem;
@@ -7555,11 +7555,11 @@ input[type=range]::-ms-thumb {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-.sidenav li > a.btn-large, .sidenav li > a.btn-small, .sidenav li > a.btn, .sidenav li > a.btn-large, .sidenav li > a.btn-flat, .sidenav li > a.btn-floating {
+.sidenav li > a.btn, .sidenav li > a.btn-large, .sidenav li > a.btn-small, .sidenav li > a.btn-large, .sidenav li > a.btn-flat, .sidenav li > a.btn-floating {
   margin: 10px 15px;
 }
 
-.sidenav li > a.btn-large, .sidenav li > a.btn-small, .sidenav li > a.btn, .sidenav li > a.btn-large, .sidenav li > a.btn-floating {
+.sidenav li > a.btn, .sidenav li > a.btn-large, .sidenav li > a.btn-small, .sidenav li > a.btn-large, .sidenav li > a.btn-floating {
   color: #fff;
 }
 
@@ -7567,7 +7567,7 @@ input[type=range]::-ms-thumb {
   color: #343434;
 }
 
-.sidenav li > a.btn-large:hover, .sidenav li > a.btn-small:hover, .sidenav li > a.btn:hover, .sidenav li > a.btn-large:hover {
+.sidenav li > a.btn:hover, .sidenav li > a.btn-large:hover, .sidenav li > a.btn-small:hover, .sidenav li > a.btn-large:hover {
   background-color: #2bbbad;
 }
 
@@ -8526,7 +8526,7 @@ input[type=range]::-ms-thumb {
   position: absolute !important;
 }
 
-.tap-target-origin:not(.btn-large):not(.btn-small):not(.btn), .tap-target-origin:not(.btn-large):not(.btn-small):not(.btn):hover {
+.tap-target-origin:not(.btn):not(.btn-large):not(.btn-small), .tap-target-origin:not(.btn):not(.btn-large):not(.btn-small):hover {
   background: none;
 }
 
@@ -9016,24 +9016,34 @@ input[type=range]::-ms-thumb {
   }
 }
 
-body {
-  font-weight: 600;
-  min-height: 100vh;
-}
-
 .body-wrapper {
   margin-left: 20px;
   margin-right: 20px;
-  padding: 25px;
-  margin-top: 25px;
+  text-align: center;
 }
 
-.discord-avatar {
-  border-radius: 50%;
-  height: 50px;
-  width: 50px;
-  margin-top: 7px;
-  margin-right: 7px;
-  cursor: pointer;
+.guilds-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  text-align: center;
 }
-/*# sourceMappingURL=style.css.map */
+
+.guild {
+  width: 200px;
+  height: 200px;
+  margin-left: 50px;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.guild img {
+  width: 60%;
+  height: auto;
+  border-radius: 50%;
+}
+/*# sourceMappingURL=index.css.map */
