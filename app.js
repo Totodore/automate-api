@@ -9,7 +9,6 @@ const fs = require("fs");
 const indexRouter = require('./routes/index');
 const connectRouter = require('./routes/connect');
 const oauthRouter = require("./routes/oauth");
-const oauthBotRouter = require("./router/oauthBot");
 const ajaxRouter = require("./routes/ajax");
 
 const app = express();
@@ -54,7 +53,7 @@ app.use('/', indexRouter);
 app.use('/connect', connectRouter);
 app.use('/oauth', oauthRouter);
 app.use('/ajax', ajaxRouter);
-app.use('/oauthBot', oauthBotRouter);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
