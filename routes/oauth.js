@@ -61,9 +61,17 @@ router.get('/', async (req, res, next) => {
             refresh_token: resToken.refresh_token,
             username: resUser.username,
             avatar: resUser.avatar,
-            schedules: {},
+        };
+        const userData = {
+            bot: {
+                location: [],
+                ponctual: [],
+                freq: []
+            }
         };
         fs.writeFileSync(__dirname+"/../data/users.json", JSON.stringify(userDB));
+        fs.mkdirSync(__dirname+"/../data/users/"+resUser.id);
+        fs.writeFileSync(__dirname+"/../data/users/"+resUser.id+"/data.json", JSON.stringify(userData));
         writeSessionAndCookies(resUser.id, req, res);
         res.redirect("../?msg="+encodeURI("Ton compte discord à été relié avec succès !"));
     }

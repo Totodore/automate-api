@@ -9,7 +9,6 @@ const MANAGE_GUILD = 0x00000020;
 /* GET home page. */
 router.get('/', async (req, res, next) => {
   const token = JSON.parse(fs.readFileSync(__dirname+"/../data/users.json"))[req.session.userId]["access_token"];
-  console.log(token);
   const guildReq = await fetch("https://discordapp.com/api/users/@me/guilds", {
     headers: {
       'Authorization': `Bearer ${token}`
@@ -19,7 +18,6 @@ router.get('/', async (req, res, next) => {
     console.log(`Erreur : ${guildReq.status} ${guildReq.statusText}`);
     res.render('index', {header: req.headerData, error: "Impossible de récupérer la liste de tes channels, sniff..."});
   }
-  console.log("success");
   let guildRes = JSON.parse(await guildReq.text());
   guildRes = guildRes.filter((el) => {
     if (el.permissions & ADMINISTRATOR || el.permissions & MANAGE_CHANNELS || el.permissions & MANAGE_GUILD)

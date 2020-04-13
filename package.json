@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "btoa": "^1.2.1",
+    "chokidar": "^3.3.1",
     "cookie-parser": "^1.4.5",
     "debug": "^2.6.9",
     "ejs": "^2.6.2",
