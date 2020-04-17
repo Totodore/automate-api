@@ -1,23 +1,88 @@
-class VueInterface {
+class VueDashboard {
     constructor() {
-        this.modal = M.Modal.init(document.querySelector("#add_cron"));
-        this.removeModal = M.Modal.init(document.querySelector("#remove_modal"));
-        this.webhookModal = M.Modal.init(document.querySelector("#webhook_modal"));
+        const i18n = {
+            cancel: "Annuler",
+            done: "Confirmer",
+            months: [
+                "Janvier",
+                "Février",
+                "Mars",
+                "Avril",
+                "Mai",
+                "Juin",
+                "Juillet",
+                "Aout",
+                "Septembre",
+                "Octobre",
+                "Novembre",
+                "Décembre"
+            ],
+            monthsShort: [
+                 "Jan",
+                 "Fév",
+                 "Mar",
+                 "Avr",
+                 "Mai",
+                 "Juin",
+                 "Juil",
+                 "Aout",
+                 "Sept",
+                 "Oct",
+                 "Nov",
+                 "Déc"
+            ],
+            weekdays: [
+                "Dimanche",
+                "Lundi",
+                "Mardi",
+                "Mercredi",
+                "Jeudi",
+                "Vendredi",
+                "Samedi",
+                "Dimanche"
+            ],
+            weekdaysShort: [
+                "Dim",
+                "Lun",
+                "Mar",
+                "Mer",
+                "Jeu",
+                "Ven",
+                "Sam",
+                "Dim"
+            ],
+            weekdaysAbbrev: ["D", "L", "M", "M", "J", "V", "S", "D"]
+        };
+        this.addCronModal = M.Modal.init(document.querySelector("#add_cron"));
+        this.removeCronModal = M.Modal.init(document.querySelector("#remove_modal"));
+        this.addTimerModal = M.Modal.init(document.querySelector("#timer_add_modal"));
         this.form = document.forms.namedItem("addForm");
-    
         this.timePickerWrapper = document.querySelector(".timeSelect-wrapper");
         this.daySelectWrapper = document.querySelector(".daySelect-wrapper");
         this.addCron_modalConfirm = document.querySelector("#add_cron .modal-confirm");
         this.removeCron_modalConfirm = document.querySelector("#remove_modal .modal-confirm");
         this.tableLines = document.querySelectorAll("tbody tr");
         this.eachSelect = this.form.elements.namedItem("each");
-        this.timePicker = M.Timepicker.init(document.querySelector(".timepicker"), {
+        this.guild_id = new URLSearchParams(location.search).get("id");
+        this.timePicker = M.Timepicker.init(document.querySelectorAll(".timepicker"), {
             container: "body",
             twelveHour: false,
             onOpenEnd: () => {
-                if (this.form.elements.namedItem("each").value == "heure")
+                if (this.form.elements.namedItem("each").value == "heure" && this.addCronModal.isOpen)
                     timePicker.showView("minutes");
-            }
+            },
+            i18n: i18n
+        });
+    
+        this.datePicker = M.Datepicker.init(document.querySelectorAll(".datepicker"), {
+           container: "body",
+           firstDay: 1,
+           format: "dddd d mmmm yyyy",
+           minDate: new Date(),
+           setDefaultDate: true,
+           yearRange: 1,
+           defaultDate: new Date(),
+           i18n: i18n
         });
         M.FormSelect.init(this.eachSelect);
         M.FormSelect.init(this.form.elements.namedItem("daySelect"));   
@@ -26,12 +91,8 @@ class VueInterface {
     }
 
     updateEventListener() {
-        document.querySelector(".fixed-action-btn").addEventListener("click", () => {
-            this.modal.open();
-        });    
-        document.querySelector(".webhook-status").addEventListener("click", () => {
-            this.webhookModal.open();
-        });
+        document.querySelector(".schedule-add-btn").addEventListener("click", () => this.addCronModal.open());
+        document.querySelector(".timer-add-btn").addEventListener("click", () => this.addTimerModal.open());
         this.eachSelect.addEventListener("change", () => this.onChangeEachSelect());
         this.addCron_modalConfirm.addEventListener("click", () => this.onConfirmAddCron());
         this.tableLines.forEach(el => el.addEventListener("click", () => this.onTableLineCLick(el)));
@@ -107,46 +168,60 @@ class VueInterface {
                 desc += " à la 1ère minute";
                 cron[0] = "00";
             }
-        }
+		}
+		
+        const channel_id = this.form.elements.namedItem("channelSelect").value;
         const formData = new FormData();
+        const content = this.form.elements.namedItem("content").value;
         formData.append("frequency", desc);
         formData.append("cron", cron.join(" "));
-        formData.append("content", this.form.elements.namedItem("content").value);
-        fetch("/src/queries/add_schedule.php", {
+        formData.append("content", content);
+        formData.append("channel_id", channel_id);
+        formData.append("guild_id", this.guild_id);
+		
+        fetch("/ajax/add_schedule", {
             method: "POST",
             body: formData
         }).then((response) => {
             if (response.status != 200) {
-                M.toast({html: "Erreur lors de l'ajout de cette horaire"}, 5000);
+                M.toast({html: "Erreur lors de l'ajout du message"}, 5000);
                 console.log("Error ", response.status, " : ", response.statusText);
             } else response.text().then((responseText) => {
-                document.querySelector("tbody").insertAdjacentHTML("afterbegin", responseText);
+				let name;
+				document.channels.forEach(element => {if(element.id == channel_id) name = element.name;});
+                document.querySelector("tbody").insertAdjacentHTML("afterbegin", `
+                    <tr id="${responseText}" channel_id=${channel_id}>
+                        <td>${desc}</td>
+                        <td>${name}</td>
+                        <td>${content}</td>
+                    </tr>
+				`);
+				const self = this;
                 document.querySelector("tbody tr").addEventListener("click", function() {
-                    this.idToRemove = this.getAttribute("id");
+                    self.idToRemove = this.getAttribute("id");
                     removeModal.open();
                 });
                 M.toast({html: "Votre message à bien été ajouté"}, 5000);
             });
-            this.modal.close();
+            this.addCronModal.close();
         });
     }
     onTableLineCLick(el) {   
         this.idToRemove = el.getAttribute("id");
-        this.removeModal.open();
+        this.removeCronModal.open();
     }
     onConfirmRemoveCron() {
-        fetch("/src/queries/remove_schedule.php?id="+this.idToRemove).then((response) => {
+        fetch(`/ajax/remove_schedule?id=${this.idToRemove}&guild_id=${this.guild_id}`).then((response) => {
             if (response.status != 200) {
                 console.log("Erreur : ", response.status, " ", responseText);
                 M.toast({html: "Erreur lors de la suppression du message"}, 5000);
             } else response.text().then((responseText) => {
                 M.toast({html: responseText}, 5000);
                 document.getElementById(this.idToRemove).remove();
-                this.removeModal.close();
+                this.removeCronModal.close();
             });
         });
     }
 }
-window.addEventListener("DOMContentLoaded", (event) => {
-    new VueInterface();
-});
+
+window.addEventListener("DOMContentLoaded", e => new VueDashboard());

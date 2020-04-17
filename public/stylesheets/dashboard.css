@@ -34,7 +34,9 @@
   background-color: #ee6e73 !important;
 }
 
-.materialize-red-text.text-lighten-2, .materialize-red-text.guild {
+.materialize-red-text.text-lighten-2, .select-dropdown span.materialize-red-text, input.materialize-red-text,
+textarea.materialize-red-text, .input-field label.materialize-red-text, .input-field input[type=text]:focus + label.materialize-red-text,
+.input-field textarea:focus + label.materialize-red-text {
   color: #ee6e73 !important;
 }
 
@@ -42,7 +44,7 @@
   background-color: #ea454b !important;
 }
 
-.materialize-red-text.text-lighten-1 {
+.materialize-red-text.text-lighten-1, .materialize-red-text.guild-data, .materialize-red-text.crons {
   color: #ea454b !important;
 }
 
@@ -54,7 +56,7 @@
   color: #d0181e !important;
 }
 
-.materialize-red.darken-2 {
+.materialize-red.darken-2, .crons tbody tr.materialize-red:hover {
   background-color: #b9151b !important;
 }
 
@@ -62,7 +64,7 @@
   color: #b9151b !important;
 }
 
-.materialize-red.darken-3 {
+.materialize-red.darken-3, .materialize-red.datepicker-calendar-container {
   background-color: #a21318 !important;
 }
 
@@ -70,11 +72,11 @@
   color: #a21318 !important;
 }
 
-.materialize-red.darken-4 {
+.materialize-red.darken-4, .materialize-red.guild-data, .materialize-red.crons, .materialize-red#timer_add_modal, .materialize-red#add_cron, .materialize-red.footer, .materialize-red.select-dropdown {
   background-color: #8b1014 !important;
 }
 
-.materialize-red-text.text-darken-4 {
+.materialize-red-text.text-darken-4, .materialize-red-text.select-dropdown {
   color: #8b1014 !important;
 }
 
@@ -114,7 +116,9 @@
   background-color: #E57373 !important;
 }
 
-.red-text.text-lighten-2, .red-text.guild {
+.red-text.text-lighten-2, .select-dropdown span.red-text, input.red-text,
+textarea.red-text, .input-field label.red-text, .input-field input[type=text]:focus + label.red-text,
+.input-field textarea:focus + label.red-text {
   color: #E57373 !important;
 }
 
@@ -122,7 +126,7 @@
   background-color: #EF5350 !important;
 }
 
-.red-text.text-lighten-1 {
+.red-text.text-lighten-1, .red-text.guild-data, .red-text.crons {
   color: #EF5350 !important;
 }
 
@@ -134,7 +138,7 @@
   color: #E53935 !important;
 }
 
-.red.darken-2 {
+.red.darken-2, .crons tbody tr.red:hover {
   background-color: #D32F2F !important;
 }
 
@@ -142,7 +146,7 @@
   color: #D32F2F !important;
 }
 
-.red.darken-3 {
+.red.darken-3, .red.datepicker-calendar-container {
   background-color: #C62828 !important;
 }
 
@@ -150,11 +154,11 @@
   color: #C62828 !important;
 }
 
-.red.darken-4 {
+.red.darken-4, .red.guild-data, .red.crons, .red#timer_add_modal, .red#add_cron, .red.footer, .red.select-dropdown {
   background-color: #B71C1C !important;
 }
 
-.red-text.text-darken-4 {
+.red-text.text-darken-4, .red-text.select-dropdown {
   color: #B71C1C !important;
 }
 
@@ -226,7 +230,9 @@
   background-color: #f06292 !important;
 }
 
-.pink-text.text-lighten-2, .pink-text.guild {
+.pink-text.text-lighten-2, .select-dropdown span.pink-text, input.pink-text,
+textarea.pink-text, .input-field label.pink-text, .input-field input[type=text]:focus + label.pink-text,
+.input-field textarea:focus + label.pink-text {
   color: #f06292 !important;
 }
 
@@ -234,7 +240,7 @@
   background-color: #ec407a !important;
 }
 
-.pink-text.text-lighten-1 {
+.pink-text.text-lighten-1, .pink-text.guild-data, .pink-text.crons {
   color: #ec407a !important;
 }
 
@@ -246,7 +252,7 @@
   color: #d81b60 !important;
 }
 
-.pink.darken-2 {
+.pink.darken-2, .crons tbody tr.pink:hover {
   background-color: #c2185b !important;
 }
 
@@ -254,7 +260,7 @@
   color: #c2185b !important;
 }
 
-.pink.darken-3 {
+.pink.darken-3, .pink.datepicker-calendar-container {
   background-color: #ad1457 !important;
 }
 
@@ -262,11 +268,11 @@
   color: #ad1457 !important;
 }
 
-.pink.darken-4 {
+.pink.darken-4, .pink.guild-data, .pink.crons, .pink#timer_add_modal, .pink#add_cron, .pink.footer, .pink.select-dropdown {
   background-color: #880e4f !important;
 }
 
-.pink-text.text-darken-4 {
+.pink-text.text-darken-4, .pink-text.select-dropdown {
   color: #880e4f !important;
 }
 
@@ -338,7 +344,9 @@
   background-color: #ba68c8 !important;
 }
 
-.purple-text.text-lighten-2, .purple-text.guild {
+.purple-text.text-lighten-2, .select-dropdown span.purple-text, input.purple-text,
+textarea.purple-text, .input-field label.purple-text, .input-field input[type=text]:focus + label.purple-text,
+.input-field textarea:focus + label.purple-text {
   color: #ba68c8 !important;
 }
 
@@ -346,7 +354,7 @@
   background-color: #ab47bc !important;
 }
 
-.purple-text.text-lighten-1 {
+.purple-text.text-lighten-1, .purple-text.guild-data, .purple-text.crons {
   color: #ab47bc !important;
 }
 
@@ -358,7 +366,7 @@
   color: #8e24aa !important;
 }
 
-.purple.darken-2 {
+.purple.darken-2, .crons tbody tr.purple:hover {
   background-color: #7b1fa2 !important;
 }
 
@@ -366,7 +374,7 @@
   color: #7b1fa2 !important;
 }
 
-.purple.darken-3 {
+.purple.darken-3, .purple.datepicker-calendar-container {
   background-color: #6a1b9a !important;
 }
 
@@ -374,11 +382,11 @@
   color: #6a1b9a !important;
 }
 
-.purple.darken-4 {
+.purple.darken-4, .purple.guild-data, .purple.crons, .purple#timer_add_modal, .purple#add_cron, .purple.footer, .purple.select-dropdown {
   background-color: #4a148c !important;
 }
 
-.purple-text.text-darken-4 {
+.purple-text.text-darken-4, .purple-text.select-dropdown {
   color: #4a148c !important;
 }
 
@@ -450,7 +458,9 @@
   background-color: #9575cd !important;
 }
 
-.deep-purple-text.text-lighten-2, .deep-purple-text.guild {
+.deep-purple-text.text-lighten-2, .select-dropdown span.deep-purple-text, input.deep-purple-text,
+textarea.deep-purple-text, .input-field label.deep-purple-text, .input-field input[type=text]:focus + label.deep-purple-text,
+.input-field textarea:focus + label.deep-purple-text {
   color: #9575cd !important;
 }
 
@@ -458,7 +468,7 @@
   background-color: #7e57c2 !important;
 }
 
-.deep-purple-text.text-lighten-1 {
+.deep-purple-text.text-lighten-1, .deep-purple-text.guild-data, .deep-purple-text.crons {
   color: #7e57c2 !important;
 }
 
@@ -470,7 +480,7 @@
   color: #5e35b1 !important;
 }
 
-.deep-purple.darken-2 {
+.deep-purple.darken-2, .crons tbody tr.deep-purple:hover {
   background-color: #512da8 !important;
 }
 
@@ -478,7 +488,7 @@
   color: #512da8 !important;
 }
 
-.deep-purple.darken-3 {
+.deep-purple.darken-3, .deep-purple.datepicker-calendar-container {
   background-color: #4527a0 !important;
 }
 
@@ -486,11 +496,11 @@
   color: #4527a0 !important;
 }
 
-.deep-purple.darken-4 {
+.deep-purple.darken-4, .deep-purple.guild-data, .deep-purple.crons, .deep-purple#timer_add_modal, .deep-purple#add_cron, .deep-purple.footer, .deep-purple.select-dropdown {
   background-color: #311b92 !important;
 }
 
-.deep-purple-text.text-darken-4 {
+.deep-purple-text.text-darken-4, .deep-purple-text.select-dropdown {
   color: #311b92 !important;
 }
 
@@ -562,7 +572,9 @@
   background-color: #7986cb !important;
 }
 
-.indigo-text.text-lighten-2, .indigo-text.guild {
+.indigo-text.text-lighten-2, .select-dropdown span.indigo-text, input.indigo-text,
+textarea.indigo-text, .input-field label.indigo-text, .input-field input[type=text]:focus + label.indigo-text,
+.input-field textarea:focus + label.indigo-text {
   color: #7986cb !important;
 }
 
@@ -570,7 +582,7 @@
   background-color: #5c6bc0 !important;
 }
 
-.indigo-text.text-lighten-1 {
+.indigo-text.text-lighten-1, .indigo-text.guild-data, .indigo-text.crons {
   color: #5c6bc0 !important;
 }
 
@@ -582,7 +594,7 @@
   color: #3949ab !important;
 }
 
-.indigo.darken-2 {
+.indigo.darken-2, .crons tbody tr.indigo:hover {
   background-color: #303f9f !important;
 }
 
@@ -590,7 +602,7 @@
   color: #303f9f !important;
 }
 
-.indigo.darken-3 {
+.indigo.darken-3, .indigo.datepicker-calendar-container {
   background-color: #283593 !important;
 }
 
@@ -598,11 +610,11 @@
   color: #283593 !important;
 }
 
-.indigo.darken-4 {
+.indigo.darken-4, .indigo.guild-data, .indigo.crons, .indigo#timer_add_modal, .indigo#add_cron, .indigo.footer, .indigo.select-dropdown {
   background-color: #1a237e !important;
 }
 
-.indigo-text.text-darken-4 {
+.indigo-text.text-darken-4, .indigo-text.select-dropdown {
   color: #1a237e !important;
 }
 
@@ -674,7 +686,9 @@
   background-color: #64B5F6 !important;
 }
 
-.blue-text.text-lighten-2, .blue-text.guild {
+.blue-text.text-lighten-2, .select-dropdown span.blue-text, input.blue-text,
+textarea.blue-text, .input-field label.blue-text, .input-field input[type=text]:focus + label.blue-text,
+.input-field textarea:focus + label.blue-text {
   color: #64B5F6 !important;
 }
 
@@ -682,7 +696,7 @@
   background-color: #42A5F5 !important;
 }
 
-.blue-text.text-lighten-1 {
+.blue-text.text-lighten-1, .blue-text.guild-data, .blue-text.crons {
   color: #42A5F5 !important;
 }
 
@@ -694,7 +708,7 @@
   color: #1E88E5 !important;
 }
 
-.blue.darken-2 {
+.blue.darken-2, .crons tbody tr.blue:hover {
   background-color: #1976D2 !important;
 }
 
@@ -702,7 +716,7 @@
   color: #1976D2 !important;
 }
 
-.blue.darken-3 {
+.blue.darken-3, .blue.datepicker-calendar-container {
   background-color: #1565C0 !important;
 }
 
@@ -710,11 +724,11 @@
   color: #1565C0 !important;
 }
 
-.blue.darken-4 {
+.blue.darken-4, .blue.guild-data, .blue.crons, .blue#timer_add_modal, .blue#add_cron, .blue.footer, .blue.select-dropdown {
   background-color: #0D47A1 !important;
 }
 
-.blue-text.text-darken-4 {
+.blue-text.text-darken-4, .blue-text.select-dropdown {
   color: #0D47A1 !important;
 }
 
@@ -786,7 +800,9 @@
   background-color: #4fc3f7 !important;
 }
 
-.light-blue-text.text-lighten-2, .light-blue-text.guild {
+.light-blue-text.text-lighten-2, .select-dropdown span.light-blue-text, input.light-blue-text,
+textarea.light-blue-text, .input-field label.light-blue-text, .input-field input[type=text]:focus + label.light-blue-text,
+.input-field textarea:focus + label.light-blue-text {
   color: #4fc3f7 !important;
 }
 
@@ -794,7 +810,7 @@
   background-color: #29b6f6 !important;
 }
 
-.light-blue-text.text-lighten-1 {
+.light-blue-text.text-lighten-1, .light-blue-text.guild-data, .light-blue-text.crons {
   color: #29b6f6 !important;
 }
 
@@ -806,7 +822,7 @@
   color: #039be5 !important;
 }
 
-.light-blue.darken-2 {
+.light-blue.darken-2, .crons tbody tr.light-blue:hover {
   background-color: #0288d1 !important;
 }
 
@@ -814,7 +830,7 @@
   color: #0288d1 !important;
 }
 
-.light-blue.darken-3 {
+.light-blue.darken-3, .light-blue.datepicker-calendar-container {
   background-color: #0277bd !important;
 }
 
@@ -822,11 +838,11 @@
   color: #0277bd !important;
 }
 
-.light-blue.darken-4 {
+.light-blue.darken-4, .light-blue.guild-data, .light-blue.crons, .light-blue#timer_add_modal, .light-blue#add_cron, .light-blue.footer, .light-blue.select-dropdown {
   background-color: #01579b !important;
 }
 
-.light-blue-text.text-darken-4 {
+.light-blue-text.text-darken-4, .light-blue-text.select-dropdown {
   color: #01579b !important;
 }
 
@@ -898,7 +914,9 @@
   background-color: #4dd0e1 !important;
 }
 
-.cyan-text.text-lighten-2, .cyan-text.guild {
+.cyan-text.text-lighten-2, .select-dropdown span.cyan-text, input.cyan-text,
+textarea.cyan-text, .input-field label.cyan-text, .input-field input[type=text]:focus + label.cyan-text,
+.input-field textarea:focus + label.cyan-text {
   color: #4dd0e1 !important;
 }
 
@@ -906,7 +924,7 @@
   background-color: #26c6da !important;
 }
 
-.cyan-text.text-lighten-1 {
+.cyan-text.text-lighten-1, .cyan-text.guild-data, .cyan-text.crons {
   color: #26c6da !important;
 }
 
@@ -918,7 +936,7 @@
   color: #00acc1 !important;
 }
 
-.cyan.darken-2 {
+.cyan.darken-2, .crons tbody tr.cyan:hover {
   background-color: #0097a7 !important;
 }
 
@@ -926,7 +944,7 @@
   color: #0097a7 !important;
 }
 
-.cyan.darken-3 {
+.cyan.darken-3, .cyan.datepicker-calendar-container {
   background-color: #00838f !important;
 }
 
@@ -934,11 +952,11 @@
   color: #00838f !important;
 }
 
-.cyan.darken-4 {
+.cyan.darken-4, .cyan.guild-data, .cyan.crons, .cyan#timer_add_modal, .cyan#add_cron, .cyan.footer, .cyan.select-dropdown {
   background-color: #006064 !important;
 }
 
-.cyan-text.text-darken-4 {
+.cyan-text.text-darken-4, .cyan-text.select-dropdown {
   color: #006064 !important;
 }
 
@@ -1010,7 +1028,9 @@
   background-color: #4db6ac !important;
 }
 
-.teal-text.text-lighten-2, .teal-text.guild {
+.teal-text.text-lighten-2, .select-dropdown span.teal-text, input.teal-text,
+textarea.teal-text, .input-field label.teal-text, .input-field input[type=text]:focus + label.teal-text,
+.input-field textarea:focus + label.teal-text {
   color: #4db6ac !important;
 }
 
@@ -1018,7 +1038,7 @@
   background-color: #26a69a !important;
 }
 
-.teal-text.text-lighten-1 {
+.teal-text.text-lighten-1, .teal-text.guild-data, .teal-text.crons {
   color: #26a69a !important;
 }
 
@@ -1030,7 +1050,7 @@
   color: #00897b !important;
 }
 
-.teal.darken-2 {
+.teal.darken-2, .crons tbody tr.teal:hover {
   background-color: #00796b !important;
 }
 
@@ -1038,7 +1058,7 @@
   color: #00796b !important;
 }
 
-.teal.darken-3 {
+.teal.darken-3, .teal.datepicker-calendar-container {
   background-color: #00695c !important;
 }
 
@@ -1046,11 +1066,11 @@
   color: #00695c !important;
 }
 
-.teal.darken-4 {
+.teal.darken-4, .teal.guild-data, .teal.crons, .teal#timer_add_modal, .teal#add_cron, .teal.footer, .teal.select-dropdown {
   background-color: #004d40 !important;
 }
 
-.teal-text.text-darken-4 {
+.teal-text.text-darken-4, .teal-text.select-dropdown {
   color: #004d40 !important;
 }
 
@@ -1122,7 +1142,9 @@
   background-color: #81C784 !important;
 }
 
-.green-text.text-lighten-2, .green-text.guild {
+.green-text.text-lighten-2, .select-dropdown span.green-text, input.green-text,
+textarea.green-text, .input-field label.green-text, .input-field input[type=text]:focus + label.green-text,
+.input-field textarea:focus + label.green-text {
   color: #81C784 !important;
 }
 
@@ -1130,7 +1152,7 @@
   background-color: #66BB6A !important;
 }
 
-.green-text.text-lighten-1 {
+.green-text.text-lighten-1, .green-text.guild-data, .green-text.crons {
   color: #66BB6A !important;
 }
 
@@ -1142,7 +1164,7 @@
   color: #43A047 !important;
 }
 
-.green.darken-2 {
+.green.darken-2, .crons tbody tr.green:hover {
   background-color: #388E3C !important;
 }
 
@@ -1150,7 +1172,7 @@
   color: #388E3C !important;
 }
 
-.green.darken-3 {
+.green.darken-3, .green.datepicker-calendar-container {
   background-color: #2E7D32 !important;
 }
 
@@ -1158,11 +1180,11 @@
   color: #2E7D32 !important;
 }
 
-.green.darken-4 {
+.green.darken-4, .green.guild-data, .green.crons, .green#timer_add_modal, .green#add_cron, .green.footer, .green.select-dropdown {
   background-color: #1B5E20 !important;
 }
 
-.green-text.text-darken-4 {
+.green-text.text-darken-4, .green-text.select-dropdown {
   color: #1B5E20 !important;
 }
 
@@ -1234,7 +1256,9 @@
   background-color: #aed581 !important;
 }
 
-.light-green-text.text-lighten-2, .light-green-text.guild {
+.light-green-text.text-lighten-2, .select-dropdown span.light-green-text, input.light-green-text,
+textarea.light-green-text, .input-field label.light-green-text, .input-field input[type=text]:focus + label.light-green-text,
+.input-field textarea:focus + label.light-green-text {
   color: #aed581 !important;
 }
 
@@ -1242,7 +1266,7 @@
   background-color: #9ccc65 !important;
 }
 
-.light-green-text.text-lighten-1 {
+.light-green-text.text-lighten-1, .light-green-text.guild-data, .light-green-text.crons {
   color: #9ccc65 !important;
 }
 
@@ -1254,7 +1278,7 @@
   color: #7cb342 !important;
 }
 
-.light-green.darken-2 {
+.light-green.darken-2, .crons tbody tr.light-green:hover {
   background-color: #689f38 !important;
 }
 
@@ -1262,7 +1286,7 @@
   color: #689f38 !important;
 }
 
-.light-green.darken-3 {
+.light-green.darken-3, .light-green.datepicker-calendar-container {
   background-color: #558b2f !important;
 }
 
@@ -1270,11 +1294,11 @@
   color: #558b2f !important;
 }
 
-.light-green.darken-4 {
+.light-green.darken-4, .light-green.guild-data, .light-green.crons, .light-green#timer_add_modal, .light-green#add_cron, .light-green.footer, .light-green.select-dropdown {
   background-color: #33691e !important;
 }
 
-.light-green-text.text-darken-4 {
+.light-green-text.text-darken-4, .light-green-text.select-dropdown {
   color: #33691e !important;
 }
 
@@ -1346,7 +1370,9 @@
   background-color: #dce775 !important;
 }
 
-.lime-text.text-lighten-2, .lime-text.guild {
+.lime-text.text-lighten-2, .select-dropdown span.lime-text, input.lime-text,
+textarea.lime-text, .input-field label.lime-text, .input-field input[type=text]:focus + label.lime-text,
+.input-field textarea:focus + label.lime-text {
   color: #dce775 !important;
 }
 
@@ -1354,7 +1380,7 @@
   background-color: #d4e157 !important;
 }
 
-.lime-text.text-lighten-1 {
+.lime-text.text-lighten-1, .lime-text.guild-data, .lime-text.crons {
   color: #d4e157 !important;
 }
 
@@ -1366,7 +1392,7 @@
   color: #c0ca33 !important;
 }
 
-.lime.darken-2 {
+.lime.darken-2, .crons tbody tr.lime:hover {
   background-color: #afb42b !important;
 }
 
@@ -1374,7 +1400,7 @@
   color: #afb42b !important;
 }
 
-.lime.darken-3 {
+.lime.darken-3, .lime.datepicker-calendar-container {
   background-color: #9e9d24 !important;
 }
 
@@ -1382,11 +1408,11 @@
   color: #9e9d24 !important;
 }
 
-.lime.darken-4 {
+.lime.darken-4, .lime.guild-data, .lime.crons, .lime#timer_add_modal, .lime#add_cron, .lime.footer, .lime.select-dropdown {
   background-color: #827717 !important;
 }
 
-.lime-text.text-darken-4 {
+.lime-text.text-darken-4, .lime-text.select-dropdown {
   color: #827717 !important;
 }
 
@@ -1458,7 +1484,9 @@
   background-color: #fff176 !important;
 }
 
-.yellow-text.text-lighten-2, .yellow-text.guild {
+.yellow-text.text-lighten-2, .select-dropdown span.yellow-text, input.yellow-text,
+textarea.yellow-text, .input-field label.yellow-text, .input-field input[type=text]:focus + label.yellow-text,
+.input-field textarea:focus + label.yellow-text {
   color: #fff176 !important;
 }
 
@@ -1466,7 +1494,7 @@
   background-color: #ffee58 !important;
 }
 
-.yellow-text.text-lighten-1 {
+.yellow-text.text-lighten-1, .yellow-text.guild-data, .yellow-text.crons {
   color: #ffee58 !important;
 }
 
@@ -1478,7 +1506,7 @@
   color: #fdd835 !important;
 }
 
-.yellow.darken-2 {
+.yellow.darken-2, .crons tbody tr.yellow:hover {
   background-color: #fbc02d !important;
 }
 
@@ -1486,7 +1514,7 @@
   color: #fbc02d !important;
 }
 
-.yellow.darken-3 {
+.yellow.darken-3, .yellow.datepicker-calendar-container {
   background-color: #f9a825 !important;
 }
 
@@ -1494,11 +1522,11 @@
   color: #f9a825 !important;
 }
 
-.yellow.darken-4 {
+.yellow.darken-4, .yellow.guild-data, .yellow.crons, .yellow#timer_add_modal, .yellow#add_cron, .yellow.footer, .yellow.select-dropdown {
   background-color: #f57f17 !important;
 }
 
-.yellow-text.text-darken-4 {
+.yellow-text.text-darken-4, .yellow-text.select-dropdown {
   color: #f57f17 !important;
 }
 
@@ -1570,7 +1598,9 @@
   background-color: #ffd54f !important;
 }
 
-.amber-text.text-lighten-2, .amber-text.guild {
+.amber-text.text-lighten-2, .select-dropdown span.amber-text, input.amber-text,
+textarea.amber-text, .input-field label.amber-text, .input-field input[type=text]:focus + label.amber-text,
+.input-field textarea:focus + label.amber-text {
   color: #ffd54f !important;
 }
 
@@ -1578,7 +1608,7 @@
   background-color: #ffca28 !important;
 }
 
-.amber-text.text-lighten-1 {
+.amber-text.text-lighten-1, .amber-text.guild-data, .amber-text.crons {
   color: #ffca28 !important;
 }
 
@@ -1590,7 +1620,7 @@
   color: #ffb300 !important;
 }
 
-.amber.darken-2 {
+.amber.darken-2, .crons tbody tr.amber:hover {
   background-color: #ffa000 !important;
 }
 
@@ -1598,7 +1628,7 @@
   color: #ffa000 !important;
 }
 
-.amber.darken-3 {
+.amber.darken-3, .amber.datepicker-calendar-container {
   background-color: #ff8f00 !important;
 }
 
@@ -1606,11 +1636,11 @@
   color: #ff8f00 !important;
 }
 
-.amber.darken-4 {
+.amber.darken-4, .amber.guild-data, .amber.crons, .amber#timer_add_modal, .amber#add_cron, .amber.footer, .amber.select-dropdown {
   background-color: #ff6f00 !important;
 }
 
-.amber-text.text-darken-4 {
+.amber-text.text-darken-4, .amber-text.select-dropdown {
   color: #ff6f00 !important;
 }
 
@@ -1682,7 +1712,9 @@
   background-color: #ffb74d !important;
 }
 
-.orange-text.text-lighten-2, .orange-text.guild {
+.orange-text.text-lighten-2, .select-dropdown span.orange-text, input.orange-text,
+textarea.orange-text, .input-field label.orange-text, .input-field input[type=text]:focus + label.orange-text,
+.input-field textarea:focus + label.orange-text {
   color: #ffb74d !important;
 }
 
@@ -1690,7 +1722,7 @@
   background-color: #ffa726 !important;
 }
 
-.orange-text.text-lighten-1 {
+.orange-text.text-lighten-1, .orange-text.guild-data, .orange-text.crons {
   color: #ffa726 !important;
 }
 
@@ -1702,7 +1734,7 @@
   color: #fb8c00 !important;
 }
 
-.orange.darken-2 {
+.orange.darken-2, .crons tbody tr.orange:hover {
   background-color: #f57c00 !important;
 }
 
@@ -1710,7 +1742,7 @@
   color: #f57c00 !important;
 }
 
-.orange.darken-3 {
+.orange.darken-3, .orange.datepicker-calendar-container {
   background-color: #ef6c00 !important;
 }
 
@@ -1718,11 +1750,11 @@
   color: #ef6c00 !important;
 }
 
-.orange.darken-4 {
+.orange.darken-4, .orange.guild-data, .orange.crons, .orange#timer_add_modal, .orange#add_cron, .orange.footer, .orange.select-dropdown {
   background-color: #e65100 !important;
 }
 
-.orange-text.text-darken-4 {
+.orange-text.text-darken-4, .orange-text.select-dropdown {
   color: #e65100 !important;
 }
 
@@ -1794,7 +1826,9 @@
   background-color: #ff8a65 !important;
 }
 
-.deep-orange-text.text-lighten-2, .deep-orange-text.guild {
+.deep-orange-text.text-lighten-2, .select-dropdown span.deep-orange-text, input.deep-orange-text,
+textarea.deep-orange-text, .input-field label.deep-orange-text, .input-field input[type=text]:focus + label.deep-orange-text,
+.input-field textarea:focus + label.deep-orange-text {
   color: #ff8a65 !important;
 }
 
@@ -1802,7 +1836,7 @@
   background-color: #ff7043 !important;
 }
 
-.deep-orange-text.text-lighten-1 {
+.deep-orange-text.text-lighten-1, .deep-orange-text.guild-data, .deep-orange-text.crons {
   color: #ff7043 !important;
 }
 
@@ -1814,7 +1848,7 @@
   color: #f4511e !important;
 }
 
-.deep-orange.darken-2 {
+.deep-orange.darken-2, .crons tbody tr.deep-orange:hover {
   background-color: #e64a19 !important;
 }
 
@@ -1822,7 +1856,7 @@
   color: #e64a19 !important;
 }
 
-.deep-orange.darken-3 {
+.deep-orange.darken-3, .deep-orange.datepicker-calendar-container {
   background-color: #d84315 !important;
 }
 
@@ -1830,11 +1864,11 @@
   color: #d84315 !important;
 }
 
-.deep-orange.darken-4 {
+.deep-orange.darken-4, .deep-orange.guild-data, .deep-orange.crons, .deep-orange#timer_add_modal, .deep-orange#add_cron, .deep-orange.footer, .deep-orange.select-dropdown {
   background-color: #bf360c !important;
 }
 
-.deep-orange-text.text-darken-4 {
+.deep-orange-text.text-darken-4, .deep-orange-text.select-dropdown {
   color: #bf360c !important;
 }
 
@@ -1906,7 +1940,9 @@
   background-color: #a1887f !important;
 }
 
-.brown-text.text-lighten-2, .brown-text.guild {
+.brown-text.text-lighten-2, .select-dropdown span.brown-text, input.brown-text,
+textarea.brown-text, .input-field label.brown-text, .input-field input[type=text]:focus + label.brown-text,
+.input-field textarea:focus + label.brown-text {
   color: #a1887f !important;
 }
 
@@ -1914,7 +1950,7 @@
   background-color: #8d6e63 !important;
 }
 
-.brown-text.text-lighten-1 {
+.brown-text.text-lighten-1, .brown-text.guild-data, .brown-text.crons {
   color: #8d6e63 !important;
 }
 
@@ -1926,7 +1962,7 @@
   color: #6d4c41 !important;
 }
 
-.brown.darken-2 {
+.brown.darken-2, .crons tbody tr.brown:hover {
   background-color: #5d4037 !important;
 }
 
@@ -1934,7 +1970,7 @@
   color: #5d4037 !important;
 }
 
-.brown.darken-3 {
+.brown.darken-3, .brown.datepicker-calendar-container {
   background-color: #4e342e !important;
 }
 
@@ -1942,11 +1978,11 @@
   color: #4e342e !important;
 }
 
-.brown.darken-4 {
+.brown.darken-4, .brown.guild-data, .brown.crons, .brown#timer_add_modal, .brown#add_cron, .brown.footer, .brown.select-dropdown {
   background-color: #3e2723 !important;
 }
 
-.brown-text.text-darken-4 {
+.brown-text.text-darken-4, .brown-text.select-dropdown {
   color: #3e2723 !important;
 }
 
@@ -1986,7 +2022,9 @@
   background-color: #90a4ae !important;
 }
 
-.blue-grey-text.text-lighten-2, .blue-grey-text.guild {
+.blue-grey-text.text-lighten-2, .select-dropdown span.blue-grey-text, input.blue-grey-text,
+textarea.blue-grey-text, .input-field label.blue-grey-text, .input-field input[type=text]:focus + label.blue-grey-text,
+.input-field textarea:focus + label.blue-grey-text {
   color: #90a4ae !important;
 }
 
@@ -1994,7 +2032,7 @@
   background-color: #78909c !important;
 }
 
-.blue-grey-text.text-lighten-1 {
+.blue-grey-text.text-lighten-1, .blue-grey-text.guild-data, .blue-grey-text.crons {
   color: #78909c !important;
 }
 
@@ -2006,7 +2044,7 @@
   color: #546e7a !important;
 }
 
-.blue-grey.darken-2 {
+.blue-grey.darken-2, .crons tbody tr.blue-grey:hover {
   background-color: #455a64 !important;
 }
 
@@ -2014,7 +2052,7 @@
   color: #455a64 !important;
 }
 
-.blue-grey.darken-3 {
+.blue-grey.darken-3, .blue-grey.datepicker-calendar-container {
   background-color: #37474f !important;
 }
 
@@ -2022,95 +2060,118 @@
   color: #37474f !important;
 }
 
-.blue-grey.darken-4 {
+.blue-grey.darken-4, .blue-grey.guild-data, .blue-grey.crons, .blue-grey#timer_add_modal, .blue-grey#add_cron, .blue-grey.footer, .blue-grey.select-dropdown {
   background-color: #263238 !important;
 }
 
-.blue-grey-text.text-darken-4 {
+.blue-grey-text.text-darken-4, .blue-grey-text.select-dropdown {
   color: #263238 !important;
 }
 
-.grey {
+.grey, .guild-data, .crons, .crons tbody tr:hover, #timer_add_modal, #add_cron, .footer, .select-dropdown, .datepicker-calendar-container {
   background-color: #9e9e9e !important;
 }
 
-.grey-text, .guild {
+.grey-text, .guild-data, .crons, .select-dropdown, .select-dropdown span, input,
+textarea, .input-field label, .input-field input[type=text]:focus + label,
+.input-field textarea:focus + label {
   color: #9e9e9e !important;
 }
 
-.grey.lighten-5 {
+.grey.lighten-5, .lighten-5.guild-data, .lighten-5.crons, .crons tbody tr.lighten-5:hover, .lighten-5#timer_add_modal, .lighten-5#add_cron, .lighten-5.footer, .lighten-5.select-dropdown, .lighten-5.datepicker-calendar-container {
   background-color: #fafafa !important;
 }
 
-.grey-text.text-lighten-5, .text-lighten-5.guild {
+.grey-text.text-lighten-5, .text-lighten-5.guild-data, .text-lighten-5.crons, .text-lighten-5.select-dropdown, .select-dropdown span.text-lighten-5, input.text-lighten-5,
+textarea.text-lighten-5, .input-field label.text-lighten-5, .input-field input[type=text]:focus + label.text-lighten-5,
+.input-field textarea:focus + label.text-lighten-5 {
   color: #fafafa !important;
 }
 
-.grey.lighten-4 {
+.grey.lighten-4, .lighten-4.guild-data, .lighten-4.crons, .crons tbody tr.lighten-4:hover, .lighten-4#timer_add_modal, .lighten-4#add_cron, .lighten-4.footer, .lighten-4.select-dropdown, .lighten-4.datepicker-calendar-container {
   background-color: #f5f5f5 !important;
 }
 
-.grey-text.text-lighten-4, .text-lighten-4.guild {
+.grey-text.text-lighten-4, .text-lighten-4.guild-data, .text-lighten-4.crons, .text-lighten-4.select-dropdown, .select-dropdown span.text-lighten-4, input.text-lighten-4,
+textarea.text-lighten-4, .input-field label.text-lighten-4, .input-field input[type=text]:focus + label.text-lighten-4,
+.input-field textarea:focus + label.text-lighten-4 {
   color: #f5f5f5 !important;
 }
 
-.grey.lighten-3 {
+.grey.lighten-3, .lighten-3.guild-data, .lighten-3.crons, .crons tbody tr.lighten-3:hover, .lighten-3#timer_add_modal, .lighten-3#add_cron, .lighten-3.footer, .lighten-3.select-dropdown, .lighten-3.datepicker-calendar-container {
   background-color: #eeeeee !important;
 }
 
-.grey-text.text-lighten-3, .text-lighten-3.guild {
+.grey-text.text-lighten-3, .text-lighten-3.guild-data, .text-lighten-3.crons, .text-lighten-3.select-dropdown, .select-dropdown span.text-lighten-3, input.text-lighten-3,
+textarea.text-lighten-3, .input-field label.text-lighten-3, .input-field input[type=text]:focus + label.text-lighten-3,
+.input-field textarea:focus + label.text-lighten-3 {
   color: #eeeeee !important;
 }
 
-.grey.lighten-2 {
+.grey.lighten-2, .lighten-2.guild-data, .lighten-2.crons, .crons tbody tr.lighten-2:hover, .lighten-2#timer_add_modal, .lighten-2#add_cron, .lighten-2.footer, .lighten-2.select-dropdown, .lighten-2.datepicker-calendar-container {
   background-color: #e0e0e0 !important;
 }
 
-.grey-text.text-lighten-2, .guild {
+.grey-text.text-lighten-2, .text-lighten-2.guild-data, input.guild-data,
+textarea.guild-data, .text-lighten-2.crons, input.crons,
+textarea.crons, .text-lighten-2.select-dropdown, input.select-dropdown,
+textarea.select-dropdown, .select-dropdown span, input,
+textarea, .input-field label, .input-field input[type=text]:focus + label,
+.input-field textarea:focus + label {
   color: #e0e0e0 !important;
 }
 
-.grey.lighten-1 {
+.grey.lighten-1, .lighten-1.guild-data, .lighten-1.crons, .crons tbody tr.lighten-1:hover, .lighten-1#timer_add_modal, .lighten-1#add_cron, .lighten-1.footer, .lighten-1.select-dropdown, .lighten-1.datepicker-calendar-container {
   background-color: #bdbdbd !important;
 }
 
-.grey-text.text-lighten-1, .text-lighten-1.guild {
+.grey-text.text-lighten-1, .guild-data, .crons, .text-lighten-1.select-dropdown, .select-dropdown span.text-lighten-1, .select-dropdown span.guild-data, .select-dropdown span.crons, input.text-lighten-1,
+textarea.text-lighten-1, .input-field label.text-lighten-1, .input-field label.guild-data, .input-field label.crons, .input-field input[type=text]:focus + label.text-lighten-1, .input-field input[type=text]:focus + label.guild-data, .input-field input[type=text]:focus + label.crons,
+.input-field textarea:focus + label.text-lighten-1, .input-field textarea:focus + label.guild-data, .input-field textarea:focus + label.crons {
   color: #bdbdbd !important;
 }
 
-.grey.darken-1 {
+.grey.darken-1, .darken-1.guild-data, .darken-1.crons, .crons tbody tr.darken-1:hover, .darken-1#timer_add_modal, .darken-1#add_cron, .darken-1.footer, .darken-1.select-dropdown, .darken-1.datepicker-calendar-container {
   background-color: #757575 !important;
 }
 
-.grey-text.text-darken-1, .text-darken-1.guild {
+.grey-text.text-darken-1, .text-darken-1.guild-data, .text-darken-1.crons, .text-darken-1.select-dropdown, .select-dropdown span.text-darken-1, input.text-darken-1,
+textarea.text-darken-1, .input-field label.text-darken-1, .input-field input[type=text]:focus + label.text-darken-1,
+.input-field textarea:focus + label.text-darken-1 {
   color: #757575 !important;
 }
 
-.grey.darken-2 {
+.grey.darken-2, .darken-2.guild-data, .darken-2.crons, .crons tbody tr:hover, .darken-2#timer_add_modal, .crons tbody tr#timer_add_modal:hover, .darken-2#add_cron, .crons tbody tr#add_cron:hover, .darken-2.footer, .darken-2.select-dropdown, .darken-2.datepicker-calendar-container {
   background-color: #616161 !important;
 }
 
-.grey-text.text-darken-2, .text-darken-2.guild {
+.grey-text.text-darken-2, .text-darken-2.guild-data, .text-darken-2.crons, .text-darken-2.select-dropdown, .select-dropdown span.text-darken-2, input.text-darken-2,
+textarea.text-darken-2, .input-field label.text-darken-2, .input-field input[type=text]:focus + label.text-darken-2,
+.input-field textarea:focus + label.text-darken-2 {
   color: #616161 !important;
 }
 
-.grey.darken-3 {
+.grey.darken-3, .darken-3.guild-data, .darken-3.crons, .crons tbody tr.darken-3:hover, .crons tbody tr.datepicker-calendar-container:hover, .darken-3#timer_add_modal, #timer_add_modal.datepicker-calendar-container, .darken-3#add_cron, #add_cron.datepicker-calendar-container, .darken-3.footer, .darken-3.select-dropdown, .datepicker-calendar-container {
   background-color: #424242 !important;
 }
 
-.grey-text.text-darken-3, .text-darken-3.guild {
+.grey-text.text-darken-3, .text-darken-3.guild-data, .text-darken-3.crons, .text-darken-3.select-dropdown, .select-dropdown span.text-darken-3, input.text-darken-3,
+textarea.text-darken-3, .input-field label.text-darken-3, .input-field input[type=text]:focus + label.text-darken-3,
+.input-field textarea:focus + label.text-darken-3 {
   color: #424242 !important;
 }
 
-.grey.darken-4 {
+.grey.darken-4, .guild-data, .crons, .crons tbody tr.darken-4:hover, .crons tbody tr.guild-data:hover, .crons tbody tr.crons:hover, .crons tbody tr.footer:hover, .crons tbody tr.select-dropdown:hover, #timer_add_modal, #add_cron, .footer, .select-dropdown, .darken-4.datepicker-calendar-container {
   background-color: #212121 !important;
 }
 
-.grey-text.text-darken-4, .text-darken-4.guild {
+.grey-text.text-darken-4, .text-darken-4.guild-data, .text-darken-4.crons, .select-dropdown, .select-dropdown span.text-darken-4, .select-dropdown span.select-dropdown, input.text-darken-4,
+textarea.text-darken-4, .input-field label.text-darken-4, .input-field label.select-dropdown, .input-field input[type=text]:focus + label.text-darken-4, .input-field input[type=text]:focus + label.select-dropdown,
+.input-field textarea:focus + label.text-darken-4, .input-field textarea:focus + label.select-dropdown {
   color: #212121 !important;
 }
 
-.black {
+.black, .body-wrapper, .timepicker-digital-display, .datepicker-date-display {
   background-color: #000000 !important;
 }
 
@@ -2126,7 +2187,7 @@
   color: #FFFFFF !important;
 }
 
-.transparent, .guild {
+.transparent {
   background-color: transparent !important;
 }
 
@@ -2624,7 +2685,7 @@ a {
 }
 
 /* 2dp elevation modified*/
-.z-depth-1, nav, .card-panel, .card, .guild, .toast, .btn, .btn-large, .btn-small, .btn-floating, .dropdown-content, .collapsible, .sidenav {
+.z-depth-1, nav, .card-panel, .card, .guild-data, .crons, .toast, .btn, .btn-large, .btn-small, .btn-floating, .dropdown-content, .collapsible, .sidenav {
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
           box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
@@ -2635,7 +2696,7 @@ a {
 }
 
 /* 6dp elevation modified*/
-.z-depth-2 {
+.z-depth-2, .guild-icon {
   -webkit-box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
           box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
 }
@@ -2658,14 +2719,14 @@ a {
           box-shadow: 0 24px 38px 3px rgba(0, 0, 0, 0.14), 0 9px 46px 8px rgba(0, 0, 0, 0.12), 0 11px 15px -7px rgba(0, 0, 0, 0.2);
 }
 
-.hoverable, .guild {
+.hoverable, .guild-data {
   -webkit-transition: -webkit-box-shadow .25s;
   transition: -webkit-box-shadow .25s;
   transition: box-shadow .25s;
   transition: box-shadow .25s, -webkit-box-shadow .25s;
 }
 
-.hoverable:hover, .guild:hover {
+.hoverable:hover, .guild-data:hover {
   -webkit-box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
           box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -3311,7 +3372,7 @@ td, th {
   text-align: right;
 }
 
-.center, .center-align {
+.center, .guild-data, .center-align {
   text-align: center;
 }
 
@@ -3439,20 +3500,20 @@ table span.badge {
   margin-right: -0.75rem;
 }
 
-.section {
+.section, .guild-data, .crons {
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
-.section.no-pad {
+.section.no-pad, .no-pad.guild-data, .no-pad.crons {
   padding: 0;
 }
 
-.section.no-pad-bot {
+.section.no-pad-bot, .no-pad-bot.guild-data, .no-pad-bot.crons {
   padding-bottom: 0;
 }
 
-.section.no-pad-top {
+.section.no-pad-top, .no-pad-top.guild-data, .no-pad-top.crons {
   padding-top: 0;
 }
 
@@ -4324,7 +4385,7 @@ nav .brand-logo {
   padding: 0;
 }
 
-nav .brand-logo.center {
+nav .brand-logo.center, nav .brand-logo.guild-data {
   left: 50%;
   -webkit-transform: translateX(-50%);
           transform: translateX(-50%);
@@ -4698,14 +4759,14 @@ small {
   }
 }
 
-.scale-transition {
+.scale-transition, .crons tbody tr i {
   -webkit-transition: -webkit-transform 0.3s cubic-bezier(0.53, 0.01, 0.36, 1.63) !important;
   transition: -webkit-transform 0.3s cubic-bezier(0.53, 0.01, 0.36, 1.63) !important;
   transition: transform 0.3s cubic-bezier(0.53, 0.01, 0.36, 1.63) !important;
   transition: transform 0.3s cubic-bezier(0.53, 0.01, 0.36, 1.63), -webkit-transform 0.3s cubic-bezier(0.53, 0.01, 0.36, 1.63) !important;
 }
 
-.scale-transition.scale-out {
+.scale-transition.scale-out, .crons tbody tr i {
   -webkit-transform: scale(0);
           transform: scale(0);
   -webkit-transition: -webkit-transform .2s !important;
@@ -4714,7 +4775,7 @@ small {
   transition: transform .2s, -webkit-transform .2s !important;
 }
 
-.scale-transition.scale-in {
+.scale-transition.scale-in, .crons tbody tr:hover i, .crons tbody tr i.scale-in {
   -webkit-transform: scale(1);
           transform: scale(1);
 }
@@ -4730,7 +4791,7 @@ small {
   background-color: #fff;
 }
 
-.card, .guild {
+.card, .guild-data, .crons {
   position: relative;
   margin: 0.5rem 0 1rem 0;
   background-color: #fff;
@@ -4741,79 +4802,79 @@ small {
   border-radius: 2px;
 }
 
-.card .card-title, .guild .card-title {
+.card .card-title, .guild-data .card-title, .crons .card-title {
   font-size: 24px;
   font-weight: 300;
 }
 
-.card .card-title.activator, .guild .card-title.activator {
+.card .card-title.activator, .guild-data .card-title.activator, .crons .card-title.activator {
   cursor: pointer;
 }
 
-.card.small, .small.guild, .card.medium, .medium.guild, .card.large, .large.guild {
+.card.small, .small.guild-data, .small.crons, .card.medium, .medium.guild-data, .medium.crons, .card.large, .large.guild-data, .large.crons {
   position: relative;
 }
 
-.card.small .card-image, .small.guild .card-image, .card.medium .card-image, .medium.guild .card-image, .card.large .card-image, .large.guild .card-image {
+.card.small .card-image, .small.guild-data .card-image, .small.crons .card-image, .card.medium .card-image, .medium.guild-data .card-image, .medium.crons .card-image, .card.large .card-image, .large.guild-data .card-image, .large.crons .card-image {
   max-height: 60%;
   overflow: hidden;
 }
 
-.card.small .card-image + .card-content, .small.guild .card-image + .card-content, .card.medium .card-image + .card-content, .medium.guild .card-image + .card-content, .card.large .card-image + .card-content, .large.guild .card-image + .card-content {
+.card.small .card-image + .card-content, .small.guild-data .card-image + .card-content, .small.crons .card-image + .card-content, .card.medium .card-image + .card-content, .medium.guild-data .card-image + .card-content, .medium.crons .card-image + .card-content, .card.large .card-image + .card-content, .large.guild-data .card-image + .card-content, .large.crons .card-image + .card-content {
   max-height: 40%;
 }
 
-.card.small .card-content, .small.guild .card-content, .card.medium .card-content, .medium.guild .card-content, .card.large .card-content, .large.guild .card-content {
+.card.small .card-content, .small.guild-data .card-content, .small.crons .card-content, .card.medium .card-content, .medium.guild-data .card-content, .medium.crons .card-content, .card.large .card-content, .large.guild-data .card-content, .large.crons .card-content {
   max-height: 100%;
   overflow: hidden;
 }
 
-.card.small .card-action, .small.guild .card-action, .card.medium .card-action, .medium.guild .card-action, .card.large .card-action, .large.guild .card-action {
+.card.small .card-action, .small.guild-data .card-action, .small.crons .card-action, .card.medium .card-action, .medium.guild-data .card-action, .medium.crons .card-action, .card.large .card-action, .large.guild-data .card-action, .large.crons .card-action {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
 }
 
-.card.small, .small.guild {
+.card.small, .small.guild-data, .small.crons {
   height: 300px;
 }
 
-.card.medium, .medium.guild {
+.card.medium, .medium.guild-data, .medium.crons {
   height: 400px;
 }
 
-.card.large, .large.guild {
+.card.large, .large.guild-data, .large.crons {
   height: 500px;
 }
 
-.card.horizontal, .horizontal.guild {
+.card.horizontal, .horizontal.guild-data, .horizontal.crons {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.card.horizontal.small .card-image, .horizontal.small.guild .card-image, .card.horizontal.medium .card-image, .horizontal.medium.guild .card-image, .card.horizontal.large .card-image, .horizontal.large.guild .card-image {
+.card.horizontal.small .card-image, .horizontal.small.guild-data .card-image, .horizontal.small.crons .card-image, .card.horizontal.medium .card-image, .horizontal.medium.guild-data .card-image, .horizontal.medium.crons .card-image, .card.horizontal.large .card-image, .horizontal.large.guild-data .card-image, .horizontal.large.crons .card-image {
   height: 100%;
   max-height: none;
   overflow: visible;
 }
 
-.card.horizontal.small .card-image img, .horizontal.small.guild .card-image img, .card.horizontal.medium .card-image img, .horizontal.medium.guild .card-image img, .card.horizontal.large .card-image img, .horizontal.large.guild .card-image img {
+.card.horizontal.small .card-image img, .horizontal.small.guild-data .card-image img, .horizontal.small.crons .card-image img, .card.horizontal.medium .card-image img, .horizontal.medium.guild-data .card-image img, .horizontal.medium.crons .card-image img, .card.horizontal.large .card-image img, .horizontal.large.guild-data .card-image img, .horizontal.large.crons .card-image img {
   height: 100%;
 }
 
-.card.horizontal .card-image, .horizontal.guild .card-image {
+.card.horizontal .card-image, .horizontal.guild-data .card-image, .horizontal.crons .card-image {
   max-width: 50%;
 }
 
-.card.horizontal .card-image img, .horizontal.guild .card-image img {
+.card.horizontal .card-image img, .horizontal.guild-data .card-image img, .horizontal.crons .card-image img {
   border-radius: 2px 0 0 2px;
   max-width: 100%;
   width: auto;
 }
 
-.card.horizontal .card-stacked, .horizontal.guild .card-stacked {
+.card.horizontal .card-stacked, .horizontal.guild-data .card-stacked, .horizontal.crons .card-stacked {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4827,26 +4888,26 @@ small {
   position: relative;
 }
 
-.card.horizontal .card-stacked .card-content, .horizontal.guild .card-stacked .card-content {
+.card.horizontal .card-stacked .card-content, .horizontal.guild-data .card-stacked .card-content, .horizontal.crons .card-stacked .card-content {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
 }
 
-.card.sticky-action .card-action, .sticky-action.guild .card-action {
+.card.sticky-action .card-action, .sticky-action.guild-data .card-action, .sticky-action.crons .card-action {
   z-index: 2;
 }
 
-.card.sticky-action .card-reveal, .sticky-action.guild .card-reveal {
+.card.sticky-action .card-reveal, .sticky-action.guild-data .card-reveal, .sticky-action.crons .card-reveal {
   z-index: 1;
   padding-bottom: 64px;
 }
 
-.card .card-image, .guild .card-image {
+.card .card-image, .guild-data .card-image, .crons .card-image {
   position: relative;
 }
 
-.card .card-image img, .guild .card-image img {
+.card .card-image img, .guild-data .card-image img, .crons .card-image img {
   display: block;
   border-radius: 2px 2px 0 0;
   position: relative;
@@ -4857,7 +4918,7 @@ small {
   width: 100%;
 }
 
-.card .card-image .card-title, .guild .card-image .card-title {
+.card .card-image .card-title, .guild-data .card-image .card-title, .crons .card-image .card-title {
   color: #fff;
   position: absolute;
   bottom: 0;
@@ -4866,37 +4927,37 @@ small {
   padding: 24px;
 }
 
-.card .card-content, .guild .card-content {
+.card .card-content, .guild-data .card-content, .crons .card-content {
   padding: 24px;
   border-radius: 0 0 2px 2px;
 }
 
-.card .card-content p, .guild .card-content p {
+.card .card-content p, .guild-data .card-content p, .crons .card-content p {
   margin: 0;
 }
 
-.card .card-content .card-title, .guild .card-content .card-title {
+.card .card-content .card-title, .guild-data .card-content .card-title, .crons .card-content .card-title {
   display: block;
   line-height: 32px;
   margin-bottom: 8px;
 }
 
-.card .card-content .card-title i, .guild .card-content .card-title i {
+.card .card-content .card-title i, .guild-data .card-content .card-title i, .crons .card-content .card-title i {
   line-height: 32px;
 }
 
-.card .card-action, .guild .card-action {
+.card .card-action, .guild-data .card-action, .crons .card-action {
   background-color: inherit;
   border-top: 1px solid rgba(160, 160, 160, 0.2);
   position: relative;
   padding: 16px 24px;
 }
 
-.card .card-action:last-child, .guild .card-action:last-child {
+.card .card-action:last-child, .guild-data .card-action:last-child, .crons .card-action:last-child {
   border-radius: 0 0 2px 2px;
 }
 
-.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating), .guild .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating), .guild-data .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating), .crons .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
   color: #ffab40;
   margin-right: 24px;
   -webkit-transition: color .3s ease;
@@ -4904,11 +4965,11 @@ small {
   text-transform: uppercase;
 }
 
-.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover, .guild .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover {
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover, .guild-data .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover, .crons .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover {
   color: #ffd8a6;
 }
 
-.card .card-reveal, .guild .card-reveal {
+.card .card-reveal, .guild-data .card-reveal, .crons .card-reveal {
   padding: 24px;
   position: absolute;
   background-color: #fff;
@@ -4921,7 +4982,7 @@ small {
   display: none;
 }
 
-.card .card-reveal .card-title, .guild .card-reveal .card-title {
+.card .card-reveal .card-title, .guild-data .card-reveal .card-title, .crons .card-reveal .card-title {
   cursor: pointer;
   display: block;
 }
@@ -5638,7 +5699,7 @@ body.keyboard-focused .dropdown-content li:focus {
   pointer-events: none;
 }
 
-.waves-effect.waves-light .waves-ripple, .waves-effect.guild .waves-ripple {
+.waves-effect.waves-light .waves-ripple, .waves-effect.guild-data .waves-ripple, .crons tbody tr.waves-effect .waves-ripple {
   background-color: rgba(255, 255, 255, 0.45);
 }
 
@@ -9016,56 +9077,87 @@ input[type=range]::-ms-thumb {
   }
 }
 
-.body-wrapper {
-  margin-left: 20px;
-  margin-right: 20px;
-  text-align: center;
-}
-
-.guilds-wrapper {
+.fixed-action-btn {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  text-align: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
-.guild {
-  width: 200px;
-  height: 200px;
-  margin-left: 50px;
+.guild-data {
+  font-size: 1.4em !important;
+  margin: auto;
+  display: block;
   cursor: pointer;
+  -webkit-transition: all 300ms;
+  transition: all 300ms;
   padding: 10px;
 }
 
-.guild img {
-  width: 60%;
-  height: auto;
+.guild-data h5 {
+  margin: 0;
+  margin-top: 10px;
+}
+
+.guild-icon {
   border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  margin-left: 7px;
+  cursor: pointer;
 }
 
-.guild span p {
-  margin-top: 7px;
-  margin-bottom: 7px;
+.crons {
+  font-size: 1.2em;
+  font-weight: 400;
+  margin-top: 20px;
 }
 
-.guild i,
-.guild img {
-  font-size: 2em;
-  -webkit-transition: all 350ms;
-  transition: all 350ms;
+.crons tbody tr {
+  position: relative;
+  cursor: pointer;
+  -webkit-transition: all 300ms;
+  transition: all 300ms;
 }
 
-.guild:hover .icon-arrow {
-  -webkit-transform: translateX(10px);
-          transform: translateX(10px);
+.crons tbody tr i {
+  position: absolute;
+  right: 25px;
+  font-size: 1.5em;
+  color: red;
 }
 
-.guild:hover .icon-add {
-  -webkit-transform: scale(1.1);
-          transform: scale(1.1);
+#timer_add_modal, #add_cron {
+  top: 5% !important;
+  height: 90% !important;
+  max-height: 90% !important;
+  width: 90% !important;
+  text-align: center;
 }
-/*# sourceMappingURL=index.css.map */
+
+.input-field {
+  -webkit-transition: all 350ms !important;
+  transition: all 350ms !important;
+}
+
+/* label color */
+/* label focus color */
+/* label underline focus color */
+.input-field input[type=text]:focus,
+.input-field input[type=text].valid,
+.input-field input[type=text].invalid,
+.input-field textarea:focus,
+.input-field textarea.valid,
+.input-field textarea.invalid {
+  border-bottom: 1px solid #e0e0e0 !important;
+  -webkit-box-shadow: 0 1px 0 0 #e0e0e0 !important;
+          box-shadow: 0 1px 0 0 #e0e0e0 !important;
+}
+
+.datepicker-calendar .selects-container .select_wrapper input {
+  background-color: #424242 !important;
+}
+/*# sourceMappingURL=dashboard.css.map */

@@ -1,0 +1,145 @@
+@import "../../node_modules/materialize-css/sass/materialize.scss";
+
+$flash-color: #e0e0e0;
+$grey-darken-3: #424242;
+
+.body-wrapper {
+    @extend .black;
+}
+.fixed-action-btn {
+    display: flex;
+    flex-direction: column;
+}
+.guild-data {
+    @extend .section,
+    .card,
+    .grey,
+    .darken-4,
+    .grey-text,
+    .text-lighten-1,
+    .center,
+    .hoverable,
+    .waves-light;
+    font-size: 1.4em !important;
+    margin: auto;
+    display: block;
+    cursor: pointer;
+    transition: all 300ms;
+    padding: 10px;
+}
+.guild-data h5 {
+    margin: 0;
+    margin-top: 10px;
+}
+.guild-icon {
+    @extend .z-depth-2;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    margin-left: 7px;
+    cursor: pointer;
+}
+
+.crons {
+    @extend .section,
+    .card,
+    .grey,
+    .darken-4,
+    .grey-text,
+    .text-lighten-1;
+    font-size: 1.2em;
+    font-weight: 400;
+    margin-top: 20px;
+}
+
+.crons tbody tr {
+    @extend .waves-light;
+    position: relative;
+    cursor: pointer;
+    transition: all 300ms;
+}
+
+.crons tbody tr:hover {
+    @extend .grey,
+    .darken-2;
+}
+
+.crons tbody tr:hover i {
+    @extend .scale-in;
+}
+
+.crons tbody tr i {
+    @extend .scale-transition,
+    .scale-out;
+    position: absolute;
+    right: 25px;
+    font-size: 1.5em;
+    color: red;
+}
+
+#timer_add_modal, #add_cron {
+    @extend .grey,
+    .darken-4;
+    top: 5% !important;
+    height: 90% !important;
+    max-height: 90% !important;
+    width: 90% !important;
+    text-align: center;
+}
+
+.footer {
+    @extend .grey, 
+    .darken-4;
+}
+
+.select-dropdown {
+    @extend .grey,
+    .darken-4,
+    .grey-text,
+    .text-darken-4;
+}
+
+.select-dropdown span {
+    @extend .grey-text,
+    .text-lighten-2;
+}
+
+.input-field {
+    transition: all 350ms !important;
+}
+input,
+textarea {
+    @extend .grey-text, .text-lighten-2;
+}
+/* label color */
+.input-field label {
+    @extend .grey-text,
+    .text-lighten-2;
+}
+
+/* label focus color */
+.input-field input[type=text]:focus+label,
+.input-field textarea:focus+label {
+    @extend .grey-text,
+    .text-lighten-2;
+}
+
+/* label underline focus color */
+.input-field input[type=text]:focus,
+.input-field input[type=text].valid,
+.input-field input[type=text].invalid,
+.input-field textarea:focus,
+.input-field textarea.valid,
+.input-field textarea.invalid {
+    border-bottom: 1px solid $flash-color !important;
+    box-shadow: 0 1px 0 0 $flash-color !important;
+}
+.timepicker-digital-display, .datepicker-date-display {
+    @extend .black;
+}
+.datepicker-calendar-container {
+    @extend .grey, .darken-3;
+}
+.datepicker-calendar .selects-container  .select_wrapper input {
+    background-color: $grey-darken-3 !important;
+}

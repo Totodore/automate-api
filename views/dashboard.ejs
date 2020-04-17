@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <% include partials/head.ejs %>
+    <link rel="stylesheet" href="/stylesheets/dashboard.css">
+    <script src="/js/viewDashboard.js"></script>
+    <script>document.channels = <%- JSON.stringify(channel_list) %>;</script>
+  </head>
+  <body class="black">
+    <% include partials/header.ejs %> 
+    <div class="body-wrapper">
+    <div class="guild-data waves-effect"><% if (guild_data.icon) {%> <img src="<%= cdn %>/icons/<%= guild_data.id %>/<%= guild_data.icon %>.png?size=64" alt="" class="left guild-icon"><% } %><h5><%= guild_data.name %></h5></div>
+        <div class="crons">
+            <table class="centered">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Salon :</th>
+                        <th>Contenu du message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% table.forEach(element => { %>
+                        <tr id="<%= element.id %>" channel_id="<%= element.channel_id %>">
+                            <td><%= element.description %></td>
+                            <td>#<%= element.channel_name %></td>
+                            <td><%= element.message %><i class="material-icons">delete</i></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large grey darken-2 waves-effect waves-light timer-add-btn" style="margin-bottom: 13px;">
+            <i class="large material-icons">timer</i>
+        </a>
+        <a href="#!" class="btn-floating btn-large gery darken-2 waves-effect waves-light schedule-add-btn">
+            <i class="material-icons large">schedule</i>
+        </a>
+    </div>
+
+    <div id="timer_add_modal" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h5 style="margin-top: 3px;">Ajouter un message prévu</h5>
+            <form method="post" name="addTimerForm">
+                <div class="input-field col s12 section">
+                    <textarea id="contentTimer" name="contentTimer" class="materialize-textarea"></textarea>
+                    <label for="contentTimer">Contenu du message</label>
+                </div>
+                <div class="input-field col s12 section channelSelect-wrapper">
+                    <select name="channelSelectTimer" id="channelSelectTimer">
+                        <% channel_list.forEach(element => { 
+                            if (element.id == guild_data.systemChannelID) { %>
+                                <option value="<%= element.id %>" selected >#<%= element.name %></option>
+                            <% } else { %>
+                                <option value="<%= element.id %>" >#<%= element.name %></option>
+                            <% }
+                        }) %>
+                    </select>
+                    <label for="channelSelectTimer">Channel :</label>
+                </div>
+                <div class="input-field col s12 scale-transition section dateSelect-wrapper-timer">
+                    <input type="text" class="datepicker" id="dateSelectTimer">
+                    <label for="dateSelectTimer">Le :</label>
+                </div>
+                <div class="input-field col s12 scale-transition section timeSelect-wrapper-timer">
+                    <input type="text" class="timepicker" id="timeSelectTimer" value="00:00">
+                    <label for="timeSelectTimer">À :</label>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer footer">
+            <a href="#!" class="modal-close waves-effect waves-light btn-flat grey-text text-lighten-2">Annuler</a>
+            <a href="#!" class="modal-confirm waves-effect waves-light btn grey darken-3">Ajouter le message</a>
+        </div>
+    </div>
+
+    <div id="add_cron" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h5 style="margin-top: 3px;">Ajouter un message régulier</h5>
+            <form method="post" name="addForm">
+                <div class="input-field col s12 section">
+                    <textarea id="content" name="content" class="materialize-textarea"></textarea>
+                    <label for="content">Contenu du message</label>
+                </div>
+                <div class="input-field col s12 section channelSelect-wrapper">
+                    <select name="channelSelect" id="channelSelect">
+                        <% channel_list.forEach(element => { 
+                            if (element.id == guild_data.systemChannelID) { %>
+                                <option value="<%= element.id %>" selected >#<%= element.name %></option>
+                            <% } else { %>
+                                <option value="<%= element.id %>" >#<%= element.name %></option>
+                            <% }
+                        }) %>
+                    </select>
+                    <label for="channelSelect">Channel :</label>
+                </div>
+                <div class="input-field col s12 section">
+                    <select name="each" id="each">
+                        <option value="semaine">semaine</option>
+                        <option value="jour">jour</option>
+                        <option value="heure">heure</option>
+                        <option value="minute">minute</option>
+                    </select>
+                    <label for="each">Chaque : </label>
+                </div>
+                <div class="input-field col s12 scale-transition section daySelect-wrapper">
+                    <select name="daySelect" id="daySelect" multiple>
+                        <option value="1" selected>Lundi</option>
+                        <option value="2">Mardi</option>
+                        <option value="3">Mercredi</option>
+                        <option value="4">Jeudi</option>
+                        <option value="5">Vendredi</option>
+                        <option value="6">Samedi</option>
+                        <option value="0">Dimanche</option>
+                    </select>
+                    <label for="daySelect">Jour de la semaine</label>
+                </div>
+                <div class="input-field col s12 scale-transition section timeSelect-wrapper">
+                    <input type="text" class="timepicker" id="timeSelect" value="00:00">
+                    <label for="timeSelect">À :</label>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer footer">
+            <a href="#!" class="modal-close waves-effect waves-light btn-flat grey-text text-lighten-2">Annuler</a>
+            <a href="#!" class="modal-confirm waves-effect waves-light btn grey darken-3">Ajouter le message</a>
+        </div>
+    </div>
+    <div id="remove_modal" class="modal bottom-sheet modal-fixed-footer" style="height: 30% !important">
+        <div class="modal-content grey darken-3 grey-text text-lighten-2" style="text-align: center">
+            <h5>Es-tu sur de supprimer ce message ?</h5>
+        </div>
+        <div class="modal-footer footer">
+            <a href="#!" class="modal-close waves-effect waves-light btn-flat grey-text text-lighten-2">Annuler</a>
+            <a href="#!" class="modal-confirm waves-effect waves-light btn grey darken-3">Confirmer</a>
+        </div>
+    </div>
+  </body>
+</html>

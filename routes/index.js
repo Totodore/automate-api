@@ -8,7 +8,7 @@ const MANAGE_CHANNELS =	0x00000010;
 const MANAGE_GUILD = 0x00000020;
 /* GET home page. */
 router.get('/', async (req, res, next) => {
-  const token = JSON.parse(fs.readFileSync(__dirname+"/../data/users.json"))[req.session.userId]["access_token"];
+  const token = JSON.parse(fs.readFileSync(__dirname+"/../data/users.json"))[req.session.userId].access_token;
   const guildReq = await fetch("https://discordapp.com/api/users/@me/guilds", {
     headers: {
       'Authorization': `Bearer ${token}`
@@ -24,8 +24,10 @@ router.get('/', async (req, res, next) => {
       return true;
     else return false;
   });
+  guildRes.forEach(element => element.added = fs.existsSync(__dirname+"/../data/guilds/"+element.id+"/data.json"));
+  guildRes.sort((a, b) => {if (a.added) return -1; else if (b.added) return 1; else return 0;});
   if (guildRes.length > 0) 
-    res.render('index', {header: req.headerData, guilds: guildRes});
+    res.render('index', {header: req.headerData, guilds: guildRes, bot_link: process.env.BOT_LINK});
   else 
     res.render("index", {header: req.headerData, error: "Il semblerait que tu n'ais aucun serveur sur lequel tu puisses installer ce bot, Snifff.\n Demande un accès administrateur à ton serveur et tu pourras :p"});
 });
