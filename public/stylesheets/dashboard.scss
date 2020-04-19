@@ -9,6 +9,12 @@ $grey-darken-3: #424242;
 .fixed-action-btn {
     display: flex;
     flex-direction: column;
+
+    img {
+        width: 60%;
+        height: 100%;
+        margin-left: -1%;
+    }
 }
 .guild-data {
     @extend .section,

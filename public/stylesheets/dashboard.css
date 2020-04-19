@@ -9087,6 +9087,12 @@ input[type=range]::-ms-thumb {
           flex-direction: column;
 }
 
+.fixed-action-btn img {
+  width: 60%;
+  height: 100%;
+  margin-left: -1%;
+}
+
 .guild-data {
   font-size: 1.4em !important;
   margin: auto;

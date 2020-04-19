@@ -230,8 +230,9 @@ class VueDashboard {
 		const formData = new FormData();
 		const content = this.formTimer.elements.namedItem("contentTimer").value;
 		const date_string = this.datePicker.toString().split(" ");
-		const time_string = !this.timePickerTimer.time ? ["00", "00"] : this.timePickerTimer.time.split(":");
-		const date = new Date();
+		const time_string = !this.timePickerTimer.time || this.timePickerTimer.time == "00:00" ? [new Date().getHours().toString(), String(new Date().getMinutes()+2)] : this.timePickerTimer.time.split(":");
+        console.log(time_string, this.timePickerTimer.time);
+        const date = new Date();
 		date.setFullYear(date_string[3], this.i18n.months.indexOf(date_string[2]), date_string[1]);
 		date.setHours(time_string[0], time_string[1]);
         const timestamp = Math.floor((date.getTime()/1000)/60);	//timestamp en minutes
@@ -239,7 +240,7 @@ class VueDashboard {
             M.toast({html: "Impossible d'envoyer un message dans le passé malheureusement... On te prévient quand c'est possible ^^"});
             return;
         }
-		const desc = this.timePickerTimer.time ? `${this.datePicker.toString()} à ${this.timePickerTimer.time}` : `${this.datePicker.toString()} à 00:00`;
+		const desc = `${this.datePicker.toString()} à ${time_string.join(":")}`;
         const channel_id = this.formTimer.elements.namedItem("channelSelectTimer").value;
 
 		formData.append("content", content);
