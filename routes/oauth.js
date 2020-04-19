@@ -32,7 +32,7 @@ router.get('/', async (req, res, next) => {
         res.redirect("../connect?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de te connecter à Discord"));
     }
     const resToken = JSON.parse(await reqToken.text());
-
+    console.log(resToken);
     //On fait une requete pour avoir l'id de la personne discord
     const reqUser = await fetch("https://discordapp.com/api/users/@me", {
         headers: {
@@ -43,6 +43,7 @@ router.get('/', async (req, res, next) => {
     if (reqUser.status != 200) {
         console.log(`Error : ${reqUser.status} ${reqUser.statusText}`);
         res.redirect("../connect?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de te connecter à Discord"));
+        return;
     }
     const resUser = JSON.parse(await reqUser.text());
     //Si l'id existe déjà dans la bdd on affiche juste un msg de reconnexion sinon on 
