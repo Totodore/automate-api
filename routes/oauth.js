@@ -5,7 +5,7 @@ const FormData = require("form-data");
 const fs = require("fs");
 
 router.get('/', async (req, res, next) => {
-    console.log("oauth requested");
+    console.log("Oauth requested");
     //Si on a pas recu le code on redirige avec un msg d'erreur
     if (!req.query.code) {
         console.log("Error getting oauth code");
@@ -34,7 +34,6 @@ router.get('/', async (req, res, next) => {
         return;
     }
     const resToken = JSON.parse(await reqToken.text());
-    console.log(resToken);
     //On fait une requete pour avoir l'id de la personne discord
     const reqUser = await fetch("https://discordapp.com/api/users/@me", {
         headers: {
