@@ -10,6 +10,7 @@ router.get('/', async (req, res, next) => {
     if (!req.query.code) {
         console.log("Error getting oauth code");
         res.redirect("../connect?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de te connecter à Discord"));
+        return;
     }
 
     //On fait la requete pour avoir le token
@@ -30,6 +31,7 @@ router.get('/', async (req, res, next) => {
     if (reqToken.status != 200) {
         console.log(`Error : ${reqToken.status} ${reqToken.statusText}`);
         res.redirect("../connect?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de te connecter à Discord"));
+        return;
     }
     const resToken = JSON.parse(await reqToken.text());
     console.log(resToken);
@@ -52,6 +54,7 @@ router.get('/', async (req, res, next) => {
     if (Object.keys(userDB).includes(resUser.id)) {
         writeSessionAndCookies(resUser.id, req, res);
         res.redirect("../?msg="+encodeURI("Super ! tu t'es reconnecté !"));
+        return;
     } else {
         // console.log(`data user : ${JSON.stringify(resUser)}`);
         userDB[resUser.id] = {
@@ -78,9 +81,12 @@ router.get("/bot", async (req, res, next) => {
     if (!req.query.code) {
         console.log("Error getting oauth code");
         res.redirect("../?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de connecter ce bot à ton salon"));
+        return;
     }
-    if (req.query.permissions != "51200")
-        res.redirect("../?msg="+encodeURI("Vous devez autoriser tous les droits pour ajouter ce bot"));
+    if (req.query.permissions != "51200") {
+        res.redirect("../?msg="+encodeURI("Tu dois autoriser tous les droits pour ajouter ce bot"));
+        return;
+    }
     else {
         const dataToSend = {
             'client_id': process.env.CLIENT_ID,
@@ -99,6 +105,7 @@ router.get("/bot", async (req, res, next) => {
         if (reqToken.status != 200) {
             console.log(`Error : ${reqToken.status} ${reqToken.statusText}`);
             res.redirect("../?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de connecter ce bot à ton salon Discord"));
+            return;
         }
         const resToken = JSON.parse(await reqToken.text());
         if (!fs.existsSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + req.query.guild_id + "/data.json")) {
