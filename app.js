@@ -31,6 +31,15 @@ app.use(cookieParser());
 app.use(session({ secret: "CoderLab=<3", resave: false, saveUninitialized: true, }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+try {
+    const io = require("@pm2/io");
+    io.init({
+        transactions: true, // will enable the transaction tracing
+        http: true // will enable metrics about the http server (optional)
+    });
+} catch (e) {
+    console.log("Tracing request not enabled");
+}
 //Fonction pour détecter si l'utilisateur est connecté ou pas
 app.use((req, res, next) => {
     if (!req.session.userId && req.cookies.userId) {
