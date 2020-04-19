@@ -7,6 +7,7 @@ const session = require("express-session");
 const fs = require("fs");
 const fetch = require("node-fetch");
 const fork = require("child_process").fork;
+const formidable = require("express-formidable");
 const botProgram = path.resolve("./bot/bot.js");
 require("dotenv").config();
 
@@ -22,10 +23,10 @@ let bot;
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.engine("ejs", require("ejs").__express);
-
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(formidable());
+app.use(logger('dev'));
 app.use(cookieParser());
 app.use(session({ secret: "CoderLab=<3", resave: false, saveUninitialized: true, }));
 app.use(express.static(path.join(__dirname, 'public')));

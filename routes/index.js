@@ -20,7 +20,7 @@ router.get('/', async (req, res, next) => {
   }
   let guildRes = JSON.parse(await guildReq.text());
   guildRes = guildRes.filter((el) => {
-    if (el.permissions & ADMINISTRATOR || el.permissions & MANAGE_CHANNELS || el.permissions & MANAGE_GUILD)
+    if (el.permissions & ADMINISTRATOR || el.permissions & MANAGE_GUILD)
       return true;
     else return false;
   });

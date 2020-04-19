@@ -72,7 +72,7 @@ textarea.materialize-red-text, .input-field label.materialize-red-text, .input-f
   color: #a21318 !important;
 }
 
-.materialize-red.darken-4, .materialize-red.guild-data, .materialize-red.crons, .materialize-red#timer_add_modal, .materialize-red#add_cron, .materialize-red.footer, .materialize-red.select-dropdown {
+.materialize-red.darken-4, .materialize-red.guild-data, .materialize-red.crons, .materialize-red#addTimer, .materialize-red#add_cron, .materialize-red.footer, .materialize-red.select-dropdown {
   background-color: #8b1014 !important;
 }
 
@@ -154,7 +154,7 @@ textarea.red-text, .input-field label.red-text, .input-field input[type=text]:fo
   color: #C62828 !important;
 }
 
-.red.darken-4, .red.guild-data, .red.crons, .red#timer_add_modal, .red#add_cron, .red.footer, .red.select-dropdown {
+.red.darken-4, .red.guild-data, .red.crons, .red#addTimer, .red#add_cron, .red.footer, .red.select-dropdown {
   background-color: #B71C1C !important;
 }
 
@@ -268,7 +268,7 @@ textarea.pink-text, .input-field label.pink-text, .input-field input[type=text]:
   color: #ad1457 !important;
 }
 
-.pink.darken-4, .pink.guild-data, .pink.crons, .pink#timer_add_modal, .pink#add_cron, .pink.footer, .pink.select-dropdown {
+.pink.darken-4, .pink.guild-data, .pink.crons, .pink#addTimer, .pink#add_cron, .pink.footer, .pink.select-dropdown {
   background-color: #880e4f !important;
 }
 
@@ -382,7 +382,7 @@ textarea.purple-text, .input-field label.purple-text, .input-field input[type=te
   color: #6a1b9a !important;
 }
 
-.purple.darken-4, .purple.guild-data, .purple.crons, .purple#timer_add_modal, .purple#add_cron, .purple.footer, .purple.select-dropdown {
+.purple.darken-4, .purple.guild-data, .purple.crons, .purple#addTimer, .purple#add_cron, .purple.footer, .purple.select-dropdown {
   background-color: #4a148c !important;
 }
 
@@ -496,7 +496,7 @@ textarea.deep-purple-text, .input-field label.deep-purple-text, .input-field inp
   color: #4527a0 !important;
 }
 
-.deep-purple.darken-4, .deep-purple.guild-data, .deep-purple.crons, .deep-purple#timer_add_modal, .deep-purple#add_cron, .deep-purple.footer, .deep-purple.select-dropdown {
+.deep-purple.darken-4, .deep-purple.guild-data, .deep-purple.crons, .deep-purple#addTimer, .deep-purple#add_cron, .deep-purple.footer, .deep-purple.select-dropdown {
   background-color: #311b92 !important;
 }
 
@@ -610,7 +610,7 @@ textarea.indigo-text, .input-field label.indigo-text, .input-field input[type=te
   color: #283593 !important;
 }
 
-.indigo.darken-4, .indigo.guild-data, .indigo.crons, .indigo#timer_add_modal, .indigo#add_cron, .indigo.footer, .indigo.select-dropdown {
+.indigo.darken-4, .indigo.guild-data, .indigo.crons, .indigo#addTimer, .indigo#add_cron, .indigo.footer, .indigo.select-dropdown {
   background-color: #1a237e !important;
 }
 
@@ -724,7 +724,7 @@ textarea.blue-text, .input-field label.blue-text, .input-field input[type=text]:
   color: #1565C0 !important;
 }
 
-.blue.darken-4, .blue.guild-data, .blue.crons, .blue#timer_add_modal, .blue#add_cron, .blue.footer, .blue.select-dropdown {
+.blue.darken-4, .blue.guild-data, .blue.crons, .blue#addTimer, .blue#add_cron, .blue.footer, .blue.select-dropdown {
   background-color: #0D47A1 !important;
 }
 
@@ -838,7 +838,7 @@ textarea.light-blue-text, .input-field label.light-blue-text, .input-field input
   color: #0277bd !important;
 }
 
-.light-blue.darken-4, .light-blue.guild-data, .light-blue.crons, .light-blue#timer_add_modal, .light-blue#add_cron, .light-blue.footer, .light-blue.select-dropdown {
+.light-blue.darken-4, .light-blue.guild-data, .light-blue.crons, .light-blue#addTimer, .light-blue#add_cron, .light-blue.footer, .light-blue.select-dropdown {
   background-color: #01579b !important;
 }
 
@@ -952,7 +952,7 @@ textarea.cyan-text, .input-field label.cyan-text, .input-field input[type=text]:
   color: #00838f !important;
 }
 
-.cyan.darken-4, .cyan.guild-data, .cyan.crons, .cyan#timer_add_modal, .cyan#add_cron, .cyan.footer, .cyan.select-dropdown {
+.cyan.darken-4, .cyan.guild-data, .cyan.crons, .cyan#addTimer, .cyan#add_cron, .cyan.footer, .cyan.select-dropdown {
   background-color: #006064 !important;
 }
 
@@ -1066,7 +1066,7 @@ textarea.teal-text, .input-field label.teal-text, .input-field input[type=text]:
   color: #00695c !important;
 }
 
-.teal.darken-4, .teal.guild-data, .teal.crons, .teal#timer_add_modal, .teal#add_cron, .teal.footer, .teal.select-dropdown {
+.teal.darken-4, .teal.guild-data, .teal.crons, .teal#addTimer, .teal#add_cron, .teal.footer, .teal.select-dropdown {
   background-color: #004d40 !important;
 }
 
@@ -1180,7 +1180,7 @@ textarea.green-text, .input-field label.green-text, .input-field input[type=text
   color: #2E7D32 !important;
 }
 
-.green.darken-4, .green.guild-data, .green.crons, .green#timer_add_modal, .green#add_cron, .green.footer, .green.select-dropdown {
+.green.darken-4, .green.guild-data, .green.crons, .green#addTimer, .green#add_cron, .green.footer, .green.select-dropdown {
   background-color: #1B5E20 !important;
 }
 
@@ -1294,7 +1294,7 @@ textarea.light-green-text, .input-field label.light-green-text, .input-field inp
   color: #558b2f !important;
 }
 
-.light-green.darken-4, .light-green.guild-data, .light-green.crons, .light-green#timer_add_modal, .light-green#add_cron, .light-green.footer, .light-green.select-dropdown {
+.light-green.darken-4, .light-green.guild-data, .light-green.crons, .light-green#addTimer, .light-green#add_cron, .light-green.footer, .light-green.select-dropdown {
   background-color: #33691e !important;
 }
 
@@ -1408,7 +1408,7 @@ textarea.lime-text, .input-field label.lime-text, .input-field input[type=text]:
   color: #9e9d24 !important;
 }
 
-.lime.darken-4, .lime.guild-data, .lime.crons, .lime#timer_add_modal, .lime#add_cron, .lime.footer, .lime.select-dropdown {
+.lime.darken-4, .lime.guild-data, .lime.crons, .lime#addTimer, .lime#add_cron, .lime.footer, .lime.select-dropdown {
   background-color: #827717 !important;
 }
 
@@ -1522,7 +1522,7 @@ textarea.yellow-text, .input-field label.yellow-text, .input-field input[type=te
   color: #f9a825 !important;
 }
 
-.yellow.darken-4, .yellow.guild-data, .yellow.crons, .yellow#timer_add_modal, .yellow#add_cron, .yellow.footer, .yellow.select-dropdown {
+.yellow.darken-4, .yellow.guild-data, .yellow.crons, .yellow#addTimer, .yellow#add_cron, .yellow.footer, .yellow.select-dropdown {
   background-color: #f57f17 !important;
 }
 
@@ -1636,7 +1636,7 @@ textarea.amber-text, .input-field label.amber-text, .input-field input[type=text
   color: #ff8f00 !important;
 }
 
-.amber.darken-4, .amber.guild-data, .amber.crons, .amber#timer_add_modal, .amber#add_cron, .amber.footer, .amber.select-dropdown {
+.amber.darken-4, .amber.guild-data, .amber.crons, .amber#addTimer, .amber#add_cron, .amber.footer, .amber.select-dropdown {
   background-color: #ff6f00 !important;
 }
 
@@ -1750,7 +1750,7 @@ textarea.orange-text, .input-field label.orange-text, .input-field input[type=te
   color: #ef6c00 !important;
 }
 
-.orange.darken-4, .orange.guild-data, .orange.crons, .orange#timer_add_modal, .orange#add_cron, .orange.footer, .orange.select-dropdown {
+.orange.darken-4, .orange.guild-data, .orange.crons, .orange#addTimer, .orange#add_cron, .orange.footer, .orange.select-dropdown {
   background-color: #e65100 !important;
 }
 
@@ -1864,7 +1864,7 @@ textarea.deep-orange-text, .input-field label.deep-orange-text, .input-field inp
   color: #d84315 !important;
 }
 
-.deep-orange.darken-4, .deep-orange.guild-data, .deep-orange.crons, .deep-orange#timer_add_modal, .deep-orange#add_cron, .deep-orange.footer, .deep-orange.select-dropdown {
+.deep-orange.darken-4, .deep-orange.guild-data, .deep-orange.crons, .deep-orange#addTimer, .deep-orange#add_cron, .deep-orange.footer, .deep-orange.select-dropdown {
   background-color: #bf360c !important;
 }
 
@@ -1978,7 +1978,7 @@ textarea.brown-text, .input-field label.brown-text, .input-field input[type=text
   color: #4e342e !important;
 }
 
-.brown.darken-4, .brown.guild-data, .brown.crons, .brown#timer_add_modal, .brown#add_cron, .brown.footer, .brown.select-dropdown {
+.brown.darken-4, .brown.guild-data, .brown.crons, .brown#addTimer, .brown#add_cron, .brown.footer, .brown.select-dropdown {
   background-color: #3e2723 !important;
 }
 
@@ -2060,7 +2060,7 @@ textarea.blue-grey-text, .input-field label.blue-grey-text, .input-field input[t
   color: #37474f !important;
 }
 
-.blue-grey.darken-4, .blue-grey.guild-data, .blue-grey.crons, .blue-grey#timer_add_modal, .blue-grey#add_cron, .blue-grey.footer, .blue-grey.select-dropdown {
+.blue-grey.darken-4, .blue-grey.guild-data, .blue-grey.crons, .blue-grey#addTimer, .blue-grey#add_cron, .blue-grey.footer, .blue-grey.select-dropdown {
   background-color: #263238 !important;
 }
 
@@ -2068,7 +2068,7 @@ textarea.blue-grey-text, .input-field label.blue-grey-text, .input-field input[t
   color: #263238 !important;
 }
 
-.grey, .guild-data, .crons, .crons tbody tr:hover, #timer_add_modal, #add_cron, .footer, .select-dropdown, .datepicker-calendar-container {
+.grey, .guild-data, .crons, .crons tbody tr:hover, #addTimer, #add_cron, .footer, .select-dropdown, .datepicker-calendar-container {
   background-color: #9e9e9e !important;
 }
 
@@ -2078,7 +2078,7 @@ textarea, .input-field label, .input-field input[type=text]:focus + label,
   color: #9e9e9e !important;
 }
 
-.grey.lighten-5, .lighten-5.guild-data, .lighten-5.crons, .crons tbody tr.lighten-5:hover, .lighten-5#timer_add_modal, .lighten-5#add_cron, .lighten-5.footer, .lighten-5.select-dropdown, .lighten-5.datepicker-calendar-container {
+.grey.lighten-5, .lighten-5.guild-data, .lighten-5.crons, .crons tbody tr.lighten-5:hover, .lighten-5#addTimer, .lighten-5#add_cron, .lighten-5.footer, .lighten-5.select-dropdown, .lighten-5.datepicker-calendar-container {
   background-color: #fafafa !important;
 }
 
@@ -2088,7 +2088,7 @@ textarea.text-lighten-5, .input-field label.text-lighten-5, .input-field input[t
   color: #fafafa !important;
 }
 
-.grey.lighten-4, .lighten-4.guild-data, .lighten-4.crons, .crons tbody tr.lighten-4:hover, .lighten-4#timer_add_modal, .lighten-4#add_cron, .lighten-4.footer, .lighten-4.select-dropdown, .lighten-4.datepicker-calendar-container {
+.grey.lighten-4, .lighten-4.guild-data, .lighten-4.crons, .crons tbody tr.lighten-4:hover, .lighten-4#addTimer, .lighten-4#add_cron, .lighten-4.footer, .lighten-4.select-dropdown, .lighten-4.datepicker-calendar-container {
   background-color: #f5f5f5 !important;
 }
 
@@ -2098,7 +2098,7 @@ textarea.text-lighten-4, .input-field label.text-lighten-4, .input-field input[t
   color: #f5f5f5 !important;
 }
 
-.grey.lighten-3, .lighten-3.guild-data, .lighten-3.crons, .crons tbody tr.lighten-3:hover, .lighten-3#timer_add_modal, .lighten-3#add_cron, .lighten-3.footer, .lighten-3.select-dropdown, .lighten-3.datepicker-calendar-container {
+.grey.lighten-3, .lighten-3.guild-data, .lighten-3.crons, .crons tbody tr.lighten-3:hover, .lighten-3#addTimer, .lighten-3#add_cron, .lighten-3.footer, .lighten-3.select-dropdown, .lighten-3.datepicker-calendar-container {
   background-color: #eeeeee !important;
 }
 
@@ -2108,7 +2108,7 @@ textarea.text-lighten-3, .input-field label.text-lighten-3, .input-field input[t
   color: #eeeeee !important;
 }
 
-.grey.lighten-2, .lighten-2.guild-data, .lighten-2.crons, .crons tbody tr.lighten-2:hover, .lighten-2#timer_add_modal, .lighten-2#add_cron, .lighten-2.footer, .lighten-2.select-dropdown, .lighten-2.datepicker-calendar-container {
+.grey.lighten-2, .lighten-2.guild-data, .lighten-2.crons, .crons tbody tr.lighten-2:hover, .lighten-2#addTimer, .lighten-2#add_cron, .lighten-2.footer, .lighten-2.select-dropdown, .lighten-2.datepicker-calendar-container {
   background-color: #e0e0e0 !important;
 }
 
@@ -2121,7 +2121,7 @@ textarea, .input-field label, .input-field input[type=text]:focus + label,
   color: #e0e0e0 !important;
 }
 
-.grey.lighten-1, .lighten-1.guild-data, .lighten-1.crons, .crons tbody tr.lighten-1:hover, .lighten-1#timer_add_modal, .lighten-1#add_cron, .lighten-1.footer, .lighten-1.select-dropdown, .lighten-1.datepicker-calendar-container {
+.grey.lighten-1, .lighten-1.guild-data, .lighten-1.crons, .crons tbody tr.lighten-1:hover, .lighten-1#addTimer, .lighten-1#add_cron, .lighten-1.footer, .lighten-1.select-dropdown, .lighten-1.datepicker-calendar-container {
   background-color: #bdbdbd !important;
 }
 
@@ -2131,7 +2131,7 @@ textarea.text-lighten-1, .input-field label.text-lighten-1, .input-field label.g
   color: #bdbdbd !important;
 }
 
-.grey.darken-1, .darken-1.guild-data, .darken-1.crons, .crons tbody tr.darken-1:hover, .darken-1#timer_add_modal, .darken-1#add_cron, .darken-1.footer, .darken-1.select-dropdown, .darken-1.datepicker-calendar-container {
+.grey.darken-1, .darken-1.guild-data, .darken-1.crons, .crons tbody tr.darken-1:hover, .darken-1#addTimer, .darken-1#add_cron, .darken-1.footer, .darken-1.select-dropdown, .darken-1.datepicker-calendar-container {
   background-color: #757575 !important;
 }
 
@@ -2141,7 +2141,7 @@ textarea.text-darken-1, .input-field label.text-darken-1, .input-field input[typ
   color: #757575 !important;
 }
 
-.grey.darken-2, .darken-2.guild-data, .darken-2.crons, .crons tbody tr:hover, .darken-2#timer_add_modal, .crons tbody tr#timer_add_modal:hover, .darken-2#add_cron, .crons tbody tr#add_cron:hover, .darken-2.footer, .darken-2.select-dropdown, .darken-2.datepicker-calendar-container {
+.grey.darken-2, .darken-2.guild-data, .darken-2.crons, .crons tbody tr:hover, .darken-2#addTimer, .crons tbody tr#addTimer:hover, .darken-2#add_cron, .crons tbody tr#add_cron:hover, .darken-2.footer, .darken-2.select-dropdown, .darken-2.datepicker-calendar-container {
   background-color: #616161 !important;
 }
 
@@ -2151,7 +2151,7 @@ textarea.text-darken-2, .input-field label.text-darken-2, .input-field input[typ
   color: #616161 !important;
 }
 
-.grey.darken-3, .darken-3.guild-data, .darken-3.crons, .crons tbody tr.darken-3:hover, .crons tbody tr.datepicker-calendar-container:hover, .darken-3#timer_add_modal, #timer_add_modal.datepicker-calendar-container, .darken-3#add_cron, #add_cron.datepicker-calendar-container, .darken-3.footer, .darken-3.select-dropdown, .datepicker-calendar-container {
+.grey.darken-3, .darken-3.guild-data, .darken-3.crons, .crons tbody tr.darken-3:hover, .crons tbody tr.datepicker-calendar-container:hover, .darken-3#addTimer, #addTimer.datepicker-calendar-container, .darken-3#add_cron, #add_cron.datepicker-calendar-container, .darken-3.footer, .darken-3.select-dropdown, .datepicker-calendar-container {
   background-color: #424242 !important;
 }
 
@@ -2161,7 +2161,7 @@ textarea.text-darken-3, .input-field label.text-darken-3, .input-field input[typ
   color: #424242 !important;
 }
 
-.grey.darken-4, .guild-data, .crons, .crons tbody tr.darken-4:hover, .crons tbody tr.guild-data:hover, .crons tbody tr.crons:hover, .crons tbody tr.footer:hover, .crons tbody tr.select-dropdown:hover, #timer_add_modal, #add_cron, .footer, .select-dropdown, .darken-4.datepicker-calendar-container {
+.grey.darken-4, .guild-data, .crons, .crons tbody tr.darken-4:hover, .crons tbody tr.guild-data:hover, .crons tbody tr.crons:hover, .crons tbody tr.footer:hover, .crons tbody tr.select-dropdown:hover, #addTimer, #add_cron, .footer, .select-dropdown, .darken-4.datepicker-calendar-container {
   background-color: #212121 !important;
 }
 
@@ -9106,8 +9106,33 @@ input[type=range]::-ms-thumb {
   border-radius: 50%;
   height: 50px;
   width: 50px;
+  margin-right: 7px;
+}
+
+.return-icon, .menu-icon {
   margin-left: 7px;
-  cursor: pointer;
+  font-size: 45px;
+  margin-top: 4px;
+  -webkit-transition: all 350ms;
+  transition: all 350ms;
+}
+
+.menu-icon {
+  -webkit-transform: translateX(-10px);
+          transform: translateX(-10px);
+  opacity: 0;
+  margin-left: 0;
+}
+
+.guild-data:hover .menu-icon {
+  opacity: 1;
+  -webkit-transform: translateX(-5px);
+          transform: translateX(-5px);
+}
+
+.guild-data:hover .return-icon {
+  -webkit-transform: translateX(-10px);
+          transform: translateX(-10px);
 }
 
 .crons {
@@ -9130,7 +9155,7 @@ input[type=range]::-ms-thumb {
   color: red;
 }
 
-#timer_add_modal, #add_cron {
+#addTimer, #add_cron {
   top: 5% !important;
   height: 90% !important;
   max-height: 90% !important;

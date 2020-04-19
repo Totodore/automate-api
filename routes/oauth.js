@@ -105,6 +105,7 @@ router.get("/bot", async (req, res, next) => {
             fs.writeFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + req.query.guild_id + "/data.json", JSON.stringify({
                 ponctual: [],
                 freq: [],
+                deleted: [],
                 token: resToken.access_token,
                 token_expires: resToken.expires_in,
                 refresh_token: resToken.refresh_token,

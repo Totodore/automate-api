@@ -1,6 +1,6 @@
 const express = require('express');
 const fs = require("fs");
-const fetch = require("node-fetch");
+const Cron = require("cron-converter");
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
     const guild_id = req.query.id;
 
     if (!db || !req.query.id) {
-        console.log("Error loading database");
+        console.error("Error loading database");
         res.redirect("../?msg=" + encodeURI("Ouuups ! Une erreur est apparue lors du chargement du dashboard. Sniff..."));
         return;
     }
@@ -29,7 +29,7 @@ router.get('/', async (req, res, next) => {
             });
 
             if (!channelRes) {
-                console.log(`Error loading channels data : ${channelReq.status} ${channelReq.statusText}`);
+                console.error(`Error loading channels data : ${channelReq.status} ${channelReq.statusText}`);
                 res.redirect("../?msg=" + encodeURI("Ouuups ! Une erreur est apparue lors du chargement du dashboard. Sniff..."));
                 return;
             }
@@ -39,24 +39,51 @@ router.get('/', async (req, res, next) => {
                         element.channel_name = channelRes[index].name;
                 });
             });
-            console.log(channelRes);
+            table.sort((a, b) => {
+                let timestamp_a, timestamp_b;
+                if (a.timestamp) timestamp_a = a.timestamp;
+                else {
+                    const cronInstance = new Cron();
+                    cronInstance.fromString(a.cron);
+                    const scheduler = cronInstance.schedule();
+                    timestamp_a = Math.floor(scheduler.next().unix() / 60);
+                }
+                if (b.timestamp) timestamp_b = b.timestamp;
+                else {
+                    const cronInstance = new Cron();
+                    cronInstance.fromString(b.cron);
+                    const scheduler = cronInstance.schedule();
+                    timestamp_b = Math.floor(scheduler.next().unix() / 60);
+                }
+                if (timestamp_a < timestamp_b)
+                    return -1;
+                else
+                    return 1;
+            });
+            // console.log(channelRes);
             //On envoie une requête au bot pour avoir des infos sur la guild
-            bot.send("request_guild?id="+guild_id);
+            bot.send("request_guild?id=" + guild_id);
             //On build le listener, si c'est la bonne réponse on l'arrête et on envoie une réponse sinon on dispatch l'event
             const botGuildListener = messageGuild => {
-
-                if (messageGuild.split("\n")[0] === "response_guild?id="+guild_id) {
+                if (messageGuild.split("\n")[0] === "response_guild?id=" + guild_id) {
 
                     bot.off("message", botGuildListener);
 
                     const guildRes = JSON.parse(messageGuild.split("\n")[1]);
-                    console.log(guildRes);
+                    // console.log(guildRes);
                     if (!guildRes) {
-                        console.log(`Error loading channels data : ${channelReq.status} ${channelReq.statusText}`);
+                        console.error(`Error loading channels data : ${channelReq.status} ${channelReq.statusText}`);
                         res.redirect("../?msg=" + encodeURI("Ouuups ! Une erreur est apparue lors du chargement du dashboard. Sniff..."));
                         return;
                     }
-                    res.render('dashboard', {header: req.headerData, table: table, channel_list: channelRes, guild_data: guildRes, cdn: process.env.CDN_ENDPOINT});
+                    res.render('dashboard', {
+                        header: req.headerData,
+                        table: table, 
+                        channel_list: channelRes, 
+                        guild_data: guildRes, 
+                        cdn: process.env.CDN_ENDPOINT,
+                        now_hour: String(new Date().getHours())+":"+String(new Date().getMinutes()+2)
+                    });
                 } else
                     bot.emit("message", messageGuild);
             };

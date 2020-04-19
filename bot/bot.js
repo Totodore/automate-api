@@ -35,15 +35,24 @@ process.on("message", message => {
 });
 
 bot.on('ready', () => {
-    if (process.send) { 
+    if (process.send) 
         process.send("started");
-    }
-    else {
+    else
         fs.writeFileSync("bot.log", "Error pipe between server and bot");
-    }
-    console.info(`Logged in as ${bot.user.tag}!`);
-    cronWatcher();
-    bot.setInterval(cronWatcher, 1000*60);
+
+    console.info(`Logged in as ${bot.user.tag} !\n`);
+
+    //On attend le passage à la prochaine minute pour être le plus syncro possible
+    const oldMinute = Math.floor((new Date().getTime()/1000)/60)*60;
+    console.log(`Actual minute : ${new Date().getMinutes()}`);
+    console.log("Waiting for new minute to start cron watcher");
+    const intervalId = setInterval(() => {
+        if (Math.floor((new Date().getTime()/1000)/60)*60 - 15 > oldMinute) {
+            console.log(`\n\nNew minute detected, Starting cron Watcher at minute ${new Date().getMinutes()}`);
+            bot.setInterval(cronWatcher, 1000*60);  //Si on est passé à une nouvelle minute on lance le cronWatcher
+            clearInterval(intervalId);
+        }
+    }, 10);
 });
 
 bot.on("guildDelete", guild => {
@@ -54,15 +63,17 @@ function cronWatcher() {
     fs.readdirSync(__dirname + "/.." + process.env.DB_GUILDS + "/").forEach(guildId => {
         //Pour chaque guild on regarde si on doit envoyer un message
         const guildData = JSON.parse(fs.readFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json"));
-        const timestamp = Math.floor((Date.now()/1000)/60)+1;
-        
-        guildData.ponctual.forEach(ponctualEvent => {
+        const timestamp = Math.floor((Date.now()/1000)/60);
+        let indexToDeletePonctual = [];
+        guildData.ponctual.forEach((ponctualEvent, index) => {
             if (ponctualEvent.timestamp == timestamp) {
+                const date = new Date();
                 bot.channels.cache.get(ponctualEvent.channel_id).send(ponctualEvent.message);
-                console.log(`New punctual message sent`);
+                console.log(`New punctual message sent at ${date.getDate()}/${date.getUTCMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`);
+                indexToDeletePonctual.push(index);
             }
         });
-        guildData.freq.forEach(freqEvent => {
+        guildData.freq.forEach((freqEvent) => {
             const cronInstance = new Cron();
             cronInstance.fromString(freqEvent.cron);
             const scheduler = cronInstance.schedule();
@@ -72,8 +83,17 @@ function cronWatcher() {
 
             if (timestampToExec == timestamp) {
                 bot.channels.cache.get(freqEvent.channel_id).send(freqEvent.message);
-                console.log(`New frequential message sent to ${bot.channels.cache.get(freqEvent.channel_id).name} in ${bot.channels.cache.get(freqEvent.channel_id).guild.name}`);
+                console.info(`New frequential message sent to ${bot.channels.cache.get(freqEvent.channel_id).name} in ${bot.channels.cache.get(freqEvent.channel_id).guild.name}`);
             }
         });
+        indexToDeletePonctual.forEach((index) => {
+            const ponctualEvent = guildData.ponctual[index];
+            delete guildData.ponctual[index];
+            guildData.deleted.push(ponctualEvent);
+        });
+        if (indexToDeletePonctual.length > 0) {
+            guildData.ponctual = guildData.ponctual.filter(element => element != null);
+            fs.writeFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", JSON.stringify(guildData));
+        }
     });
 }
