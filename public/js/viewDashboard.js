@@ -139,7 +139,6 @@ class VueDashboard {
         let desc = "Chaque " + eachVal;
         let cron = ["*", "*", "*", "*", "*"];
         if (eachVal == "semaine") {
-            const dayValues = this.daySelectWrapper.querySelectorAll(".selected");
             let selectedDays = {};
             //Pour chaque element selectionné (on a juste le nom)
         	this.daySelectWrapper.querySelectorAll(".selected").forEach((el) => {
@@ -210,7 +209,6 @@ class VueDashboard {
 				let name;
 				document.channels.forEach(element => {if(element.id == channel_id) name = element.name;});
                 document.querySelector("tbody").insertAdjacentHTML("afterbegin", '<tr id="'+responseText+'" channel_id="'+channel_id+'"><td>'+desc+'</td><td>#'+name+'</td><td>'+content+'<i class="material-icons">delete</i></td></tr>');
-                var self = this;
                 document.getElementById(responseText).addEventListener("click", () => {
                     self.removeCronModal.open();
                     self.idToRemove = responseText;
@@ -231,7 +229,6 @@ class VueDashboard {
 		const content = this.formTimer.elements.namedItem("contentTimer").value;
 		const date_string = this.datePicker.toString().split(" ");
 		const time_string = !this.timePickerTimer.time || this.timePickerTimer.time == "00:00" ? [new Date().getHours().toString(), String(new Date().getMinutes()+2)] : this.timePickerTimer.time.split(":");
-        console.log(time_string, this.timePickerTimer.time);
         const date = new Date();
 		date.setFullYear(date_string[3], this.i18n.months.indexOf(date_string[2]), date_string[1]);
 		date.setHours(time_string[0], time_string[1]);
@@ -261,11 +258,12 @@ class VueDashboard {
 				let name;
 				document.channels.forEach(element => {if(element.id == channel_id) name = element.name;});
                 document.querySelector("tbody").insertAdjacentHTML("afterbegin", '<tr id="'+responseText+'" channel_id="'+channel_id+'"><td>'+desc+'</td><td>#'+name+'</td><td>'+content+'<i class="material-icons">delete</i></td></tr>');
-                var self = this;
                 document.getElementById(responseText).addEventListener("click", () => {
                     self.removeCronModal.open();
                     self.idToRemove = responseText;
                 });
+                //Suppression du message automatiquement si la date est dépassée.
+                setTimeout(() => {document.getElementById(responseText).remove();}, timestamp*60*1000 - Date.now());
 				this.formTimer.reset();
                 M.toast({html: "Ce message à bien été ajouté"}, 5000);
 			});
@@ -280,7 +278,7 @@ class VueDashboard {
     onConfirmRemoveCron() {
         fetch(`/ajax/remove_message?id=${this.idToRemove}&guild_id=${this.guild_id}`).then((response) => {
             if (response.status != 200) {
-                console.log("Erreur : ", response.status, " ", responseText);
+                console.log("Error : ", response.status, " ", responseText);
                 M.toast({html: "Erreur lors de la suppression du message"}, 5000);
             } else response.text().then((responseText) => {
                 M.toast({html: responseText}, 5000);

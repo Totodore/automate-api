@@ -61,16 +61,13 @@ router.get('/', async (req, res, next) => {
             token_expires: resToken.expires_in,
             refresh_token: resToken.refresh_token
         };
-        const userData = {
-            bot: {
-                location: [],
-                ponctual: [],
-                freq: []
-            }
-        };
-        fs.writeFileSync(__dirname+"/../data/users.json", JSON.stringify(userDB));
-        fs.mkdirSync(__dirname+"/../data/users/"+resUser.id);
-        fs.writeFileSync(__dirname+"/../data/users/"+resUser.id+"/data.json", JSON.stringify(userData));
+        try {
+            fs.writeFileSync(__dirname+"/../data/users.json", JSON.stringify(userDB));
+        } catch (e) {
+            console.error(e);
+            res.redirect("../?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de connecter ce bot à ton salon"));
+            return;
+        }
         writeSessionAndCookies(resUser.id, req, res);
         res.redirect("../?msg="+encodeURI("Ton compte discord à été relié avec succès !"));
     }
