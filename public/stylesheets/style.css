@@ -9028,12 +9028,24 @@ body {
   margin-top: 25px;
 }
 
+.header_user {
+  height: 100%;
+  width: auto;
+}
+
 .discord-avatar {
   border-radius: 50%;
-  height: 50px;
-  width: 50px;
-  margin-top: 7px;
+  height: 79%;
+  width: auto;
+  margin-top: 11%;
   margin-right: 7px;
   cursor: pointer;
+}
+
+.favicon {
+  height: 79%;
+  width: auto;
+  margin-left: 7px;
+  margin-top: 11%;
 }
 /*# sourceMappingURL=style.css.map */
