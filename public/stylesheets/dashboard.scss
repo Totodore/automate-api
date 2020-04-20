@@ -33,10 +33,15 @@ $grey-darken-3: #424242;
     cursor: pointer;
     transition: all 300ms;
     padding: 10px;
+    position: relative;
 }
 .guild-data h5 {
-    margin: 0;
-    margin-top: 10px;
+    margin: 0px !important;
+    width: max-content;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 .guild-icon {
     @extend .z-depth-2;
@@ -75,6 +80,12 @@ $grey-darken-3: #424242;
     margin-top: 20px;
 }
 
+.crons table {
+    min-height: 165px;
+}
+.crons tbody {
+    text-align: center;
+}
 .crons tbody tr {
     @extend .waves-light;
     position: relative;
@@ -129,6 +140,9 @@ $grey-darken-3: #424242;
 
 .input-field {
     transition: all 350ms !important;
+    padding: 0px !important;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 input,
 textarea {
@@ -165,4 +179,27 @@ textarea {
 }
 .datepicker-calendar .selects-container  .select_wrapper input {
     background-color: $grey-darken-3 !important;
+}
+
+@media screen and (max-width: 600px)
+{
+    .body-wrapper {
+        margin-left: 17px;
+        margin-right: 17px;
+        padding: 0px;
+    }
+    .guild-data {
+        padding: 6px;
+    }
+    .return-icon, .menu-icon {
+        font-size: 38px;
+        margin-top: 4px;
+    }
+    .menu-icon {
+        display: none;
+    }
+    .guild-icon {
+        height: 40px;
+        width: 40px;
+    }
 }
