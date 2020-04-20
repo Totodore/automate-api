@@ -59,6 +59,9 @@ bot.on("guildDelete", guild => {
     fs.rmdirSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guild.id + "/", {recursive: true});
 });
 
+bot.on("guildCreate", guild => {
+    bot.channels.cache.get(guild.systemChannelID).send("Salut ! Je suis Spam-bot, pour me controller il faut que tu ailles sur l'interface suivante : https://spam-bot.app .\nJe peux envoyer des message à ta place quand t'es pas là à n'importe quelle heure ou alors régulièrement pour un évènement récurrent par exemple");
+});
 function cronWatcher() {
     fs.readdirSync(__dirname + "/.." + process.env.DB_GUILDS + "/").forEach(guildId => {
         //Pour chaque guild on regarde si on doit envoyer un message
