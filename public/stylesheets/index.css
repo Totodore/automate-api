@@ -9036,7 +9036,8 @@ input[type=range]::-ms-thumb {
 .guild {
   width: 200px;
   height: 200px;
-  margin-left: 50px;
+  margin-left: 25px;
+  margin-right: 25px;
   cursor: pointer;
   padding: 10px;
 }

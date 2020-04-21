@@ -9087,6 +9087,12 @@ input[type=range]::-ms-thumb {
           flex-direction: column;
 }
 
+.fixed-action-btn img {
+  width: 60%;
+  height: 100%;
+  margin-left: -1%;
+}
+
 .guild-data {
   font-size: 1.4em !important;
   margin: auto;
@@ -9095,11 +9101,19 @@ input[type=range]::-ms-thumb {
   -webkit-transition: all 300ms;
   transition: all 300ms;
   padding: 10px;
+  position: relative;
 }
 
 .guild-data h5 {
-  margin: 0;
-  margin-top: 10px;
+  margin: 0px !important;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 .guild-icon {
@@ -9141,6 +9155,14 @@ input[type=range]::-ms-thumb {
   margin-top: 20px;
 }
 
+.crons table {
+  min-height: 165px;
+}
+
+.crons tbody {
+  text-align: center;
+}
+
 .crons tbody tr {
   position: relative;
   cursor: pointer;
@@ -9166,6 +9188,9 @@ input[type=range]::-ms-thumb {
 .input-field {
   -webkit-transition: all 350ms !important;
   transition: all 350ms !important;
+  padding: 0px !important;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 /* label color */
@@ -9184,5 +9209,27 @@ input[type=range]::-ms-thumb {
 
 .datepicker-calendar .selects-container .select_wrapper input {
   background-color: #424242 !important;
+}
+
+@media screen and (max-width: 600px) {
+  .body-wrapper {
+    margin-left: 17px;
+    margin-right: 17px;
+    padding: 0px;
+  }
+  .guild-data {
+    padding: 6px;
+  }
+  .return-icon, .menu-icon {
+    font-size: 38px;
+    margin-top: 4px;
+  }
+  .menu-icon {
+    display: none;
+  }
+  .guild-icon {
+    height: 40px;
+    width: 40px;
+  }
 }
 /*# sourceMappingURL=dashboard.css.map */

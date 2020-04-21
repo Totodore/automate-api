@@ -5,11 +5,12 @@ const FormData = require("form-data");
 const fs = require("fs");
 
 router.get('/', async (req, res, next) => {
-    console.log("oauth requested");
+    console.log("Oauth requested");
     //Si on a pas recu le code on redirige avec un msg d'erreur
     if (!req.query.code) {
         console.log("Error getting oauth code");
         res.redirect("../connect?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de te connecter à Discord"));
+        return;
     }
 
     //On fait la requete pour avoir le token
@@ -30,9 +31,9 @@ router.get('/', async (req, res, next) => {
     if (reqToken.status != 200) {
         console.log(`Error : ${reqToken.status} ${reqToken.statusText}`);
         res.redirect("../connect?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de te connecter à Discord"));
+        return;
     }
     const resToken = JSON.parse(await reqToken.text());
-
     //On fait une requete pour avoir l'id de la personne discord
     const reqUser = await fetch("https://discordapp.com/api/users/@me", {
         headers: {
@@ -43,6 +44,7 @@ router.get('/', async (req, res, next) => {
     if (reqUser.status != 200) {
         console.log(`Error : ${reqUser.status} ${reqUser.statusText}`);
         res.redirect("../connect?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de te connecter à Discord"));
+        return;
     }
     const resUser = JSON.parse(await reqUser.text());
     //Si l'id existe déjà dans la bdd on affiche juste un msg de reconnexion sinon on 
@@ -51,6 +53,7 @@ router.get('/', async (req, res, next) => {
     if (Object.keys(userDB).includes(resUser.id)) {
         writeSessionAndCookies(resUser.id, req, res);
         res.redirect("../?msg="+encodeURI("Super ! tu t'es reconnecté !"));
+        return;
     } else {
         // console.log(`data user : ${JSON.stringify(resUser)}`);
         userDB[resUser.id] = {
@@ -58,16 +61,13 @@ router.get('/', async (req, res, next) => {
             token_expires: resToken.expires_in,
             refresh_token: resToken.refresh_token
         };
-        const userData = {
-            bot: {
-                location: [],
-                ponctual: [],
-                freq: []
-            }
-        };
-        fs.writeFileSync(__dirname+"/../data/users.json", JSON.stringify(userDB));
-        fs.mkdirSync(__dirname+"/../data/users/"+resUser.id);
-        fs.writeFileSync(__dirname+"/../data/users/"+resUser.id+"/data.json", JSON.stringify(userData));
+        try {
+            fs.writeFileSync(__dirname+"/../data/users.json", JSON.stringify(userDB));
+        } catch (e) {
+            console.error(e);
+            res.redirect("../?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de connecter ce bot à ton salon"));
+            return;
+        }
         writeSessionAndCookies(resUser.id, req, res);
         res.redirect("../?msg="+encodeURI("Ton compte discord à été relié avec succès !"));
     }
@@ -77,9 +77,12 @@ router.get("/bot", async (req, res, next) => {
     if (!req.query.code) {
         console.log("Error getting oauth code");
         res.redirect("../?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de connecter ce bot à ton salon"));
+        return;
     }
-    if (req.query.permissions != "51200")
-        res.redirect("../?msg="+encodeURI("Vous devez autoriser tous les droits pour ajouter ce bot"));
+    if (req.query.permissions != "51200") {
+        res.redirect("../?msg="+encodeURI("Tu dois autoriser tous les droits pour ajouter ce bot"));
+        return;
+    }
     else {
         const dataToSend = {
             'client_id': process.env.CLIENT_ID,
@@ -98,6 +101,7 @@ router.get("/bot", async (req, res, next) => {
         if (reqToken.status != 200) {
             console.log(`Error : ${reqToken.status} ${reqToken.statusText}`);
             res.redirect("../?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de connecter ce bot à ton salon Discord"));
+            return;
         }
         const resToken = JSON.parse(await reqToken.text());
         if (!fs.existsSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + req.query.guild_id + "/data.json")) {

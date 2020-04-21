@@ -31,12 +31,21 @@ app.use(cookieParser());
 app.use(session({ secret: "CoderLab=<3", resave: false, saveUninitialized: true, }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+try {
+    const io = require("@pm2/io");
+    io.init({
+        transactions: true, // will enable the transaction tracing
+        http: true // will enable metrics about the http server (optional)
+    });
+} catch (e) {
+    console.log("Tracing request not enabled");
+}
 //Fonction pour détecter si l'utilisateur est connecté ou pas
 app.use((req, res, next) => {
     if (!req.session.userId && req.cookies.userId) {
         req.session.userId = req.cookies.userId;
         next();
-    } else if (!req.session.userId && !req.cookies.userId && req.path != "/connect" && req.path != "/oauth") {
+    } else if (!req.session.userId && !req.cookies.userId && req.path != "/connect" && req.path != "/oauth" && !req.path.split("/").includes("ajax")) {
         //On exclu les chemins oauth et connect sinon on a des redirections infinies
         res.redirect("/connect");
     } else next();
@@ -55,6 +64,7 @@ app.use(async (req, res, next) => {
         if (reqUser.status != 200) {
             console.log(`Error : ${reqUser.status} ${reqUser.statusText}`);
             res.redirect("../connect?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de te connecter à Discord"));
+            return;
         }
         const resUser = JSON.parse(await reqUser.text());
         req.headerData = {

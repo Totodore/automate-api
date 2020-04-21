@@ -2,7 +2,8 @@
 
 
 body {
-    @extend .grey-text, .text-lighten-3;
+    @extend .grey-text,
+    .text-lighten-3;
     font-weight: 600;
     min-height: 100vh;
 }
@@ -18,24 +19,53 @@ body {
     margin-top: 25px;
 }
 
+.header_user {
+    height: 100%;
+    width: auto;
+}
+
 .discord-avatar {
     @extend .z-depth-2;
     border-radius: 50%;
-    height: 50px;
-    width: 50px;
-    margin-top: 7px;
+    height: 79%;
+    width: auto;
+    margin-top: 11%;
     margin-right: 7px;
     cursor: pointer;
 }
+
+.favicon {
+    height: 79%;
+    width: auto;
+    margin-left: 7px;
+    margin-top: 11%;
+}
+
 .modal {
-    @extend .grey, .darken-3, .grey-text, .text-lighten-2;
+    @extend .grey,
+    .darken-3,
+    .grey-text,
+    .text-lighten-2;
 }
+
 .modal-footer {
-    @extend .grey, .darken-4, .grey-text, .text-lighten-2;
+    @extend .grey,
+    .darken-4,
+    .grey-text,
+    .text-lighten-2;
 }
+
 .btn {
-    @extend .waves-light, .btn, .grey-text, .text-lighten-2, .grey, .darken-3;
+    @extend .waves-light,
+    .btn,
+    .grey-text,
+    .text-lighten-2,
+    .grey,
+    .darken-3;
 }
+
 .btn-flat {
-    @extend .waves-light, .grey-text, .text-lighten-2;
+    @extend .waves-light,
+    .grey-text,
+    .text-lighten-2;
 }
