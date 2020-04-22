@@ -75,7 +75,11 @@ function cronWatcher() {
         guildData.ponctual.forEach((ponctualEvent, index) => {
             if (ponctualEvent.timestamp == timestamp) {
                 const date = new Date();
-                bot.channels.cache.get(ponctualEvent.channel_id).send(ponctualEvent.message);
+                try {
+                    bot.channels.cache.get(ponctualEvent.channel_id).send(ponctualEvent.message);
+                } catch (e) {
+                    console.log("Error sending message (probably admin rights)");
+                }
                 console.log(`New punctual message sent at ${date.getDate()}/${date.getUTCMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`);
                 indexToDeletePonctual.push(index);
             }
@@ -89,7 +93,11 @@ function cronWatcher() {
             // console.log(`Actual : ${timestamp}`);
 
             if (timestampToExec == timestamp) {
-                bot.channels.cache.get(freqEvent.channel_id).send(freqEvent.message);
+                try {
+                    bot.channels.cache.get(freqEvent.channel_id).send(freqEvent.message);
+                } catch (e) {
+                    console.log("Error sending message (probably admin rights)");
+                }
                 console.info(`New frequential message sent to ${bot.channels.cache.get(freqEvent.channel_id).name} in ${bot.channels.cache.get(freqEvent.channel_id).guild.name}`);
             }
         });

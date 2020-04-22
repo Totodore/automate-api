@@ -79,7 +79,7 @@ router.get("/bot", async (req, res, next) => {
         res.redirect("../?msg="+encodeURI("Whoops ! It seems like your connection to your server is impossible!"));
         return;
     }
-    if (req.query.permissions != "51200") {
+    if (req.query.permissions != "8") {
         res.redirect("../?msg="+encodeURI("You need to get me full powers!"));
         return;
     }
