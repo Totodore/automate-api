@@ -4,7 +4,6 @@ const fs = require("fs");
 const router = express.Router();
 
 const ADMINISTRATOR =	0x00000008;
-const MANAGE_CHANNELS =	0x00000010;
 const MANAGE_GUILD = 0x00000020;
 /* GET home page. */
 router.get('/', async (req, res, next) => {
@@ -16,7 +15,7 @@ router.get('/', async (req, res, next) => {
   });
   if (guildReq.status != 200) {
     console.log(`Erreur : ${guildReq.status} ${guildReq.statusText}`);
-    res.render('index', {header: req.headerData, error: "Impossible de récupérer la liste de tes channels, sniff..."});
+    res.render('index', {header: req.headerData, error: "I didn't manage to collect all your channels, sniffu..."});
   }
   let guildRes = JSON.parse(await guildReq.text());
   guildRes = guildRes.filter((el) => {
@@ -29,7 +28,7 @@ router.get('/', async (req, res, next) => {
   if (guildRes.length > 0) 
     res.render('index', {header: req.headerData, guilds: guildRes, bot_link: process.env.BOT_LINK});
   else 
-    res.render("index", {header: req.headerData, error: "Il semblerait que tu n'ais aucun serveur sur lequel tu puisses installer ce bot, Snifff.\n Demande un accès administrateur à ton serveur et tu pourras :p"});
+    res.render("index", {header: req.headerData, error: "It seems that there is nowhere for me to hop in... Snifffu.\n I'll be able to, if you ask for permissions to be Admin :p"});
 });
 
 module.exports = router;

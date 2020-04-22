@@ -35,7 +35,7 @@ router.get("/remove_message", (req, res) => {
 		res.status(500).send("Error operating on db");
 		return;
 	}
-	res.send("Ce message à bien été supprimé");
+	res.send("This message has successfully been deleted");
 });
 
 router.post("/add_schedule", (req, res) => {

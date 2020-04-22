@@ -63,7 +63,7 @@ app.use(async (req, res, next) => {
         });
         if (reqUser.status != 200) {
             console.log(`Error : ${reqUser.status} ${reqUser.statusText}`);
-            res.redirect("../connect?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de te connecter à Discord"));
+            res.redirect("../connect?msg="+encodeURI("Whoops ! It seems like your connection to Discord is impossible!"));
             return;
         }
         const resUser = JSON.parse(await reqUser.text());

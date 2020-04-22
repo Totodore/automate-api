@@ -10,7 +10,7 @@ router.get('/', async (req, res, next) => {
 
     if (!db || !req.query.id) {
         console.error("Error loading database");
-        res.redirect("../?msg=" + encodeURI("Ouuups ! Une erreur est apparue lors du chargement du dashboard. Sniff..."));
+        res.redirect("../?msg=" + encodeURI("Whoops ! It seems like an error has occured during the dashboard's loading. Sniffu..."));
         return;
     }
     const table = db.freq.concat(db.ponctual);
@@ -30,7 +30,7 @@ router.get('/', async (req, res, next) => {
 
             if (!channelRes) {
                 console.error(`Error loading channels data : ${channelReq.status} ${channelReq.statusText}`);
-                res.redirect("../?msg=" + encodeURI("Ouuups ! Une erreur est apparue lors du chargement du dashboard. Sniff..."));
+                res.redirect("../?msg=" + encodeURI("Whoops ! It seems like an error has occured during the dashboard's loading. Sniffu..."));
                 return;
             }
             table.forEach(element => {
@@ -73,7 +73,7 @@ router.get('/', async (req, res, next) => {
                     // console.log(guildRes);
                     if (!guildRes) {
                         console.error(`Error loading channels data : ${channelReq.status} ${channelReq.statusText}`);
-                        res.redirect("../?msg=" + encodeURI("Ouuups ! Une erreur est apparue lors du chargement du dashboard. Sniff..."));
+                        res.redirect("../?msg=" + encodeURI("Whoops ! It seems like an error has occured during the dashboard's loading. Sniffu..."));
                         return;
                     }
                     res.render('dashboard', {

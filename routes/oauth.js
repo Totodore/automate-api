@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
     //Si on a pas recu le code on redirige avec un msg d'erreur
     if (!req.query.code) {
         console.log("Error getting oauth code");
-        res.redirect("../connect?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de te connecter à Discord"));
+        res.redirect("../connect?msg="+encodeURI("Whoops ! It seems like your connection to Discord is impossible!"));
         return;
     }
 
@@ -30,7 +30,7 @@ router.get('/', async (req, res, next) => {
     }); 
     if (reqToken.status != 200) {
         console.log(`Error : ${reqToken.status} ${reqToken.statusText}`);
-        res.redirect("../connect?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de te connecter à Discord"));
+        res.redirect("../connect?msg="+encodeURI("Whoops ! It seems like your connection to Discord is impossible!"));
         return;
     }
     const resToken = JSON.parse(await reqToken.text());
@@ -43,7 +43,7 @@ router.get('/', async (req, res, next) => {
     });
     if (reqUser.status != 200) {
         console.log(`Error : ${reqUser.status} ${reqUser.statusText}`);
-        res.redirect("../connect?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de te connecter à Discord"));
+        res.redirect("../connect?msg="+encodeURI("Whoops ! It seems like your connection to Discord is impossible!"));
         return;
     }
     const resUser = JSON.parse(await reqUser.text());
@@ -52,7 +52,7 @@ router.get('/', async (req, res, next) => {
     let userDB = JSON.parse(fs.readFileSync(__dirname+"/../data/users.json"));
     if (Object.keys(userDB).includes(resUser.id)) {
         writeSessionAndCookies(resUser.id, req, res);
-        res.redirect("../?msg="+encodeURI("Super ! tu t'es reconnecté !"));
+        res.redirect("../?msg="+encodeURI("Nice to see you again!"));
         return;
     } else {
         // console.log(`data user : ${JSON.stringify(resUser)}`);
@@ -65,22 +65,22 @@ router.get('/', async (req, res, next) => {
             fs.writeFileSync(__dirname+"/../data/users.json", JSON.stringify(userDB));
         } catch (e) {
             console.error(e);
-            res.redirect("../?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de connecter ce bot à ton salon"));
+            res.redirect("../?msg="+encodeURI("Whoops ! It seems like your connection to Discord is impossible!"));
             return;
         }
         writeSessionAndCookies(resUser.id, req, res);
-        res.redirect("../?msg="+encodeURI("Ton compte discord à été relié avec succès !"));
+        res.redirect("../?msg="+encodeURI("Your account has been successfully synced!"));
     }
 });
 
 router.get("/bot", async (req, res, next) => {
     if (!req.query.code) {
         console.log("Error getting oauth code");
-        res.redirect("../?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de connecter ce bot à ton salon"));
+        res.redirect("../?msg="+encodeURI("Whoops ! It seems like your connection to your server is impossible!"));
         return;
     }
     if (req.query.permissions != "51200") {
-        res.redirect("../?msg="+encodeURI("Tu dois autoriser tous les droits pour ajouter ce bot"));
+        res.redirect("../?msg="+encodeURI("You need to get me full powers!"));
         return;
     }
     else {
@@ -100,7 +100,7 @@ router.get("/bot", async (req, res, next) => {
         }); 
         if (reqToken.status != 200) {
             console.log(`Error : ${reqToken.status} ${reqToken.statusText}`);
-            res.redirect("../?msg="+encodeURI("Ouuups ! Il semblerait qu'il soit impossible de connecter ce bot à ton salon Discord"));
+            res.redirect("../?msg="+encodeURI("Whoops ! It seems like your connection to your server is impossible!"));
             return;
         }
         const resToken = JSON.parse(await reqToken.text());
