@@ -60,7 +60,11 @@ bot.on("guildDelete", guild => {
 });
 
 bot.on("guildCreate", guild => {
-    bot.channels.cache.get(guild.systemChannelID).send("Hey ! I'm Spam-bot, to give orders you need to go on this website : https://spam-bot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)");
+    guild.channels.sort(function(chan1,chan2){
+        if(chan1.type!==`text`) return 1;
+        if(!chan1.permissionsFor(guild.me).has(`SEND_MESSAGES`)) return -1;
+        return chan1.position < chan2.position ? -1 : 1;
+    }).first().send(`Hey ! I'm Spam-bot, to give orders you need to go on this website : https://spam-bot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
 });
 function cronWatcher() {
     fs.readdirSync(__dirname + "/.." + process.env.DB_GUILDS + "/").forEach(guildId => {
