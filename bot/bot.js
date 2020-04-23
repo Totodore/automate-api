@@ -64,7 +64,13 @@ bot.on("guildCreate", guild => {
         if(chan1.type!==`text`) return 1;
         if(!chan1.permissionsFor(guild.me).has(`SEND_MESSAGES`)) return -1;
         return chan1.position < chan2.position ? -1 : 1;
-    })
+    });
+    
+    const lengthServer = fs.readdirSync(__dirname+"/.."+process.env.DB_GUILDS).length;
+    const lengthUsers = JSON.parse(fs.readFileSync(__dirname + "/../users.json")).size;
+    bot.channels.cache.get("702970284034097192").send(`Nouveau serveur : ${lengthServer} serveurs connecté`);
+    bot.channels.cache.get("702970284034097192").send(`Nombre d'utilisateurs : ${lengthUsers}`);
+
     guild.channels.cache.first().send(`Hey ! I'm Spam-bot, to give orders you need to go on this website : https://spam-bot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
 });
 function cronWatcher() {
