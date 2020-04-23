@@ -76,6 +76,6 @@ body {
 
 @media screen and (max-width: 800px) {
     .join-discord {
-        display: none;
+        display: none !important;
     }
 }
