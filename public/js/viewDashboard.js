@@ -1,5 +1,19 @@
 class VueDashboard {
     constructor() {
+        this.months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December"
+        ]
 		this.addTimerModal = M.Modal.init(document.querySelector("#addTimer"));
 		this.formTimer = document.forms.namedItem("addTimerForm");
 		this.addTimer_modalConfirm = document.querySelector("#addTimer .modal-confirm");
@@ -41,7 +55,6 @@ class VueDashboard {
            setDefaultDate: true,
            yearRange: 1,
            defaultDate: new Date(),
-           i18n: this.i18n
         });
         M.FormSelect.init(document.querySelectorAll("select")); 
         this.addEventListener();
@@ -181,7 +194,7 @@ class VueDashboard {
 		const date_string = this.datePicker.toString().split(" ");
 		const time_string = !this.timePickerTimer.time || this.timePickerTimer.time == "00:00" ? [new Date().getHours().toString(), String(new Date().getMinutes()+2)] : this.timePickerTimer.time.split(":");
         const date = new Date();
-		date.setFullYear(date_string[3], this.i18n.months.indexOf(date_string[2]), date_string[1]);
+		date.setFullYear(date_string[3], this.months.indexOf(date_string[2]), date_string[1]);
 		date.setHours(time_string[0], time_string[1]);
         const timestamp = Math.floor((date.getTime()/1000)/60);	//timestamp en minutes
         if (timestamp < Math.floor((Date.now()/1000)/60)) {
