@@ -29,7 +29,16 @@ process.on("message", message => {
             console.log("Error bot : " + error);
             process.send("response_guild?id="+params.get("id")+"\n ");
         }
-    } else {
+    } else if (url == "request_people" && params.get("id")) {
+        try {
+            const dataToSend = bot.guilds.cache.get(params.get("id")).members.cache;
+            process.send("response_people?id="+params.get("id")+"\n"+JSON.stringify(dataToSend));
+        } catch (error) {
+            console.log("Error bot : " + error);
+            process.send("response_people?id="+params.get("id")+"\n ");   
+        }
+    } 
+    else {
         console.log(`Error parsing message : ${message}`);
     }
 });

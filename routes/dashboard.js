@@ -66,24 +66,40 @@ router.get('/', async (req, res, next) => {
             //On build le listener, si c'est la bonne réponse on l'arrête et on envoie une réponse sinon on dispatch l'event
             const botGuildListener = messageGuild => {
                 if (messageGuild.split("\n")[0] === "response_guild?id=" + guild_id) {
-
                     bot.off("message", botGuildListener);
 
                     const guildRes = JSON.parse(messageGuild.split("\n")[1]);
-                    // console.log(guildRes);
                     if (!guildRes) {
-                        console.error(`Error loading channels data : ${channelReq.status} ${channelReq.statusText}`);
+                        console.error(`Error loading channels data`);
                         res.redirect("../?msg=" + encodeURI("Whoops ! It seems like an error has occured during the dashboard's loading. Sniffu..."));
                         return;
                     }
-                    res.render('dashboard', {
-                        header: req.headerData,
-                        table: table, 
-                        channel_list: channelRes, 
-                        guild_data: guildRes, 
-                        cdn: process.env.CDN_ENDPOINT,
-                        now_hour: String(new Date().getHours())+":"+String(new Date().getMinutes()+2)
-                    });
+
+                    bot.send("request_people?id="+guild_id);
+
+                    const botPeopleListener = messagePeople => {
+                        if (messagePeople.split("\n")[0] === "response_people?id="+guild_id) {
+                            bot.off("message", botPeopleListener);
+
+                            const peopleRes = JSON.parse(messagePeople.split("\n")[1]);
+                            if (!peopleRes) {
+                                console.error(`Error loading people data`);
+                                res.redirect("../?msg=" + encodeURI("Whoops ! It seems like an error has occured during the dashboard's loading. Sniffu..."));
+                                return;
+                            }
+                            res.render('dashboard', {
+                                header: req.headerData,
+                                table: table, 
+                                channel_list: channelRes, 
+                                people_list: peopleRes,
+                                guild_data: guildRes, 
+                                cdn: process.env.CDN_ENDPOINT,
+                                now_hour: String(new Date().getHours())+":"+String(new Date().getMinutes()+2)
+                            });
+                        } else 
+                            bot.emit("message", messagePeople);
+                    };
+                    bot.on("message", botPeopleListener);
                 } else
                     bot.emit("message", messageGuild);
             };
