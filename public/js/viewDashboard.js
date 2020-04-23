@@ -50,7 +50,7 @@ class VueDashboard {
         this.datePicker = M.Datepicker.init(document.querySelectorAll(".datepicker"), {
            container: "body",
            firstDay: 1,
-           format: "the dddd d on mmmm yyyy",
+           format: "On dddd the d on mmmm yyyy",
            minDate: new Date(),
            setDefaultDate: true,
            yearRange: 1,
@@ -136,14 +136,14 @@ class VueDashboard {
             }
         } else if (eachVal == "hour") {
             if (this.timePicker.time) {
-                if (this.timePicker.time == "01")
-                    desc += " at the " +  this.timePicker.time.substring + "st minute";
-                else if (this.timePicker.time == "02")
-                    desc += " at the " +  this.timePicker.time.substring + "nd minute";
-                else if (this.timePicker.time == "03")
-                    desc += " at the " +  this.timePicker.time.substring + "rd minute";
+                if (this.timePicker.time.substring(4, 5) == "01")
+                    desc += " at the " +  this.timePicker.time.substring(3, 5) + "st minute";
+                else if (this.timePicker.time.substring(4, 5) == "2")
+                    desc += " at the " +  this.timePicker.time.substring(3, 5) + "nd minute";
+                else if (this.timePicker.time.substring(4, 5) == "03")
+                    desc += " at the " +  this.timePicker.time.substring(3, 5) + "rd minute";
                 else
-                    desc += " at the " +  this.timePicker.time.substring + "th minute";
+                    desc += " at the " +  this.timePicker.time.substring(3, 5) + "th minute";
                 cron[0] =  this.timePicker.time.substring(3,5);
             }
             else {
