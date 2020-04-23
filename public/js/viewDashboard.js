@@ -96,15 +96,18 @@ class VueDashboard {
         let desc = "Every " + eachVal;
         let cron = ["*", "*", "*", "*", "*"];
         if (eachVal == "week") {
-            let selectedDays = {};
+            let selectedDays = [];
             //Pour chaque element selectionné (on a juste le nom)
         	this.daySelectWrapper.querySelectorAll(".selected").forEach((el) => {
                 //Pour chaque element proposé (nom + valeur)
+                console.log(el);
                 document.querySelectorAll("#daySelect option").forEach((inputEl) => {
+                    console.log(inputEl);
                     if (el.textContent == inputEl.textContent)
                         selectedDays[inputEl.value] = inputEl.textContent;
                 });
             });
+            console.log(selectedDays);
             if (selectedDays.length > 0) {
                 desc += " on " + Object.values(selectedDays).join(", ");
                 cron[4] = Object.keys(selectedDays).join(",");
