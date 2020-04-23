@@ -50,7 +50,7 @@ class VueDashboard {
         this.datePicker = M.Datepicker.init(document.querySelectorAll(".datepicker"), {
            container: "body",
            firstDay: 1,
-           format: "dddd d mmmm yyyy",
+           format: "the dddd d on mmmm yyyy",
            minDate: new Date(),
            setDefaultDate: true,
            yearRange: 1,
@@ -201,7 +201,7 @@ class VueDashboard {
             M.toast({html: "We haven't found a way to send messages in past yet, we are waiting for Marty and Doc to come back !"});
             return;
         }
-		const desc = `${this.datePicker.toString()} à ${time_string.join(":")}`;
+		const desc = `${this.datePicker.toString()} at ${time_string.join(":")}`;
         const channel_id = this.formTimer.elements.namedItem("channelSelectTimer").value;
 
 		formData.append("content", content);
