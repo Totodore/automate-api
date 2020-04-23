@@ -36,7 +36,7 @@ class VueDashboard {
             container: "body",
             twelveHour: false,
             onOpenEnd: () => {
-                if (self.form.elements.namedItem("each").value == "heure")
+                if (self.form.elements.namedItem("each").value == "hour")
                     self.timePicker.showView("minutes");
             },
 			defaultTime: 'now'
@@ -136,11 +136,11 @@ class VueDashboard {
             }
         } else if (eachVal == "hour") {
             if (this.timePicker.time) {
-                if (this.timePicker.time.substring(4, 5) == "01")
+                if (this.timePicker.time.substring(4, 5) == "1")
                     desc += " at the " +  this.timePicker.time.substring(3, 5) + "st minute";
                 else if (this.timePicker.time.substring(4, 5) == "2")
                     desc += " at the " +  this.timePicker.time.substring(3, 5) + "nd minute";
-                else if (this.timePicker.time.substring(4, 5) == "03")
+                else if (this.timePicker.time.substring(4, 5) == "3")
                     desc += " at the " +  this.timePicker.time.substring(3, 5) + "rd minute";
                 else
                     desc += " at the " +  this.timePicker.time.substring(3, 5) + "th minute";
