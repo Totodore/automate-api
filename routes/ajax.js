@@ -41,7 +41,7 @@ router.get("/remove_message", (req, res) => {
 router.post("/add_schedule", (req, res) => {
 	const msg_id = uniqid();
 	const query = req.fields; 
-	if (!query.content || query.content.length < 1 || !query.frequency || !query.cron || !query.channel_id || !query.guild_id) {
+	if (!query.content || query.content.length < 1 || !query.frequency || !query.cron || !query.channel_id || !query.guild_id || !query.sys_content) {
 		res.status(520);
 		res.send("Error params not given");
 		return;
@@ -53,7 +53,8 @@ router.post("/add_schedule", (req, res) => {
 			channel_id: query.channel_id,
 			cron: query.cron,
 			message: query.content,
-			description: query.frequency
+			description: query.frequency,
+			sys_content: query.sys_content,
 		});
 		fs.writeFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`, JSON.stringify(guildData));
 	} catch (error) {
@@ -68,7 +69,7 @@ router.post("/add_schedule", (req, res) => {
 router.post("/add_timer", (req, res) => {
 	const msg_id = uniqid();
 	const query = req.fields; 
-	if (!query.content || query.content.length < 1 || !query.timestamp || !query.description || !query.channel_id || !query.guild_id) {
+	if (!query.content || query.content.length < 1 || !query.timestamp || !query.description || !query.channel_id || !query.guild_id || !query.sys_content) {
 		res.status(520);
 		res.send("Error params not given");
 		return;
@@ -80,7 +81,8 @@ router.post("/add_timer", (req, res) => {
 			channel_id: query.channel_id,
 			timestamp: query.timestamp,
 			message: query.content,
-			description: query.description
+			description: query.description,
+			sys_content: query.sys_content
 		});
 		fs.writeFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`, JSON.stringify(guildData));
 	} catch (error) {

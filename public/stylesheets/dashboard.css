@@ -64,7 +64,7 @@ textarea.materialize-red-text, .input-field label.materialize-red-text, .input-f
   color: #b9151b !important;
 }
 
-.materialize-red.darken-3, .materialize-red.datepicker-calendar-container {
+.materialize-red.darken-3, .materialize-red.user_el.selected, .materialize-red.channel_el.selected, .materialize-red.user_el:hover, .materialize-red.channel_el:hover, .materialize-red.datepicker-calendar-container {
   background-color: #a21318 !important;
 }
 
@@ -72,7 +72,7 @@ textarea.materialize-red-text, .input-field label.materialize-red-text, .input-f
   color: #a21318 !important;
 }
 
-.materialize-red.darken-4, .materialize-red.guild-data, .materialize-red.crons, .materialize-red#addTimer, .materialize-red#add_cron, .materialize-red.footer, .materialize-red.select-dropdown {
+.materialize-red.darken-4, .materialize-red.guild-data, .materialize-red.crons, .materialize-red#addTimer, .materialize-red#add_cron, .materialize-red.users_wrapper, .materialize-red.channels_wrapper, .materialize-red.user_el, .materialize-red.channel_el, .materialize-red.footer, .materialize-red.select-dropdown {
   background-color: #8b1014 !important;
 }
 
@@ -146,7 +146,7 @@ textarea.red-text, .input-field label.red-text, .input-field input[type=text]:fo
   color: #D32F2F !important;
 }
 
-.red.darken-3, .red.datepicker-calendar-container {
+.red.darken-3, .red.user_el.selected, .red.channel_el.selected, .red.user_el:hover, .red.channel_el:hover, .red.datepicker-calendar-container {
   background-color: #C62828 !important;
 }
 
@@ -154,7 +154,7 @@ textarea.red-text, .input-field label.red-text, .input-field input[type=text]:fo
   color: #C62828 !important;
 }
 
-.red.darken-4, .red.guild-data, .red.crons, .red#addTimer, .red#add_cron, .red.footer, .red.select-dropdown {
+.red.darken-4, .red.guild-data, .red.crons, .red#addTimer, .red#add_cron, .red.users_wrapper, .red.channels_wrapper, .red.user_el, .red.channel_el, .red.footer, .red.select-dropdown {
   background-color: #B71C1C !important;
 }
 
@@ -260,7 +260,7 @@ textarea.pink-text, .input-field label.pink-text, .input-field input[type=text]:
   color: #c2185b !important;
 }
 
-.pink.darken-3, .pink.datepicker-calendar-container {
+.pink.darken-3, .pink.user_el.selected, .pink.channel_el.selected, .pink.user_el:hover, .pink.channel_el:hover, .pink.datepicker-calendar-container {
   background-color: #ad1457 !important;
 }
 
@@ -268,7 +268,7 @@ textarea.pink-text, .input-field label.pink-text, .input-field input[type=text]:
   color: #ad1457 !important;
 }
 
-.pink.darken-4, .pink.guild-data, .pink.crons, .pink#addTimer, .pink#add_cron, .pink.footer, .pink.select-dropdown {
+.pink.darken-4, .pink.guild-data, .pink.crons, .pink#addTimer, .pink#add_cron, .pink.users_wrapper, .pink.channels_wrapper, .pink.user_el, .pink.channel_el, .pink.footer, .pink.select-dropdown {
   background-color: #880e4f !important;
 }
 
@@ -374,7 +374,7 @@ textarea.purple-text, .input-field label.purple-text, .input-field input[type=te
   color: #7b1fa2 !important;
 }
 
-.purple.darken-3, .purple.datepicker-calendar-container {
+.purple.darken-3, .purple.user_el.selected, .purple.channel_el.selected, .purple.user_el:hover, .purple.channel_el:hover, .purple.datepicker-calendar-container {
   background-color: #6a1b9a !important;
 }
 
@@ -382,7 +382,7 @@ textarea.purple-text, .input-field label.purple-text, .input-field input[type=te
   color: #6a1b9a !important;
 }
 
-.purple.darken-4, .purple.guild-data, .purple.crons, .purple#addTimer, .purple#add_cron, .purple.footer, .purple.select-dropdown {
+.purple.darken-4, .purple.guild-data, .purple.crons, .purple#addTimer, .purple#add_cron, .purple.users_wrapper, .purple.channels_wrapper, .purple.user_el, .purple.channel_el, .purple.footer, .purple.select-dropdown {
   background-color: #4a148c !important;
 }
 
@@ -488,7 +488,7 @@ textarea.deep-purple-text, .input-field label.deep-purple-text, .input-field inp
   color: #512da8 !important;
 }
 
-.deep-purple.darken-3, .deep-purple.datepicker-calendar-container {
+.deep-purple.darken-3, .deep-purple.user_el.selected, .deep-purple.channel_el.selected, .deep-purple.user_el:hover, .deep-purple.channel_el:hover, .deep-purple.datepicker-calendar-container {
   background-color: #4527a0 !important;
 }
 
@@ -496,7 +496,7 @@ textarea.deep-purple-text, .input-field label.deep-purple-text, .input-field inp
   color: #4527a0 !important;
 }
 
-.deep-purple.darken-4, .deep-purple.guild-data, .deep-purple.crons, .deep-purple#addTimer, .deep-purple#add_cron, .deep-purple.footer, .deep-purple.select-dropdown {
+.deep-purple.darken-4, .deep-purple.guild-data, .deep-purple.crons, .deep-purple#addTimer, .deep-purple#add_cron, .deep-purple.users_wrapper, .deep-purple.channels_wrapper, .deep-purple.user_el, .deep-purple.channel_el, .deep-purple.footer, .deep-purple.select-dropdown {
   background-color: #311b92 !important;
 }
 
@@ -602,7 +602,7 @@ textarea.indigo-text, .input-field label.indigo-text, .input-field input[type=te
   color: #303f9f !important;
 }
 
-.indigo.darken-3, .indigo.datepicker-calendar-container {
+.indigo.darken-3, .indigo.user_el.selected, .indigo.channel_el.selected, .indigo.user_el:hover, .indigo.channel_el:hover, .indigo.datepicker-calendar-container {
   background-color: #283593 !important;
 }
 
@@ -610,7 +610,7 @@ textarea.indigo-text, .input-field label.indigo-text, .input-field input[type=te
   color: #283593 !important;
 }
 
-.indigo.darken-4, .indigo.guild-data, .indigo.crons, .indigo#addTimer, .indigo#add_cron, .indigo.footer, .indigo.select-dropdown {
+.indigo.darken-4, .indigo.guild-data, .indigo.crons, .indigo#addTimer, .indigo#add_cron, .indigo.users_wrapper, .indigo.channels_wrapper, .indigo.user_el, .indigo.channel_el, .indigo.footer, .indigo.select-dropdown {
   background-color: #1a237e !important;
 }
 
@@ -716,7 +716,7 @@ textarea.blue-text, .input-field label.blue-text, .input-field input[type=text]:
   color: #1976D2 !important;
 }
 
-.blue.darken-3, .blue.datepicker-calendar-container {
+.blue.darken-3, .blue.user_el.selected, .blue.channel_el.selected, .blue.user_el:hover, .blue.channel_el:hover, .blue.datepicker-calendar-container {
   background-color: #1565C0 !important;
 }
 
@@ -724,7 +724,7 @@ textarea.blue-text, .input-field label.blue-text, .input-field input[type=text]:
   color: #1565C0 !important;
 }
 
-.blue.darken-4, .blue.guild-data, .blue.crons, .blue#addTimer, .blue#add_cron, .blue.footer, .blue.select-dropdown {
+.blue.darken-4, .blue.guild-data, .blue.crons, .blue#addTimer, .blue#add_cron, .blue.users_wrapper, .blue.channels_wrapper, .blue.user_el, .blue.channel_el, .blue.footer, .blue.select-dropdown {
   background-color: #0D47A1 !important;
 }
 
@@ -830,7 +830,7 @@ textarea.light-blue-text, .input-field label.light-blue-text, .input-field input
   color: #0288d1 !important;
 }
 
-.light-blue.darken-3, .light-blue.datepicker-calendar-container {
+.light-blue.darken-3, .light-blue.user_el.selected, .light-blue.channel_el.selected, .light-blue.user_el:hover, .light-blue.channel_el:hover, .light-blue.datepicker-calendar-container {
   background-color: #0277bd !important;
 }
 
@@ -838,7 +838,7 @@ textarea.light-blue-text, .input-field label.light-blue-text, .input-field input
   color: #0277bd !important;
 }
 
-.light-blue.darken-4, .light-blue.guild-data, .light-blue.crons, .light-blue#addTimer, .light-blue#add_cron, .light-blue.footer, .light-blue.select-dropdown {
+.light-blue.darken-4, .light-blue.guild-data, .light-blue.crons, .light-blue#addTimer, .light-blue#add_cron, .light-blue.users_wrapper, .light-blue.channels_wrapper, .light-blue.user_el, .light-blue.channel_el, .light-blue.footer, .light-blue.select-dropdown {
   background-color: #01579b !important;
 }
 
@@ -944,7 +944,7 @@ textarea.cyan-text, .input-field label.cyan-text, .input-field input[type=text]:
   color: #0097a7 !important;
 }
 
-.cyan.darken-3, .cyan.datepicker-calendar-container {
+.cyan.darken-3, .cyan.user_el.selected, .cyan.channel_el.selected, .cyan.user_el:hover, .cyan.channel_el:hover, .cyan.datepicker-calendar-container {
   background-color: #00838f !important;
 }
 
@@ -952,7 +952,7 @@ textarea.cyan-text, .input-field label.cyan-text, .input-field input[type=text]:
   color: #00838f !important;
 }
 
-.cyan.darken-4, .cyan.guild-data, .cyan.crons, .cyan#addTimer, .cyan#add_cron, .cyan.footer, .cyan.select-dropdown {
+.cyan.darken-4, .cyan.guild-data, .cyan.crons, .cyan#addTimer, .cyan#add_cron, .cyan.users_wrapper, .cyan.channels_wrapper, .cyan.user_el, .cyan.channel_el, .cyan.footer, .cyan.select-dropdown {
   background-color: #006064 !important;
 }
 
@@ -1058,7 +1058,7 @@ textarea.teal-text, .input-field label.teal-text, .input-field input[type=text]:
   color: #00796b !important;
 }
 
-.teal.darken-3, .teal.datepicker-calendar-container {
+.teal.darken-3, .teal.user_el.selected, .teal.channel_el.selected, .teal.user_el:hover, .teal.channel_el:hover, .teal.datepicker-calendar-container {
   background-color: #00695c !important;
 }
 
@@ -1066,7 +1066,7 @@ textarea.teal-text, .input-field label.teal-text, .input-field input[type=text]:
   color: #00695c !important;
 }
 
-.teal.darken-4, .teal.guild-data, .teal.crons, .teal#addTimer, .teal#add_cron, .teal.footer, .teal.select-dropdown {
+.teal.darken-4, .teal.guild-data, .teal.crons, .teal#addTimer, .teal#add_cron, .teal.users_wrapper, .teal.channels_wrapper, .teal.user_el, .teal.channel_el, .teal.footer, .teal.select-dropdown {
   background-color: #004d40 !important;
 }
 
@@ -1172,7 +1172,7 @@ textarea.green-text, .input-field label.green-text, .input-field input[type=text
   color: #388E3C !important;
 }
 
-.green.darken-3, .green.datepicker-calendar-container {
+.green.darken-3, .green.user_el.selected, .green.channel_el.selected, .green.user_el:hover, .green.channel_el:hover, .green.datepicker-calendar-container {
   background-color: #2E7D32 !important;
 }
 
@@ -1180,7 +1180,7 @@ textarea.green-text, .input-field label.green-text, .input-field input[type=text
   color: #2E7D32 !important;
 }
 
-.green.darken-4, .green.guild-data, .green.crons, .green#addTimer, .green#add_cron, .green.footer, .green.select-dropdown {
+.green.darken-4, .green.guild-data, .green.crons, .green#addTimer, .green#add_cron, .green.users_wrapper, .green.channels_wrapper, .green.user_el, .green.channel_el, .green.footer, .green.select-dropdown {
   background-color: #1B5E20 !important;
 }
 
@@ -1286,7 +1286,7 @@ textarea.light-green-text, .input-field label.light-green-text, .input-field inp
   color: #689f38 !important;
 }
 
-.light-green.darken-3, .light-green.datepicker-calendar-container {
+.light-green.darken-3, .light-green.user_el.selected, .light-green.channel_el.selected, .light-green.user_el:hover, .light-green.channel_el:hover, .light-green.datepicker-calendar-container {
   background-color: #558b2f !important;
 }
 
@@ -1294,7 +1294,7 @@ textarea.light-green-text, .input-field label.light-green-text, .input-field inp
   color: #558b2f !important;
 }
 
-.light-green.darken-4, .light-green.guild-data, .light-green.crons, .light-green#addTimer, .light-green#add_cron, .light-green.footer, .light-green.select-dropdown {
+.light-green.darken-4, .light-green.guild-data, .light-green.crons, .light-green#addTimer, .light-green#add_cron, .light-green.users_wrapper, .light-green.channels_wrapper, .light-green.user_el, .light-green.channel_el, .light-green.footer, .light-green.select-dropdown {
   background-color: #33691e !important;
 }
 
@@ -1400,7 +1400,7 @@ textarea.lime-text, .input-field label.lime-text, .input-field input[type=text]:
   color: #afb42b !important;
 }
 
-.lime.darken-3, .lime.datepicker-calendar-container {
+.lime.darken-3, .lime.user_el.selected, .lime.channel_el.selected, .lime.user_el:hover, .lime.channel_el:hover, .lime.datepicker-calendar-container {
   background-color: #9e9d24 !important;
 }
 
@@ -1408,7 +1408,7 @@ textarea.lime-text, .input-field label.lime-text, .input-field input[type=text]:
   color: #9e9d24 !important;
 }
 
-.lime.darken-4, .lime.guild-data, .lime.crons, .lime#addTimer, .lime#add_cron, .lime.footer, .lime.select-dropdown {
+.lime.darken-4, .lime.guild-data, .lime.crons, .lime#addTimer, .lime#add_cron, .lime.users_wrapper, .lime.channels_wrapper, .lime.user_el, .lime.channel_el, .lime.footer, .lime.select-dropdown {
   background-color: #827717 !important;
 }
 
@@ -1514,7 +1514,7 @@ textarea.yellow-text, .input-field label.yellow-text, .input-field input[type=te
   color: #fbc02d !important;
 }
 
-.yellow.darken-3, .yellow.datepicker-calendar-container {
+.yellow.darken-3, .yellow.user_el.selected, .yellow.channel_el.selected, .yellow.user_el:hover, .yellow.channel_el:hover, .yellow.datepicker-calendar-container {
   background-color: #f9a825 !important;
 }
 
@@ -1522,7 +1522,7 @@ textarea.yellow-text, .input-field label.yellow-text, .input-field input[type=te
   color: #f9a825 !important;
 }
 
-.yellow.darken-4, .yellow.guild-data, .yellow.crons, .yellow#addTimer, .yellow#add_cron, .yellow.footer, .yellow.select-dropdown {
+.yellow.darken-4, .yellow.guild-data, .yellow.crons, .yellow#addTimer, .yellow#add_cron, .yellow.users_wrapper, .yellow.channels_wrapper, .yellow.user_el, .yellow.channel_el, .yellow.footer, .yellow.select-dropdown {
   background-color: #f57f17 !important;
 }
 
@@ -1628,7 +1628,7 @@ textarea.amber-text, .input-field label.amber-text, .input-field input[type=text
   color: #ffa000 !important;
 }
 
-.amber.darken-3, .amber.datepicker-calendar-container {
+.amber.darken-3, .amber.user_el.selected, .amber.channel_el.selected, .amber.user_el:hover, .amber.channel_el:hover, .amber.datepicker-calendar-container {
   background-color: #ff8f00 !important;
 }
 
@@ -1636,7 +1636,7 @@ textarea.amber-text, .input-field label.amber-text, .input-field input[type=text
   color: #ff8f00 !important;
 }
 
-.amber.darken-4, .amber.guild-data, .amber.crons, .amber#addTimer, .amber#add_cron, .amber.footer, .amber.select-dropdown {
+.amber.darken-4, .amber.guild-data, .amber.crons, .amber#addTimer, .amber#add_cron, .amber.users_wrapper, .amber.channels_wrapper, .amber.user_el, .amber.channel_el, .amber.footer, .amber.select-dropdown {
   background-color: #ff6f00 !important;
 }
 
@@ -1742,7 +1742,7 @@ textarea.orange-text, .input-field label.orange-text, .input-field input[type=te
   color: #f57c00 !important;
 }
 
-.orange.darken-3, .orange.datepicker-calendar-container {
+.orange.darken-3, .orange.user_el.selected, .orange.channel_el.selected, .orange.user_el:hover, .orange.channel_el:hover, .orange.datepicker-calendar-container {
   background-color: #ef6c00 !important;
 }
 
@@ -1750,7 +1750,7 @@ textarea.orange-text, .input-field label.orange-text, .input-field input[type=te
   color: #ef6c00 !important;
 }
 
-.orange.darken-4, .orange.guild-data, .orange.crons, .orange#addTimer, .orange#add_cron, .orange.footer, .orange.select-dropdown {
+.orange.darken-4, .orange.guild-data, .orange.crons, .orange#addTimer, .orange#add_cron, .orange.users_wrapper, .orange.channels_wrapper, .orange.user_el, .orange.channel_el, .orange.footer, .orange.select-dropdown {
   background-color: #e65100 !important;
 }
 
@@ -1856,7 +1856,7 @@ textarea.deep-orange-text, .input-field label.deep-orange-text, .input-field inp
   color: #e64a19 !important;
 }
 
-.deep-orange.darken-3, .deep-orange.datepicker-calendar-container {
+.deep-orange.darken-3, .deep-orange.user_el.selected, .deep-orange.channel_el.selected, .deep-orange.user_el:hover, .deep-orange.channel_el:hover, .deep-orange.datepicker-calendar-container {
   background-color: #d84315 !important;
 }
 
@@ -1864,7 +1864,7 @@ textarea.deep-orange-text, .input-field label.deep-orange-text, .input-field inp
   color: #d84315 !important;
 }
 
-.deep-orange.darken-4, .deep-orange.guild-data, .deep-orange.crons, .deep-orange#addTimer, .deep-orange#add_cron, .deep-orange.footer, .deep-orange.select-dropdown {
+.deep-orange.darken-4, .deep-orange.guild-data, .deep-orange.crons, .deep-orange#addTimer, .deep-orange#add_cron, .deep-orange.users_wrapper, .deep-orange.channels_wrapper, .deep-orange.user_el, .deep-orange.channel_el, .deep-orange.footer, .deep-orange.select-dropdown {
   background-color: #bf360c !important;
 }
 
@@ -1970,7 +1970,7 @@ textarea.brown-text, .input-field label.brown-text, .input-field input[type=text
   color: #5d4037 !important;
 }
 
-.brown.darken-3, .brown.datepicker-calendar-container {
+.brown.darken-3, .brown.user_el.selected, .brown.channel_el.selected, .brown.user_el:hover, .brown.channel_el:hover, .brown.datepicker-calendar-container {
   background-color: #4e342e !important;
 }
 
@@ -1978,7 +1978,7 @@ textarea.brown-text, .input-field label.brown-text, .input-field input[type=text
   color: #4e342e !important;
 }
 
-.brown.darken-4, .brown.guild-data, .brown.crons, .brown#addTimer, .brown#add_cron, .brown.footer, .brown.select-dropdown {
+.brown.darken-4, .brown.guild-data, .brown.crons, .brown#addTimer, .brown#add_cron, .brown.users_wrapper, .brown.channels_wrapper, .brown.user_el, .brown.channel_el, .brown.footer, .brown.select-dropdown {
   background-color: #3e2723 !important;
 }
 
@@ -2052,7 +2052,7 @@ textarea.blue-grey-text, .input-field label.blue-grey-text, .input-field input[t
   color: #455a64 !important;
 }
 
-.blue-grey.darken-3, .blue-grey.datepicker-calendar-container {
+.blue-grey.darken-3, .blue-grey.user_el.selected, .blue-grey.channel_el.selected, .blue-grey.user_el:hover, .blue-grey.channel_el:hover, .blue-grey.datepicker-calendar-container {
   background-color: #37474f !important;
 }
 
@@ -2060,7 +2060,7 @@ textarea.blue-grey-text, .input-field label.blue-grey-text, .input-field input[t
   color: #37474f !important;
 }
 
-.blue-grey.darken-4, .blue-grey.guild-data, .blue-grey.crons, .blue-grey#addTimer, .blue-grey#add_cron, .blue-grey.footer, .blue-grey.select-dropdown {
+.blue-grey.darken-4, .blue-grey.guild-data, .blue-grey.crons, .blue-grey#addTimer, .blue-grey#add_cron, .blue-grey.users_wrapper, .blue-grey.channels_wrapper, .blue-grey.user_el, .blue-grey.channel_el, .blue-grey.footer, .blue-grey.select-dropdown {
   background-color: #263238 !important;
 }
 
@@ -2068,7 +2068,7 @@ textarea.blue-grey-text, .input-field label.blue-grey-text, .input-field input[t
   color: #263238 !important;
 }
 
-.grey, .guild-data, .crons, .crons tbody tr:hover, #addTimer, #add_cron, .footer, .select-dropdown, .datepicker-calendar-container {
+.grey, .guild-data, .crons, .crons tbody tr:hover, #addTimer, #add_cron, .users_wrapper, .channels_wrapper, .user_el, .channel_el, .footer, .select-dropdown, .datepicker-calendar-container {
   background-color: #9e9e9e !important;
 }
 
@@ -2078,7 +2078,7 @@ textarea, .input-field label, .input-field input[type=text]:focus + label,
   color: #9e9e9e !important;
 }
 
-.grey.lighten-5, .lighten-5.guild-data, .lighten-5.crons, .crons tbody tr.lighten-5:hover, .lighten-5#addTimer, .lighten-5#add_cron, .lighten-5.footer, .lighten-5.select-dropdown, .lighten-5.datepicker-calendar-container {
+.grey.lighten-5, .lighten-5.guild-data, .lighten-5.crons, .crons tbody tr.lighten-5:hover, .lighten-5#addTimer, .lighten-5#add_cron, .lighten-5.users_wrapper, .lighten-5.channels_wrapper, .lighten-5.user_el, .lighten-5.channel_el, .lighten-5.footer, .lighten-5.select-dropdown, .lighten-5.datepicker-calendar-container {
   background-color: #fafafa !important;
 }
 
@@ -2088,7 +2088,7 @@ textarea.text-lighten-5, .input-field label.text-lighten-5, .input-field input[t
   color: #fafafa !important;
 }
 
-.grey.lighten-4, .lighten-4.guild-data, .lighten-4.crons, .crons tbody tr.lighten-4:hover, .lighten-4#addTimer, .lighten-4#add_cron, .lighten-4.footer, .lighten-4.select-dropdown, .lighten-4.datepicker-calendar-container {
+.grey.lighten-4, .lighten-4.guild-data, .lighten-4.crons, .crons tbody tr.lighten-4:hover, .lighten-4#addTimer, .lighten-4#add_cron, .lighten-4.users_wrapper, .lighten-4.channels_wrapper, .lighten-4.user_el, .lighten-4.channel_el, .lighten-4.footer, .lighten-4.select-dropdown, .lighten-4.datepicker-calendar-container {
   background-color: #f5f5f5 !important;
 }
 
@@ -2098,7 +2098,7 @@ textarea.text-lighten-4, .input-field label.text-lighten-4, .input-field input[t
   color: #f5f5f5 !important;
 }
 
-.grey.lighten-3, .lighten-3.guild-data, .lighten-3.crons, .crons tbody tr.lighten-3:hover, .lighten-3#addTimer, .lighten-3#add_cron, .lighten-3.footer, .lighten-3.select-dropdown, .lighten-3.datepicker-calendar-container {
+.grey.lighten-3, .lighten-3.guild-data, .lighten-3.crons, .crons tbody tr.lighten-3:hover, .lighten-3#addTimer, .lighten-3#add_cron, .lighten-3.users_wrapper, .lighten-3.channels_wrapper, .lighten-3.user_el, .lighten-3.channel_el, .lighten-3.footer, .lighten-3.select-dropdown, .lighten-3.datepicker-calendar-container {
   background-color: #eeeeee !important;
 }
 
@@ -2108,7 +2108,7 @@ textarea.text-lighten-3, .input-field label.text-lighten-3, .input-field input[t
   color: #eeeeee !important;
 }
 
-.grey.lighten-2, .lighten-2.guild-data, .lighten-2.crons, .crons tbody tr.lighten-2:hover, .lighten-2#addTimer, .lighten-2#add_cron, .lighten-2.footer, .lighten-2.select-dropdown, .lighten-2.datepicker-calendar-container {
+.grey.lighten-2, .lighten-2.guild-data, .lighten-2.crons, .crons tbody tr.lighten-2:hover, .lighten-2#addTimer, .lighten-2#add_cron, .lighten-2.users_wrapper, .lighten-2.channels_wrapper, .lighten-2.user_el, .lighten-2.channel_el, .lighten-2.footer, .lighten-2.select-dropdown, .lighten-2.datepicker-calendar-container {
   background-color: #e0e0e0 !important;
 }
 
@@ -2121,7 +2121,7 @@ textarea, .input-field label, .input-field input[type=text]:focus + label,
   color: #e0e0e0 !important;
 }
 
-.grey.lighten-1, .lighten-1.guild-data, .lighten-1.crons, .crons tbody tr.lighten-1:hover, .lighten-1#addTimer, .lighten-1#add_cron, .lighten-1.footer, .lighten-1.select-dropdown, .lighten-1.datepicker-calendar-container {
+.grey.lighten-1, .lighten-1.guild-data, .lighten-1.crons, .crons tbody tr.lighten-1:hover, .lighten-1#addTimer, .lighten-1#add_cron, .lighten-1.users_wrapper, .lighten-1.channels_wrapper, .lighten-1.user_el, .lighten-1.channel_el, .lighten-1.footer, .lighten-1.select-dropdown, .lighten-1.datepicker-calendar-container {
   background-color: #bdbdbd !important;
 }
 
@@ -2131,7 +2131,7 @@ textarea.text-lighten-1, .input-field label.text-lighten-1, .input-field label.g
   color: #bdbdbd !important;
 }
 
-.grey.darken-1, .darken-1.guild-data, .darken-1.crons, .crons tbody tr.darken-1:hover, .darken-1#addTimer, .darken-1#add_cron, .darken-1.footer, .darken-1.select-dropdown, .darken-1.datepicker-calendar-container {
+.grey.darken-1, .darken-1.guild-data, .darken-1.crons, .crons tbody tr.darken-1:hover, .darken-1#addTimer, .darken-1#add_cron, .darken-1.users_wrapper, .darken-1.channels_wrapper, .darken-1.user_el, .darken-1.channel_el, .darken-1.footer, .darken-1.select-dropdown, .darken-1.datepicker-calendar-container {
   background-color: #757575 !important;
 }
 
@@ -2141,7 +2141,7 @@ textarea.text-darken-1, .input-field label.text-darken-1, .input-field input[typ
   color: #757575 !important;
 }
 
-.grey.darken-2, .darken-2.guild-data, .darken-2.crons, .crons tbody tr:hover, .darken-2#addTimer, .crons tbody tr#addTimer:hover, .darken-2#add_cron, .crons tbody tr#add_cron:hover, .darken-2.footer, .darken-2.select-dropdown, .darken-2.datepicker-calendar-container {
+.grey.darken-2, .darken-2.guild-data, .darken-2.crons, .crons tbody tr:hover, .darken-2#addTimer, .crons tbody tr#addTimer:hover, .darken-2#add_cron, .crons tbody tr#add_cron:hover, .darken-2.users_wrapper, .darken-2.channels_wrapper, .darken-2.user_el, .darken-2.channel_el, .darken-2.footer, .darken-2.select-dropdown, .darken-2.datepicker-calendar-container {
   background-color: #616161 !important;
 }
 
@@ -2151,7 +2151,7 @@ textarea.text-darken-2, .input-field label.text-darken-2, .input-field input[typ
   color: #616161 !important;
 }
 
-.grey.darken-3, .darken-3.guild-data, .darken-3.crons, .crons tbody tr.darken-3:hover, .crons tbody tr.datepicker-calendar-container:hover, .darken-3#addTimer, #addTimer.datepicker-calendar-container, .darken-3#add_cron, #add_cron.datepicker-calendar-container, .darken-3.footer, .darken-3.select-dropdown, .datepicker-calendar-container {
+.grey.darken-3, .darken-3.guild-data, .darken-3.crons, .crons tbody tr.darken-3:hover, .crons tbody tr.user_el:hover, .crons tbody tr.channel_el:hover, .crons tbody tr.datepicker-calendar-container:hover, .darken-3#addTimer, #addTimer.user_el.selected, #addTimer.channel_el.selected, #addTimer.user_el:hover, #addTimer.channel_el:hover, #addTimer.datepicker-calendar-container, .darken-3#add_cron, #add_cron.user_el.selected, #add_cron.channel_el.selected, #add_cron.user_el:hover, #add_cron.channel_el:hover, #add_cron.datepicker-calendar-container, .darken-3.users_wrapper, .darken-3.channels_wrapper, .darken-3.user_el, .user_el.selected, .user_el:hover, .darken-3.channel_el, .channel_el.selected, .channel_el:hover, .darken-3.footer, .darken-3.select-dropdown, .datepicker-calendar-container {
   background-color: #424242 !important;
 }
 
@@ -2161,7 +2161,7 @@ textarea.text-darken-3, .input-field label.text-darken-3, .input-field input[typ
   color: #424242 !important;
 }
 
-.grey.darken-4, .guild-data, .crons, .crons tbody tr.darken-4:hover, .crons tbody tr.guild-data:hover, .crons tbody tr.crons:hover, .crons tbody tr.footer:hover, .crons tbody tr.select-dropdown:hover, #addTimer, #add_cron, .footer, .select-dropdown, .darken-4.datepicker-calendar-container {
+.grey.darken-4, .guild-data, .crons, .crons tbody tr.darken-4:hover, .crons tbody tr.guild-data:hover, .crons tbody tr.crons:hover, .crons tbody tr.users_wrapper:hover, .crons tbody tr.channels_wrapper:hover, .crons tbody tr.user_el:hover, .crons tbody tr.channel_el:hover, .crons tbody tr.footer:hover, .crons tbody tr.select-dropdown:hover, #addTimer, #add_cron, .users_wrapper, .channels_wrapper, .user_el, .channel_el, .footer, .select-dropdown, .darken-4.datepicker-calendar-container {
   background-color: #212121 !important;
 }
 
@@ -2685,7 +2685,7 @@ a {
 }
 
 /* 2dp elevation modified*/
-.z-depth-1, nav, .card-panel, .card, .guild-data, .crons, .toast, .btn, .btn-large, .btn-small, .btn-floating, .dropdown-content, .collapsible, .sidenav {
+.z-depth-1, nav, .card-panel, .card, .guild-data, .crons, .user_el, .channel_el, .toast, .btn, .btn-large, .btn-small, .btn-floating, .dropdown-content, .collapsible, .sidenav {
   -webkit-box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
           box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 }
@@ -2696,7 +2696,7 @@ a {
 }
 
 /* 6dp elevation modified*/
-.z-depth-2, .guild-icon {
+.z-depth-2, .guild-icon, .users_wrapper, .channels_wrapper {
   -webkit-box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
           box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
 }
@@ -4759,14 +4759,14 @@ small {
   }
 }
 
-.scale-transition, .crons tbody tr i {
+.scale-transition, .crons tbody tr i, .users_wrapper, .channels_wrapper {
   -webkit-transition: -webkit-transform 0.3s cubic-bezier(0.53, 0.01, 0.36, 1.63) !important;
   transition: -webkit-transform 0.3s cubic-bezier(0.53, 0.01, 0.36, 1.63) !important;
   transition: transform 0.3s cubic-bezier(0.53, 0.01, 0.36, 1.63) !important;
   transition: transform 0.3s cubic-bezier(0.53, 0.01, 0.36, 1.63), -webkit-transform 0.3s cubic-bezier(0.53, 0.01, 0.36, 1.63) !important;
 }
 
-.scale-transition.scale-out, .crons tbody tr i {
+.scale-transition.scale-out, .crons tbody tr i, .scale-out.users_wrapper, .scale-out.channels_wrapper {
   -webkit-transform: scale(0);
           transform: scale(0);
   -webkit-transition: -webkit-transform .2s !important;
@@ -4775,7 +4775,7 @@ small {
   transition: transform .2s, -webkit-transform .2s !important;
 }
 
-.scale-transition.scale-in, .crons tbody tr:hover i, .crons tbody tr i.scale-in {
+.scale-transition.scale-in, .crons tbody tr:hover i, .crons tbody tr i.scale-in, .scale-in.users_wrapper, .scale-in.channels_wrapper {
   -webkit-transform: scale(1);
           transform: scale(1);
 }
@@ -4791,7 +4791,7 @@ small {
   background-color: #fff;
 }
 
-.card, .guild-data, .crons {
+.card, .guild-data, .crons, .user_el, .channel_el {
   position: relative;
   margin: 0.5rem 0 1rem 0;
   background-color: #fff;
@@ -4802,79 +4802,79 @@ small {
   border-radius: 2px;
 }
 
-.card .card-title, .guild-data .card-title, .crons .card-title {
+.card .card-title, .guild-data .card-title, .crons .card-title, .user_el .card-title, .channel_el .card-title {
   font-size: 24px;
   font-weight: 300;
 }
 
-.card .card-title.activator, .guild-data .card-title.activator, .crons .card-title.activator {
+.card .card-title.activator, .guild-data .card-title.activator, .crons .card-title.activator, .user_el .card-title.activator, .channel_el .card-title.activator {
   cursor: pointer;
 }
 
-.card.small, .small.guild-data, .small.crons, .card.medium, .medium.guild-data, .medium.crons, .card.large, .large.guild-data, .large.crons {
+.card.small, .small.guild-data, .small.crons, .small.user_el, .small.channel_el, .card.medium, .medium.guild-data, .medium.crons, .medium.user_el, .medium.channel_el, .card.large, .large.guild-data, .large.crons, .large.user_el, .large.channel_el {
   position: relative;
 }
 
-.card.small .card-image, .small.guild-data .card-image, .small.crons .card-image, .card.medium .card-image, .medium.guild-data .card-image, .medium.crons .card-image, .card.large .card-image, .large.guild-data .card-image, .large.crons .card-image {
+.card.small .card-image, .small.guild-data .card-image, .small.crons .card-image, .small.user_el .card-image, .small.channel_el .card-image, .card.medium .card-image, .medium.guild-data .card-image, .medium.crons .card-image, .medium.user_el .card-image, .medium.channel_el .card-image, .card.large .card-image, .large.guild-data .card-image, .large.crons .card-image, .large.user_el .card-image, .large.channel_el .card-image {
   max-height: 60%;
   overflow: hidden;
 }
 
-.card.small .card-image + .card-content, .small.guild-data .card-image + .card-content, .small.crons .card-image + .card-content, .card.medium .card-image + .card-content, .medium.guild-data .card-image + .card-content, .medium.crons .card-image + .card-content, .card.large .card-image + .card-content, .large.guild-data .card-image + .card-content, .large.crons .card-image + .card-content {
+.card.small .card-image + .card-content, .small.guild-data .card-image + .card-content, .small.crons .card-image + .card-content, .small.user_el .card-image + .card-content, .small.channel_el .card-image + .card-content, .card.medium .card-image + .card-content, .medium.guild-data .card-image + .card-content, .medium.crons .card-image + .card-content, .medium.user_el .card-image + .card-content, .medium.channel_el .card-image + .card-content, .card.large .card-image + .card-content, .large.guild-data .card-image + .card-content, .large.crons .card-image + .card-content, .large.user_el .card-image + .card-content, .large.channel_el .card-image + .card-content {
   max-height: 40%;
 }
 
-.card.small .card-content, .small.guild-data .card-content, .small.crons .card-content, .card.medium .card-content, .medium.guild-data .card-content, .medium.crons .card-content, .card.large .card-content, .large.guild-data .card-content, .large.crons .card-content {
+.card.small .card-content, .small.guild-data .card-content, .small.crons .card-content, .small.user_el .card-content, .small.channel_el .card-content, .card.medium .card-content, .medium.guild-data .card-content, .medium.crons .card-content, .medium.user_el .card-content, .medium.channel_el .card-content, .card.large .card-content, .large.guild-data .card-content, .large.crons .card-content, .large.user_el .card-content, .large.channel_el .card-content {
   max-height: 100%;
   overflow: hidden;
 }
 
-.card.small .card-action, .small.guild-data .card-action, .small.crons .card-action, .card.medium .card-action, .medium.guild-data .card-action, .medium.crons .card-action, .card.large .card-action, .large.guild-data .card-action, .large.crons .card-action {
+.card.small .card-action, .small.guild-data .card-action, .small.crons .card-action, .small.user_el .card-action, .small.channel_el .card-action, .card.medium .card-action, .medium.guild-data .card-action, .medium.crons .card-action, .medium.user_el .card-action, .medium.channel_el .card-action, .card.large .card-action, .large.guild-data .card-action, .large.crons .card-action, .large.user_el .card-action, .large.channel_el .card-action {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
 }
 
-.card.small, .small.guild-data, .small.crons {
+.card.small, .small.guild-data, .small.crons, .small.user_el, .small.channel_el {
   height: 300px;
 }
 
-.card.medium, .medium.guild-data, .medium.crons {
+.card.medium, .medium.guild-data, .medium.crons, .medium.user_el, .medium.channel_el {
   height: 400px;
 }
 
-.card.large, .large.guild-data, .large.crons {
+.card.large, .large.guild-data, .large.crons, .large.user_el, .large.channel_el {
   height: 500px;
 }
 
-.card.horizontal, .horizontal.guild-data, .horizontal.crons {
+.card.horizontal, .horizontal.guild-data, .horizontal.crons, .horizontal.user_el, .horizontal.channel_el {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.card.horizontal.small .card-image, .horizontal.small.guild-data .card-image, .horizontal.small.crons .card-image, .card.horizontal.medium .card-image, .horizontal.medium.guild-data .card-image, .horizontal.medium.crons .card-image, .card.horizontal.large .card-image, .horizontal.large.guild-data .card-image, .horizontal.large.crons .card-image {
+.card.horizontal.small .card-image, .horizontal.small.guild-data .card-image, .horizontal.small.crons .card-image, .horizontal.small.user_el .card-image, .horizontal.small.channel_el .card-image, .card.horizontal.medium .card-image, .horizontal.medium.guild-data .card-image, .horizontal.medium.crons .card-image, .horizontal.medium.user_el .card-image, .horizontal.medium.channel_el .card-image, .card.horizontal.large .card-image, .horizontal.large.guild-data .card-image, .horizontal.large.crons .card-image, .horizontal.large.user_el .card-image, .horizontal.large.channel_el .card-image {
   height: 100%;
   max-height: none;
   overflow: visible;
 }
 
-.card.horizontal.small .card-image img, .horizontal.small.guild-data .card-image img, .horizontal.small.crons .card-image img, .card.horizontal.medium .card-image img, .horizontal.medium.guild-data .card-image img, .horizontal.medium.crons .card-image img, .card.horizontal.large .card-image img, .horizontal.large.guild-data .card-image img, .horizontal.large.crons .card-image img {
+.card.horizontal.small .card-image img, .horizontal.small.guild-data .card-image img, .horizontal.small.crons .card-image img, .horizontal.small.user_el .card-image img, .horizontal.small.channel_el .card-image img, .card.horizontal.medium .card-image img, .horizontal.medium.guild-data .card-image img, .horizontal.medium.crons .card-image img, .horizontal.medium.user_el .card-image img, .horizontal.medium.channel_el .card-image img, .card.horizontal.large .card-image img, .horizontal.large.guild-data .card-image img, .horizontal.large.crons .card-image img, .horizontal.large.user_el .card-image img, .horizontal.large.channel_el .card-image img {
   height: 100%;
 }
 
-.card.horizontal .card-image, .horizontal.guild-data .card-image, .horizontal.crons .card-image {
+.card.horizontal .card-image, .horizontal.guild-data .card-image, .horizontal.crons .card-image, .horizontal.user_el .card-image, .horizontal.channel_el .card-image {
   max-width: 50%;
 }
 
-.card.horizontal .card-image img, .horizontal.guild-data .card-image img, .horizontal.crons .card-image img {
+.card.horizontal .card-image img, .horizontal.guild-data .card-image img, .horizontal.crons .card-image img, .horizontal.user_el .card-image img, .horizontal.channel_el .card-image img {
   border-radius: 2px 0 0 2px;
   max-width: 100%;
   width: auto;
 }
 
-.card.horizontal .card-stacked, .horizontal.guild-data .card-stacked, .horizontal.crons .card-stacked {
+.card.horizontal .card-stacked, .horizontal.guild-data .card-stacked, .horizontal.crons .card-stacked, .horizontal.user_el .card-stacked, .horizontal.channel_el .card-stacked {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -4888,26 +4888,26 @@ small {
   position: relative;
 }
 
-.card.horizontal .card-stacked .card-content, .horizontal.guild-data .card-stacked .card-content, .horizontal.crons .card-stacked .card-content {
+.card.horizontal .card-stacked .card-content, .horizontal.guild-data .card-stacked .card-content, .horizontal.crons .card-stacked .card-content, .horizontal.user_el .card-stacked .card-content, .horizontal.channel_el .card-stacked .card-content {
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
           flex-grow: 1;
 }
 
-.card.sticky-action .card-action, .sticky-action.guild-data .card-action, .sticky-action.crons .card-action {
+.card.sticky-action .card-action, .sticky-action.guild-data .card-action, .sticky-action.crons .card-action, .sticky-action.user_el .card-action, .sticky-action.channel_el .card-action {
   z-index: 2;
 }
 
-.card.sticky-action .card-reveal, .sticky-action.guild-data .card-reveal, .sticky-action.crons .card-reveal {
+.card.sticky-action .card-reveal, .sticky-action.guild-data .card-reveal, .sticky-action.crons .card-reveal, .sticky-action.user_el .card-reveal, .sticky-action.channel_el .card-reveal {
   z-index: 1;
   padding-bottom: 64px;
 }
 
-.card .card-image, .guild-data .card-image, .crons .card-image {
+.card .card-image, .guild-data .card-image, .crons .card-image, .user_el .card-image, .channel_el .card-image {
   position: relative;
 }
 
-.card .card-image img, .guild-data .card-image img, .crons .card-image img {
+.card .card-image img, .guild-data .card-image img, .crons .card-image img, .user_el .card-image img, .channel_el .card-image img {
   display: block;
   border-radius: 2px 2px 0 0;
   position: relative;
@@ -4918,7 +4918,7 @@ small {
   width: 100%;
 }
 
-.card .card-image .card-title, .guild-data .card-image .card-title, .crons .card-image .card-title {
+.card .card-image .card-title, .guild-data .card-image .card-title, .crons .card-image .card-title, .user_el .card-image .card-title, .channel_el .card-image .card-title {
   color: #fff;
   position: absolute;
   bottom: 0;
@@ -4927,37 +4927,37 @@ small {
   padding: 24px;
 }
 
-.card .card-content, .guild-data .card-content, .crons .card-content {
+.card .card-content, .guild-data .card-content, .crons .card-content, .user_el .card-content, .channel_el .card-content {
   padding: 24px;
   border-radius: 0 0 2px 2px;
 }
 
-.card .card-content p, .guild-data .card-content p, .crons .card-content p {
+.card .card-content p, .guild-data .card-content p, .crons .card-content p, .user_el .card-content p, .channel_el .card-content p {
   margin: 0;
 }
 
-.card .card-content .card-title, .guild-data .card-content .card-title, .crons .card-content .card-title {
+.card .card-content .card-title, .guild-data .card-content .card-title, .crons .card-content .card-title, .user_el .card-content .card-title, .channel_el .card-content .card-title {
   display: block;
   line-height: 32px;
   margin-bottom: 8px;
 }
 
-.card .card-content .card-title i, .guild-data .card-content .card-title i, .crons .card-content .card-title i {
+.card .card-content .card-title i, .guild-data .card-content .card-title i, .crons .card-content .card-title i, .user_el .card-content .card-title i, .channel_el .card-content .card-title i {
   line-height: 32px;
 }
 
-.card .card-action, .guild-data .card-action, .crons .card-action {
+.card .card-action, .guild-data .card-action, .crons .card-action, .user_el .card-action, .channel_el .card-action {
   background-color: inherit;
   border-top: 1px solid rgba(160, 160, 160, 0.2);
   position: relative;
   padding: 16px 24px;
 }
 
-.card .card-action:last-child, .guild-data .card-action:last-child, .crons .card-action:last-child {
+.card .card-action:last-child, .guild-data .card-action:last-child, .crons .card-action:last-child, .user_el .card-action:last-child, .channel_el .card-action:last-child {
   border-radius: 0 0 2px 2px;
 }
 
-.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating), .guild-data .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating), .crons .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating), .guild-data .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating), .crons .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating), .user_el .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating), .channel_el .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
   color: #ffab40;
   margin-right: 24px;
   -webkit-transition: color .3s ease;
@@ -4965,11 +4965,11 @@ small {
   text-transform: uppercase;
 }
 
-.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover, .guild-data .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover, .crons .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover {
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover, .guild-data .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover, .crons .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover, .user_el .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover, .channel_el .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating):hover {
   color: #ffd8a6;
 }
 
-.card .card-reveal, .guild-data .card-reveal, .crons .card-reveal {
+.card .card-reveal, .guild-data .card-reveal, .crons .card-reveal, .user_el .card-reveal, .channel_el .card-reveal {
   padding: 24px;
   position: absolute;
   background-color: #fff;
@@ -4982,7 +4982,7 @@ small {
   display: none;
 }
 
-.card .card-reveal .card-title, .guild-data .card-reveal .card-title, .crons .card-reveal .card-title {
+.card .card-reveal .card-title, .guild-data .card-reveal .card-title, .crons .card-reveal .card-title, .user_el .card-reveal .card-title, .channel_el .card-reveal .card-title {
   cursor: pointer;
   display: block;
 }
@@ -9183,6 +9183,46 @@ input[type=range]::-ms-thumb {
   max-height: 90% !important;
   width: 90% !important;
   text-align: center;
+}
+
+.modal-content {
+  overflow-x: hidden;
+}
+
+.users_wrapper, .channels_wrapper {
+  position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  bottom: -36px;
+  width: 100%;
+  overflow: hidden;
+  height: 50px;
+  z-index: 2000;
+}
+
+.user_el, .channel_el {
+  margin-left: 15px;
+  cursor: pointer;
+  -webkit-transition: all 350ms;
+  transition: all 350ms;
+  height: 60%;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 10px;
+  padding-top: 4px;
+  min-width: -webkit-fit-content;
+  min-width: -moz-fit-content;
+  min-width: fit-content;
+}
+
+.user_el.hidden, .channel_el.hidden {
+  opacity: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  min-width: 0px !important;
+  max-width: 0px !important;
+  margin-left: 0px !important;
 }
 
 .input-field {

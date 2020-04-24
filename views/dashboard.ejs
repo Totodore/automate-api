@@ -57,6 +57,26 @@
                 <div class="input-field col s12 section">
                     <textarea id="contentTimer" name="contentTimer" class="materialize-textarea" required minlength="1" maxlength="1000"></textarea>
                     <label for="contentTimer">Message's content</label>
+                    <div class="users_wrapper scale-out">
+                        <% people_list.forEach((el, index) => { %>
+                            <div class="user_el waves-effect waves-light" data-id="<%= el.userID %>" nickname="<%= el.nickname != null ? el.nickname : "" %>">
+                                @<%= el.nickname != null ? el.nickname : el.displayName %>
+                            </div>
+                        <% }); %>
+                        <div class="user_el waves-effect waves-light">
+                            @everyone
+                        </div>
+                        <div class="user_el waves-effect waves-light">
+                            @here
+                        </div>
+                    </div>
+                    <div class="channels_wrapper scale-out">
+                        <% channel_list.forEach((el, index) => { %>
+                            <div class="channel_el waves-effect waves-light" data-id="<%= el.id %>">
+                                #<%= el.name %>
+                            </div>
+                        <% }); %>
+                    </div>
                 </div>
                 <div class="input-field col s12 section channelSelect-wrapper">
                     <select name="channelSelectTimer" id="channelSelectTimer">
@@ -93,6 +113,26 @@
                 <div class="input-field col s12 section">
                     <textarea id="content" name="content" class="materialize-textarea" required minlength="1" maxlength="1000"></textarea>
                     <label for="content">Message's content</label>
+                    <div class="users_wrapper scale-out">
+                        <% people_list.forEach((el, index) => { %>
+                            <div class="user_el waves-effect waves-light" data-id="<%= el.userID %>" nickname="<%= el.nickname != null ? el.nickname : "" %>">
+                                @<%= el.nickname != null ? el.nickname : el.displayName %>
+                            </div>
+                        <% }); %>
+                        <div class="user_el waves-effect waves-light">
+                            @everyone
+                        </div>
+                        <div class="user_el waves-effect waves-light">
+                            @here
+                        </div>
+                    </div>
+                    <div class="channels_wrapper scale-out">
+                        <% channel_list.forEach((el, index) => { %>
+                            <div class="channel_el waves-effect waves-light" data-id="<%= el.id %>">
+                                #<%= el.name %>
+                            </div>
+                        <% }); %>
+                    </div>
                 </div>
                 <div class="input-field col s12 section channelSelect-wrapper">
                     <select name="channelSelect" id="channelSelect">

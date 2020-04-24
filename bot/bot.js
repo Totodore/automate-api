@@ -76,7 +76,7 @@ bot.on("guildCreate", guild => {
     });
     const lengthServer = fs.readdirSync(__dirname+"/.."+process.env.DB_GUILDS).length;
     const lengthUsers = Object.keys(JSON.parse(fs.readFileSync(__dirname + "/../data/users.json"))).length;
-    bot.channels.cache.get("702970284034097192").send(`Nouveau serveur : **${lengthServer}** serveurs connecté`);
+    bot.channels.cache.get("702970284034097192").send(`Nombre de serveurs : **${lengthServer}**`);
     bot.channels.cache.get("702970284034097192").send(`Nombre d'utilisateurs : **${lengthUsers}**`);
 
     guild.channels.cache.first().send(`Hey ! I'm Spam-bot, to give orders you need to go on this website : https://spam-bot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
@@ -91,7 +91,7 @@ function cronWatcher() {
             if (ponctualEvent.timestamp == timestamp) {
                 const date = new Date();
                 try {
-                    bot.channels.cache.get(ponctualEvent.channel_id).send(ponctualEvent.message);
+                    bot.channels.cache.get(ponctualEvent.channel_id).send(ponctualEvent.sys_content || ponctualEvent.message);
                 } catch (e) {
                     console.log("Error sending message (probably admin rights)");
                 }
@@ -109,7 +109,7 @@ function cronWatcher() {
 
             if (timestampToExec == timestamp) {
                 try {
-                    bot.channels.cache.get(freqEvent.channel_id).send(freqEvent.message);
+                    bot.channels.cache.get(freqEvent.channel_id).send(freqEvent.sys_content || freqEvent.message);
                 } catch (e) {
                     console.log("Error sending message (probably admin rights)");
                 }

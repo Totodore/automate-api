@@ -120,6 +120,44 @@ $grey-darken-3: #424242;
     width: 90% !important;
     text-align: center;
 }
+.modal-content {
+    overflow-x: hidden;
+}
+
+.users_wrapper, .channels_wrapper {
+    @extend .grey, .darken-4, .z-depth-2, .scale-transition;
+    position: absolute;
+    display: flex;
+    bottom: -36px;
+    width: 100%;
+    overflow: hidden;
+    height: 50px;
+    z-index: 2000;
+    // padding-left: 10px;
+}
+.user_el, .channel_el {
+    @extend .grey, .darken-4, .card;
+    margin-left: 15px;
+    cursor: pointer;
+    transition: all 350ms;
+    height: 60%;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 10px;
+    padding-top: 4px;
+    min-width: fit-content;
+}
+.user_el.hidden, .channel_el.hidden {
+    opacity: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    min-width: 0px !important;
+    max-width: 0px !important;
+    margin-left: 0px !important;
+}
+.user_el.selected, .channel_el.selected, .user_el:hover, .channel_el:hover {
+    @extend .darken-3;
+}
 
 .footer {
     @extend .grey, 
