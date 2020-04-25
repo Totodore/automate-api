@@ -40,13 +40,14 @@ try {
 } catch (e) {
     console.log("Tracing request not enabled");
 }
+
 //Fonction pour détecter si l'utilisateur est connecté ou pas
 app.use((req, res, next) => {
     if (!req.session.userId && req.cookies.userId) {
         req.session.userId = req.cookies.userId;
         next();
     } else if (!req.session.userId && !req.cookies.userId && req.path != "/connect" && req.path != "/oauth" && !req.path.split("/").includes("ajax")) {
-        //On exclu les chemins oauth et connect sinon on a des redirections infinies
+        //On exclu les chemins oauth et connect sinon on a des redirections infinies et ajax
         res.redirect("/connect");
     } else next();
 });
@@ -115,5 +116,26 @@ bot.once("message", message => {
 
 app.listen(3000, () => {
     console.log("Server started, starting bot...");
+    console.log("Checking tokens expiration every hour...");
+    checkTokens();
+    setInterval(checkTokens, 1000*60*60); //Toutes les heures le bot check les tokens des gens pour vérifier qu'il est à jour
 });
+
+async function checkTokens() {
+    const userData = JSON.parse(fs.readFileSync(`${__dirname}/data/users.json`));
+    const keysToDelete = [];
+    try {
+        for (const key of Object.keys(userData)) {
+            const value = userData[key];
+            if (value.token_timestamp < Math.floor(Date.now()/1000) - 60*60*24)//si ca expire dans 1jours
+                keysToDelete.push(key);
+        }
+        console.log(`Checking token availability : ${keysToDelete.length} user accounts expired`);
+        keysToDelete.forEach(key => delete userData[key]);
+    } catch(e) {
+        console.error(`Error function refresh token : ${e}`);
+        return;
+    }
+    fs.writeFileSync(`${__dirname}/data/users.json`, JSON.stringify(userData));
+}
 module.exports = app;

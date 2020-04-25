@@ -35,7 +35,7 @@ router.get('/', async (req, res, next) => {
     }
     const resToken = JSON.parse(await reqToken.text());
     //On fait une requete pour avoir l'id de la personne discord
-    const reqUser = await fetch("https://discordapp.com/api/users/@me", {
+    const reqUser = await fetch(`${process.env.API_ENDPOINT}/users/@me`, {
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${resToken.access_token}`
@@ -51,14 +51,18 @@ router.get('/', async (req, res, next) => {
     //écrit les donnée dans la db
     let userDB = JSON.parse(fs.readFileSync(__dirname+"/../data/users.json"));
     if (Object.keys(userDB).includes(resUser.id)) {
-        writeSessionAndCookies(resUser.id, req, res);
+        req.session.userId = resUser.id;
+        res.cookie("userId", resUser.id, {
+            maxAge: Math.floor(Date.now()/1000)-userDB[resUser.id].token_timestamp-60*60*24, //Le cookie va expirer un jour avant l'expiration du token
+            //On calcul le nombre de minute qu'il reste entre mnt et l'expiration token - 1 jours
+        });
         res.redirect("../?msg="+encodeURI("Nice to see you again!"));
         return;
     } else {
         // console.log(`data user : ${JSON.stringify(resUser)}`);
         userDB[resUser.id] = {
             access_token: resToken.access_token,
-            token_expires: resToken.expires_in,
+            token_timestamp: resToken.expires_in + Math.floor(Date.now()/1000),
             refresh_token: resToken.refresh_token
         };
         try {
@@ -68,7 +72,11 @@ router.get('/', async (req, res, next) => {
             res.redirect("../?msg="+encodeURI("Whoops ! It seems like your connection to Discord is impossible!"));
             return;
         }
-        writeSessionAndCookies(resUser.id, req, res);
+        //La personne se reconnecte
+        req.session.userId = resUser.id;
+        res.cookie("userId", resUser.id, {
+            maxAge: resToken.expires_in - 60*60*24 //Le cookie va expirer un jour avant l'expiration du token
+        });
         res.redirect("../?msg="+encodeURI("Your account has been successfully synced!"));
     }
 });
@@ -94,7 +102,7 @@ router.get("/bot", async (req, res, next) => {
         };
         const formData = new FormData();
         Object.entries(dataToSend).forEach(el => formData.append(el[0], el[1]));
-        const reqToken = await fetch("https://discordapp.com/api/oauth2/token", {
+        const reqToken = await fetch(`${process.env.API_ENDPOINT}/oauth2/token`, {
             method: "POST",
             body: formData
         }); 
@@ -119,12 +127,4 @@ router.get("/bot", async (req, res, next) => {
         res.redirect("../dashboard/?id="+req.query.guild_id);
     }
 });
-
-
-function writeSessionAndCookies(id, req, res) {
-    req.session.userId = id;
-    res.cookie("userId", id, {
-        maxAge: 60*60*24*15,
-    });
-}
 module.exports = router;
