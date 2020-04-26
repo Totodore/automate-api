@@ -89,10 +89,10 @@ function cronWatcher() {
                     bot.channels.cache.get(ponctualEvent.channel_id).send(ponctualEvent.sys_content || ponctualEvent.message).catch(e => {
                         console.log("Error sending message (probably admin rights)");
                     });
+                    console.log(`New punctual message sent at ${date.getDate()}/${date.getUTCMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`);
                 } catch (e) {
                     console.log("Error sending a message");
                 }
-                console.log(`New punctual message sent at ${date.getDate()}/${date.getUTCMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`);
                 indexToDeletePonctual.push(index);
             }
         });
@@ -109,10 +109,10 @@ function cronWatcher() {
                     bot.channels.cache.get(freqEvent.channel_id).send(freqEvent.sys_content || freqEvent.message).catch(e => {
                         console.log("Error sending message (probably admin rights)");
                     });
+                    console.info(`New frequential message sent to ${bot.channels.cache.get(freqEvent.channel_id).name} in ${bot.channels.cache.get(freqEvent.channel_id).guild.name}`);
                 } catch (e) {
                     console.log("Error sending a message");
                 }
-                console.info(`New frequential message sent to ${bot.channels.cache.get(freqEvent.channel_id).name} in ${bot.channels.cache.get(freqEvent.channel_id).guild.name}`);
             }
         });
         indexToDeletePonctual.forEach((index) => {
