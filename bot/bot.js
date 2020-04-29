@@ -90,7 +90,7 @@ function cronWatcher() {
                 const date = new Date();
                 try {
                     bot.channels.cache.get(ponctualEvent.channel_id).send(ponctualEvent.sys_content || ponctualEvent.message).catch(e => {
-                        console.log("Error sending message (probably admin rights)");
+                        console.log(`Error sending message (probably admin rights) to channel : ${ponctualEvent.channels_id}`);
                     });
                     console.log(`New punctual message sent at ${date.getDate()}/${date.getUTCMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`);
                 } catch (e) {
@@ -110,11 +110,11 @@ function cronWatcher() {
             if (timestampToExec == timestamp) {
                 try {
                     bot.channels.cache.get(freqEvent.channel_id).send(freqEvent.sys_content || freqEvent.message).catch(e => {
-                        console.log("Error sending message (probably admin rights)");
+                        console.log(`Error sending message (probably admin rights) to channel : ${freqEvent.channel_id}`);
                     });
                     console.info(`New frequential message sent to ${bot.channels.cache.get(freqEvent.channel_id).name} in ${bot.channels.cache.get(freqEvent.channel_id).guild.name}`);
                 } catch (e) {
-                    console.log(`Error sending message channel id ${$ponctualEvent.channels_id} not found`);
+                    console.log(`Error sending message channel id ${$freqEvent.channels_id} not found`);
                 }
             }
         });
