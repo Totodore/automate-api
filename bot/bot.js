@@ -73,8 +73,11 @@ bot.on("guildCreate", guild => {
     const lengthUsers = Object.keys(JSON.parse(fs.readFileSync(__dirname + "/../data/users.json"))).length;
     bot.channels.cache.get("702970284034097192").send(`Nombre de serveurs : **${lengthServer}**`);
     bot.channels.cache.get("702970284034097192").send(`Nombre d'utilisateurs : **${lengthUsers}**`);
-
-    guild.systemChannel.send(`Hey ! I'm Spam-bot, to give orders you need to go on this website : https://spam-bot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
+    try {
+        guild.systemChannel.send(`Hey ! I'm Spam-bot, to give orders you need to go on this website : https://spam-bot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
+    } catch(e) {
+        console.log("Added bot but no systemChannel has been specified...");
+    }
 });
 function cronWatcher() {
     fs.readdirSync(__dirname + "/.." + process.env.DB_GUILDS + "/").forEach(guildId => {
