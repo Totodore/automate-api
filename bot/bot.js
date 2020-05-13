@@ -131,6 +131,7 @@ function cronWatcher() {
         }
     });
     console.log(`<----------- Sent ${i} messages ----------->`);
+    i = 0;
     messageSentAverage = Math.ceil((messageSentAverage + i)/2); //Calcul de moyenne de messages envoyé chaque minute
 }
 
