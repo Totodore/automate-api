@@ -120,8 +120,6 @@ function cronWatcher() {
                 i++;
             }
         });
-        console.log(`<----------- Sent ${i} messages ----------->`);
-        messageSentAverage = Math.ceil((messageSentAverage + i)/2); //Calcul de moyenne de messages envoyé chaque minute
         indexToDeletePonctual.forEach((index) => {
             const ponctualEvent = guildData.ponctual[index];
             delete guildData.ponctual[index];
@@ -132,6 +130,8 @@ function cronWatcher() {
             fs.writeFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", JSON.stringify(guildData));
         }
     });
+    console.log(`<----------- Sent ${i} messages ----------->`);
+    messageSentAverage = Math.ceil((messageSentAverage + i)/2); //Calcul de moyenne de messages envoyé chaque minute
 }
 
 async function sendStats() {
