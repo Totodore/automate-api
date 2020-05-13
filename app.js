@@ -9,6 +9,7 @@ const fetch = require("node-fetch");
 const fork = require("child_process").fork;
 const formidable = require("express-formidable");
 const botProgram = path.resolve("./bot/bot.js");
+const pm2 = require('pm2');
 require("dotenv").config();
 
 const indexRouter = require('./routes/index');
@@ -121,6 +122,7 @@ app.listen(3000, () => {
     setInterval(checkTokens, 1000*60*60); //Toutes les heures le bot check les tokens des gens pour vérifier qu'il est à jour
 });
 
+setTimeout(restartApp, 1000*60*60*3);   //Toutes les trois heures
 async function checkTokens() {
     const userData = JSON.parse(fs.readFileSync(`${__dirname}/data/users.json`));
     const keysToDelete = [];
@@ -137,5 +139,12 @@ async function checkTokens() {
         return;
     }
     fs.writeFileSync(`${__dirname}/data/users.json`, JSON.stringify(userData));
+}
+
+async function restartApp() {
+    console.log("Restarting app...");
+    pm2.restart("app", () => {
+        console.error("Error restarting automatically restart app");
+    });
 }
 module.exports = app;
