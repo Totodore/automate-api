@@ -3,10 +3,12 @@ const dotenv = require("dotenv");
 const Cron = require("cron-converter");
 const fs = require("fs");
 const bot = new Discord.Client();
+let messageSentAverage = 0;
 
 dotenv.config();
 
 bot.login(process.env.TOKEN_BOT);
+setInterval(sendStats, 1000*60*60);     //Envoi des stats chaque heure
 
 process.on("message", message => {
     console.log(`Message from server : ${message}`);
@@ -69,17 +71,15 @@ bot.on("guildDelete", guild => {
 });
 
 bot.on("guildCreate", guild => {
-    const lengthServer = fs.readdirSync(__dirname+"/.."+process.env.DB_GUILDS).length;
-    const lengthUsers = Object.keys(JSON.parse(fs.readFileSync(__dirname + "/../data/users.json"))).length;
-    bot.channels.cache.get("702970284034097192").send(`Nombre de serveurs : **${lengthServer}**`);
-    bot.channels.cache.get("702970284034097192").send(`Nombre d'utilisateurs : **${lengthUsers}**`);
     try {
         guild.systemChannel.send(`Hey ! I'm Spam-bot, to give orders you need to go on this website : https://spam-bot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
     } catch(e) {
         console.log("Added bot but no systemChannel has been specified...");
     }
 });
+
 function cronWatcher() {
+    let i = 0;
     fs.readdirSync(__dirname + "/.." + process.env.DB_GUILDS + "/").forEach(guildId => {
         //Pour chaque guild on regarde si on doit envoyer un message
         const guildData = JSON.parse(fs.readFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json"));
@@ -96,6 +96,7 @@ function cronWatcher() {
                 } catch (e) {
                     console.log(`Error sending message channel id ${ponctualEvent.channels_id} not found`);
                 }
+                i++;
                 indexToDeletePonctual.push(index);
             }
         });
@@ -116,8 +117,11 @@ function cronWatcher() {
                 } catch (e) {
                     console.log(`Error sending message channel id ${freqEvent.channels_id} not found`);
                 }
+                i++;
             }
         });
+        console.log(`<----------- Sent ${i} messages ----------->`);
+        messageSentAverage = Math.ceil((messageSentAverage + i)/2);
         indexToDeletePonctual.forEach((index) => {
             const ponctualEvent = guildData.ponctual[index];
             delete guildData.ponctual[index];
@@ -128,4 +132,13 @@ function cronWatcher() {
             fs.writeFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", JSON.stringify(guildData));
         }
     });
+}
+
+async function sendStats() {
+    const channel = bot.channels.cache.get("702970284034097192");
+    const lengthServer = fs.readdirSync(__dirname+"/.."+process.env.DB_GUILDS).length;
+    const lengthUsers = Object.keys(JSON.parse(fs.readFileSync(__dirname + "/../data/users.json"))).length;
+    channel.send(`Nombre de serveurs : **${lengthServer}**`);
+    channel.send(`Nombre d'utilisateurs : **${lengthUsers}**`);
+    channel.send(`Moyenne de messages envoyé par minutes : **${messageSentAverage}**`);
 }
