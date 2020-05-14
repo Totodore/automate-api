@@ -25,7 +25,7 @@ router.get('/', async (req, res, next) => {
       else return false;
     });
   } catch (e) {
-    console.error(`Erreur lors de la guildRes.filer : guildResObj : ${guildsRes}`);
+    console.log(`Erreur lors de la guildRes.filter`);
     res.render('index', {header: req.headerData, error: "I didn't manage to collect all your channels, sniffu..."});
   }
   guildRes.forEach(element => element.added = fs.existsSync(__dirname+"/../data/guilds/"+element.id+"/data.json"));
