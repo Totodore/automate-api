@@ -5,7 +5,14 @@ const router = express.Router();
 
 router.get('/', async (req, res, next) => {
     const bot = req.app.get("bot");
-    const db = JSON.parse(fs.readFileSync(__dirname + "/../data/guilds/" + req.query.id + "/data.json"));
+    let db;
+    try {
+        db = JSON.parse(fs.readFileSync(__dirname + "/../data/guilds/" + req.query.id + "/data.json"));
+    } catch(e) {
+        console.error("Error loading database");
+        res.redirect("../?msg=" + encodeURI("Whoops ! It seems like an error has occured during the dashboard's loading. Sniffu..."));
+        return;
+    }
     const guild_id = req.query.id;
 
     if (!db || !req.query.id) {
