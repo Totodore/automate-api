@@ -115,7 +115,8 @@ function cronWatcher() {
                     });
                     console.info(`New frequential message sent to ${bot.channels.cache.get(freqEvent.channel_id).name} in ${bot.channels.cache.get(freqEvent.channel_id).guild.name}`);
                 } catch (e) {
-                    console.log(`Error sending message channel id ${freqEvent.channels_id} not found`);
+                    //TODO: Supprimer les messages concernant ce channel qui n'existe plus
+                    console.log(`Error sending message channel id ${freqEvent.channels_id} in guild id ${guildId}`);
                 }
                 i++;
             }
