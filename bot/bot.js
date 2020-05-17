@@ -73,7 +73,7 @@ bot.on("channelDelete", channel => {    //Il faut supprimer tous les message dan
     //On récupère l'id de la guild à partir du channel
     for (const guilds of bot.guilds.cache.values())
         if (guilds.channels.cache.has(channel.id))
-            removeDeletedChannels(guilds.id, channelId);
+            removeDeletedChannels(guilds.id, channel.id);
 });
 
 bot.on("guildCreate", guild => {
