@@ -70,10 +70,8 @@ bot.on("guildDelete", guild => {
     fs.rmdirSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guild.id + "/", {recursive: true});
 });
 bot.on("channelDelete", channel => {    //Il faut supprimer tous les message dans ce channel
-    //On récupère l'id de la guild à partir du channel
-    for (const guilds of bot.guilds.cache.values())
-        if (guilds.channels.cache.has(channel.id))
-            removeDeletedChannels(guilds.id, channel.id);
+    //On récupère l'id de la guild à partir du channel et on supprime les messages dans ce channel
+    bot.guilds.cache.forEach((guild, guildId) => !guild.channels.cache.has(channel.id) ? removeDeletedChannels(guildId, channel.id) : null);
 });
 
 bot.on("guildCreate", guild => {
