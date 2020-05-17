@@ -69,10 +69,7 @@ bot.on('ready', () => {
 bot.on("guildDelete", guild => {
     fs.rmdirSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guild.id + "/", {recursive: true});
 });
-bot.on("channelDelete", channel => {    //Il faut supprimer tous les message dans ce channel
-    //On récupère l'id de la guild à partir du channel et on supprime les messages dans ce channel
-    bot.guilds.cache.forEach((guild, guildId) => guild.channels.cache.has(channel.id) ? removeDeletedChannels(guildId, channel.id) : null);
-});
+bot.on("channelDelete", channel => {}); //Finalement on fait que dalle ^^
 
 bot.on("guildCreate", guild => {
     try {
@@ -98,7 +95,6 @@ function cronWatcher() {
                     });
                     console.log(`New punctual message sent at ${date.getDate()}/${date.getUTCMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`);
                 } catch (e) {
-                    console.log(`Error sending message channel id ${ponctualEvent.channel_id} not found`);
                     removeDeletedChannels(guildId, ponctualEvent.channel_id);
                 }
                 i++;
@@ -120,8 +116,6 @@ function cronWatcher() {
                     });
                     console.info(`New frequential message sent to ${bot.channels.cache.get(freqEvent.channel_id).name} in ${bot.channels.cache.get(freqEvent.channel_id).guild.name}`);
                 } catch (e) {
-                    //TODO: Supprimer les messages concernant ce channel qui n'existe plus
-                    console.log(`Error sending message channel id ${freqEvent.channel_id} in guild id ${guildId}`);
                     removeDeletedChannels(guildId, freqEvent.channel_id);
                 }
                 i++;
