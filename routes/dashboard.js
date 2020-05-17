@@ -9,7 +9,7 @@ router.get('/', async (req, res, next) => {
     try {
         db = JSON.parse(fs.readFileSync(__dirname + "/../data/guilds/" + req.query.id + "/data.json"));
     } catch(e) {
-        console.error("Error loading database");
+        console.log("Error loading database id probably incorrect");
         res.redirect("../?msg=" + encodeURI("Whoops ! It seems like an error has occured during the dashboard's loading. Sniffu..."));
         return;
     }
