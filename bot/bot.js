@@ -101,7 +101,7 @@ function cronWatcher() {
                     console.log(`New punctual message sent at ${date.getDate()}/${date.getUTCMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`);
                 } catch (e) {
                     console.log(`Error sending message channel id ${ponctualEvent.channel_id} not found`);
-                    removeDeletedChannels(guildId, guildData.ponctual.channel_id);
+                    removeDeletedChannels(guildId, ponctualEvent.channel_id);
                 }
                 i++;
                 indexToDeletePonctual.push(index);
@@ -124,7 +124,7 @@ function cronWatcher() {
                 } catch (e) {
                     //TODO: Supprimer les messages concernant ce channel qui n'existe plus
                     console.log(`Error sending message channel id ${freqEvent.channel_id} in guild id ${guildId}`);
-                    removeDeletedChannels(guildId, guildData.freq.channel_id);
+                    removeDeletedChannels(guildId, freqEvent.channel_id);
                 }
                 i++;
             }
