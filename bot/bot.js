@@ -71,7 +71,7 @@ bot.on("guildDelete", guild => {
 });
 bot.on("channelDelete", channel => {    //Il faut supprimer tous les message dans ce channel
     //On récupère l'id de la guild à partir du channel et on supprime les messages dans ce channel
-    bot.guilds.cache.forEach((guild, guildId) => !guild.channels.cache.has(channel.id) ? removeDeletedChannels(guildId, channel.id) : null);
+    bot.guilds.cache.forEach((guild, guildId) => guild.channels.cache.has(channel.id) ? removeDeletedChannels(guildId, channel.id) : null);
 });
 
 bot.on("guildCreate", guild => {
