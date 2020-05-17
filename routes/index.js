@@ -16,6 +16,7 @@ router.get('/', async (req, res, next) => {
   if (guildReq.status != 200) {
     console.log(`Erreur : ${guildReq.status} ${guildReq.statusText}`);
     res.render('index', {header: req.headerData, error: "I didn't manage to collect all your channels, sniffu..."});
+    return;
   }
   let guildRes = JSON.parse(await guildReq.text());
   try {
@@ -27,6 +28,7 @@ router.get('/', async (req, res, next) => {
   } catch (e) {
     console.log(`Erreur lors de la guildRes.filter`);
     res.render('index', {header: req.headerData, error: "I didn't manage to collect all your channels, sniffu..."});
+    return;
   }
   guildRes.forEach(element => element.added = fs.existsSync(__dirname+"/../data/guilds/"+element.id+"/data.json"));
   guildRes.sort((a, b) => {if (a.added) return -1; else if (b.added) return 1; else return 0;});
