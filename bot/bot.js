@@ -46,6 +46,7 @@ process.on("message", message => {
 });
 
 bot.on('ready', () => {
+    fs.writeFileSync("bot.log", "bot launched");
     if (process.send) 
         process.send("started");
     else
