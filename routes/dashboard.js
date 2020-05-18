@@ -31,7 +31,7 @@ router.get('/', async (req, res, next) => {
     table.forEach(element => {
         channelRes.forEach((channel, index) => {
             if (channel.id == element.channel_id)
-                element.channel_name = channelRes[index].name;
+                element.channel_name = channel.name;
         });
     });
     table.sort((a, b) => {
