@@ -44,7 +44,7 @@ class Bot {
     }
     cronWatcher(self) {
         let i = 0;
-        fs.readdirSync(__dirname + "/.." + process.env.DB_GUILDS + "/").forEach(guildId => {
+        fs.readdir(__dirname + "/.." + process.env.DB_GUILDS + "/", {}, (err, files) => files.forEach(guildId => {
             //Pour chaque guild on regarde si on doit envoyer un message
             const guildData = JSON.parse(fs.readFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json"));
             const timestamp = Math.floor((Date.now()/1000)/60);
@@ -93,7 +93,7 @@ class Bot {
                 guildData.ponctual = guildData.ponctual.filter(element => element != null);
                 fs.writeFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", JSON.stringify(guildData));
             }
-        });
+        }));
         console.log(`<----------- Sent ${i} messages ----------->`);
         messageSentAverage = Math.ceil((messageSentAverage + i)/2); //Calcul de moyenne de messages envoyé chaque minute
     }

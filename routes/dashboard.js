@@ -23,8 +23,7 @@ router.get('/', async (req, res, next) => {
             else return false;
         });
     } catch(e) {
-        console.log(`Error loading channels data`);
-        console.log(e);
+        console.log(`Error loading datas : ${e}`);
         res.redirect("../?msg=" + encodeURI("Whoops ! It seems like an error has occured during the dashboard's loading. Sniffu..."));
         return;
     }
