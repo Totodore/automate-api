@@ -5,155 +5,152 @@ const fs = require("fs");
 const bot = new Discord.Client();
 let messageSentAverage = 0;
 
+const STAT_CHANNEL = "702970284034097192";
+
 dotenv.config();
 
-bot.login(process.env.TOKEN_BOT);
-setInterval(sendStats, 1000*60*60);     //Envoi des stats chaque heure
+class Bot {
+    constructor() {
+        bot.login(process.env.TOKEN_BOT);
+        bot.on("ready", () => this.ready(this));
+        bot.on("guildCreate", this.guildDelete);
+        bot.on("guildDelete", this.guildDelete);
+        bot.setInterval(this.sendStats, 1000*60*60); //Stats toutes les 3h
+    }
 
-process.on("message", message => {
-    console.log(`Message from server : ${message}`);
-    const params = new URLSearchParams(message.split("?")[1]);
-    const url = message.split("?")[0];
-    if (url == "request_channels" && params.get("id")) {
+    ready(self) {
+        console.info(`Logged in as ${bot.user.tag} !\n`);
+        //On attend le passage à la prochaine minute pour être le plus syncro possible
+        const oldMinute = Math.floor((new Date().getTime()/1000)/60)*60;
+        console.log(`Actual minute : ${new Date().getMinutes()}`);
+        console.log("Waiting for new minute to start cron watcher");
+        const intervalId = setInterval((self) => {
+            if (Math.floor((new Date().getTime()/1000)/60)*60 > oldMinute) {
+                console.log(`\n\nNew minute detected, Starting cron Watcher at minute ${new Date().getMinutes()}`);
+                bot.setInterval(() => self.cronWatcher(self), 1000*60);  //Si on est passé à une nouvelle minute on lance le cronWatcher
+                clearInterval(intervalId);
+            }
+        }, 10, self);
+    }
+    guildDelete(guild) {
+        fs.rmdirSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guild.id + "/", {recursive: true});
+    }
+    guildCreate(guild) {
         try {
-            const dataToSend = bot.guilds.cache.get(params.get("id")).channels.cache;
-            process.send("response_channels?id="+params.get("id")+"\n"+JSON.stringify(dataToSend));
-        } catch (error) {
-            console.log("Error bot : " + error);
-            process.send("response_channels?id="+params.get("id")+"\n ");
+            guild.systemChannel.send(`Hey ! I'm Spam-bot, to give orders you need to go on this website : https://spam-bot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
+        } catch(e) {
+            console.log("Added bot but no systemChannel has been specified...");
         }
     }
-    else if (url == "request_guild" && params.get("id")) {
-        try {
-            const dataToSend = bot.guilds.cache.get(params.get("id"));
-            process.send("response_guild?id="+params.get("id")+"\n"+JSON.stringify(dataToSend));
-        } catch (error) {
-            console.log("Error bot : " + error);
-            process.send("response_guild?id="+params.get("id")+"\n ");
-        }
-    } else if (url == "request_people" && params.get("id")) {
-        try {
-            const dataToSend = bot.guilds.cache.get(params.get("id")).members.cache;
-            process.send("response_people?id="+params.get("id")+"\n"+JSON.stringify(dataToSend));
-        } catch (error) {
-            console.log("Error bot : " + error);
-            process.send("response_people?id="+params.get("id")+"\n ");   
-        }
-    } 
-    else {
-        console.log(`Error parsing message : ${message}`);
-    }
-});
-
-bot.on('ready', () => {
-    fs.writeFileSync("bot.log", "bot launched");
-    if (process.send) 
-        process.send("started");
-    else
-        fs.writeFileSync("bot.log", "Error pipe between server and bot");
-
-    console.info(`Logged in as ${bot.user.tag} !\n`);
-
-    //On attend le passage à la prochaine minute pour être le plus syncro possible
-    const oldMinute = Math.floor((new Date().getTime()/1000)/60)*60;
-    console.log(`Actual minute : ${new Date().getMinutes()}`);
-    console.log("Waiting for new minute to start cron watcher");
-    const intervalId = setInterval(() => {
-        if (Math.floor((new Date().getTime()/1000)/60)*60 - 15 > oldMinute) {
-            console.log(`\n\nNew minute detected, Starting cron Watcher at minute ${new Date().getMinutes()}`);
-            bot.setInterval(cronWatcher, 1000*60);  //Si on est passé à une nouvelle minute on lance le cronWatcher
-            clearInterval(intervalId);
-        }
-    }, 10);
-});
-
-bot.on("guildDelete", guild => {
-    fs.rmdirSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guild.id + "/", {recursive: true});
-});
-bot.on("channelDelete", channel => {}); //Finalement on fait que dalle ^^
-
-bot.on("guildCreate", guild => {
-    try {
-        guild.systemChannel.send(`Hey ! I'm Spam-bot, to give orders you need to go on this website : https://spam-bot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
-    } catch(e) {
-        console.log("Added bot but no systemChannel has been specified...");
-    }
-});
-
-function cronWatcher() {
-    let i = 0;
-    fs.readdirSync(__dirname + "/.." + process.env.DB_GUILDS + "/").forEach(guildId => {
-        //Pour chaque guild on regarde si on doit envoyer un message
-        const guildData = JSON.parse(fs.readFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json"));
-        const timestamp = Math.floor((Date.now()/1000)/60);
-        let indexToDeletePonctual = [];
-        guildData.ponctual.forEach((ponctualEvent, index) => {
-            if (ponctualEvent.timestamp == timestamp) {
-                const date = new Date();
-                try {
-                    bot.channels.cache.get(ponctualEvent.channel_id).send(ponctualEvent.sys_content || ponctualEvent.message).catch(e => {
-                        console.log(`Error sending message (probably admin rights) to channel : ${ponctualEvent.channel_id}`);
-                    });
-                    console.log(`New punctual message sent at ${date.getDate()}/${date.getUTCMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`);
-                } catch (e) {
-                    removeDeletedChannels(guildId, ponctualEvent.channel_id);
+    cronWatcher(self) {
+        let i = 0;
+        fs.readdirSync(__dirname + "/.." + process.env.DB_GUILDS + "/").forEach(guildId => {
+            //Pour chaque guild on regarde si on doit envoyer un message
+            const guildData = JSON.parse(fs.readFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json"));
+            const timestamp = Math.floor((Date.now()/1000)/60);
+            let indexToDeletePonctual = [];
+            guildData.ponctual.forEach((ponctualEvent, index) => {
+                if (ponctualEvent.timestamp == timestamp) {
+                    const date = new Date();
+                    try {
+                        bot.channels.cache.get(ponctualEvent.channel_id).send(ponctualEvent.sys_content || ponctualEvent.message).catch(e => {
+                            console.log(`Error sending message (probably admin rights) to channel : ${ponctualEvent.channel_id}`);
+                        });
+                        console.log(`New punctual message sent at ${date.getDate()}/${date.getUTCMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`);
+                    } catch (e) {
+                        self.removeDeletedChannels(guildId, ponctualEvent.channel_id);
+                    }
+                    i++;
+                    indexToDeletePonctual.push(index);
                 }
-                i++;
-                indexToDeletePonctual.push(index);
+            });
+            guildData.freq.forEach((freqEvent) => {
+                const cronInstance = new Cron();
+                cronInstance.fromString(freqEvent.cron);
+                const scheduler = cronInstance.schedule();
+                const timestampToExec = Math.floor(scheduler.next().unix()/60);
+                // console.log(`freq next  : ${timestampToExec}`);
+                // console.log(`Actual : ${timestamp}`);
+    
+                if (timestampToExec == timestamp) {
+                    try {
+                        bot.channels.cache.get(freqEvent.channel_id).send(freqEvent.sys_content || freqEvent.message).catch(e => {
+                            console.log(`Error sending message (probably admin rights) to channel : ${freqEvent.channel_id}`);
+                        });
+                        console.info(`New frequential message sent to ${bot.channels.cache.get(freqEvent.channel_id).name} in ${bot.channels.cache.get(freqEvent.channel_id).guild.name}`);
+                    } catch (e) {
+                        self.removeDeletedChannels(guildId, freqEvent.channel_id);
+                    }
+                    i++;
+                }
+            });
+            indexToDeletePonctual.forEach((index) => {
+                const ponctualEvent = guildData.ponctual[index];
+                delete guildData.ponctual[index];
+                guildData.deleted.push(ponctualEvent);
+            });
+            if (indexToDeletePonctual.length > 0) {
+                guildData.ponctual = guildData.ponctual.filter(element => element != null);
+                fs.writeFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", JSON.stringify(guildData));
             }
         });
-        guildData.freq.forEach((freqEvent) => {
-            const cronInstance = new Cron();
-            cronInstance.fromString(freqEvent.cron);
-            const scheduler = cronInstance.schedule();
-            const timestampToExec = Math.floor(scheduler.next().unix()/60);
-            // console.log(`freq next  : ${timestampToExec}`);
-            // console.log(`Actual : ${timestamp}`);
+        console.log(`<----------- Sent ${i} messages ----------->`);
+        messageSentAverage = Math.ceil((messageSentAverage + i)/2); //Calcul de moyenne de messages envoyé chaque minute
+    }
 
-            if (timestampToExec == timestamp) {
-                try {
-                    bot.channels.cache.get(freqEvent.channel_id).send(freqEvent.sys_content || freqEvent.message).catch(e => {
-                        console.log(`Error sending message (probably admin rights) to channel : ${freqEvent.channel_id}`);
-                    });
-                    console.info(`New frequential message sent to ${bot.channels.cache.get(freqEvent.channel_id).name} in ${bot.channels.cache.get(freqEvent.channel_id).guild.name}`);
-                } catch (e) {
-                    removeDeletedChannels(guildId, freqEvent.channel_id);
-                }
-                i++;
-            }
-        });
-        indexToDeletePonctual.forEach((index) => {
-            const ponctualEvent = guildData.ponctual[index];
-            delete guildData.ponctual[index];
-            guildData.deleted.push(ponctualEvent);
-        });
-        if (indexToDeletePonctual.length > 0) {
-            guildData.ponctual = guildData.ponctual.filter(element => element != null);
-            fs.writeFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", JSON.stringify(guildData));
+    async sendStats() {
+        const channel = bot.channels.cache.get(STAT_CHANNEL);
+        const lengthServer = fs.readdirSync(__dirname+"/.."+process.env.DB_GUILDS).length;
+        const lengthUsers = Object.keys(JSON.parse(fs.readFileSync(__dirname + "/../data/users.json"))).length;
+        channel.send(`Nombre de serveurs : **${lengthServer}**`);
+        channel.send(`Nombre d'utilisateurs : **${lengthUsers}**`);
+        channel.send(`Moyenne de messages envoyé par minutes : **${messageSentAverage}**`);
+        messageSentAverage = 0;
+    }
+
+    removeDeletedChannels(guildId, channelId) {
+        console.log(`Removing channel : ${channelId} in guild : ${guildId}`);
+        const data = JSON.parse(fs.readFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json",));
+        //On supprime le channel correspondant au channelid dans freq et ponctual
+        data.freq = data.freq.map(el => el.channel_id != channelId ? el : null);
+        data.freq = data.freq.filter(element => element != null);   //On supprime les index null
+        data.ponctual = data.ponctual.map(el => el.channel_id != channelId ? el : null);
+        data.ponctual = data.ponctual.filter(element => element != null);
+
+        fs.writeFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", JSON.stringify(data));
+    }
+
+    //Return channels collection or false
+    getChannels(id) {
+        if (!id) return;
+        try {
+            const dataToSend = bot.guilds.cache.get(id).channels.cache;
+            return dataToSend;
+        } catch(e) {
+            console.log(e);
+            return false;
         }
-    });
-    console.log(`<----------- Sent ${i} messages ----------->`);
-    messageSentAverage = Math.ceil((messageSentAverage + i)/2); //Calcul de moyenne de messages envoyé chaque minute
+    }
+    getGuild(id) {
+        if (!id) return;
+        try {
+            const dataToSend = bot.guilds.cache.get(id);
+            return  dataToSend;
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+    }
+    getPeople(id) {
+        if (!id) return;
+        try {
+            const dataToSend = bot.guilds.cache.get(id).members.cache;
+            return dataToSend;
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
+    }
 }
 
-async function sendStats() {
-    const channel = bot.channels.cache.get("702970284034097192");
-    const lengthServer = fs.readdirSync(__dirname+"/.."+process.env.DB_GUILDS).length;
-    const lengthUsers = Object.keys(JSON.parse(fs.readFileSync(__dirname + "/../data/users.json"))).length;
-    channel.send(`Nombre de serveurs : **${lengthServer}**`);
-    channel.send(`Nombre d'utilisateurs : **${lengthUsers}**`);
-    channel.send(`Moyenne de messages envoyé par minutes : **${messageSentAverage}**`);
-    messageSentAverage = 0;
-}
-
-function removeDeletedChannels(guildId, channelId) {
-    console.log(`Removing channel : ${channelId} in guild : ${guildId}`);
-    const data = JSON.parse(fs.readFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json",));
-    //On supprime le channel correspondant au channelid dans freq et ponctual
-    data.freq = data.freq.map(el => el.channel_id != channelId ? el : null);
-    data.freq = data.freq.filter(element => element != null);   //On supprime les index null
-    data.ponctual = data.ponctual.map(el => el.channel_id != channelId ? el : null);
-    data.ponctual = data.ponctual.filter(element => element != null);
-
-    fs.writeFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", JSON.stringify(data));
-}
+module.exports = Bot;

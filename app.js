@@ -8,8 +8,8 @@ const fs = require("fs");
 const fetch = require("node-fetch");
 const fork = require("child_process").fork;
 const formidable = require("express-formidable");
-const botProgram = path.resolve("./bot/bot.js");
 const pm2 = require('pm2');
+const Bot = require("./bot/bot");
 require("dotenv").config();
 
 const indexRouter = require('./routes/index');
@@ -19,7 +19,6 @@ const ajaxRouter = require("./routes/ajax");
 const dashboardRouter = require("./routes/dashboard");
 
 const app = express();
-let bot;
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -99,22 +98,7 @@ app.use(function (err, req, res, next) {
     res.render('error');
 });
 
-const botParameters = [];
-const botOptions = {
-    stdio: ['inherit', 'inherit', 'inherit', 'ipc'],
-    detached: false
-};
-
-
-bot = fork(botProgram, botParameters, botOptions);  
-bot.setMaxListeners(999999);
-app.set("bot", bot);
-bot.once("message", message => {
-    console.log(`Message from bot : ${message}`);
-    if (message == "started") {
-        console.log("Bot started, communication enabled");
-    }
-});
+app.set("bot", new Bot());
 
 app.listen(3000, () => {
     console.log("Server started, starting bot...");
