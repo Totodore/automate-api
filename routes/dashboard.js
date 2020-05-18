@@ -15,9 +15,9 @@ router.get('/', async (req, res, next) => {
         table = db.freq.concat(db.ponctual);
 
         const bot = req.app.get("bot");
-        guildRes = JSON.parse(bot.getGuild(guild_id));
-        peopleRes = JSON.parse(bot.getPeople(guild_id));
-        channelRes = JSON.parse(bot.getChannels(guild_id)).filter((element) => {
+        guildRes = bot.getGuild(guild_id);
+        peopleRes = bot.getPeople(guild_id);
+        channelRes = bot.getChannels(guild_id).filter((element) => {
             if (!element.deleted && (element.type == "text" || element.type == "news"))
                 return true;
             else return false;
