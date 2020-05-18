@@ -101,7 +101,8 @@ app.use(function (err, req, res, next) {
 
 const botParameters = [];
 const botOptions = {
-    stdio: ['inherit', 'inherit', 'inherit', 'ipc']
+    stdio: ['inherit', 'inherit', 'inherit', 'ipc'],
+    detached: false
 };
 
 
