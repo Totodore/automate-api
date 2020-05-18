@@ -45,6 +45,7 @@ class Bot {
     cronWatcher(self) {
         fs.readdir(__dirname + "/.." + process.env.DB_GUILDS + "/", {}, (err, files) => {
             let i = 0;
+            console.log(files.length);
             files.forEach(guildId => {
                 //Pour chaque guild on regarde si on doit envoyer un message
                 const guildData = JSON.parse(fs.readFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json"));
