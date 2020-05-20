@@ -105,7 +105,7 @@ class Bot {
             setTimeout(() => {
                 console.log(`<----------- Sent ${i} messages ----------->`);
                 messageSentAverage = Math.ceil((messageSentAverage + i)/2); //Calcul de moyenne de messages envoyé chaque minute
-            }, 1000*10); //10 secondes après (le temps que tout s'envoie on affiche le nombre de message envoyé et on calcul la moyenne) 
+            }, 1000*50); //10 secondes après (le temps que tout s'envoie on affiche le nombre de message envoyé et on calcul la moyenne) 
             
         });
     }
