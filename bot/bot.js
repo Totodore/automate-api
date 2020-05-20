@@ -43,14 +43,15 @@ class Bot {
         }
     }
     cronWatcher(self) {
+        const timestamp = Math.floor((Date.now()/1000)/60);
         fs.readdir(__dirname + "/.." + process.env.DB_GUILDS + "/", {}, (err, files) => {
             let i = 0;
             console.log(files.length);
-            files.forEach(guildId => {
+            files.forEach(guildId => fs.readFile(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json").then(file => {
                 //Pour chaque guild on regarde si on doit envoyer un message
-                const guildData = JSON.parse(fs.readFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json"));
-                const timestamp = Math.floor((Date.now()/1000)/60);
+                const guildData = JSON.parse(file);
                 let indexToDeletePonctual = [];
+
                 guildData.ponctual.forEach((ponctualEvent, index) => {
                     if (ponctualEvent.timestamp == timestamp) {
                         const date = new Date();
@@ -66,6 +67,7 @@ class Bot {
                         indexToDeletePonctual.push(index);
                     }
                 });
+
                 guildData.freq.forEach((freqEvent) => {
                     const cronInstance = new Cron();
                     cronInstance.fromString(freqEvent.cron);
@@ -86,6 +88,7 @@ class Bot {
                         i++;
                     }
                 });
+
                 indexToDeletePonctual.forEach((index) => {
                     const ponctualEvent = guildData.ponctual[index];
                     delete guildData.ponctual[index];
@@ -95,7 +98,7 @@ class Bot {
                     guildData.ponctual = guildData.ponctual.filter(element => element != null);
                     fs.writeFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", JSON.stringify(guildData));
                 }
-            });
+            }));
             console.log(`<----------- Sent ${i} messages ----------->`);
             messageSentAverage = Math.ceil((messageSentAverage + i)/2); //Calcul de moyenne de messages envoyé chaque minute
         });
