@@ -48,13 +48,13 @@ class VueDashboard {
 		});
     
         this.datePicker = M.Datepicker.init(document.querySelectorAll(".datepicker"), {
-           container: "body",
-           firstDay: 1,
-           format: "On dddd the d on mmmm yyyy",
-           minDate: new Date(),
-           setDefaultDate: true,
-           yearRange: 1,
-           defaultDate: new Date(),
+            container: "body",
+            firstDay: 1,
+            format: "On dddd the d on mmmm yyyy",
+            minDate: new Date(),
+            setDefaultDate: true,
+            yearRange: 1,
+            defaultDate: new Date(),
         });
         M.FormSelect.init(document.querySelectorAll("select")); 
         this.addEventListener();
@@ -263,7 +263,7 @@ class VueDashboard {
         if (eachVal == "week") {
             let selectedDays = [];
             //Pour chaque element selectionné (on a juste le nom)
-        	this.daySelectWrapper.querySelectorAll(".selected").forEach((el) => {
+            this.daySelectWrapper.querySelectorAll(".selected").forEach((el) => {
                 //Pour chaque element proposé (nom + valeur)
                 console.log(el);
                 document.querySelectorAll("#daySelect option").forEach((inputEl) => {

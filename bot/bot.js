@@ -47,58 +47,60 @@ class Bot {
         fs.readdir(__dirname + "/.." + process.env.DB_GUILDS + "/", {}, (err, files) => {
             let i = 0;
             console.log(files.length);
-            files.forEach(guildId => fs.readFile(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json").then(file => {
-                //Pour chaque guild on regarde si on doit envoyer un message
-                const guildData = JSON.parse(file);
-                let indexToDeletePonctual = [];
+            files.forEach(guildId => {
+                fs.readFile(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json").then(file => {
+                    //Pour chaque guild on regarde si on doit envoyer un message
+                    const guildData = JSON.parse(file);
+                    let indexToDeletePonctual = [];
 
-                guildData.ponctual.forEach((ponctualEvent, index) => {
-                    if (ponctualEvent.timestamp == timestamp) {
-                        const date = new Date();
-                        try {
-                            bot.channels.cache.get(ponctualEvent.channel_id).send(ponctualEvent.sys_content || ponctualEvent.message).catch(e => {
-                                console.log(`Error sending message (probably admin rights) to channel : ${ponctualEvent.channel_id}`);
-                            });
-                            console.log(`New punctual message sent at ${date.getDate()}/${date.getUTCMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`);
-                        } catch (e) {
-                            self.removeDeletedChannels(guildId, ponctualEvent.channel_id);
+                    guildData.ponctual.forEach((ponctualEvent, index) => {
+                        if (ponctualEvent.timestamp == timestamp) {
+                            const date = new Date();
+                            try {
+                                bot.channels.cache.get(ponctualEvent.channel_id).send(ponctualEvent.sys_content || ponctualEvent.message).catch(e => {
+                                    console.log(`Error sending message (probably admin rights) to channel : ${ponctualEvent.channel_id}`);
+                                });
+                                console.log(`New punctual message sent at ${date.getDate()}/${date.getUTCMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`);
+                            } catch (e) {
+                                self.removeDeletedChannels(guildId, ponctualEvent.channel_id);
+                            }
+                            i++;
+                            indexToDeletePonctual.push(index);
                         }
-                        i++;
-                        indexToDeletePonctual.push(index);
+                    });
+
+                    guildData.freq.forEach((freqEvent) => {
+                        const cronInstance = new Cron();
+                        cronInstance.fromString(freqEvent.cron);
+                        const scheduler = cronInstance.schedule();
+                        const timestampToExec = Math.floor(scheduler.next().unix()/60);
+                        // console.log(`freq next  : ${timestampToExec}`);
+                        // console.log(`Actual : ${timestamp}`);
+            
+                        if (timestampToExec == timestamp) {
+                            try {
+                                bot.channels.cache.get(freqEvent.channel_id).send(freqEvent.sys_content || freqEvent.message).catch(e => {
+                                    console.log(`Error sending message (probably admin rights) to channel : ${freqEvent.channel_id}`);
+                                });
+                                console.info(`New frequential message sent to ${bot.channels.cache.get(freqEvent.channel_id).name} in ${bot.channels.cache.get(freqEvent.channel_id).guild.name}`);
+                            } catch (e) {
+                                self.removeDeletedChannels(guildId, freqEvent.channel_id);
+                            }
+                            i++;
+                        }
+                    });
+
+                    indexToDeletePonctual.forEach((index) => {
+                        const ponctualEvent = guildData.ponctual[index];
+                        delete guildData.ponctual[index];
+                        guildData.deleted.push(ponctualEvent);
+                    });
+                    if (indexToDeletePonctual.length > 0) {
+                        guildData.ponctual = guildData.ponctual.filter(element => element != null);
+                        fs.writeFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", JSON.stringify(guildData));
                     }
                 });
-
-                guildData.freq.forEach((freqEvent) => {
-                    const cronInstance = new Cron();
-                    cronInstance.fromString(freqEvent.cron);
-                    const scheduler = cronInstance.schedule();
-                    const timestampToExec = Math.floor(scheduler.next().unix()/60);
-                    // console.log(`freq next  : ${timestampToExec}`);
-                    // console.log(`Actual : ${timestamp}`);
-        
-                    if (timestampToExec == timestamp) {
-                        try {
-                            bot.channels.cache.get(freqEvent.channel_id).send(freqEvent.sys_content || freqEvent.message).catch(e => {
-                                console.log(`Error sending message (probably admin rights) to channel : ${freqEvent.channel_id}`);
-                            });
-                            console.info(`New frequential message sent to ${bot.channels.cache.get(freqEvent.channel_id).name} in ${bot.channels.cache.get(freqEvent.channel_id).guild.name}`);
-                        } catch (e) {
-                            self.removeDeletedChannels(guildId, freqEvent.channel_id);
-                        }
-                        i++;
-                    }
-                });
-
-                indexToDeletePonctual.forEach((index) => {
-                    const ponctualEvent = guildData.ponctual[index];
-                    delete guildData.ponctual[index];
-                    guildData.deleted.push(ponctualEvent);
-                });
-                if (indexToDeletePonctual.length > 0) {
-                    guildData.ponctual = guildData.ponctual.filter(element => element != null);
-                    fs.writeFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", JSON.stringify(guildData));
-                }
-            }));
+            });
             console.log(`<----------- Sent ${i} messages ----------->`);
             messageSentAverage = Math.ceil((messageSentAverage + i)/2); //Calcul de moyenne de messages envoyé chaque minute
         });
