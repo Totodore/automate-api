@@ -56,14 +56,15 @@ class Bot {
                     if (ponctualEvent.timestamp == timestamp) {
                         const date = new Date();
                         try {
-                            bot.channels.cache.get(ponctualEvent.channel_id).send(ponctualEvent.sys_content || ponctualEvent.message).catch(e => {
+                            bot.channels.cache.get(ponctualEvent.channel_id).send(ponctualEvent.sys_content || ponctualEvent.message).then(message => {
+                                console.log(`New punctual message sent at ${date.getDate()}/${date.getUTCMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`);
+                                i++;
+                            }).catch(e => {
                                 console.log(`Error sending message (probably admin rights) to channel : ${ponctualEvent.channel_id}`);
                             });
-                            console.log(`New punctual message sent at ${date.getDate()}/${date.getUTCMonth()}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`);
                         } catch (e) {
                             self.removeDeletedChannels(guildId, ponctualEvent.channel_id);
                         }
-                        i++;
                         indexToDeletePonctual.push(index);
                     }
                 });
@@ -78,14 +79,15 @@ class Bot {
         
                     if (timestampToExec == timestamp) {
                         try {
-                            bot.channels.cache.get(freqEvent.channel_id).send(freqEvent.sys_content || freqEvent.message).catch(e => {
+                            bot.channels.cache.get(freqEvent.channel_id).send(freqEvent.sys_content || freqEvent.message).then(message => {
+                                console.info(`New frequential message sent to ${bot.channels.cache.get(freqEvent.channel_id).name} in ${bot.channels.cache.get(freqEvent.channel_id).guild.name}`);
+                                i++;
+                            }).catch(e => {
                                 console.log(`Error sending message (probably admin rights) to channel : ${freqEvent.channel_id}`);
                             });
-                            console.info(`New frequential message sent to ${bot.channels.cache.get(freqEvent.channel_id).name} in ${bot.channels.cache.get(freqEvent.channel_id).guild.name}`);
                         } catch (e) {
                             self.removeDeletedChannels(guildId, freqEvent.channel_id);
                         }
-                        i++;
                     }
                 });
 
@@ -99,8 +101,12 @@ class Bot {
                     fs.writeFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", JSON.stringify(guildData));
                 }
             }));
-            console.log(`<----------- Sent ${i} messages ----------->`);
-            messageSentAverage = Math.ceil((messageSentAverage + i)/2); //Calcul de moyenne de messages envoyé chaque minute
+
+            setTimeout(() => {
+                console.log(`<----------- Sent ${i} messages ----------->`);
+                messageSentAverage = Math.ceil((messageSentAverage + i)/2); //Calcul de moyenne de messages envoyé chaque minute
+            }, 1000*10); //10 secondes après (le temps que tout s'envoie on affiche le nombre de message envoyé et on calcul la moyenne) 
+            
         });
     }
 
