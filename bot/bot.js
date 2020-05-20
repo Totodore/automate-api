@@ -47,7 +47,7 @@ class Bot {
         fs.readdir(__dirname + "/.." + process.env.DB_GUILDS + "/", {}, (err, files) => {
             let i = 0;
             console.log(files.length);
-            files.forEach(guildId => fs.readFile(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", file => {
+            files.forEach(guildId => fs.readFile(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", (err, file) => {
                 //Pour chaque guild on regarde si on doit envoyer un message
                 const guildData = JSON.parse(file);
                 let indexToDeletePonctual = [];
