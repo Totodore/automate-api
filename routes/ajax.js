@@ -48,6 +48,11 @@ router.post("/add_schedule", (req, res) => {
 	}
 	try {
 		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`));
+		if (guildData.freq.length >= 5) {
+			res.status(403);
+			res.send("Message not allowed");
+			return;
+		}
 		guildData.freq.push({
 			id: msg_id,
 			channel_id: query.channel_id,

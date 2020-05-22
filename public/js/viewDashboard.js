@@ -344,9 +344,11 @@ class VueDashboard {
             method: "POST",
 			body: formData,
         }).then(response => {
-            if (response.status != 200) {
+            if (response.status != 200 && response.status != 403) {
                 M.toast({html: "Error : This message could not be set"}, 5000);
                 console.log("Error ", response.status, " : ", response.statusText);
+            } else if (response.status == 403) {
+                M.toast({html: "Reccuring messages are limited to 5 per server"}, 5000);
             } else response.text().then((responseText) => {
 				let name;
 				document.channels.forEach(element => {if(element.id == channel_id) name = element.name;});
@@ -420,7 +422,7 @@ class VueDashboard {
 			});
 			this.addTimerModal.close();
 		});
-	}
+    }
 
     onTableLineCLick(el) {   
         this.idToRemove = el.getAttribute("id");

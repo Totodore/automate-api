@@ -55,7 +55,7 @@
             <h5 style="margin-top: 3px;">Add a one time message</h5>
             <form method="post" name="addTimerForm">
                 <div class="input-field col s12 section">
-                    <textarea id="contentTimer" name="contentTimer" class="materialize-textarea" required minlength="1" maxlength="1000"></textarea>
+                    <textarea id="contentTimer" name="contentTimer" class="materialize-textarea" required minlength="1" maxlength="2000"></textarea>
                     <label for="contentTimer">Message's content</label>
                     <div class="users_wrapper scale-out">
                         <% people_list.forEach((el, index) => { %>
@@ -111,7 +111,7 @@
             <h5 style="margin-top: 3px;">Add a recurring message</h5>
             <form method="post" name="addForm">
                 <div class="input-field col s12 section">
-                    <textarea id="content" name="content" class="materialize-textarea" required minlength="1" maxlength="1000"></textarea>
+                    <textarea id="content" name="content" class="materialize-textarea" required minlength="1" maxlength="2000"></textarea>
                     <label for="content">Message's content</label>
                     <div class="users_wrapper scale-out">
                         <% people_list.forEach((el, index) => { %>

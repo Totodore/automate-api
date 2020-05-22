@@ -30,7 +30,7 @@ router.get('/', async (req, res, next) => {
     }); 
     if (reqToken.status != 200) {
         console.log(`Error : ${reqToken.status} ${reqToken.statusText}`);
-        if (reqToken.status == 429) {
+        if (reqToken.status == 429 || reqToken.status == 400) {
             console.error(JSON.parse(await reqToken.text()));
         }
         res.redirect("../connect?msg="+encodeURI("Whoops ! It seems like your connection to Discord is impossible!"));
