@@ -3,7 +3,7 @@ const dotenv = require("dotenv");
 const Cron = require("cron-converter");
 const fs = require("fs");
 const bot = new Discord.Client();
-let messageSentAverage = 0;
+let messageSent = 0;
 
 const STAT_CHANNEL = "702970284034097192";
 
@@ -46,7 +46,6 @@ class Bot {
         const timestamp = Math.floor((Date.now()/1000)/60);
         fs.readdir(__dirname + "/.." + process.env.DB_GUILDS + "/", {}, (err, files) => {
             let i = 0;
-            console.log(files.length);
             files.forEach(guildId => fs.readFile(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", (err, file) => {
                 //Pour chaque guild on regarde si on doit envoyer un message
                 const guildData = JSON.parse(file);
@@ -104,8 +103,8 @@ class Bot {
 
             setTimeout(() => {
                 console.log(`<----------- Sent ${i} messages ----------->`);
-                messageSentAverage = Math.ceil((messageSentAverage + i)/2); //Calcul de moyenne de messages envoyé chaque minute
-            }, 1000*50); //10 secondes après (le temps que tout s'envoie on affiche le nombre de message envoyé et on calcul la moyenne) 
+                messageSent += i; //Calcul de moyenne de messages envoyé chaque minute
+            }, 1000*30); //30 secondes après (le temps que tout s'envoie on affiche le nombre de message envoyé et on calcul la moyenne) 
             
         });
     }
@@ -116,8 +115,8 @@ class Bot {
         const lengthUsers = Object.keys(JSON.parse(fs.readFileSync(__dirname + "/../data/users.json"))).length;
         channel.send(`Nombre de serveurs : **${lengthServer}**`);
         channel.send(`Nombre d'utilisateurs : **${lengthUsers}**`);
-        channel.send(`Moyenne de messages envoyé par minutes : **${messageSentAverage}**`);
-        messageSentAverage = 0;
+        channel.send(`Messages envoyé en une heure : **${messageSent}**`);
+        messageSent = 0;
     }
 
     removeDeletedChannels(guildId, channelId) {
