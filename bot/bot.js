@@ -37,7 +37,7 @@ class Bot {
     }
     guildCreate(guild) {
         try {
-            guild.systemChannel.send(`Hey ! I'm Spam-bot, to give orders you need to go on this website : https://spam-bot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
+            guild.systemChannel.send(`Hey ! I'm Automate, to give orders you need to go on this website : https://automatebot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
         } catch(e) {
             console.log("Added bot but no systemChannel has been specified...");
         }

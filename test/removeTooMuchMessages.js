@@ -4,8 +4,5 @@ const fs = require("fs");
 
 fs.readdirSync(__dirname+"/../data/guilds/").forEach(guildId => {
     const data = JSON.parse(fs.readFileSync(__dirname + "/../data/guilds/" + guildId + "/data.json"));
-    if (data.freq.length > 5) {
-        data.freq.splice(5, data.freq.length);
-        fs.writeFileSync(__dirname + "/../data/guilds/" + guildId + "/data.json", JSON.stringify(data));
-    }
+    data.freq = data.freq.filter((el, index) => el.cron == "* * * * *" ? false : true);
 });
