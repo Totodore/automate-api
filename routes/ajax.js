@@ -3,6 +3,8 @@ const fs = require("fs");
 const uniqid = require("uniqid");
 const router = express.Router();
 
+const MAX_MESSAGE = 10;
+
 router.get('/', (req, res) => {
 	res.redirect("../");
 });
@@ -48,7 +50,7 @@ router.post("/add_schedule", (req, res) => {
 	}
 	try {
 		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`));
-		if (guildData.freq.length >= 5) {
+		if (guildData.freq.length >= MAX_MESSAGE) {
 			res.status(403);
 			res.send("Message not allowed");
 			return;
