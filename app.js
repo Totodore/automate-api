@@ -105,7 +105,7 @@ app.listen(3000, () => {
     console.log("Checking tokens expiration every hour...");
     checkTokens();
     setInterval(checkTokens, 1000*60*60); //Toutes les heures le bot check les tokens des gens pour vérifier qu'il est à jour
-    setTimeout(restartApp, 1000*60*60*3 + 3*1000);   //Toutes les trois heures on redémarre le bot (+ 3 seconde pour que ca redémarre pas en même temps que l'envoie des stats)
+    // setTimeout(restartApp, 1000*60*60*3 + 3*1000);   //Toutes les trois heures on redémarre le bot (+ 3 seconde pour que ca redémarre pas en même temps que l'envoie des stats)
 });
 
 async function checkTokens() {
