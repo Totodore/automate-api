@@ -2,17 +2,17 @@
 
 
 body {
-    @extend .grey-text,
-    .text-lighten-3;
+    @extend .grey-text;
+    @extend .text-lighten-3;
     font-weight: 600;
     min-height: 100vh;
 }
 
 .body-wrapper {
-    @extend .section,
-    .card,
-    .grey,
-    .darken-4;
+    @extend .section;
+    @extend .card;
+    @extend .grey;
+    @extend .darken-4;
     margin-left: 20px;
     margin-right: 20px;
     padding: 25px;
@@ -46,32 +46,37 @@ body {
 }
 
 .modal {
-    @extend .grey,
-    .darken-3,
-    .grey-text,
-    .text-lighten-2;
+    @extend .grey;
+    @extend .darken-3;
+    @extend .grey-text;
+    @extend .text-lighten-2;
 }
 
 .modal-footer {
-    @extend .grey,
-    .darken-4,
-    .grey-text,
-    .text-lighten-2;
+    @extend .grey;
+    @extend .darken-4;
+    @extend .grey-text;
+    @extend .text-lighten-2;
 }
 
 .btn {
-    @extend .waves-light,
-    .btn,
-    .grey-text,
-    .text-lighten-2,
-    .grey,
-    .darken-3;
+    @extend .waves-light;
+    @extend .btn;
+    @extend .grey-text;
+    @extend .text-lighten-2;
+    @extend .grey;
+    @extend .darken-3;
 }
 
 .btn-flat {
-    @extend .waves-light,
-    .grey-text,
-    .text-lighten-2;
+    @extend .waves-light;
+    @extend .grey-text;
+    @extend .text-lighten-2;
+}
+.btn-disabled {
+    @extend .grey;
+    @extend .lighten-1;
+    @extend .z-depth-0;
 }
 
 @media screen and (max-width: 800px) {

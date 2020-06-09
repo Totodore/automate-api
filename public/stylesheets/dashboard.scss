@@ -2,10 +2,12 @@
 
 $flash-color: #e0e0e0;
 $grey-darken-3: #424242;
+$grey-lighten-1: #bdbdbd;
 
 .body-wrapper {
     @extend .black;
 }
+
 .fixed-action-btn {
     display: flex;
     flex-direction: column;
@@ -16,17 +18,28 @@ $grey-darken-3: #424242;
         margin-left: -1%;
     }
 }
-.guild-data {
-    @extend .section,
-    .card,
-    .grey,
-    .darken-4,
-    .grey-text,
-    .text-lighten-1,
-    .center,
-    .hoverable,
-    .waves-light,
-    .hoverable;
+
+.guild-data, .guild-timezone {
+    @extend .section;
+
+    @extend .card;
+
+    @extend .grey;
+
+    @extend .darken-4;
+
+    @extend .grey-text;
+
+    @extend .text-lighten-1;
+
+    @extend .center;
+
+    @extend .hoverable;
+
+    @extend .waves-light;
+
+    @extend .hoverable;
+
     font-size: 1.4em !important;
     margin: auto;
     display: block;
@@ -35,7 +48,18 @@ $grey-darken-3: #424242;
     padding: 10px;
     position: relative;
 }
-.guild-data h5 {
+
+.guild-timezone {
+    margin-top: 20px;
+}
+
+.guild-timezone svg {
+    height: 100%;
+    width: 45px;
+    fill: $grey-lighten-1;
+}
+
+.guild-data h5, .guild-timezone h5 {
     margin: 0px !important;
     width: max-content;
     position: absolute;
@@ -43,38 +67,68 @@ $grey-darken-3: #424242;
     top: 50%;
     transform: translate(-50%, -50%);
 }
+
 .guild-icon {
     @extend .z-depth-2;
+
     border-radius: 50%;
     height: 50px;
     width: 50px;
     margin-right: 7px;
 }
-.return-icon, .menu-icon {
+
+.forward-icon {
+    margin-right: 7px;
+    font-size: 45px;
+    margin-top: 4px;
+    transition: all 350ms;
+
+    @extend .right;
+}
+
+.return-icon,
+.menu-icon,
+.guild-timezone svg {
     margin-left: 7px;
     font-size: 45px;
     margin-top: 4px;
     transition: all 350ms;
+
+    @extend .left;
 }
+
 .menu-icon {
     transform: translateX(-10px);
     opacity: 0;
     margin-left: 0;
 }
+
 .guild-data:hover .menu-icon {
     opacity: 1;
     transform: translateX(-5px);
 }
+
 .guild-data:hover .return-icon {
     transform: translateX(-10px);
 }
+
+.guild-timezone:hover .forward-icon {
+    transform: translateX(10px);
+}
+
 .crons {
-    @extend .section,
-    .card,
-    .grey,
-    .darken-4,
-    .grey-text,
-    .text-lighten-1;
+    @extend .section;
+
+    @extend .card;
+
+    @extend .grey;
+
+    @extend .darken-4;
+
+    @extend .grey-text;
+
+    @extend .text-lighten-1;
+
     font-size: 1.2em;
     font-weight: 400;
     margin-top: 20px;
@@ -83,19 +137,23 @@ $grey-darken-3: #424242;
 .crons table {
     min-height: 165px;
 }
+
 .crons tbody {
     text-align: center;
 }
+
 .crons tbody tr {
     @extend .waves-light;
+
     position: relative;
     cursor: pointer;
     transition: all 300ms;
 }
 
 .crons tbody tr:hover {
-    @extend .grey,
-    .darken-2;
+    @extend .grey;
+
+    @extend .darken-2;
 }
 
 .crons tbody tr:hover i {
@@ -103,29 +161,51 @@ $grey-darken-3: #424242;
 }
 
 .crons tbody tr i {
-    @extend .scale-transition,
-    .scale-out;
+    @extend .scale-transition;
+
+    @extend .scale-out;
+
     position: absolute;
     right: 25px;
     font-size: 1.5em;
     color: red;
 }
 
-#addTimer, #add_cron {
-    @extend .grey,
-    .darken-4;
+#addTimer,
+#add_cron {
+    @extend .grey;
+
+    @extend .darken-4;
+
     top: 5% !important;
     height: 90% !important;
     max-height: 90% !important;
     width: 90% !important;
     text-align: center;
 }
+
+#setTimezone {
+    @extend .grey;
+
+    @extend .darken-4;
+
+    text-align: center;
+}
+
 .modal-content {
     overflow-x: hidden;
 }
 
-.users_wrapper, .channels_wrapper {
-    @extend .grey, .darken-4, .z-depth-2, .scale-transition;
+.users_wrapper,
+.channels_wrapper {
+    @extend .grey;
+
+    @extend .darken-4;
+
+    @extend .z-depth-2;
+
+    @extend .scale-transition;
+
     position: absolute;
     display: flex;
     bottom: -36px;
@@ -133,10 +213,18 @@ $grey-darken-3: #424242;
     overflow: hidden;
     height: 50px;
     z-index: 2000;
+
     // padding-left: 10px;
 }
-.user_el, .channel_el {
-    @extend .grey, .darken-4, .card;
+
+.user_el,
+.channel_el {
+    @extend .grey;
+
+    @extend .darken-4;
+
+    @extend .card;
+
     margin-left: 15px;
     cursor: pointer;
     transition: all 350ms;
@@ -147,7 +235,9 @@ $grey-darken-3: #424242;
     padding-top: 4px;
     min-width: fit-content;
 }
-.user_el.hidden, .channel_el.hidden {
+
+.user_el.hidden,
+.channel_el.hidden {
     opacity: 0 !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
@@ -155,25 +245,34 @@ $grey-darken-3: #424242;
     max-width: 0px !important;
     margin-left: 0px !important;
 }
-.user_el.selected, .channel_el.selected, .user_el:hover, .channel_el:hover {
+
+.user_el.selected,
+.channel_el.selected,
+.user_el:hover,
+.channel_el:hover {
     @extend .darken-3;
 }
 
 .footer {
-    @extend .grey, 
-    .darken-4;
+    @extend .grey;
+
+    @extend .darken-4;
 }
 
 .select-dropdown {
-    @extend .grey,
-    .darken-4,
-    .grey-text,
-    .text-darken-4;
+    @extend .grey;
+
+    @extend .darken-4;
+
+    @extend .grey-text;
+
+    @extend .text-darken-4;
 }
 
 .select-dropdown span {
-    @extend .grey-text,
-    .text-lighten-2;
+    @extend .grey-text;
+
+    @extend .text-lighten-2;
 }
 
 .input-field {
@@ -182,21 +281,27 @@ $grey-darken-3: #424242;
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
+
 input,
 textarea {
-    @extend .grey-text, .text-lighten-2;
+    @extend .grey-text;
+
+    @extend .text-lighten-2;
 }
+
 /* label color */
 .input-field label {
-    @extend .grey-text,
-    .text-lighten-2;
+    @extend .grey-text;
+
+    @extend .text-lighten-2;
 }
 
 /* label focus color */
-.input-field input[type=text]:focus+label,
-.input-field textarea:focus+label {
-    @extend .grey-text,
-    .text-lighten-2;
+.input-field input[type=text]:focus + label,
+.input-field textarea:focus + label {
+    @extend .grey-text;
+
+    @extend .text-lighten-2;
 }
 
 /* label underline focus color */
@@ -209,34 +314,69 @@ textarea {
     border-bottom: 1px solid $flash-color !important;
     box-shadow: 0 1px 0 0 $flash-color !important;
 }
-.timepicker-digital-display, .datepicker-date-display {
+
+.timepicker-digital-display,
+.datepicker-date-display {
     @extend .black;
 }
+
 .datepicker-calendar-container {
-    @extend .grey, .darken-3;
+    @extend .grey;
+
+    @extend .darken-3;
 }
-.datepicker-calendar .selects-container  .select_wrapper input {
+
+.datepicker-calendar .selects-container .select_wrapper input {
     background-color: $grey-darken-3 !important;
 }
 
-@media screen and (max-width: 600px)
-{
+.section-search input.autocomplete {
+    @extend .grey;
+    @extend .darken-4;
+}
+
+.input-field .prefix.active {
+    background-color: $grey-darken-3 !important;
+}
+
+.dropdown-content li > a, .dropdown-content li > span {
+    @extend .grey;
+    @extend .darken-4;
+    @extend .grey-text;
+    @extend .text-lighten-2;
+}
+
+.autocomplete-content li .highlight {
+    // @extend .grey;
+    // @extend .darken-3;
+    @extend .grey-text;
+    @extend .text-darken-1;
+}
+
+@media screen and (max-width: 600px) {
     .body-wrapper {
         margin-left: 17px;
         margin-right: 17px;
         padding: 0px;
     }
-    .guild-data {
+
+    .guild-data, .guild-timezone {
         padding: 6px;
     }
-    .return-icon, .menu-icon {
+
+    .return-icon,
+    .menu-icon,
+    .forward-icon {
         font-size: 38px;
         margin-top: 4px;
     }
+
     .menu-icon {
         display: none;
     }
-    .guild-icon {
+
+    .guild-icon,
+    .guild-timezone svg {
         height: 40px;
         width: 40px;
     }

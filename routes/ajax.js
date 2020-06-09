@@ -101,4 +101,24 @@ router.post("/add_timer", (req, res) => {
 	res.send(msg_id);
 });
 
+router.get("/set_timezone", (req, res) => {
+	const query = req.query;
+	console.log(query);
+	if (!query.guild_id || !query.utc_offset || !query.timezone) {
+		res.status(400).send("Bad request : Params not given");
+		return;
+	}
+	try {
+		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`));
+		guildData.utc_offset = parseInt(query.utc_offset)*60;
+		guildData.timezone = query.timezone;
+		fs.writeFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`, JSON.stringify(guildData));
+		res.send("This timezone has been successfully set !");
+	} catch (error) {
+		console.log(`Error ajax set timezone : ${error}`);
+		res.send("Internal server error");
+		res.status(500);
+		return;
+	}
+});
 module.exports = router;

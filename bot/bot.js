@@ -72,10 +72,9 @@ class Bot {
                     const cronInstance = new Cron();
                     cronInstance.fromString(freqEvent.cron);
                     const scheduler = cronInstance.schedule();
-                    const timestampToExec = Math.floor(scheduler.next().unix()/60);
+                    const timestampToExec = Math.floor(scheduler.next().utc().utcOffset(guildData.utc_offset || 0).unix()/60);
                     // console.log(`freq next  : ${timestampToExec}`);
                     // console.log(`Actual : ${timestamp}`);
-        
                     if (timestampToExec == timestamp) {
                         try {
                             bot.channels.cache.get(freqEvent.channel_id).send(freqEvent.sys_content || freqEvent.message).then(message => {
