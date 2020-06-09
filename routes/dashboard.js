@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require("fs");
 const Cron = require("cron-converter");
+const momentTz = require("moment-timezone");
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
@@ -54,6 +55,16 @@ router.get('/', async (req, res, next) => {
         else
             return 1;
     });
+    let zones = {};
+    for (const el of momentTz.tz.names()) {
+        const zoneEl = momentTz.tz.zone(el);
+        const offset = zoneEl.utcOffset(new Date().getTime());
+        const zoneName = zoneEl.name.split("/");
+        let name = `${zoneName[zoneName.length-2] || ""} : ${zoneName[zoneName.length-1]} → UTC${Math.floor(offset/60) > 0 ? "+" : ""}${Math.floor(offset/60)}`;
+
+        zones[name] = offset;
+    }
+    console.log(db.timezone);
     res.render('dashboard', {
         header: req.headerData,
         table: table, 
@@ -61,7 +72,9 @@ router.get('/', async (req, res, next) => {
         people_list: peopleRes,
         guild_data: guildRes, 
         cdn: process.env.CDN_ENDPOINT,
-        now_hour: String(new Date().getHours())+":"+String(new Date().getMinutes()+2)
+        now_hour: String(new Date().getHours())+":"+String(new Date().getMinutes()+2),
+        timezone_data: zones,
+        guildTimezone: db.timezone
     });
 });
 

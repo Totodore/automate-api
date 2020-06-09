@@ -16,7 +16,7 @@ class VueDashboard {
         ];
 		this.addTimerModal = M.Modal.init(document.querySelector("#addTimer"));
 		this.formTimer = document.forms.namedItem("addTimerForm");
-		this.addTimer_modalConfirm = document.querySelector("#addTimer .modal-confirm");
+        this.addTimer_modalConfirm = document.querySelector("#addTimer .modal-confirm");
 
         this.addCronModal = M.Modal.init(document.querySelector("#add_cron"));
 		this.form = document.forms.namedItem("addForm");
@@ -29,7 +29,14 @@ class VueDashboard {
         this.removeCronModal = M.Modal.init(document.querySelector("#remove_modal"));
 
 		this.tableLines = document.querySelectorAll("tbody tr");
-		this.guild_id = new URLSearchParams(location.search).get("id");
+        this.guild_id = new URLSearchParams(location.search).get("id");
+
+        this.timezoneModal = M.Modal.init(document.querySelector("#setTimezone"));
+        this.addTimezone = document.querySelector("#setTimezone .modal-confirm");
+        let data = {};
+        for(const key of Object.keys(document.timezone_data))
+            data[key] = null;
+        this.timezoneSelector = M.Autocomplete.init(document.querySelector(".autocomplete"), {data: data});
 
 		let self = this;
         this.timePicker = M.Timepicker.init(document.querySelector("#timeSelect"), {
@@ -63,15 +70,18 @@ class VueDashboard {
     addEventListener() {
         document.querySelector(".schedule-add-btn").addEventListener("click", () => this.addCronModal.open());
         document.querySelector(".timer-add-btn").addEventListener("click", () => this.addTimerModal.open());
+        document.querySelector(".guild-timezone").addEventListener("click", () => this.timezoneModal.open());
         document.querySelectorAll("textarea").forEach(el => {
             el.addEventListener("input", () => this.onInputTextarea(el));
             el.addEventListener("keydown", (event) => this.onKeyPressedTextarea(event, el));
         });
+        document.querySelector(".autocomplete").addEventListener("change", (e) => this.onInputAutoComplete(e));
         document.querySelectorAll(".user_el").forEach(el => el.addEventListener("click", () => this.onUserClick(el)));
         document.querySelectorAll(".channel_el").forEach(el => el.addEventListener("click", () => this.onChannelClick(el)));
+        document.querySelector("#setTimezone .modal-confirm").addEventListener("click", () => this.onConfirmSetTimer());
         this.eachSelect.addEventListener("change", () => this.onChangeEachSelect());
 		this.addCron_modalConfirm.addEventListener("click", () => this.onConfirmAddCron());
-		this.addTimer_modalConfirm.addEventListener("click", () => this.onConfirmAddTimer());
+        this.addTimer_modalConfirm.addEventListener("click", () => this.onConfirmAddTimer());
 		
         this.tableLines.forEach(el => el.addEventListener("click", () => this.onTableLineCLick(el)));
         this.removeCron_modalConfirm.addEventListener("click", () => this.onConfirmRemoveCron());
@@ -106,6 +116,12 @@ class VueDashboard {
             if (channels_wrapper.querySelector(".selected"))
                 channels_wrapper.querySelector(".selected").classList.remove("selected");
         }
+    }
+    onInputAutoComplete(e) {
+        if (e.target.value in this.timezoneSelector.options.data)
+            this.addTimezone.classList.remove("disabled");
+        else 
+            this.addTimezone.classList.add("disabled");
     }
 
     onUserClick(element) {
@@ -439,6 +455,19 @@ class VueDashboard {
                 this.removeCronModal.close();
             });
         });
+    }
+    async onConfirmSetTimer() {
+        const timezone = document.querySelector(".autocomplete").value;
+        const offset = timezone.split("UTC")[1];
+        const response = await fetch(`/ajax/set_timezone?guild_id=${this.guild_id}&utc_offset=${offset}&timezone=${timezone}`);
+        if (response.status != 200) {
+            console.log("Error : ", response.status, " ", response.statusText);
+            M.toast({html: "Error : Impossible to set this timezone"}, 5000);
+            return;
+        }
+        M.toast({html: "The timezone has been succesfully set !"}, 5000);
+        document.querySelector(".guild-timezone h5").textContent = "Timezone : " + timezone;
+        this.timezoneModal.close();
     }
 }
 
