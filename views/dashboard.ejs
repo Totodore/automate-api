@@ -82,14 +82,15 @@
             <h5 style="margin-top: 3px;">Add a one time message</h5>
             <form method="post" name="addTimerForm">
                 <div class="input-field col s12 section">
-                    <textarea id="contentTimer" name="contentTimer" class="materialize-textarea" required minlength="1" maxlength="2000"></textarea>
+                    <textarea id="contentTimer" name="contentTimer" class="materialize-textarea" required minlength="1"
+                        maxlength="2000"></textarea>
                     <label for="contentTimer">Message's content</label>
                     <div class="users_wrapper scale-out">
                         <% people_list.forEach((el, index) => { %>
-                            <div class="user_el waves-effect waves-light" data-id="<%= el.userID %>"
-                                nickname="<%= el.nickname != null ? el.nickname : "" %>">
-                                @<%= el.nickname != null ? el.nickname : el.displayName %>
-                            </div>
+                        <div class="user_el waves-effect waves-light" data-id="<%= el.id %>"
+                            nickname="<%= (el.nickname || el.username) %>">
+                            @<%= el.nickname != null ? el.nickname : el.username %>
+                        </div>
                         <% }); %>
                         <div class="user_el waves-effect waves-light">
                             @everyone
@@ -100,9 +101,9 @@
                     </div>
                     <div class="channels_wrapper scale-out">
                         <% channel_list.forEach((el, index) => { %>
-                            <div class="channel_el waves-effect waves-light" data-id="<%= el.id %>">
-                                #<%= el.name %>
-                            </div>
+                        <div class="channel_el waves-effect waves-light" data-id="<%= el.id %>">
+                            #<%= el.name %>
+                        </div>
                         <% }); %>
                     </div>
                 </div>
@@ -146,17 +147,11 @@
                     <label for="content">Message's content</label>
                     <div class="users_wrapper scale-out">
                         <% people_list.forEach((el, index) => { %>
-                        <div class="user_el waves-effect waves-light" data-id="<%= el.userID %>"
-                            nickname="<%= el.nickname != null ? el.nickname : "" %>">
-                            @<%= el.nickname != null ? el.nickname : el.displayName %>
+                        <div class="user_el waves-effect waves-light" data-id="<%= el.id %>"
+                            nickname="<%= (el.nickname || el.username) %>">
+                            @<%= (el.nickname || el.username) %>
                         </div>
                         <% }); %>
-                        <div class="user_el waves-effect waves-light">
-                            @everyone
-                        </div>
-                        <div class="user_el waves-effect waves-light">
-                            @here
-                        </div>
                     </div>
                     <div class="channels_wrapper scale-out">
                         <% channel_list.forEach((el, index) => { %>

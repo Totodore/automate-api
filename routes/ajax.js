@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require("fs");
 const uniqid = require("uniqid");
 const router = express.Router();
+const momentTz = require("moment-timezone");
 
 const MAX_MESSAGE = 10;
 
@@ -103,14 +104,15 @@ router.post("/add_timer", (req, res) => {
 
 router.get("/set_timezone", (req, res) => {
 	const query = req.query;
-	console.log(query);
 	if (!query.guild_id || !query.utc_offset || !query.timezone) {
 		res.status(400).send("Bad request : Params not given");
 		return;
 	}
 	try {
 		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`));
-		guildData.utc_offset = parseInt(query.utc_offset)*60;
+		const utc_offset = parseInt(query.utc_offset)*60;
+		guildData.timezone_code = momentTz.tz.names().filter(el => 
+			momentTz.tz.zone(el).utcOffset(new Date().getTime()) == utc_offset)[0];
 		guildData.timezone = query.timezone;
 		fs.writeFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`, JSON.stringify(guildData));
 		res.send("This timezone has been successfully set !");

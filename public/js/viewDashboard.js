@@ -130,7 +130,7 @@ class VueDashboard {
         const users_wrapper = element.parentNode.parentNode.querySelector(".users_wrapper");
         textarea.value = textarea.value.substring(0, textarea.value.lastIndexOf("@")) + user;
         for (let el of document.users) {
-            const nickname = el.nickname || el.displayName;
+            const nickname = el.nickname || el.username;
             if ("@"+nickname == user) {
                 document.users.push(el);
                 break;
@@ -159,8 +159,8 @@ class VueDashboard {
         const wrapper = element.parentNode.querySelector(".channels_wrapper");
         const keyword = data.substring(data.lastIndexOf("#")+1, data.length);
         if (!clear) {
-            const elsToHide = document.channels.filter(el => !el.name.includes(keyword));
-            const elsToShow = document.channels.filter(el => el.name.includes(keyword));
+            const elsToHide = document.channels.filter(el => !el.name.toLowerCase().includes(keyword.toLowerCase()));
+            const elsToShow = document.channels.filter(el => el.name.toLowerCase().includes(keyword.toLowerCase()));
             elsToHide.forEach(el => wrapper.querySelector('div[data-id="'+el.id+'"]').classList.add("hidden"));
             elsToShow.forEach(el => wrapper.querySelector('div[data-id="'+el.id+'"]').classList.remove("hidden"));
         } else {
@@ -172,10 +172,10 @@ class VueDashboard {
         const wrapper = element.parentNode.querySelector(".users_wrapper");
         const keyword = data.substring(data.lastIndexOf("@")+1, data.length);
         if (!clear) {
-            const elsToHide = document.users.filter(el => el.nickname ? !el.nickname.includes(keyword) : !el.displayName.includes(keyword));
-            const elsToShow = document.users.filter(el => el.nickname ? el.nickname.includes(keyword) : el.displayName.includes(keyword));
-            elsToHide.forEach(el => wrapper.querySelector('div[data-id="'+el.userID+'"]').classList.add("hidden"));
-            elsToShow.forEach(el => wrapper.querySelector('div[data-id="'+el.userID+'"]').classList.remove("hidden"));
+            const elsToHide = document.users.filter(el => el.nickname ? !el.nickname.toLowerCase().includes(keyword.toLowerCase()) : !el.username.toLowerCase().includes(keyword.toLowerCase()));
+            const elsToShow = document.users.filter(el => el.nickname ? el.nickname.toLowerCase().includes(keyword.toLowerCase()) : el.username.toLowerCase().includes(keyword.toLowerCase()));
+            elsToHide.forEach(el => wrapper.querySelector('div[data-id="'+el.id+'"]').classList.add("hidden"));
+            elsToShow.forEach(el => wrapper.querySelector('div[data-id="'+el.id+'"]').classList.remove("hidden"));
         } else {
             wrapper.querySelectorAll(".hidden").forEach(el => el.classList.remove("hidden"));
         }
@@ -344,8 +344,8 @@ class VueDashboard {
             sysContent = sysContent.replace("#"+el.name, "<#"+el.id+">");
         });
         document.users.forEach(el => {
-            const name = el.nickname || el.displayName;
-            sysContent = sysContent.replace("@"+name, "<@"+el.userID+">");
+            const name = el.nickname || el.username;
+            sysContent = sysContent.replace("@"+name, "<@"+el.id+">");
         });
         formData.append("frequency", desc);
         formData.append("cron", cron.join(" "));
@@ -405,8 +405,8 @@ class VueDashboard {
             sysContent = sysContent.replace("#"+el.name, "<#"+el.id+">");
         });
         document.users.forEach(el => {
-            const name = el.nickname || el.displayName;
-            sysContent = sysContent.replace("@"+name, "<@"+el.userID+">");
+            const name = el.nickname || el.username;
+            sysContent = sysContent.replace("@"+name, "<@"+el.id+">");
         });
         formData.append("content", content);
         formData.append("sys_content", sysContent);

@@ -11,6 +11,7 @@ router.get('/', async (req, res, next) => {
     let guildRes;
     let peopleRes;
     let channelRes;
+    let rolesRes;
     try {
         db = JSON.parse(fs.readFileSync(__dirname + "/../data/guilds/" + req.query.id + "/data.json"));
         table = db.freq.concat(db.ponctual);
@@ -23,6 +24,7 @@ router.get('/', async (req, res, next) => {
                 return true;
             else return false;
         });
+        rolesRes = bot.getRoles(guild_id);
     } catch(e) {
         console.log(`Error loading datas : ${e}`);
         res.redirect("../?msg=" + encodeURI("Whoops ! It seems like an error has occured during the dashboard's loading. Sniffu..."));
@@ -64,7 +66,28 @@ router.get('/', async (req, res, next) => {
 
         zones[name] = offset;
     }
-    console.log(db.timezone);
+    peopleRes = peopleRes.map((val, index) => {
+        return {
+            username: val.user.username,
+            id: val.user.id,
+            nickname: val.nickname
+        };
+    });
+    //Adding roles to people list because both are preceded by a @ 
+    peopleRes = peopleRes.concat(rolesRes.map((val, index) => {
+        if (val.name[0] == "@")
+            val.name = val.name.substring(1, val.name.length-1);
+        return {
+            username: val.name,
+            id: val.id
+        };
+    }));
+    channelRes = channelRes.map((val, index) => {
+        return {
+            name: val.name,
+            id: val.id
+        };
+    });
     res.render('dashboard', {
         header: req.headerData,
         table: table, 

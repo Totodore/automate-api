@@ -1,10 +1,9 @@
 {
-  "name": "schedule-message-discord-v3",
-  "version": "1.0.0",
+  "name": "automate",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www",
-    "prestart": "node ./bot/bot.js"
+    "start": "node app.js"
   },
   "nodemonConfig": {
     "ignore": [
