@@ -57,6 +57,7 @@ router.get('/', async (req, res, next) => {
         else
             return 1;
     });
+    //We get all the available zones
     let zones = {};
     for (const el of momentTz.tz.names()) {
         const zoneEl = momentTz.tz.zone(el);
@@ -66,6 +67,7 @@ router.get('/', async (req, res, next) => {
 
         zones[name] = offset;
     }
+
     peopleRes = peopleRes.map((val, index) => {
         return {
             username: val.user.username,
@@ -73,15 +75,15 @@ router.get('/', async (req, res, next) => {
             nickname: val.nickname
         };
     });
-    //Adding roles to people list because both are preceded by a @ 
-    peopleRes = peopleRes.concat(rolesRes.map((val, index) => {
+    //We remove the @ if they start by a @ because they are manually added later in the html
+    rolesRes = rolesRes.map((val, index) => {
         if (val.name[0] == "@")
-            val.name = val.name.substring(1, val.name.length-1);
+            val.name = val.name.substring(1, val.name.length);
         return {
             username: val.name,
             id: val.id
         };
-    }));
+    }).filter((el, index) => el.username != "everyone");   //We remove everyone role because it is already manually added in the html
     channelRes = channelRes.map((val, index) => {
         return {
             name: val.name,
@@ -93,6 +95,7 @@ router.get('/', async (req, res, next) => {
         table: table, 
         channel_list: channelRes, 
         people_list: peopleRes,
+        roles_list: rolesRes,
         guild_data: guildRes, 
         cdn: process.env.CDN_ENDPOINT,
         now_hour: String(new Date().getHours())+":"+String(new Date().getMinutes()+2),

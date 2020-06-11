@@ -8,6 +8,7 @@
     <script>
         document.channels = <%- JSON.stringify(channel_list) %>;
         document.users = <%- JSON.stringify(people_list) %>;
+        document.roles = <%- JSON.stringify(roles_list) %>;
         document.timezone_data = <%- JSON.stringify(timezone_data) %>;
     </script>
 </head>
@@ -86,7 +87,7 @@
                         maxlength="2000"></textarea>
                     <label for="contentTimer">Message's content</label>
                     <div class="users_wrapper scale-out">
-                        <% people_list.forEach((el, index) => { %>
+                        <% people_list.concat(roles_list).forEach((el, index) => { %>
                         <div class="user_el waves-effect waves-light" data-id="<%= el.id %>"
                             nickname="<%= (el.nickname || el.username) %>">
                             @<%= el.nickname != null ? el.nickname : el.username %>
@@ -146,12 +147,18 @@
                         maxlength="2000"></textarea>
                     <label for="content">Message's content</label>
                     <div class="users_wrapper scale-out">
-                        <% people_list.forEach((el, index) => { %>
+                        <% people_list.concat(roles_list).forEach((el, index) => { %>
                         <div class="user_el waves-effect waves-light" data-id="<%= el.id %>"
                             nickname="<%= (el.nickname || el.username) %>">
                             @<%= (el.nickname || el.username) %>
                         </div>
                         <% }); %>
+                        <div class="user_el waves-effect waves-light">
+                            @everyone
+                        </div>
+                        <div class="user_el waves-effect waves-light">
+                            @here
+                        </div>
                     </div>
                     <div class="channels_wrapper scale-out">
                         <% channel_list.forEach((el, index) => { %>

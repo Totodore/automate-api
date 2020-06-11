@@ -347,6 +347,9 @@ class VueDashboard {
             const name = el.nickname || el.username;
             sysContent = sysContent.replace("@"+name, "<@"+el.id+">");
         });
+        document.roles.forEach(el => {
+            sysContent = sysContent.replace("@"+el.username, "<@&"+el.id+">");
+        });
         formData.append("frequency", desc);
         formData.append("cron", cron.join(" "));
         formData.append("content", content);
