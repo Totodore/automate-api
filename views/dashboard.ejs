@@ -27,8 +27,14 @@
         </a>
         <div href="/" class="guild-timezone waves-effect">
             <% include ../public/images/timezone.svg %>
-            <h5><% if (guildTimezone) {%> Timezone : <%= guildTimezone%> <% } else {%> Timezone :
-                No timezone has been set ! Default set to UTC <% } %></h5>
+            <h5>
+                <% if (guildTimezone) {%> 
+                    <span>Timezone :</span> <%= guildTimezone%> 
+                <% } else {%> 
+                    <span>Timezone :</span>
+                    No timezone has been set ! Default set to UTC 
+                <% } %>
+            </h5>
             <i class="material-icons forward-icon">arrow_forward</i>
         </div>
         <div class="crons">

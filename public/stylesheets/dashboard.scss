@@ -364,6 +364,21 @@ textarea {
         padding: 6px;
     }
 
+    .guild-timezone .timezone-icon {
+        height: 35px;
+        width: 35px;
+    }
+    .guild-timezone h5 {
+        font-size: 17px;
+    }
+    .guild-timezone .forward-icon {
+        font-size: 34px;
+    }
+    .guild-timezone span {
+        display: none;
+    }
+
+
     .return-icon,
     .menu-icon,
     .forward-icon {
