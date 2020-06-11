@@ -1,6 +1,7 @@
 const express = require('express');
 const fs = require("fs");
 const Cron = require("cron-converter");
+const momentTz = require("moment-timezone");
 const router = express.Router();
 
 router.get('/', async (req, res, next) => {
@@ -10,6 +11,7 @@ router.get('/', async (req, res, next) => {
     let guildRes;
     let peopleRes;
     let channelRes;
+    let rolesRes;
     try {
         db = JSON.parse(fs.readFileSync(__dirname + "/../data/guilds/" + req.query.id + "/data.json"));
         table = db.freq.concat(db.ponctual);
@@ -22,6 +24,7 @@ router.get('/', async (req, res, next) => {
                 return true;
             else return false;
         });
+        rolesRes = bot.getRoles(guild_id);
     } catch(e) {
         console.log(`Error loading datas : ${e}`);
         res.redirect("../?msg=" + encodeURI("Whoops ! It seems like an error has occured during the dashboard's loading. Sniffu..."));
@@ -54,14 +57,50 @@ router.get('/', async (req, res, next) => {
         else
             return 1;
     });
+    //We get all the available zones
+    let zones = {};
+    for (const el of momentTz.tz.names()) {
+        const zoneEl = momentTz.tz.zone(el);
+        const offset = zoneEl.utcOffset(new Date().getTime());
+        const zoneName = zoneEl.name.split("/");
+        let name = `${zoneName[zoneName.length-2] || ""} : ${zoneName[zoneName.length-1]} → UTC${Math.floor(offset/60) > 0 ? "+" : ""}${Math.floor(offset/60)}`;
+
+        zones[name] = offset;
+    }
+
+    peopleRes = peopleRes.map((val, index) => {
+        return {
+            username: val.user.username,
+            id: val.user.id,
+            nickname: val.nickname
+        };
+    });
+    //We remove the @ if they start by a @ because they are manually added later in the html
+    rolesRes = rolesRes.map((val, index) => {
+        if (val.name[0] == "@")
+            val.name = val.name.substring(1, val.name.length);
+        return {
+            username: val.name,
+            id: val.id
+        };
+    }).filter((el, index) => el.username != "everyone");   //We remove everyone role because it is already manually added in the html
+    channelRes = channelRes.map((val, index) => {
+        return {
+            name: val.name,
+            id: val.id
+        };
+    });
     res.render('dashboard', {
         header: req.headerData,
         table: table, 
         channel_list: channelRes, 
         people_list: peopleRes,
+        roles_list: rolesRes,
         guild_data: guildRes, 
         cdn: process.env.CDN_ENDPOINT,
-        now_hour: String(new Date().getHours())+":"+String(new Date().getMinutes()+2)
+        now_hour: String(new Date().getHours())+":"+String(new Date().getMinutes()+2),
+        timezone_data: zones,
+        guildTimezone: db.timezone
     });
 });
 
