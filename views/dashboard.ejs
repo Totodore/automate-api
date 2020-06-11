@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <% include partials/head.ejs %>
     <link rel="stylesheet" href="/stylesheets/dashboard.css">
     <script src="/js/viewDashboard.js"></script>
     <script>
         document.channels = <%- JSON.stringify(channel_list) %>;
         document.users = <%- JSON.stringify(people_list) %>;
+        document.roles = <%- JSON.stringify(roles_list) %>;
+        document.timezone_data = <%- JSON.stringify(timezone_data) %>;
     </script>
-  </head>
-  <body class="black">
-    <% include partials/header.ejs %> 
+</head>
+
+<body class="black">
+    <% include partials/header.ejs %>
     <div class="body-wrapper">
         <a class="guild-data waves-effect" href="/">
-            <i class="material-icons return-icon left">arrow_back</i>
-            <i class="material-icons menu-icon left">apps</i>
-            <% if (guild_data.icon) {%> 
-                <img src="<%= cdn %>/icons/<%= guild_data.id %>/<%= guild_data.icon %>.png?size=64" alt="" class="right guild-icon">
+            <i class="material-icons return-icon">arrow_back</i>
+            <i class="material-icons menu-icon">apps</i>
+            <% if (guild_data.icon) {%>
+            <img src="<%= cdn %>/icons/<%= guild_data.id %>/<%= guild_data.icon %>.png?size=64" alt=""
+                class="right guild-icon">
             <% } %>
             <h5><%= guild_data.name %></h5>
         </a>
+        <div href="/" class="guild-timezone waves-effect">
+            <% include ../public/images/timezone.svg %>
+            <h5><% if (guildTimezone) {%> Timezone : <%= guildTimezone%> <% } else {%> Timezone :
+                No timezone has been set ! Default set to UTC <% } %></h5>
+            <i class="material-icons forward-icon">arrow_forward</i>
+        </div>
         <div class="crons">
             <table class="centered responsive-table">
                 <thead>
@@ -31,37 +42,56 @@
                 </thead>
                 <tbody>
                     <% table.forEach(element => { %>
-                        <tr id="<%= element.id %>" channel_id="<%= element.channel_id %>">
-                            <td><%= element.description %></td>
-                            <td>#<%= element.channel_name %></td>
-                            <td><%= element.message %><i class="material-icons">delete</i></td>
-                        </tr>
+                    <tr id="<%= element.id %>" channel_id="<%= element.channel_id %>">
+                        <td><%= element.description %></td>
+                        <td>#<%= element.channel_name %></td>
+                        <td><%= element.message %><i class="material-icons">delete</i></td>
+                    </tr>
                     <% }); %>
                 </tbody>
             </table>
         </div>
     </div>
     <div class="fixed-action-btn">
-        <button class="btn-floating btn-large grey darken-2 waves-effect waves-light timer-add-btn tooltipped" data-position="left" data-tooltip="One time message" style="margin-bottom: 13px;">
+        <button class="btn-floating btn-large grey darken-2 waves-effect waves-light timer-add-btn tooltipped"
+            data-position="left" data-tooltip="One time message" style="margin-bottom: 13px;">
             <img src="/images/clock.svg" />
         </button>
-        <button href="#!" class="btn-floating btn-large gery darken-2 waves-effect waves-light schedule-add-btn tooltipped" data-position="left" data-tooltip="Recurrent message">
+        <button href="#!"
+            class="btn-floating btn-large gery darken-2 waves-effect waves-light schedule-add-btn tooltipped"
+            data-position="left" data-tooltip="Recurrent message">
             <img src="/images/calendar.svg" />
         </button>
     </div>
 
+    <div id="setTimezone" class="modal modal-fixed-footer">
+        <div class="modal-content">
+            <h5 style="margin-top: 3px;">Select your server timezone below :</h5>
+            <div class="input-field col s12 section">
+                <input type="text" id="timezone-input" class="autocomplete" autocomplete="off">
+                <label for="timezone-input">Type your city or country name</label>
+            </div>
+        </div>
+        <div class="modal-footer footer">
+            <button href="#!"
+                class="modal-close waves-effect waves-light btn-flat grey-text text-lighten-2">Cancel</button>
+            <button href="#!" class="modal-confirm waves-effect btn disabled">Set the timezone</button>
+        </div>
+    </div>
     <div id="addTimer" class="modal modal-fixed-footer">
         <div class="modal-content">
             <h5 style="margin-top: 3px;">Add a one time message</h5>
             <form method="post" name="addTimerForm">
                 <div class="input-field col s12 section">
-                    <textarea id="contentTimer" name="contentTimer" class="materialize-textarea" required minlength="1" maxlength="2000"></textarea>
+                    <textarea id="contentTimer" name="contentTimer" class="materialize-textarea" required minlength="1"
+                        maxlength="2000"></textarea>
                     <label for="contentTimer">Message's content</label>
                     <div class="users_wrapper scale-out">
-                        <% people_list.forEach((el, index) => { %>
-                            <div class="user_el waves-effect waves-light" data-id="<%= el.userID %>" nickname="<%= el.nickname != null ? el.nickname : "" %>">
-                                @<%= el.nickname != null ? el.nickname : el.displayName %>
-                            </div>
+                        <% people_list.concat(roles_list).forEach((el, index) => { %>
+                        <div class="user_el waves-effect waves-light" data-id="<%= el.id %>"
+                            nickname="<%= (el.nickname || el.username) %>">
+                            @<%= el.nickname != null ? el.nickname : el.username %>
+                        </div>
                         <% }); %>
                         <div class="user_el waves-effect waves-light">
                             @everyone
@@ -72,9 +102,9 @@
                     </div>
                     <div class="channels_wrapper scale-out">
                         <% channel_list.forEach((el, index) => { %>
-                            <div class="channel_el waves-effect waves-light" data-id="<%= el.id %>">
-                                #<%= el.name %>
-                            </div>
+                        <div class="channel_el waves-effect waves-light" data-id="<%= el.id %>">
+                            #<%= el.name %>
+                        </div>
                         <% }); %>
                     </div>
                 </div>
@@ -82,11 +112,11 @@
                     <select name="channelSelectTimer" id="channelSelectTimer">
                         <% channel_list.forEach(element => { 
                             if (element.id == guild_data.systemChannelID) { %>
-                                <option value="<%= element.id %>" selected >#<%= element.name %></option>
-                            <% } else { %>
-                                <option value="<%= element.id %>" >#<%= element.name %></option>
-                            <% }
-                        }) %>
+                        <option value="<%= element.id %>" selected>#<%= element.name %></option>
+                        <% } else { %>
+                        <option value="<%= element.id %>">#<%= element.name %></option>
+                        <% }
+                    }) %>
                     </select>
                     <label for="channelSelectTimer">Channel :</label>
                 </div>
@@ -101,8 +131,10 @@
             </form>
         </div>
         <div class="modal-footer footer">
-            <button href="#!" class="modal-close waves-effect waves-light btn-flat grey-text text-lighten-2">Cancel</button>
-            <button href="#!" class="modal-confirm waves-effect waves-light btn grey darken-3">Add the message <i class="material-icons right">send</i></button>
+            <button href="#!"
+                class="modal-close waves-effect waves-light btn-flat grey-text text-lighten-2">Cancel</button>
+            <button href="#!" class="modal-confirm waves-effect waves-light btn grey darken-3">Add the message <i
+                    class="material-icons right">send</i></button>
         </div>
     </div>
 
@@ -111,13 +143,15 @@
             <h5 style="margin-top: 3px;">Add a recurring message</h5>
             <form method="post" name="addForm">
                 <div class="input-field col s12 section">
-                    <textarea id="content" name="content" class="materialize-textarea" required minlength="1" maxlength="2000"></textarea>
+                    <textarea id="content" name="content" class="materialize-textarea" required minlength="1"
+                        maxlength="2000"></textarea>
                     <label for="content">Message's content</label>
                     <div class="users_wrapper scale-out">
-                        <% people_list.forEach((el, index) => { %>
-                            <div class="user_el waves-effect waves-light" data-id="<%= el.userID %>" nickname="<%= el.nickname != null ? el.nickname : "" %>">
-                                @<%= el.nickname != null ? el.nickname : el.displayName %>
-                            </div>
+                        <% people_list.concat(roles_list).forEach((el, index) => { %>
+                        <div class="user_el waves-effect waves-light" data-id="<%= el.id %>"
+                            nickname="<%= (el.nickname || el.username) %>">
+                            @<%= (el.nickname || el.username) %>
+                        </div>
                         <% }); %>
                         <div class="user_el waves-effect waves-light">
                             @everyone
@@ -128,9 +162,9 @@
                     </div>
                     <div class="channels_wrapper scale-out">
                         <% channel_list.forEach((el, index) => { %>
-                            <div class="channel_el waves-effect waves-light" data-id="<%= el.id %>">
-                                #<%= el.name %>
-                            </div>
+                        <div class="channel_el waves-effect waves-light" data-id="<%= el.id %>">
+                            #<%= el.name %>
+                        </div>
                         <% }); %>
                     </div>
                 </div>
@@ -138,10 +172,10 @@
                     <select name="channelSelect" id="channelSelect">
                         <% channel_list.forEach(element => { 
                             if (element.id == guild_data.systemChannelID) { %>
-                                <option value="<%= element.id %>" selected >#<%= element.name %></option>
-                            <% } else { %>
-                                <option value="<%= element.id %>" >#<%= element.name %></option>
-                            <% }
+                        <option value="<%= element.id %>" selected>#<%= element.name %></option>
+                        <% } else { %>
+                        <option value="<%= element.id %>">#<%= element.name %></option>
+                        <% }
                         }) %>
                     </select>
                     <label for="channelSelect">Channel :</label>
@@ -173,8 +207,10 @@
             </form>
         </div>
         <div class="modal-footer footer">
-            <button href="#!" class="modal-close waves-effect waves-light btn-flat grey-text text-lighten-2">Cancel</button>
-            <button href="#!" class="modal-confirm waves-effect waves-light btn grey darken-3">Add the message <i class="material-icons right">send</i></button>
+            <button href="#!"
+                class="modal-close waves-effect waves-light btn-flat grey-text text-lighten-2">Cancel</button>
+            <button href="#!" class="modal-confirm waves-effect waves-light btn grey darken-3">Add the message <i
+                    class="material-icons right">send</i></button>
         </div>
     </div>
     <div id="remove_modal" class="modal bottom-sheet modal-fixed-footer" style="height: 30% !important">
@@ -182,9 +218,11 @@
             <h5>Are you sure you want to delete this message ?</h5>
         </div>
         <div class="modal-footer footer">
-            <button href="#!" class="modal-close waves-effect waves-light btn-flat grey-text text-lighten-2">Cancel</button>
+            <button href="#!"
+                class="modal-close waves-effect waves-light btn-flat grey-text text-lighten-2">Cancel</button>
             <button href="#!" class="modal-confirm waves-effect waves-light btn grey darken-3">Confirm</button>
         </div>
     </div>
-  </body>
+</body>
+
 </html>
