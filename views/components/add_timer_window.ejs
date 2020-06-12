@@ -1,0 +1,56 @@
+<div id="addTimer" class="modal modal-fixed-footer">
+    <div class="modal-content">
+        <h5 style="margin-top: 3px;">Add a one time message</h5>
+        <form method="post" name="addTimerForm">
+            <div class="input-field col s12 section">
+                <textarea id="contentTimer" name="contentTimer" class="materialize-textarea" required minlength="1" maxlength="2000"></textarea>
+                <label for="contentTimer">Message's content</label>
+                <div class="users_wrapper scale-out">
+                    <% people_list.concat(roles_list).forEach((el, index) => { %>
+                        <div class="user_el waves-effect waves-light" data-id="<%= el.id %>"
+                            nickname="<%= (el.nickname || el.username) %>">
+                            @<%= el.nickname != null ? el.nickname : el.username %>
+                        </div>
+                    <% }); %>
+                    <div class="user_el waves-effect waves-light">
+                        @everyone
+                    </div>
+                    <div class="user_el waves-effect waves-light">
+                        @here
+                    </div>
+                </div>
+                <div class="channels_wrapper scale-out">
+                    <% channel_list.forEach((el, index) => { %>
+                    <div class="channel_el waves-effect waves-light" data-id="<%= el.id %>">
+                        #<%= el.name %>
+                    </div>
+                    <% }); %>
+                </div>
+            </div>
+            <div class="input-field col s12 section channelSelect-wrapper">
+                <select name="channelSelectTimer" id="channelSelectTimer">
+                    <% channel_list.forEach(element => { 
+                        if (element.id == guild_data.systemChannelID) { %>
+                            <option value="<%= element.id %>" selected>#<%= element.name %></option>
+                        <% } else { %>
+                            <option value="<%= element.id %>">#<%= element.name %></option>
+                        <% }
+                    }) %>
+                </select>
+                <label for="channelSelectTimer">Channel :</label>
+            </div>
+            <div class="input-field col s12 scale-transition section dateSelect-wrapper-timer">
+                <input type="text" class="datepicker" id="dateSelectTimer">
+                <label for="dateSelectTimer">On :</label>
+            </div>
+            <div class="input-field col s12 scale-transition section timeSelect-wrapper-timer">
+                <input type="text" class="timepicker" id="timeSelectTimer" value="<%= now_hour %>">
+                <label for="timeSelectTimer">At :</label>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer footer">
+        <button href="#!" class="modal-close waves-effect waves-light btn-flat grey-text text-lighten-2">Cancel</button>
+        <button href="#!" class="modal-confirm waves-effect waves-light btn grey darken-3">Add the message <i class="material-icons right">send</i></button>
+    </div>
+</div>
