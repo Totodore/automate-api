@@ -28,6 +28,9 @@ class VueDashboard {
         this.removeCron_modalConfirm = document.querySelector("#remove_modal .modal-confirm");
         this.removeCronModal = M.Modal.init(document.querySelector("#remove_modal"));
 
+        this.optionsModal = M.Modal.init(document.querySelector("#options_modal"));
+        this.editMessageModal = M.Modal.init(document.querySelector("#editMessage"));
+
 		this.tableLines = document.querySelectorAll("tbody tr");
         this.guild_id = new URLSearchParams(location.search).get("id");
 
@@ -68,6 +71,7 @@ class VueDashboard {
     }
 
     addEventListener() {
+		this.tableLines = document.querySelectorAll("tbody tr");
         document.querySelector(".schedule-add-btn").addEventListener("click", () => this.addCronModal.open());
         document.querySelector(".timer-add-btn").addEventListener("click", () => this.addTimerModal.open());
         document.querySelector(".guild-timezone").addEventListener("click", () => this.timezoneModal.open());
@@ -79,11 +83,17 @@ class VueDashboard {
         document.querySelectorAll(".user_el").forEach(el => el.addEventListener("click", () => this.onUserClick(el)));
         document.querySelectorAll(".channel_el").forEach(el => el.addEventListener("click", () => this.onChannelClick(el)));
         document.querySelector("#setTimezone .modal-confirm").addEventListener("click", () => this.onConfirmSetTimer());
+        document.querySelector("#options_modal .delete").addEventListener("click", () => this.onRemoveEl());
+        document.querySelector("#editMessage .modal-confirm").addEventListener("click", () => this.onConfirmUpdateMessage());
         this.eachSelect.addEventListener("change", () => this.onChangeEachSelect());
 		this.addCron_modalConfirm.addEventListener("click", () => this.onConfirmAddCron());
         this.addTimer_modalConfirm.addEventListener("click", () => this.onConfirmAddTimer());
 		
-        this.tableLines.forEach(el => el.addEventListener("click", () => this.onTableLineCLick(el)));
+        this.tableLines.forEach(el => {
+            el.addEventListener("click", () => this.onElClick(el)); 
+            el.querySelector(".edit").addEventListener("click", () => this.onOpenEdit(el));
+            el.querySelector(".delete").addEventListener("click", () => this.onRemoveEl(el));
+        });
         this.removeCron_modalConfirm.addEventListener("click", () => this.onConfirmRemoveCron());
     }
 
@@ -371,11 +381,22 @@ class VueDashboard {
             } else response.text().then((responseText) => {
 				let name;
 				document.channels.forEach(element => {if(element.id == channel_id) name = element.name;});
-                document.querySelector("tbody").insertAdjacentHTML("afterbegin", '<tr id="'+responseText+'" channel_id="'+channel_id+'"><td>'+desc+'</td><td>#'+name+'</td><td>'+content+'<i class="material-icons">delete</i></td></tr>');
-                document.getElementById(responseText).addEventListener("click", () => {
-                    self.removeCronModal.open();
-                    self.idToRemove = responseText;
-                });
+                    document.querySelector("tbody").insertAdjacentHTML("afterbegin", `
+                    <tr id="${responseText}" channel_id="${channel_id}">
+                        <td>${desc}</td>
+                        <td>#${name}</td>
+                        <td class="message">
+                            <div>
+                                <p class="description">${content}</p>
+                                <div class="options">
+                                    <i class="material-icons waves-effect edit">edit</i>
+                                    <span class="divider"></span>
+                                    <i class="material-icons waves-effect delete">delete</i>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>`);
+                this.addEventListener();
 				this.form.reset();
                 M.toast({html: "This message has successfully been set"}, 5000);
             });
@@ -432,23 +453,50 @@ class VueDashboard {
             } else response.text().then((responseText) => {
 				let name;
 				document.channels.forEach(element => {if(element.id == channel_id) name = element.name;});
-                document.querySelector("tbody").insertAdjacentHTML("afterbegin", '<tr id="'+responseText+'" channel_id="'+channel_id+'"><td>'+desc+'</td><td>#'+name+'</td><td>'+content+'<i class="material-icons">delete</i></td></tr>');
-                document.getElementById(responseText).addEventListener("click", () => {
-                    self.removeCronModal.open();
-                    self.idToRemove = responseText;
-                });
+                document.querySelector("tbody").insertAdjacentHTML("afterbegin", `
+                <tr id="${responseText}" channel_id="${channel_id}">
+                    <td>${desc}</td>
+                    <td>#${name}</td>
+                    <td class="message">
+                        <div>
+                            <p class="description">${content}</p>
+                            <div class="options">
+                                <i class="material-icons waves-effect edit">edit</i>
+                                <span class="divider"></span>
+                                <i class="material-icons waves-effect delete">delete</i>
+                            </div>
+                        </div>
+                    </td>
+                </tr>`);
+                this.addEventListener();
                 //Suppression du message automatiquement si la date est dépassée.
                 setTimeout(() => {document.getElementById(responseText).remove();}, timestamp*60*1000 - Date.now());
 				this.formTimer.reset();
                 M.toast({html: "This message has successfully been set"}, 5000);
 			});
 			this.addTimerModal.close();
-		});
+        });
     }
-
-    onTableLineCLick(el) {   
-        this.idToRemove = el.getAttribute("id");
+    onRemoveEl(el) {
+        if (el)
+            this.idToRemove = el.getAttribute("id");
+        this.optionsModal.close();
         this.removeCronModal.open();
+    }
+    onElClick(el) {
+        console.log(window.screen.width);
+        if (window.screen.width < 1000) {
+            this.idToRemove = el.getAttribute("id"); 
+            this.optionsModal.open();
+        }
+    }
+    onOpenEdit(el) {
+        if (el)
+            this.idToRemove = el.getAttribute("id");
+        document.querySelector("#contentEdit").textContent = document.querySelector("#"+this.idToRemove).querySelector(".description").innerText;
+        M.textareaAutoResize(document.querySelector("#contentEdit"));
+        M.updateTextFields();
+        this.editMessageModal.open();
     }
     onConfirmRemoveCron() {
         fetch(`/ajax/remove_message?id=${this.idToRemove}&guild_id=${this.guild_id}`).then((response) => {
@@ -474,6 +522,39 @@ class VueDashboard {
         M.toast({html: "The timezone has been succesfully set !"}, 5000);
         document.querySelector(".guild-timezone h5").textContent = "Timezone : " + timezone;
         this.timezoneModal.close();
+    }
+    async onConfirmUpdateMessage() {
+        const message = document.querySelector("#contentEdit").value;
+        const formData = new FormData();
+
+        let sysContent = message;
+        document.channels.forEach(el => {
+            sysContent = sysContent.replace("#"+el.name, "<#"+el.id+">");
+        });
+        document.users.forEach(el => {
+            const name = el.nickname || el.username;
+            sysContent = sysContent.replace("@"+name, "<@"+el.id+">");
+        });
+        document.roles.forEach(el => {
+            sysContent = sysContent.replace("@"+el.username, "<@&"+el.id+">");
+        });
+
+        formData.append("content", message);
+        formData.append("msg_id", this.idToRemove);
+        formData.append("guild_id", this.guild_id);
+        formData.append("sys_content", sysContent);
+        const req = await fetch("/ajax/set_message", {
+            body: formData,
+            method: "POST"
+        });
+        if (req.status != 200) {
+            console.log("Error : ", req.status, " ", req.statusText);
+            M.toast({html: "Error : Impossible to set this message"}, 5000);
+            return;
+        }
+        this.editMessageModal.close();
+        M.toast({html: "Message updated !"});
+        document.querySelector("#"+this.idToRemove).querySelector(".description").textContent = message;
     }
 }
 

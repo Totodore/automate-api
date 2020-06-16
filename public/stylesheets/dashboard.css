@@ -25,7 +25,7 @@
 .materialize-red.lighten-2 {
   background-color: #ee6e73 !important; }
 
-.materialize-red-text.text-lighten-2, .select-dropdown span.materialize-red-text, input.materialize-red-text,
+.materialize-red-text.text-lighten-2, .crons tbody tr .message > div > .options .materialize-red-text.edit:hover, .select-dropdown span.materialize-red-text, input.materialize-red-text,
 textarea.materialize-red-text, .input-field label.materialize-red-text, .input-field input[type=text]:focus + label.materialize-red-text,
 .input-field textarea:focus + label.materialize-red-text, .dropdown-content li > a.materialize-red-text, .dropdown-content li > span.materialize-red-text {
   color: #ee6e73 !important; }
@@ -42,13 +42,13 @@ textarea.materialize-red-text, .input-field label.materialize-red-text, .input-f
 .materialize-red-text.text-darken-1, .autocomplete-content li .materialize-red-text.highlight {
   color: #d0181e !important; }
 
-.materialize-red.darken-2, .crons tbody tr.materialize-red:hover {
+.materialize-red.darken-2 {
   background-color: #b9151b !important; }
 
 .materialize-red-text.text-darken-2 {
   color: #b9151b !important; }
 
-.materialize-red.darken-3, .materialize-red.user_el.selected,
+.materialize-red.darken-3, .crons tbody tr.materialize-red:hover, .crons tbody tr .message > div > .materialize-red.options, .materialize-red.user_el.selected,
 .materialize-red.channel_el.selected,
 .materialize-red.user_el:hover,
 .materialize-red.channel_el:hover, .materialize-red.datepicker-calendar-container {
@@ -69,31 +69,32 @@ textarea.materialize-red-text, .input-field label.materialize-red-text, .input-f
 .red {
   background-color: #F44336 !important; }
 
-.red-text {
+.red-text, .crons tbody tr .message > div > .options .delete:hover {
   color: #F44336 !important; }
 
 .red.lighten-5 {
   background-color: #FFEBEE !important; }
 
-.red-text.text-lighten-5 {
+.red-text.text-lighten-5, .crons tbody tr .message > div > .options .text-lighten-5.delete:hover {
   color: #FFEBEE !important; }
 
 .red.lighten-4 {
   background-color: #FFCDD2 !important; }
 
-.red-text.text-lighten-4 {
+.red-text.text-lighten-4, .crons tbody tr .message > div > .options .text-lighten-4.delete:hover {
   color: #FFCDD2 !important; }
 
 .red.lighten-3 {
   background-color: #EF9A9A !important; }
 
-.red-text.text-lighten-3 {
+.red-text.text-lighten-3, .crons tbody tr .message > div > .options .text-lighten-3.delete:hover {
   color: #EF9A9A !important; }
 
 .red.lighten-2 {
   background-color: #E57373 !important; }
 
-.red-text.text-lighten-2, .select-dropdown span.red-text, input.red-text,
+.red-text.text-lighten-2, .crons tbody tr .message > div > .options .text-lighten-2.delete:hover, .crons tbody tr .message > div > .options .delete.edit:hover, .crons tbody tr .message > div > .options .select-dropdown span.delete:hover, .select-dropdown .crons tbody tr .message > div > .options span.delete:hover, .crons tbody tr .message > div > .options input.delete:hover,
+.crons tbody tr .message > div > .options textarea.delete:hover, .crons tbody tr .message > div > .options .input-field label.delete:hover, .input-field .crons tbody tr .message > div > .options label.delete:hover, .crons tbody tr .message > div > .options .dropdown-content li > a.delete:hover, .dropdown-content .crons tbody tr .message > div > .options li > a.delete:hover, .crons tbody tr .message > div > .options .dropdown-content li > span.delete:hover, .dropdown-content .crons tbody tr .message > div > .options li > span.delete:hover, .crons tbody tr .message > div > .options .red-text.edit:hover, .select-dropdown span.red-text, input.red-text,
 textarea.red-text, .input-field label.red-text, .input-field input[type=text]:focus + label.red-text,
 .input-field textarea:focus + label.red-text, .dropdown-content li > a.red-text, .dropdown-content li > span.red-text {
   color: #E57373 !important; }
@@ -101,28 +102,28 @@ textarea.red-text, .input-field label.red-text, .input-field input[type=text]:fo
 .red.lighten-1 {
   background-color: #EF5350 !important; }
 
-.red-text.text-lighten-1, .red-text.guild-data, .red-text.guild-timezone, .red-text.crons {
+.red-text.text-lighten-1, .red-text.guild-data, .crons tbody tr .message > div > .options .guild-data.delete:hover, .red-text.guild-timezone, .crons tbody tr .message > div > .options .guild-timezone.delete:hover, .red-text.crons, .crons tbody tr .message > div > .options .crons.delete:hover, .crons tbody tr .message > div > .options .text-lighten-1.delete:hover {
   color: #EF5350 !important; }
 
 .red.darken-1 {
   background-color: #E53935 !important; }
 
-.red-text.text-darken-1, .autocomplete-content li .red-text.highlight {
+.red-text.text-darken-1, .crons tbody tr .message > div > .options .text-darken-1.delete:hover, .crons tbody tr .message > div > .options .autocomplete-content li .delete.highlight:hover, .autocomplete-content li .crons tbody tr .message > div > .options .delete.highlight:hover, .autocomplete-content li .red-text.highlight {
   color: #E53935 !important; }
 
-.red.darken-2, .crons tbody tr.red:hover {
+.red.darken-2 {
   background-color: #D32F2F !important; }
 
-.red-text.text-darken-2 {
+.red-text.text-darken-2, .crons tbody tr .message > div > .options .text-darken-2.delete:hover {
   color: #D32F2F !important; }
 
-.red.darken-3, .red.user_el.selected,
+.red.darken-3, .crons tbody tr.red:hover, .crons tbody tr .message > div > .red.options, .red.user_el.selected,
 .red.channel_el.selected,
 .red.user_el:hover,
 .red.channel_el:hover, .red.datepicker-calendar-container {
   background-color: #C62828 !important; }
 
-.red-text.text-darken-3 {
+.red-text.text-darken-3, .crons tbody tr .message > div > .options .text-darken-3.delete:hover {
   color: #C62828 !important; }
 
 .red.darken-4, .red.guild-data, .red.guild-timezone, .red.crons, .red#addTimer,
@@ -131,31 +132,31 @@ textarea.red-text, .input-field label.red-text, .input-field input[type=text]:fo
 .red.channel_el, .red.footer, .red.select-dropdown, .section-search input.red.autocomplete, .dropdown-content li > a.red, .dropdown-content li > span.red {
   background-color: #B71C1C !important; }
 
-.red-text.text-darken-4, .red-text.select-dropdown {
+.red-text.text-darken-4, .crons tbody tr .message > div > .options .text-darken-4.delete:hover, .crons tbody tr .message > div > .options .delete.select-dropdown:hover, .red-text.select-dropdown {
   color: #B71C1C !important; }
 
 .red.accent-1 {
   background-color: #FF8A80 !important; }
 
-.red-text.text-accent-1 {
+.red-text.text-accent-1, .crons tbody tr .message > div > .options .text-accent-1.delete:hover {
   color: #FF8A80 !important; }
 
 .red.accent-2 {
   background-color: #FF5252 !important; }
 
-.red-text.text-accent-2 {
+.red-text.text-accent-2, .crons tbody tr .message > div > .options .text-accent-2.delete:hover {
   color: #FF5252 !important; }
 
 .red.accent-3 {
   background-color: #FF1744 !important; }
 
-.red-text.text-accent-3 {
+.red-text.text-accent-3, .crons tbody tr .message > div > .options .text-accent-3.delete:hover {
   color: #FF1744 !important; }
 
 .red.accent-4 {
   background-color: #D50000 !important; }
 
-.red-text.text-accent-4 {
+.red-text.text-accent-4, .crons tbody tr .message > div > .options .text-accent-4.delete:hover {
   color: #D50000 !important; }
 
 .pink {
@@ -185,7 +186,7 @@ textarea.red-text, .input-field label.red-text, .input-field input[type=text]:fo
 .pink.lighten-2 {
   background-color: #f06292 !important; }
 
-.pink-text.text-lighten-2, .select-dropdown span.pink-text, input.pink-text,
+.pink-text.text-lighten-2, .crons tbody tr .message > div > .options .pink-text.edit:hover, .select-dropdown span.pink-text, input.pink-text,
 textarea.pink-text, .input-field label.pink-text, .input-field input[type=text]:focus + label.pink-text,
 .input-field textarea:focus + label.pink-text, .dropdown-content li > a.pink-text, .dropdown-content li > span.pink-text {
   color: #f06292 !important; }
@@ -202,13 +203,13 @@ textarea.pink-text, .input-field label.pink-text, .input-field input[type=text]:
 .pink-text.text-darken-1, .autocomplete-content li .pink-text.highlight {
   color: #d81b60 !important; }
 
-.pink.darken-2, .crons tbody tr.pink:hover {
+.pink.darken-2 {
   background-color: #c2185b !important; }
 
 .pink-text.text-darken-2 {
   color: #c2185b !important; }
 
-.pink.darken-3, .pink.user_el.selected,
+.pink.darken-3, .crons tbody tr.pink:hover, .crons tbody tr .message > div > .pink.options, .pink.user_el.selected,
 .pink.channel_el.selected,
 .pink.user_el:hover,
 .pink.channel_el:hover, .pink.datepicker-calendar-container {
@@ -277,7 +278,7 @@ textarea.pink-text, .input-field label.pink-text, .input-field input[type=text]:
 .purple.lighten-2 {
   background-color: #ba68c8 !important; }
 
-.purple-text.text-lighten-2, .select-dropdown span.purple-text, input.purple-text,
+.purple-text.text-lighten-2, .crons tbody tr .message > div > .options .purple-text.edit:hover, .select-dropdown span.purple-text, input.purple-text,
 textarea.purple-text, .input-field label.purple-text, .input-field input[type=text]:focus + label.purple-text,
 .input-field textarea:focus + label.purple-text, .dropdown-content li > a.purple-text, .dropdown-content li > span.purple-text {
   color: #ba68c8 !important; }
@@ -294,13 +295,13 @@ textarea.purple-text, .input-field label.purple-text, .input-field input[type=te
 .purple-text.text-darken-1, .autocomplete-content li .purple-text.highlight {
   color: #8e24aa !important; }
 
-.purple.darken-2, .crons tbody tr.purple:hover {
+.purple.darken-2 {
   background-color: #7b1fa2 !important; }
 
 .purple-text.text-darken-2 {
   color: #7b1fa2 !important; }
 
-.purple.darken-3, .purple.user_el.selected,
+.purple.darken-3, .crons tbody tr.purple:hover, .crons tbody tr .message > div > .purple.options, .purple.user_el.selected,
 .purple.channel_el.selected,
 .purple.user_el:hover,
 .purple.channel_el:hover, .purple.datepicker-calendar-container {
@@ -369,7 +370,7 @@ textarea.purple-text, .input-field label.purple-text, .input-field input[type=te
 .deep-purple.lighten-2 {
   background-color: #9575cd !important; }
 
-.deep-purple-text.text-lighten-2, .select-dropdown span.deep-purple-text, input.deep-purple-text,
+.deep-purple-text.text-lighten-2, .crons tbody tr .message > div > .options .deep-purple-text.edit:hover, .select-dropdown span.deep-purple-text, input.deep-purple-text,
 textarea.deep-purple-text, .input-field label.deep-purple-text, .input-field input[type=text]:focus + label.deep-purple-text,
 .input-field textarea:focus + label.deep-purple-text, .dropdown-content li > a.deep-purple-text, .dropdown-content li > span.deep-purple-text {
   color: #9575cd !important; }
@@ -386,13 +387,13 @@ textarea.deep-purple-text, .input-field label.deep-purple-text, .input-field inp
 .deep-purple-text.text-darken-1, .autocomplete-content li .deep-purple-text.highlight {
   color: #5e35b1 !important; }
 
-.deep-purple.darken-2, .crons tbody tr.deep-purple:hover {
+.deep-purple.darken-2 {
   background-color: #512da8 !important; }
 
 .deep-purple-text.text-darken-2 {
   color: #512da8 !important; }
 
-.deep-purple.darken-3, .deep-purple.user_el.selected,
+.deep-purple.darken-3, .crons tbody tr.deep-purple:hover, .crons tbody tr .message > div > .deep-purple.options, .deep-purple.user_el.selected,
 .deep-purple.channel_el.selected,
 .deep-purple.user_el:hover,
 .deep-purple.channel_el:hover, .deep-purple.datepicker-calendar-container {
@@ -461,7 +462,7 @@ textarea.deep-purple-text, .input-field label.deep-purple-text, .input-field inp
 .indigo.lighten-2 {
   background-color: #7986cb !important; }
 
-.indigo-text.text-lighten-2, .select-dropdown span.indigo-text, input.indigo-text,
+.indigo-text.text-lighten-2, .crons tbody tr .message > div > .options .indigo-text.edit:hover, .select-dropdown span.indigo-text, input.indigo-text,
 textarea.indigo-text, .input-field label.indigo-text, .input-field input[type=text]:focus + label.indigo-text,
 .input-field textarea:focus + label.indigo-text, .dropdown-content li > a.indigo-text, .dropdown-content li > span.indigo-text {
   color: #7986cb !important; }
@@ -478,13 +479,13 @@ textarea.indigo-text, .input-field label.indigo-text, .input-field input[type=te
 .indigo-text.text-darken-1, .autocomplete-content li .indigo-text.highlight {
   color: #3949ab !important; }
 
-.indigo.darken-2, .crons tbody tr.indigo:hover {
+.indigo.darken-2 {
   background-color: #303f9f !important; }
 
 .indigo-text.text-darken-2 {
   color: #303f9f !important; }
 
-.indigo.darken-3, .indigo.user_el.selected,
+.indigo.darken-3, .crons tbody tr.indigo:hover, .crons tbody tr .message > div > .indigo.options, .indigo.user_el.selected,
 .indigo.channel_el.selected,
 .indigo.user_el:hover,
 .indigo.channel_el:hover, .indigo.datepicker-calendar-container {
@@ -553,7 +554,7 @@ textarea.indigo-text, .input-field label.indigo-text, .input-field input[type=te
 .blue.lighten-2 {
   background-color: #64B5F6 !important; }
 
-.blue-text.text-lighten-2, .select-dropdown span.blue-text, input.blue-text,
+.blue-text.text-lighten-2, .crons tbody tr .message > div > .options .blue-text.edit:hover, .select-dropdown span.blue-text, input.blue-text,
 textarea.blue-text, .input-field label.blue-text, .input-field input[type=text]:focus + label.blue-text,
 .input-field textarea:focus + label.blue-text, .dropdown-content li > a.blue-text, .dropdown-content li > span.blue-text {
   color: #64B5F6 !important; }
@@ -570,13 +571,13 @@ textarea.blue-text, .input-field label.blue-text, .input-field input[type=text]:
 .blue-text.text-darken-1, .autocomplete-content li .blue-text.highlight {
   color: #1E88E5 !important; }
 
-.blue.darken-2, .crons tbody tr.blue:hover {
+.blue.darken-2 {
   background-color: #1976D2 !important; }
 
 .blue-text.text-darken-2 {
   color: #1976D2 !important; }
 
-.blue.darken-3, .blue.user_el.selected,
+.blue.darken-3, .crons tbody tr.blue:hover, .crons tbody tr .message > div > .blue.options, .blue.user_el.selected,
 .blue.channel_el.selected,
 .blue.user_el:hover,
 .blue.channel_el:hover, .blue.datepicker-calendar-container {
@@ -645,7 +646,7 @@ textarea.blue-text, .input-field label.blue-text, .input-field input[type=text]:
 .light-blue.lighten-2 {
   background-color: #4fc3f7 !important; }
 
-.light-blue-text.text-lighten-2, .select-dropdown span.light-blue-text, input.light-blue-text,
+.light-blue-text.text-lighten-2, .crons tbody tr .message > div > .options .light-blue-text.edit:hover, .select-dropdown span.light-blue-text, input.light-blue-text,
 textarea.light-blue-text, .input-field label.light-blue-text, .input-field input[type=text]:focus + label.light-blue-text,
 .input-field textarea:focus + label.light-blue-text, .dropdown-content li > a.light-blue-text, .dropdown-content li > span.light-blue-text {
   color: #4fc3f7 !important; }
@@ -662,13 +663,13 @@ textarea.light-blue-text, .input-field label.light-blue-text, .input-field input
 .light-blue-text.text-darken-1, .autocomplete-content li .light-blue-text.highlight {
   color: #039be5 !important; }
 
-.light-blue.darken-2, .crons tbody tr.light-blue:hover {
+.light-blue.darken-2 {
   background-color: #0288d1 !important; }
 
 .light-blue-text.text-darken-2 {
   color: #0288d1 !important; }
 
-.light-blue.darken-3, .light-blue.user_el.selected,
+.light-blue.darken-3, .crons tbody tr.light-blue:hover, .crons tbody tr .message > div > .light-blue.options, .light-blue.user_el.selected,
 .light-blue.channel_el.selected,
 .light-blue.user_el:hover,
 .light-blue.channel_el:hover, .light-blue.datepicker-calendar-container {
@@ -737,7 +738,7 @@ textarea.light-blue-text, .input-field label.light-blue-text, .input-field input
 .cyan.lighten-2 {
   background-color: #4dd0e1 !important; }
 
-.cyan-text.text-lighten-2, .select-dropdown span.cyan-text, input.cyan-text,
+.cyan-text.text-lighten-2, .crons tbody tr .message > div > .options .cyan-text.edit:hover, .select-dropdown span.cyan-text, input.cyan-text,
 textarea.cyan-text, .input-field label.cyan-text, .input-field input[type=text]:focus + label.cyan-text,
 .input-field textarea:focus + label.cyan-text, .dropdown-content li > a.cyan-text, .dropdown-content li > span.cyan-text {
   color: #4dd0e1 !important; }
@@ -754,13 +755,13 @@ textarea.cyan-text, .input-field label.cyan-text, .input-field input[type=text]:
 .cyan-text.text-darken-1, .autocomplete-content li .cyan-text.highlight {
   color: #00acc1 !important; }
 
-.cyan.darken-2, .crons tbody tr.cyan:hover {
+.cyan.darken-2 {
   background-color: #0097a7 !important; }
 
 .cyan-text.text-darken-2 {
   color: #0097a7 !important; }
 
-.cyan.darken-3, .cyan.user_el.selected,
+.cyan.darken-3, .crons tbody tr.cyan:hover, .crons tbody tr .message > div > .cyan.options, .cyan.user_el.selected,
 .cyan.channel_el.selected,
 .cyan.user_el:hover,
 .cyan.channel_el:hover, .cyan.datepicker-calendar-container {
@@ -829,7 +830,7 @@ textarea.cyan-text, .input-field label.cyan-text, .input-field input[type=text]:
 .teal.lighten-2 {
   background-color: #4db6ac !important; }
 
-.teal-text.text-lighten-2, .select-dropdown span.teal-text, input.teal-text,
+.teal-text.text-lighten-2, .crons tbody tr .message > div > .options .teal-text.edit:hover, .select-dropdown span.teal-text, input.teal-text,
 textarea.teal-text, .input-field label.teal-text, .input-field input[type=text]:focus + label.teal-text,
 .input-field textarea:focus + label.teal-text, .dropdown-content li > a.teal-text, .dropdown-content li > span.teal-text {
   color: #4db6ac !important; }
@@ -846,13 +847,13 @@ textarea.teal-text, .input-field label.teal-text, .input-field input[type=text]:
 .teal-text.text-darken-1, .autocomplete-content li .teal-text.highlight {
   color: #00897b !important; }
 
-.teal.darken-2, .crons tbody tr.teal:hover {
+.teal.darken-2 {
   background-color: #00796b !important; }
 
 .teal-text.text-darken-2 {
   color: #00796b !important; }
 
-.teal.darken-3, .teal.user_el.selected,
+.teal.darken-3, .crons tbody tr.teal:hover, .crons tbody tr .message > div > .teal.options, .teal.user_el.selected,
 .teal.channel_el.selected,
 .teal.user_el:hover,
 .teal.channel_el:hover, .teal.datepicker-calendar-container {
@@ -921,7 +922,7 @@ textarea.teal-text, .input-field label.teal-text, .input-field input[type=text]:
 .green.lighten-2 {
   background-color: #81C784 !important; }
 
-.green-text.text-lighten-2, .select-dropdown span.green-text, input.green-text,
+.green-text.text-lighten-2, .crons tbody tr .message > div > .options .green-text.edit:hover, .select-dropdown span.green-text, input.green-text,
 textarea.green-text, .input-field label.green-text, .input-field input[type=text]:focus + label.green-text,
 .input-field textarea:focus + label.green-text, .dropdown-content li > a.green-text, .dropdown-content li > span.green-text {
   color: #81C784 !important; }
@@ -938,13 +939,13 @@ textarea.green-text, .input-field label.green-text, .input-field input[type=text
 .green-text.text-darken-1, .autocomplete-content li .green-text.highlight {
   color: #43A047 !important; }
 
-.green.darken-2, .crons tbody tr.green:hover {
+.green.darken-2 {
   background-color: #388E3C !important; }
 
 .green-text.text-darken-2 {
   color: #388E3C !important; }
 
-.green.darken-3, .green.user_el.selected,
+.green.darken-3, .crons tbody tr.green:hover, .crons tbody tr .message > div > .green.options, .green.user_el.selected,
 .green.channel_el.selected,
 .green.user_el:hover,
 .green.channel_el:hover, .green.datepicker-calendar-container {
@@ -1013,7 +1014,7 @@ textarea.green-text, .input-field label.green-text, .input-field input[type=text
 .light-green.lighten-2 {
   background-color: #aed581 !important; }
 
-.light-green-text.text-lighten-2, .select-dropdown span.light-green-text, input.light-green-text,
+.light-green-text.text-lighten-2, .crons tbody tr .message > div > .options .light-green-text.edit:hover, .select-dropdown span.light-green-text, input.light-green-text,
 textarea.light-green-text, .input-field label.light-green-text, .input-field input[type=text]:focus + label.light-green-text,
 .input-field textarea:focus + label.light-green-text, .dropdown-content li > a.light-green-text, .dropdown-content li > span.light-green-text {
   color: #aed581 !important; }
@@ -1030,13 +1031,13 @@ textarea.light-green-text, .input-field label.light-green-text, .input-field inp
 .light-green-text.text-darken-1, .autocomplete-content li .light-green-text.highlight {
   color: #7cb342 !important; }
 
-.light-green.darken-2, .crons tbody tr.light-green:hover {
+.light-green.darken-2 {
   background-color: #689f38 !important; }
 
 .light-green-text.text-darken-2 {
   color: #689f38 !important; }
 
-.light-green.darken-3, .light-green.user_el.selected,
+.light-green.darken-3, .crons tbody tr.light-green:hover, .crons tbody tr .message > div > .light-green.options, .light-green.user_el.selected,
 .light-green.channel_el.selected,
 .light-green.user_el:hover,
 .light-green.channel_el:hover, .light-green.datepicker-calendar-container {
@@ -1105,7 +1106,7 @@ textarea.light-green-text, .input-field label.light-green-text, .input-field inp
 .lime.lighten-2 {
   background-color: #dce775 !important; }
 
-.lime-text.text-lighten-2, .select-dropdown span.lime-text, input.lime-text,
+.lime-text.text-lighten-2, .crons tbody tr .message > div > .options .lime-text.edit:hover, .select-dropdown span.lime-text, input.lime-text,
 textarea.lime-text, .input-field label.lime-text, .input-field input[type=text]:focus + label.lime-text,
 .input-field textarea:focus + label.lime-text, .dropdown-content li > a.lime-text, .dropdown-content li > span.lime-text {
   color: #dce775 !important; }
@@ -1122,13 +1123,13 @@ textarea.lime-text, .input-field label.lime-text, .input-field input[type=text]:
 .lime-text.text-darken-1, .autocomplete-content li .lime-text.highlight {
   color: #c0ca33 !important; }
 
-.lime.darken-2, .crons tbody tr.lime:hover {
+.lime.darken-2 {
   background-color: #afb42b !important; }
 
 .lime-text.text-darken-2 {
   color: #afb42b !important; }
 
-.lime.darken-3, .lime.user_el.selected,
+.lime.darken-3, .crons tbody tr.lime:hover, .crons tbody tr .message > div > .lime.options, .lime.user_el.selected,
 .lime.channel_el.selected,
 .lime.user_el:hover,
 .lime.channel_el:hover, .lime.datepicker-calendar-container {
@@ -1197,7 +1198,7 @@ textarea.lime-text, .input-field label.lime-text, .input-field input[type=text]:
 .yellow.lighten-2 {
   background-color: #fff176 !important; }
 
-.yellow-text.text-lighten-2, .select-dropdown span.yellow-text, input.yellow-text,
+.yellow-text.text-lighten-2, .crons tbody tr .message > div > .options .yellow-text.edit:hover, .select-dropdown span.yellow-text, input.yellow-text,
 textarea.yellow-text, .input-field label.yellow-text, .input-field input[type=text]:focus + label.yellow-text,
 .input-field textarea:focus + label.yellow-text, .dropdown-content li > a.yellow-text, .dropdown-content li > span.yellow-text {
   color: #fff176 !important; }
@@ -1214,13 +1215,13 @@ textarea.yellow-text, .input-field label.yellow-text, .input-field input[type=te
 .yellow-text.text-darken-1, .autocomplete-content li .yellow-text.highlight {
   color: #fdd835 !important; }
 
-.yellow.darken-2, .crons tbody tr.yellow:hover {
+.yellow.darken-2 {
   background-color: #fbc02d !important; }
 
 .yellow-text.text-darken-2 {
   color: #fbc02d !important; }
 
-.yellow.darken-3, .yellow.user_el.selected,
+.yellow.darken-3, .crons tbody tr.yellow:hover, .crons tbody tr .message > div > .yellow.options, .yellow.user_el.selected,
 .yellow.channel_el.selected,
 .yellow.user_el:hover,
 .yellow.channel_el:hover, .yellow.datepicker-calendar-container {
@@ -1289,7 +1290,7 @@ textarea.yellow-text, .input-field label.yellow-text, .input-field input[type=te
 .amber.lighten-2 {
   background-color: #ffd54f !important; }
 
-.amber-text.text-lighten-2, .select-dropdown span.amber-text, input.amber-text,
+.amber-text.text-lighten-2, .crons tbody tr .message > div > .options .amber-text.edit:hover, .select-dropdown span.amber-text, input.amber-text,
 textarea.amber-text, .input-field label.amber-text, .input-field input[type=text]:focus + label.amber-text,
 .input-field textarea:focus + label.amber-text, .dropdown-content li > a.amber-text, .dropdown-content li > span.amber-text {
   color: #ffd54f !important; }
@@ -1306,13 +1307,13 @@ textarea.amber-text, .input-field label.amber-text, .input-field input[type=text
 .amber-text.text-darken-1, .autocomplete-content li .amber-text.highlight {
   color: #ffb300 !important; }
 
-.amber.darken-2, .crons tbody tr.amber:hover {
+.amber.darken-2 {
   background-color: #ffa000 !important; }
 
 .amber-text.text-darken-2 {
   color: #ffa000 !important; }
 
-.amber.darken-3, .amber.user_el.selected,
+.amber.darken-3, .crons tbody tr.amber:hover, .crons tbody tr .message > div > .amber.options, .amber.user_el.selected,
 .amber.channel_el.selected,
 .amber.user_el:hover,
 .amber.channel_el:hover, .amber.datepicker-calendar-container {
@@ -1381,7 +1382,7 @@ textarea.amber-text, .input-field label.amber-text, .input-field input[type=text
 .orange.lighten-2 {
   background-color: #ffb74d !important; }
 
-.orange-text.text-lighten-2, .select-dropdown span.orange-text, input.orange-text,
+.orange-text.text-lighten-2, .crons tbody tr .message > div > .options .orange-text.edit:hover, .select-dropdown span.orange-text, input.orange-text,
 textarea.orange-text, .input-field label.orange-text, .input-field input[type=text]:focus + label.orange-text,
 .input-field textarea:focus + label.orange-text, .dropdown-content li > a.orange-text, .dropdown-content li > span.orange-text {
   color: #ffb74d !important; }
@@ -1398,13 +1399,13 @@ textarea.orange-text, .input-field label.orange-text, .input-field input[type=te
 .orange-text.text-darken-1, .autocomplete-content li .orange-text.highlight {
   color: #fb8c00 !important; }
 
-.orange.darken-2, .crons tbody tr.orange:hover {
+.orange.darken-2 {
   background-color: #f57c00 !important; }
 
 .orange-text.text-darken-2 {
   color: #f57c00 !important; }
 
-.orange.darken-3, .orange.user_el.selected,
+.orange.darken-3, .crons tbody tr.orange:hover, .crons tbody tr .message > div > .orange.options, .orange.user_el.selected,
 .orange.channel_el.selected,
 .orange.user_el:hover,
 .orange.channel_el:hover, .orange.datepicker-calendar-container {
@@ -1473,7 +1474,7 @@ textarea.orange-text, .input-field label.orange-text, .input-field input[type=te
 .deep-orange.lighten-2 {
   background-color: #ff8a65 !important; }
 
-.deep-orange-text.text-lighten-2, .select-dropdown span.deep-orange-text, input.deep-orange-text,
+.deep-orange-text.text-lighten-2, .crons tbody tr .message > div > .options .deep-orange-text.edit:hover, .select-dropdown span.deep-orange-text, input.deep-orange-text,
 textarea.deep-orange-text, .input-field label.deep-orange-text, .input-field input[type=text]:focus + label.deep-orange-text,
 .input-field textarea:focus + label.deep-orange-text, .dropdown-content li > a.deep-orange-text, .dropdown-content li > span.deep-orange-text {
   color: #ff8a65 !important; }
@@ -1490,13 +1491,13 @@ textarea.deep-orange-text, .input-field label.deep-orange-text, .input-field inp
 .deep-orange-text.text-darken-1, .autocomplete-content li .deep-orange-text.highlight {
   color: #f4511e !important; }
 
-.deep-orange.darken-2, .crons tbody tr.deep-orange:hover {
+.deep-orange.darken-2 {
   background-color: #e64a19 !important; }
 
 .deep-orange-text.text-darken-2 {
   color: #e64a19 !important; }
 
-.deep-orange.darken-3, .deep-orange.user_el.selected,
+.deep-orange.darken-3, .crons tbody tr.deep-orange:hover, .crons tbody tr .message > div > .deep-orange.options, .deep-orange.user_el.selected,
 .deep-orange.channel_el.selected,
 .deep-orange.user_el:hover,
 .deep-orange.channel_el:hover, .deep-orange.datepicker-calendar-container {
@@ -1565,7 +1566,7 @@ textarea.deep-orange-text, .input-field label.deep-orange-text, .input-field inp
 .brown.lighten-2 {
   background-color: #a1887f !important; }
 
-.brown-text.text-lighten-2, .select-dropdown span.brown-text, input.brown-text,
+.brown-text.text-lighten-2, .crons tbody tr .message > div > .options .brown-text.edit:hover, .select-dropdown span.brown-text, input.brown-text,
 textarea.brown-text, .input-field label.brown-text, .input-field input[type=text]:focus + label.brown-text,
 .input-field textarea:focus + label.brown-text, .dropdown-content li > a.brown-text, .dropdown-content li > span.brown-text {
   color: #a1887f !important; }
@@ -1582,13 +1583,13 @@ textarea.brown-text, .input-field label.brown-text, .input-field input[type=text
 .brown-text.text-darken-1, .autocomplete-content li .brown-text.highlight {
   color: #6d4c41 !important; }
 
-.brown.darken-2, .crons tbody tr.brown:hover {
+.brown.darken-2 {
   background-color: #5d4037 !important; }
 
 .brown-text.text-darken-2 {
   color: #5d4037 !important; }
 
-.brown.darken-3, .brown.user_el.selected,
+.brown.darken-3, .crons tbody tr.brown:hover, .crons tbody tr .message > div > .brown.options, .brown.user_el.selected,
 .brown.channel_el.selected,
 .brown.user_el:hover,
 .brown.channel_el:hover, .brown.datepicker-calendar-container {
@@ -1609,31 +1610,31 @@ textarea.brown-text, .input-field label.brown-text, .input-field input[type=text
 .blue-grey {
   background-color: #607d8b !important; }
 
-.blue-grey-text {
+.blue-grey-text, .crons tbody tr .message > div > .options .edit:hover {
   color: #607d8b !important; }
 
 .blue-grey.lighten-5 {
   background-color: #eceff1 !important; }
 
-.blue-grey-text.text-lighten-5 {
+.blue-grey-text.text-lighten-5, .crons tbody tr .message > div > .options .text-lighten-5.edit:hover {
   color: #eceff1 !important; }
 
 .blue-grey.lighten-4 {
   background-color: #cfd8dc !important; }
 
-.blue-grey-text.text-lighten-4 {
+.blue-grey-text.text-lighten-4, .crons tbody tr .message > div > .options .text-lighten-4.edit:hover {
   color: #cfd8dc !important; }
 
 .blue-grey.lighten-3 {
   background-color: #b0bec5 !important; }
 
-.blue-grey-text.text-lighten-3 {
+.blue-grey-text.text-lighten-3, .crons tbody tr .message > div > .options .text-lighten-3.edit:hover {
   color: #b0bec5 !important; }
 
 .blue-grey.lighten-2 {
   background-color: #90a4ae !important; }
 
-.blue-grey-text.text-lighten-2, .select-dropdown span.blue-grey-text, input.blue-grey-text,
+.blue-grey-text.text-lighten-2, .crons tbody tr .message > div > .options .edit:hover, .select-dropdown span.blue-grey-text, input.blue-grey-text,
 textarea.blue-grey-text, .input-field label.blue-grey-text, .input-field input[type=text]:focus + label.blue-grey-text,
 .input-field textarea:focus + label.blue-grey-text, .dropdown-content li > a.blue-grey-text, .dropdown-content li > span.blue-grey-text {
   color: #90a4ae !important; }
@@ -1641,28 +1642,28 @@ textarea.blue-grey-text, .input-field label.blue-grey-text, .input-field input[t
 .blue-grey.lighten-1 {
   background-color: #78909c !important; }
 
-.blue-grey-text.text-lighten-1, .blue-grey-text.guild-data, .blue-grey-text.guild-timezone, .blue-grey-text.crons {
+.blue-grey-text.text-lighten-1, .blue-grey-text.guild-data, .crons tbody tr .message > div > .options .guild-data.edit:hover, .blue-grey-text.guild-timezone, .crons tbody tr .message > div > .options .guild-timezone.edit:hover, .blue-grey-text.crons, .crons tbody tr .message > div > .options .crons.edit:hover, .crons tbody tr .message > div > .options .text-lighten-1.edit:hover {
   color: #78909c !important; }
 
 .blue-grey.darken-1 {
   background-color: #546e7a !important; }
 
-.blue-grey-text.text-darken-1, .autocomplete-content li .blue-grey-text.highlight {
+.blue-grey-text.text-darken-1, .crons tbody tr .message > div > .options .text-darken-1.edit:hover, .crons tbody tr .message > div > .options .autocomplete-content li .edit.highlight:hover, .autocomplete-content li .crons tbody tr .message > div > .options .edit.highlight:hover, .autocomplete-content li .blue-grey-text.highlight {
   color: #546e7a !important; }
 
-.blue-grey.darken-2, .crons tbody tr.blue-grey:hover {
+.blue-grey.darken-2 {
   background-color: #455a64 !important; }
 
-.blue-grey-text.text-darken-2 {
+.blue-grey-text.text-darken-2, .crons tbody tr .message > div > .options .text-darken-2.edit:hover {
   color: #455a64 !important; }
 
-.blue-grey.darken-3, .blue-grey.user_el.selected,
+.blue-grey.darken-3, .crons tbody tr.blue-grey:hover, .crons tbody tr .message > div > .blue-grey.options, .blue-grey.user_el.selected,
 .blue-grey.channel_el.selected,
 .blue-grey.user_el:hover,
 .blue-grey.channel_el:hover, .blue-grey.datepicker-calendar-container {
   background-color: #37474f !important; }
 
-.blue-grey-text.text-darken-3 {
+.blue-grey-text.text-darken-3, .crons tbody tr .message > div > .options .text-darken-3.edit:hover {
   color: #37474f !important; }
 
 .blue-grey.darken-4, .blue-grey.guild-data, .blue-grey.guild-timezone, .blue-grey.crons, .blue-grey#addTimer,
@@ -1671,10 +1672,10 @@ textarea.blue-grey-text, .input-field label.blue-grey-text, .input-field input[t
 .blue-grey.channel_el, .blue-grey.footer, .blue-grey.select-dropdown, .section-search input.blue-grey.autocomplete, .dropdown-content li > a.blue-grey, .dropdown-content li > span.blue-grey {
   background-color: #263238 !important; }
 
-.blue-grey-text.text-darken-4, .blue-grey-text.select-dropdown {
+.blue-grey-text.text-darken-4, .crons tbody tr .message > div > .options .text-darken-4.edit:hover, .crons tbody tr .message > div > .options .edit.select-dropdown:hover, .blue-grey-text.select-dropdown {
   color: #263238 !important; }
 
-.grey, .guild-data, .guild-timezone, .crons, .crons tbody tr:hover, #addTimer,
+.grey, .guild-data, .guild-timezone, .crons, .crons tbody tr:hover, .crons tbody tr .message > div > .options, #addTimer,
 #add_cron, #setTimezone, .users_wrapper,
 .channels_wrapper, .user_el,
 .channel_el, .footer, .select-dropdown, .datepicker-calendar-container, .section-search input.autocomplete, .dropdown-content li > a, .dropdown-content li > span {
@@ -1685,7 +1686,7 @@ textarea, .input-field label, .input-field input[type=text]:focus + label,
 .input-field textarea:focus + label, .dropdown-content li > a, .dropdown-content li > span, .autocomplete-content li .highlight {
   color: #9e9e9e !important; }
 
-.grey.lighten-5, .lighten-5.guild-data, .lighten-5.guild-timezone, .lighten-5.crons, .crons tbody tr.lighten-5:hover, .lighten-5#addTimer,
+.grey.lighten-5, .lighten-5.guild-data, .lighten-5.guild-timezone, .lighten-5.crons, .crons tbody tr.lighten-5:hover, .crons tbody tr .message > div > .lighten-5.options, .lighten-5#addTimer,
 .lighten-5#add_cron, .lighten-5#setTimezone, .lighten-5.users_wrapper,
 .lighten-5.channels_wrapper, .lighten-5.user_el,
 .lighten-5.channel_el, .lighten-5.footer, .lighten-5.select-dropdown, .lighten-5.datepicker-calendar-container, .section-search input.lighten-5.autocomplete, .dropdown-content li > a.lighten-5, .dropdown-content li > span.lighten-5 {
@@ -1696,7 +1697,7 @@ textarea.text-lighten-5, .input-field label.text-lighten-5, .input-field input[t
 .input-field textarea:focus + label.text-lighten-5, .dropdown-content li > a.text-lighten-5, .dropdown-content li > span.text-lighten-5, .autocomplete-content li .text-lighten-5.highlight {
   color: #fafafa !important; }
 
-.grey.lighten-4, .lighten-4.guild-data, .lighten-4.guild-timezone, .lighten-4.crons, .crons tbody tr.lighten-4:hover, .lighten-4#addTimer,
+.grey.lighten-4, .lighten-4.guild-data, .lighten-4.guild-timezone, .lighten-4.crons, .crons tbody tr.lighten-4:hover, .crons tbody tr .message > div > .lighten-4.options, .lighten-4#addTimer,
 .lighten-4#add_cron, .lighten-4#setTimezone, .lighten-4.users_wrapper,
 .lighten-4.channels_wrapper, .lighten-4.user_el,
 .lighten-4.channel_el, .lighten-4.footer, .lighten-4.select-dropdown, .lighten-4.datepicker-calendar-container, .section-search input.lighten-4.autocomplete, .dropdown-content li > a.lighten-4, .dropdown-content li > span.lighten-4 {
@@ -1707,7 +1708,7 @@ textarea.text-lighten-4, .input-field label.text-lighten-4, .input-field input[t
 .input-field textarea:focus + label.text-lighten-4, .dropdown-content li > a.text-lighten-4, .dropdown-content li > span.text-lighten-4, .autocomplete-content li .text-lighten-4.highlight {
   color: #f5f5f5 !important; }
 
-.grey.lighten-3, .lighten-3.guild-data, .lighten-3.guild-timezone, .lighten-3.crons, .crons tbody tr.lighten-3:hover, .lighten-3#addTimer,
+.grey.lighten-3, .lighten-3.guild-data, .lighten-3.guild-timezone, .lighten-3.crons, .crons tbody tr.lighten-3:hover, .crons tbody tr .message > div > .lighten-3.options, .lighten-3#addTimer,
 .lighten-3#add_cron, .lighten-3#setTimezone, .lighten-3.users_wrapper,
 .lighten-3.channels_wrapper, .lighten-3.user_el,
 .lighten-3.channel_el, .lighten-3.footer, .lighten-3.select-dropdown, .lighten-3.datepicker-calendar-container, .section-search input.lighten-3.autocomplete, .dropdown-content li > a.lighten-3, .dropdown-content li > span.lighten-3 {
@@ -1718,23 +1719,24 @@ textarea.text-lighten-3, .input-field label.text-lighten-3, .input-field input[t
 .input-field textarea:focus + label.text-lighten-3, .dropdown-content li > a.text-lighten-3, .dropdown-content li > span.text-lighten-3, .autocomplete-content li .text-lighten-3.highlight {
   color: #eeeeee !important; }
 
-.grey.lighten-2, .lighten-2.guild-data, .lighten-2.guild-timezone, .lighten-2.crons, .crons tbody tr.lighten-2:hover, .lighten-2#addTimer,
+.grey.lighten-2, .lighten-2.guild-data, .lighten-2.guild-timezone, .lighten-2.crons, .crons tbody tr.lighten-2:hover, .crons tbody tr .message > div > .lighten-2.options, .lighten-2#addTimer,
 .lighten-2#add_cron, .lighten-2#setTimezone, .lighten-2.users_wrapper,
 .lighten-2.channels_wrapper, .lighten-2.user_el,
 .lighten-2.channel_el, .lighten-2.footer, .lighten-2.select-dropdown, .lighten-2.datepicker-calendar-container, .section-search input.lighten-2.autocomplete, .dropdown-content li > a.lighten-2, .dropdown-content li > span.lighten-2 {
   background-color: #e0e0e0 !important; }
 
-.grey-text.text-lighten-2, .text-lighten-2.guild-data, input.guild-data,
-textarea.guild-data, .text-lighten-2.guild-timezone, input.guild-timezone,
-textarea.guild-timezone, .text-lighten-2.crons, input.crons,
-textarea.crons, .text-lighten-2.select-dropdown, input.select-dropdown,
+.grey-text.text-lighten-2, .text-lighten-2.guild-data, .crons tbody tr .message > div > .options .guild-data.edit:hover, input.guild-data,
+textarea.guild-data, .text-lighten-2.guild-timezone, .crons tbody tr .message > div > .options .guild-timezone.edit:hover, input.guild-timezone,
+textarea.guild-timezone, .text-lighten-2.crons, .crons tbody tr .message > div > .options .crons.edit:hover, input.crons,
+textarea.crons, .crons tbody tr .message > div > .options .grey-text.edit:hover, .crons tbody tr .message > div > .options .edit.select-dropdown:hover, .crons tbody tr .message > div > .options .select-dropdown span.edit:hover, .select-dropdown .crons tbody tr .message > div > .options span.edit:hover, .crons tbody tr .message > div > .options input.edit:hover,
+.crons tbody tr .message > div > .options textarea.edit:hover, .crons tbody tr .message > div > .options .input-field label.edit:hover, .input-field .crons tbody tr .message > div > .options label.edit:hover, .crons tbody tr .message > div > .options .dropdown-content li > a.edit:hover, .dropdown-content .crons tbody tr .message > div > .options li > a.edit:hover, .crons tbody tr .message > div > .options .dropdown-content li > span.edit:hover, .dropdown-content .crons tbody tr .message > div > .options li > span.edit:hover, .crons tbody tr .message > div > .options .autocomplete-content li .edit.highlight:hover, .autocomplete-content li .crons tbody tr .message > div > .options .edit.highlight:hover, .text-lighten-2.select-dropdown, input.select-dropdown,
 textarea.select-dropdown, .select-dropdown span, input,
 textarea, .input-field label, .input-field input[type=text]:focus + label,
 .input-field textarea:focus + label, .dropdown-content li > a, .dropdown-content li > span, .autocomplete-content li .text-lighten-2.highlight, .autocomplete-content li .select-dropdown span.highlight, .select-dropdown .autocomplete-content li span.highlight, .autocomplete-content li input.highlight,
 .autocomplete-content li textarea.highlight, .autocomplete-content li .input-field label.highlight, .input-field .autocomplete-content li label.highlight, .autocomplete-content .dropdown-content li > a.highlight, .dropdown-content .autocomplete-content li > a.highlight, .autocomplete-content .dropdown-content li > span.highlight, .dropdown-content .autocomplete-content li > span.highlight {
   color: #e0e0e0 !important; }
 
-.grey.lighten-1, .lighten-1.guild-data, .lighten-1.guild-timezone, .lighten-1.crons, .crons tbody tr.lighten-1:hover, .lighten-1#addTimer,
+.grey.lighten-1, .lighten-1.guild-data, .lighten-1.guild-timezone, .lighten-1.crons, .crons tbody tr.lighten-1:hover, .crons tbody tr .message > div > .lighten-1.options, .lighten-1#addTimer,
 .lighten-1#add_cron, .lighten-1#setTimezone, .lighten-1.users_wrapper,
 .lighten-1.channels_wrapper, .lighten-1.user_el,
 .lighten-1.channel_el, .lighten-1.footer, .lighten-1.select-dropdown, .lighten-1.datepicker-calendar-container, .section-search input.lighten-1.autocomplete, .dropdown-content li > a.lighten-1, .dropdown-content li > span.lighten-1 {
@@ -1748,7 +1750,7 @@ textarea.text-lighten-1, .input-field label.text-lighten-1, .input-field label.g
 .input-field textarea:focus + label.crons, .dropdown-content li > a.text-lighten-1, .dropdown-content li > a.guild-data, .dropdown-content li > a.guild-timezone, .dropdown-content li > a.crons, .dropdown-content li > span.text-lighten-1, .dropdown-content li > span.guild-data, .dropdown-content li > span.guild-timezone, .dropdown-content li > span.crons, .autocomplete-content li .text-lighten-1.highlight, .autocomplete-content li .highlight.guild-data, .autocomplete-content li .highlight.guild-timezone, .autocomplete-content li .highlight.crons {
   color: #bdbdbd !important; }
 
-.grey.darken-1, .darken-1.guild-data, .darken-1.guild-timezone, .darken-1.crons, .crons tbody tr.darken-1:hover, .darken-1#addTimer,
+.grey.darken-1, .darken-1.guild-data, .darken-1.guild-timezone, .darken-1.crons, .crons tbody tr.darken-1:hover, .crons tbody tr .message > div > .darken-1.options, .darken-1#addTimer,
 .darken-1#add_cron, .darken-1#setTimezone, .darken-1.users_wrapper,
 .darken-1.channels_wrapper, .darken-1.user_el,
 .darken-1.channel_el, .darken-1.footer, .darken-1.select-dropdown, .darken-1.datepicker-calendar-container, .section-search input.darken-1.autocomplete, .dropdown-content li > a.darken-1, .dropdown-content li > span.darken-1 {
@@ -1761,9 +1763,8 @@ textarea.text-darken-1, .input-field label.text-darken-1, .input-field input[typ
 .autocomplete-content li .input-field textarea:focus + label.highlight, .dropdown-content li > a.text-darken-1, .dropdown-content li > span.text-darken-1, .autocomplete-content li .highlight {
   color: #757575 !important; }
 
-.grey.darken-2, .darken-2.guild-data, .darken-2.guild-timezone, .darken-2.crons, .crons tbody tr:hover, .darken-2#addTimer, .crons tbody tr#addTimer:hover,
-.darken-2#add_cron,
-.crons tbody tr#add_cron:hover, .darken-2#setTimezone, .crons tbody tr#setTimezone:hover, .darken-2.users_wrapper,
+.grey.darken-2, .darken-2.guild-data, .darken-2.guild-timezone, .darken-2.crons, .crons tbody tr.darken-2:hover, .crons tbody tr .message > div > .darken-2.options, .darken-2#addTimer,
+.darken-2#add_cron, .darken-2#setTimezone, .darken-2.users_wrapper,
 .darken-2.channels_wrapper, .darken-2.user_el,
 .darken-2.channel_el, .darken-2.footer, .darken-2.select-dropdown, .darken-2.datepicker-calendar-container, .section-search input.darken-2.autocomplete, .dropdown-content li > a.darken-2, .dropdown-content li > span.darken-2 {
   background-color: #616161 !important; }
@@ -1773,29 +1774,67 @@ textarea.text-darken-2, .input-field label.text-darken-2, .input-field input[typ
 .input-field textarea:focus + label.text-darken-2, .dropdown-content li > a.text-darken-2, .dropdown-content li > span.text-darken-2, .autocomplete-content li .text-darken-2.highlight {
   color: #616161 !important; }
 
-.grey.darken-3, .darken-3.guild-data, .darken-3.guild-timezone, .darken-3.crons, .crons tbody tr.darken-3:hover,
-.crons tbody tr.user_el:hover,
-.crons tbody tr.channel_el:hover, .crons tbody tr.datepicker-calendar-container:hover, .darken-3#addTimer, #addTimer.user_el.selected,
+.grey.darken-3, .darken-3.guild-data, .crons tbody tr.guild-data:hover, .crons tbody tr .message > div > .guild-data.options, .guild-data.user_el.selected,
+.guild-data.channel_el.selected,
+.guild-data.user_el:hover,
+.guild-data.channel_el:hover, .guild-data.datepicker-calendar-container, .darken-3.guild-timezone, .crons tbody tr.guild-timezone:hover, .crons tbody tr .message > div > .guild-timezone.options, .guild-timezone.user_el.selected,
+.guild-timezone.channel_el.selected,
+.guild-timezone.user_el:hover,
+.guild-timezone.channel_el:hover, .guild-timezone.datepicker-calendar-container, .darken-3.crons, .crons tbody tr.crons:hover, .crons tbody tr .message > div > .crons.options, .crons.user_el.selected,
+.crons.channel_el.selected,
+.crons.user_el:hover,
+.crons.channel_el:hover, .crons.datepicker-calendar-container, .crons tbody tr:hover, .crons tbody tr .message > div > .options, .darken-3#addTimer, .crons tbody tr#addTimer:hover, .crons tbody tr .message > div > #addTimer.options, #addTimer.user_el.selected,
 #addTimer.channel_el.selected,
 #addTimer.user_el:hover,
 #addTimer.channel_el:hover, #addTimer.datepicker-calendar-container,
 .darken-3#add_cron,
+.crons tbody tr#add_cron:hover,
+.crons tbody tr .message > div > #add_cron.options,
 #add_cron.user_el.selected,
 #add_cron.channel_el.selected,
 #add_cron.user_el:hover,
 #add_cron.channel_el:hover,
-#add_cron.datepicker-calendar-container, .darken-3#setTimezone, #setTimezone.user_el.selected,
+#add_cron.datepicker-calendar-container, .darken-3#setTimezone, .crons tbody tr#setTimezone:hover, .crons tbody tr .message > div > #setTimezone.options, #setTimezone.user_el.selected,
 #setTimezone.channel_el.selected,
 #setTimezone.user_el:hover,
-#setTimezone.channel_el:hover, #setTimezone.datepicker-calendar-container, .darken-3.users_wrapper,
-.darken-3.channels_wrapper, .darken-3.user_el, .user_el.selected,
-.user_el:hover,
+#setTimezone.channel_el:hover, #setTimezone.datepicker-calendar-container, .darken-3.users_wrapper, .crons tbody tr.users_wrapper:hover, .crons tbody tr .message > div > .users_wrapper.options, .users_wrapper.user_el.selected,
+.users_wrapper.channel_el.selected,
+.users_wrapper.user_el:hover,
+.users_wrapper.channel_el:hover, .users_wrapper.datepicker-calendar-container,
+.darken-3.channels_wrapper,
+.crons tbody tr.channels_wrapper:hover,
+.crons tbody tr .message > div > .channels_wrapper.options,
+.channels_wrapper.user_el.selected,
+.channels_wrapper.channel_el.selected,
+.channels_wrapper.user_el:hover,
+.channels_wrapper.channel_el:hover,
+.channels_wrapper.datepicker-calendar-container, .darken-3.user_el, .crons tbody tr.user_el:hover, .crons tbody tr .message > div > .user_el.options, .user_el.selected,
+.user_el:hover, .user_el.datepicker-calendar-container,
 .darken-3.channel_el,
+.crons tbody tr.channel_el:hover,
+.crons tbody tr .message > div > .channel_el.options,
 .channel_el.selected,
-.channel_el:hover, .section-search input.user_el.selected.autocomplete,
+.channel_el:hover,
+.channel_el.datepicker-calendar-container, .crons tbody tr.user_el.selected:hover, .crons tbody tr .message > div > .user_el.selected.options, .section-search input.user_el.selected.autocomplete,
+.crons tbody tr.channel_el.selected:hover,
+.crons tbody tr .message > div > .channel_el.selected.options,
 .section-search input.channel_el.selected.autocomplete,
+.crons tbody tr .message > div > .user_el.options:hover,
 .section-search input.user_el.autocomplete:hover,
-.section-search input.channel_el.autocomplete:hover, .darken-3.footer, .darken-3.select-dropdown, .datepicker-calendar-container, .section-search input.darken-3.autocomplete, .section-search input.autocomplete.datepicker-calendar-container, .dropdown-content li > a.darken-3, .dropdown-content li > a.datepicker-calendar-container, .dropdown-content li > span.darken-3, .dropdown-content li > span.datepicker-calendar-container {
+.crons tbody tr .message > div > .channel_el.options:hover,
+.section-search input.channel_el.autocomplete:hover, .darken-3.footer, .crons tbody tr.footer:hover, .crons tbody tr .message > div > .footer.options, .footer.user_el.selected,
+.footer.channel_el.selected,
+.footer.user_el:hover,
+.footer.channel_el:hover, .footer.datepicker-calendar-container, .darken-3.select-dropdown, .crons tbody tr.select-dropdown:hover, .crons tbody tr .message > div > .select-dropdown.options, .select-dropdown.user_el.selected,
+.select-dropdown.channel_el.selected,
+.select-dropdown.user_el:hover,
+.select-dropdown.channel_el:hover, .select-dropdown.datepicker-calendar-container, .datepicker-calendar-container, .section-search input.darken-3.autocomplete, .section-search .crons tbody tr .message > div > input.autocomplete.options, .crons tbody tr .section-search .message > div > input.autocomplete.options, .section-search input.autocomplete.datepicker-calendar-container, .dropdown-content li > a.darken-3, .dropdown-content li > a.user_el.selected,
+.dropdown-content li > a.channel_el.selected,
+.dropdown-content li > a.user_el:hover,
+.dropdown-content li > a.channel_el:hover, .dropdown-content li > a.datepicker-calendar-container, .dropdown-content li > span.darken-3, .dropdown-content li > span.user_el.selected,
+.dropdown-content li > span.channel_el.selected,
+.dropdown-content li > span.user_el:hover,
+.dropdown-content li > span.channel_el:hover, .dropdown-content li > span.datepicker-calendar-container {
   background-color: #424242 !important; }
 
 .grey-text.text-darken-3, .text-darken-3.guild-data, .text-darken-3.guild-timezone, .text-darken-3.crons, .text-darken-3.select-dropdown, .select-dropdown span.text-darken-3, input.text-darken-3,
@@ -1805,7 +1844,9 @@ textarea.text-darken-3, .input-field label.text-darken-3, .input-field input[typ
 
 .grey.darken-4, .guild-data, .guild-timezone, .crons, .crons tbody tr.darken-4:hover, .crons tbody tr.guild-data:hover, .crons tbody tr.guild-timezone:hover, .crons tbody tr.crons:hover, .crons tbody tr.users_wrapper:hover,
 .crons tbody tr.channels_wrapper:hover, .crons tbody tr.user_el:hover,
-.crons tbody tr.channel_el:hover, .crons tbody tr.footer:hover, .crons tbody tr.select-dropdown:hover, #addTimer,
+.crons tbody tr.channel_el:hover, .crons tbody tr.footer:hover, .crons tbody tr.select-dropdown:hover, .crons tbody tr .message > div > .darken-4.options, .crons tbody tr .message > div > .options.guild-data, .crons tbody tr .message > div > .options.guild-timezone, .crons tbody tr .message > div > .options.crons, .crons tbody tr .message > div > .options.users_wrapper,
+.crons tbody tr .message > div > .options.channels_wrapper, .crons tbody tr .message > div > .options.user_el,
+.crons tbody tr .message > div > .options.channel_el, .crons tbody tr .message > div > .options.footer, .crons tbody tr .message > div > .options.select-dropdown, .crons tbody tr .section-search .message > div > input.options.autocomplete, .section-search .crons tbody tr .message > div > input.options.autocomplete, #addTimer,
 #add_cron, #setTimezone, .users_wrapper,
 .channels_wrapper, .user_el,
 .channel_el, .footer, .select-dropdown, .darken-4.datepicker-calendar-container, .section-search input.autocomplete, .dropdown-content li > a, .dropdown-content li > span {
@@ -2263,10 +2304,10 @@ a {
 
 /* 2dp elevation modified*/
 .z-depth-1, nav, .card-panel, .card, .guild-data, .guild-timezone, .crons, .user_el,
-.channel_el, .toast, .btn, .btn-large, .btn-small, .btn-floating, .dropdown-content, .collapsible, .sidenav {
+.channel_el, .toast, .btn, .btn-large, .btn-small, .crons tbody tr .message > div > .options, .btn-floating, .dropdown-content, .collapsible, .sidenav {
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); }
 
-.z-depth-1-half, .btn:hover, .btn-large:hover, .btn-small:hover, .btn-floating:hover {
+.z-depth-1-half, .btn:hover, .btn-large:hover, .btn-small:hover, .crons tbody tr .message > div > .options:hover, .btn-floating:hover {
   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2); }
 
 /* 6dp elevation modified*/
@@ -3463,11 +3504,11 @@ nav {
       display: block;
       padding: 0 15px;
       cursor: pointer; }
-      nav ul a.btn, nav ul a.btn-large, nav ul a.btn-small, nav ul a.btn-large, nav ul a.btn-flat, nav ul a.btn-floating {
+      nav ul a.btn, nav ul a.btn-large, nav ul a.btn-small, nav ul .crons tbody tr .message > div > a.options, .crons tbody tr nav ul .message > div > a.options, nav ul a.btn-large, nav ul a.btn-flat, nav ul a.btn-floating {
         margin-top: -2px;
         margin-left: 15px;
         margin-right: 15px; }
-        nav ul a.btn > .material-icons, nav ul a.btn-large > .material-icons, nav ul a.btn-small > .material-icons, nav ul a.btn-large > .material-icons, nav ul a.btn-flat > .material-icons, nav ul a.btn-floating > .material-icons {
+        nav ul a.btn > .material-icons, nav ul a.btn-large > .material-icons, nav ul a.btn-small > .material-icons, nav ul .crons tbody tr .message > div > a.options > .material-icons, .crons tbody tr nav ul .message > div > a.options > .material-icons, nav ul a.btn-large > .material-icons, nav ul a.btn-flat > .material-icons, nav ul a.btn-floating > .material-icons {
           height: inherit;
           line-height: inherit; }
       nav ul a:hover {
@@ -3651,14 +3692,14 @@ small {
   .flow-text {
     font-size: 1.2rem; } }
 
-.scale-transition, .crons tbody tr i, .users_wrapper,
+.scale-transition, .users_wrapper,
 .channels_wrapper {
   transition: transform 0.3s cubic-bezier(0.53, 0.01, 0.36, 1.63) !important; }
-  .scale-transition.scale-out, .crons tbody tr i, .scale-out.users_wrapper,
+  .scale-transition.scale-out, .scale-out.users_wrapper,
   .scale-out.channels_wrapper {
     transform: scale(0);
     transition: transform .2s !important; }
-  .scale-transition.scale-in, .crons tbody tr:hover i, .crons tbody tr i.scale-in, .scale-in.users_wrapper,
+  .scale-transition.scale-in, .scale-in.users_wrapper,
   .scale-in.channels_wrapper {
     transform: scale(1); }
 
@@ -3978,7 +4019,7 @@ small {
   transform-origin: 50% 0%;
   visibility: hidden; }
 
-.btn, .btn-large, .btn-small,
+.btn, .btn-large, .btn-small, .crons tbody tr .message > div > .options,
 .btn-flat {
   border: none;
   border-radius: 2px;
@@ -3990,7 +4031,7 @@ small {
   vertical-align: middle;
   -webkit-tap-highlight-color: transparent; }
 
-.btn.disabled, .disabled.btn-large, .disabled.btn-small,
+.btn.disabled, .disabled.btn-large, .disabled.btn-small, .crons tbody tr .message > div > .disabled.options,
 .btn-floating.disabled,
 .btn-large.disabled,
 .btn-small.disabled,
@@ -3998,6 +4039,7 @@ small {
 .btn:disabled,
 .btn-large:disabled,
 .btn-small:disabled,
+.crons tbody tr .message > div > .options:disabled,
 .btn-floating:disabled,
 .btn-large:disabled,
 .btn-small:disabled,
@@ -4005,6 +4047,7 @@ small {
 .btn[disabled],
 [disabled].btn-large,
 [disabled].btn-small,
+.crons tbody tr .message > div > [disabled].options,
 .btn-floating[disabled],
 .btn-large[disabled],
 .btn-small[disabled],
@@ -4014,7 +4057,7 @@ small {
   box-shadow: none;
   color: #9F9F9F !important;
   cursor: default; }
-  .btn.disabled:hover, .disabled.btn-large:hover, .disabled.btn-small:hover,
+  .btn.disabled:hover, .disabled.btn-large:hover, .disabled.btn-small:hover, .crons tbody tr .message > div > .disabled.options:hover,
   .btn-floating.disabled:hover,
   .btn-large.disabled:hover,
   .btn-small.disabled:hover,
@@ -4022,6 +4065,7 @@ small {
   .btn:disabled:hover,
   .btn-large:disabled:hover,
   .btn-small:disabled:hover,
+  .crons tbody tr .message > div > .options:disabled:hover,
   .btn-floating:disabled:hover,
   .btn-large:disabled:hover,
   .btn-small:disabled:hover,
@@ -4029,6 +4073,7 @@ small {
   .btn[disabled]:hover,
   [disabled].btn-large:hover,
   [disabled].btn-small:hover,
+  .crons tbody tr .message > div > [disabled].options:hover,
   .btn-floating[disabled]:hover,
   .btn-large[disabled]:hover,
   .btn-small[disabled]:hover,
@@ -4036,14 +4081,14 @@ small {
     background-color: #DFDFDF !important;
     color: #9F9F9F !important; }
 
-.btn, .btn-large, .btn-small,
+.btn, .btn-large, .btn-small, .crons tbody tr .message > div > .options,
 .btn-floating,
 .btn-large,
 .btn-small,
 .btn-flat {
   font-size: 14px;
   outline: 0; }
-  .btn i, .btn-large i, .btn-small i,
+  .btn i, .btn-large i, .btn-small i, .crons tbody tr .message > div > .options i,
   .btn-floating i,
   .btn-large i,
   .btn-small i,
@@ -4051,11 +4096,11 @@ small {
     font-size: 1.3rem;
     line-height: inherit; }
 
-.btn:focus, .btn-large:focus, .btn-small:focus,
+.btn:focus, .btn-large:focus, .btn-small:focus, .crons tbody tr .message > div > .options:focus,
 .btn-floating:focus {
   background-color: #1d7d74; }
 
-.btn, .btn-large, .btn-small {
+.btn, .btn-large, .btn-small, .crons tbody tr .message > div > .options {
   text-decoration: none;
   color: #fff;
   background-color: #26a69a;
@@ -4063,7 +4108,7 @@ small {
   letter-spacing: .5px;
   transition: background-color .2s ease-out;
   cursor: pointer; }
-  .btn:hover, .btn-large:hover, .btn-small:hover {
+  .btn:hover, .btn-large:hover, .btn-small:hover, .crons tbody tr .message > div > .options:hover {
     background-color: #2bbbad; }
 
 .btn-floating {
@@ -4335,7 +4380,7 @@ body.keyboard-focused .dropdown-content li:focus {
     transition-property: transform, opacity;
     transform: scale(0);
     pointer-events: none; }
-  .waves-effect.waves-light .waves-ripple, .waves-effect.guild-data .waves-ripple, .waves-effect.guild-timezone .waves-ripple, .crons tbody tr.waves-effect .waves-ripple {
+  .waves-effect.waves-light .waves-ripple, .waves-effect.guild-data .waves-ripple, .waves-effect.guild-timezone .waves-ripple, .crons tbody tr.waves-effect .waves-ripple, .crons tbody tr .message > div > .options i.waves-effect .waves-ripple {
     background-color: rgba(255, 255, 255, 0.45); }
   .waves-effect.waves-red .waves-ripple {
     background-color: rgba(244, 67, 54, 0.7); }
@@ -4421,7 +4466,7 @@ body.keyboard-focused .dropdown-content li:focus {
     height: 56px;
     width: 100%;
     text-align: right; }
-    .modal .modal-footer .btn, .modal .modal-footer .btn-large, .modal .modal-footer .btn-small, .modal .modal-footer .btn-flat {
+    .modal .modal-footer .btn, .modal .modal-footer .btn-large, .modal .modal-footer .btn-small, .modal .modal-footer .crons tbody tr .message > div > .options, .crons tbody tr .modal .modal-footer .message > div > .options, .modal .modal-footer .btn-flat {
       margin: 6px 0; }
 
 .modal-overlay {
@@ -5554,7 +5599,7 @@ body.keyboard-focused .select-dropdown.dropdown-content li:focus {
     padding-left: 10px; }
   .file-field input.file-path {
     width: 100%; }
-  .file-field .btn, .file-field .btn-large, .file-field .btn-small {
+  .file-field .btn, .file-field .btn-large, .file-field .btn-small, .file-field .crons tbody tr .message > div > .options, .crons tbody tr .file-field .message > div > .options {
     float: left;
     height: 3rem;
     line-height: 3rem; }
@@ -6832,11 +6877,43 @@ input[type=range]::-ms-thumb {
   cursor: pointer;
   transition: all 300ms; }
 
-.crons tbody tr i {
+.crons tbody tr td {
+  padding-top: 15px !important;
+  padding-bottom: 15px !important; }
+
+.crons tbody tr .message > div {
+  position: relative; }
+
+.crons tbody tr .message > div > p {
+  margin: 0; }
+
+.crons tbody tr .message > div > .options {
   position: absolute;
-  right: 25px;
-  font-size: 1.5em;
-  color: red; }
+  top: -15px;
+  right: 0;
+  transform: translateY(-40%);
+  opacity: 0;
+  transition: all 350ms;
+  display: inline-block;
+  margin: 0;
+  padding: 0; }
+  .crons tbody tr .message > div > .options i {
+    font-size: 25px;
+    width: 50px;
+    transform: translateY(-2px);
+    transition: all 350ms; }
+  .crons tbody tr .message > div > .options .divider {
+    width: 1px;
+    height: 80%;
+    background-color: #616161;
+    display: inline-block;
+    position: absolute;
+    top: 10%;
+    left: 50%; }
+
+.crons tbody tr:hover .message > div > .options {
+  opacity: 1;
+  transform: translateY(-50%); }
 
 #addTimer,
 #add_cron {
@@ -6907,6 +6984,9 @@ input[type=range]::-ms-thumb {
 .input-field .prefix.active {
   background-color: #424242 !important; }
 
+@media screen and (max-width: 1000px) {
+  .crons tbody tr .message > div > .options {
+    display: none; } }
 @media screen and (max-width: 600px) {
   .body-wrapper {
     margin-left: 17px;

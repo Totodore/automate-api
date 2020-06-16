@@ -68,7 +68,6 @@ router.post("/add_schedule", (req, res) => {
 	} catch (error) {
 		console.log(`Error ajax add schedule : ${error}`);
 		res.status(500);
-		res.send("Error operating on db");
 		return;
 	}
 	res.send(msg_id);
@@ -78,8 +77,7 @@ router.post("/add_timer", (req, res) => {
 	const msg_id = uniqid();
 	const query = req.fields; 
 	if (!query.content || query.content.length < 1 || !query.timestamp || !query.description || !query.channel_id || !query.guild_id || !query.sys_content) {
-		res.status(520);
-		res.send("Error params not given");
+		res.status(400).send("Bad request : Params not given");
 		return;
 	}
 	try {
@@ -96,7 +94,6 @@ router.post("/add_timer", (req, res) => {
 	} catch (error) {
 		console.log(`Error ajax add ponctual : ${error}`);
 		res.status(500);
-		res.send("Error operating on db");
 		return;
 	}
 	res.send(msg_id);
@@ -118,7 +115,35 @@ router.get("/set_timezone", (req, res) => {
 		res.send("This timezone has been successfully set !");
 	} catch (error) {
 		console.log(`Error ajax set timezone : ${error}`);
-		res.send("Internal server error");
+		res.status(500);
+		return;
+	}
+});
+
+router.post("/set_message", (req, res) => {
+	const query = req.fields;
+	if (!query.content || query.content.length < 1 || !query.msg_id || !query.guild_id || !query.sys_content) {
+		res.status(400).send("Error bad request : params not given");
+		return;
+	}
+	try {
+		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`));
+		guildData.freq.forEach((el, index) => {
+			if (el.id == query.msg_id) {
+				el.message = query.content;
+				el.sys_content = query.sys_content;
+			}
+		});
+		guildData.ponctual.forEach((el, index) => {
+			if (el.id == query.msg_id) {
+				el.message = query.content;
+				el.sys_content = query.sys_content;
+			}
+		});
+		fs.writeFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`, JSON.stringify(guildData));
+		res.send();
+	} catch (error) {
+		console.log(`Error ajax set message : ${error}`);
 		res.status(500);
 		return;
 	}

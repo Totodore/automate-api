@@ -3,6 +3,7 @@
 $flash-color: #e0e0e0;
 $grey-darken-3: #424242;
 $grey-lighten-1: #bdbdbd;
+$grey-darken-2: #616161;
 
 .body-wrapper {
     @extend .black;
@@ -149,26 +150,63 @@ $grey-lighten-1: #bdbdbd;
     cursor: pointer;
     transition: all 300ms;
 }
-
 .crons tbody tr:hover {
     @extend .grey;
 
-    @extend .darken-2;
+    @extend .darken-3;
 }
-
-.crons tbody tr:hover i {
-    @extend .scale-in;
+.crons tbody tr td {
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
 }
-
-.crons tbody tr i {
-    @extend .scale-transition;
-
-    @extend .scale-out;
-
+.crons tbody tr .message > div {
+    position: relative;
+}
+.crons tbody tr .message > div > p {
+    margin: 0;
+}
+.crons tbody tr .message > div > .options {
     position: absolute;
-    right: 25px;
-    font-size: 1.5em;
-    color: red;
+    top: -15px;
+    right: 0;
+    transform: translateY(-40%);
+    @extend .grey;
+    @extend .darken-3;
+    opacity: 0;
+    transition: all 350ms;
+    @extend .btn;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+
+    i {
+        font-size: 25px;
+        width: 50px;
+        @extend .waves-light;
+        transform: translateY(-2px);
+        transition: all 350ms;
+    }
+    .delete:hover {
+        @extend .red-text;
+        // @extend .text-darken-1;        
+    }
+    .edit:hover {
+        @extend .blue-grey-text;
+        @extend .text-lighten-2;
+    }
+    .divider {
+        width: 1px;
+        height: 80%;
+        background-color: $grey-darken-2;
+        display: inline-block;
+        position: absolute;
+        top: 10%;
+        left: 50%;
+    }
+}
+.crons tbody tr:hover .message > div > .options {
+    opacity: 1;
+    transform: translateY(-50%);
 }
 
 #addTimer,
@@ -353,6 +391,11 @@ textarea {
     @extend .text-darken-1;
 }
 
+@media screen and (max-width: 1000px) {
+    .crons tbody tr .message > div > .options {
+        display: none;
+    }
+}
 @media screen and (max-width: 600px) {
     .body-wrapper {
         margin-left: 17px;

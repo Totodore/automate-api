@@ -48,11 +48,22 @@
                 </thead>
                 <tbody>
                     <% table.forEach(element => { %>
-                    <tr id="<%= element.id %>" channel_id="<%= element.channel_id %>">
-                        <td><%= element.description %></td>
-                        <td>#<%= element.channel_name %></td>
-                        <td><%= element.message %><i class="material-icons">delete</i></td>
-                    </tr>
+                    <tr id="<%= element.id %>" channel_id="<%= element.channel_id %>" type="<% if (element.cron) { %>schedule<% } else { %>timer<% } %>">
+                            <td><%= element.description %></td>
+                            <td>#<%= element.channel_name %></td>
+                            <td class="message">
+                                <div>
+                                    <p class="description">
+                                        <%= element.message %>
+                                    </p>
+                                    <div class="options">
+                                        <i class="material-icons waves-effect edit">edit</i>
+                                        <span class="divider"></span>
+                                        <i class="material-icons waves-effect delete">delete</i>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
                     <% }); %>
                 </tbody>
             </table>
@@ -71,9 +82,10 @@
     </div>
     <% include components/add_schedule_window.ejs %>
     <% include components/add_timer_window.ejs %>
-    <% include components/edit_window.ejs %>
+    <% include components/edit_message_window.ejs %>
     <% include components/remove_message_window.ejs %>
     <% include components/set_timezone_window.ejs %>
+    <% include components/options_window.ejs %>
 
 </body>
 
