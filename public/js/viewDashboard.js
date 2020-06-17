@@ -484,8 +484,7 @@ class VueDashboard {
         this.removeCronModal.open();
     }
     onElClick(el) {
-        console.log(window.screen.width);
-        if (window.screen.width < 1000) {
+        if (window.innerWidth < 1000) {
             this.idToRemove = el.getAttribute("id"); 
             this.optionsModal.open();
         }
