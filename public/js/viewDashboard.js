@@ -397,7 +397,10 @@ class VueDashboard {
                             </div>
                         </td>
                     </tr>`);
-                this.addEventListener();
+                const el = document.getElementById(responseText);
+                el.addEventListener("click", () => this.onElClick(el)); 
+                el.querySelector(".edit").addEventListener("click", () => this.onOpenEdit(el));
+                el.querySelector(".delete").addEventListener("click", () => this.onRemoveEl(el));                
 				this.form.reset();
                 M.toast({html: "This message has successfully been set"}, 5000);
             });
@@ -469,7 +472,10 @@ class VueDashboard {
                         </div>
                     </td>
                 </tr>`);
-                this.addEventListener();
+                const el = document.getElementById(responseText);
+                el.addEventListener("click", () => this.onElClick(el)); 
+                el.querySelector(".edit").addEventListener("click", () => this.onOpenEdit(el));
+                el.querySelector(".delete").addEventListener("click", () => this.onRemoveEl(el));  
                 //Suppression du message automatiquement si la date est dépassée.
                 setTimeout(() => {document.getElementById(responseText).remove();}, timestamp*60*1000 - Date.now());
 				this.formTimer.reset();
