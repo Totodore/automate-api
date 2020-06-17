@@ -1,0 +1,37 @@
+<div id="editMessage" class="modal modal-fixed-footer">
+    <div class="modal-content grey darken-4">
+        <h5 style="text-align: center;">Edit my message</h5>
+        <form method="post">
+            <div class="input-field col s12 section">
+                <textarea id="contentEdit" name="contentTimerEdit" class="materialize-textarea" required minlength="1"
+                    maxlength="2000"></textarea>
+                <label for="contentEdit">Message's content</label>
+                <div class="users_wrapper scale-out">
+                    <% people_list.concat(roles_list).forEach((el, index) => { %>
+                    <div class="user_el waves-effect waves-light" data-id="<%= el.id %>"
+                        nickname="<%= (el.nickname || el.username) %>">
+                        @<%= el.nickname != null ? el.nickname : el.username %>
+                    </div>
+                    <% }); %>
+                    <div class="user_el waves-effect waves-light">
+                        @everyone
+                    </div>
+                    <div class="user_el waves-effect waves-light">
+                        @here
+                    </div>
+                </div>
+                <div class="channels_wrapper scale-out">
+                    <% channel_list.forEach((el, index) => { %>
+                    <div class="channel_el waves-effect waves-light" data-id="<%= el.id %>">
+                        #<%= el.name %>
+                    </div>
+                    <% }); %>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer footer">
+        <button href="#!" class="modal-close waves-effect waves-light btn-flat grey-text text-lighten-2">Cancel</button>
+        <button href="#!" class="modal-confirm waves-effect btn"><i class="material-icons" style="font-size: 12px; transform: scale(1.5); margin-right: 10px;">edit</i>Edit message</button>
+    </div>
+</div>
