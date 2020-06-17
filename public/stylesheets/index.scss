@@ -14,9 +14,12 @@
 }
 
 .guild {
-    @extend .card,
-    .transparent,
-    .hoverable, .grey-text, .text-lighten-2, .waves-light;
+    @extend .card;
+    @extend .transparent;
+    @extend .hoverable;
+    @extend .grey-text; 
+    @extend .text-lighten-2;
+    @extend .waves-light;
     width: 200px;
     height: 200px;
     margin-left: 25px;

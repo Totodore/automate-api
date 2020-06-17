@@ -6874,7 +6874,6 @@ input[type=range]::-ms-thumb {
 
 .crons tbody tr {
   position: relative;
-  cursor: pointer;
   transition: all 300ms; }
 
 .crons tbody tr td {
