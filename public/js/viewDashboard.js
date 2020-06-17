@@ -84,6 +84,7 @@ class VueDashboard {
         document.querySelectorAll(".channel_el").forEach(el => el.addEventListener("click", () => this.onChannelClick(el)));
         document.querySelector("#setTimezone .modal-confirm").addEventListener("click", () => this.onConfirmSetTimer());
         document.querySelector("#options_modal .delete").addEventListener("click", () => this.onRemoveEl());
+        document.querySelector("#options_modal .edit").addEventListener("click", () => this.onOpenEdit());
         document.querySelector("#editMessage .modal-confirm").addEventListener("click", () => this.onConfirmUpdateMessage());
         this.eachSelect.addEventListener("change", () => this.onChangeEachSelect());
 		this.addCron_modalConfirm.addEventListener("click", () => this.onConfirmAddCron());
@@ -492,9 +493,10 @@ class VueDashboard {
     onOpenEdit(el) {
         if (el)
             this.idToRemove = el.getAttribute("id");
-        document.querySelector("#contentEdit").textContent = document.querySelector("#"+this.idToRemove).querySelector(".description").innerText;
+        document.querySelector("#contentEdit").textContent = document.getElementById(this.idToRemove).querySelector(".description").innerText;
         M.textareaAutoResize(document.querySelector("#contentEdit"));
         M.updateTextFields();
+        this.optionsModal.close();
         this.editMessageModal.open();
     }
     onConfirmRemoveCron() {
@@ -553,7 +555,7 @@ class VueDashboard {
         }
         this.editMessageModal.close();
         M.toast({html: "Message updated !"});
-        document.querySelector("#"+this.idToRemove).querySelector(".description").textContent = message;
+        document.getElementById(this.idToRemove).querySelector(".description").textContent = message;
     }
 }
 
