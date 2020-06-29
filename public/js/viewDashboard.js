@@ -129,7 +129,8 @@ class VueDashboard {
         }
     }
     onInputAutoComplete(e) {
-        if (e.target.value in this.timezoneSelector.options.data)
+        //Bug patched for selecting :
+        if (e.target.value in this.timezoneSelector.options.data || " " + e.target.value in this.timezoneSelector.options.data)
             this.addTimezone.classList.remove("disabled");
         else 
             this.addTimezone.classList.add("disabled");
