@@ -1,3 +1,4 @@
+import TagHandler from "./TagHandler.js";
 class VueDashboard {
     constructor() {
         this.months = [
@@ -66,6 +67,18 @@ class VueDashboard {
             yearRange: 1,
             defaultDate: new Date(),
         });
+        document.querySelectorAll(".channels_wrapper").forEach(el => new TagHandler({
+            elementWrapper: el,
+            dataset: document.channels,
+            textarea: el.parentElement.querySelector("textarea"),
+            type: "channel"
+        }));
+        document.querySelectorAll(".users_wrapper").forEach(el => new TagHandler({
+            elementWrapper: el,
+            dataset: document.users,
+            textarea: el.parentElement.querySelector("textarea"),
+            type: "user"
+        }));
         M.FormSelect.init(document.querySelectorAll("select")); 
         this.addEventListener();
     }
@@ -75,13 +88,7 @@ class VueDashboard {
         document.querySelector(".schedule-add-btn").addEventListener("click", () => this.addCronModal.open());
         document.querySelector(".timer-add-btn").addEventListener("click", () => this.addTimerModal.open());
         document.querySelector(".guild-timezone").addEventListener("click", () => this.timezoneModal.open());
-        document.querySelectorAll("textarea").forEach(el => {
-            el.addEventListener("input", () => this.onInputTextarea(el));
-            el.addEventListener("keydown", (event) => this.onKeyPressedTextarea(event, el));
-        });
         document.querySelector(".autocomplete").addEventListener("change", (e) => this.onInputAutoComplete(e));
-        document.querySelectorAll(".user_el").forEach(el => el.addEventListener("click", () => this.onUserClick(el)));
-        document.querySelectorAll(".channel_el").forEach(el => el.addEventListener("click", () => this.onChannelClick(el)));
         document.querySelector("#setTimezone .modal-confirm").addEventListener("click", () => this.onConfirmSetTimer());
         document.querySelector("#options_modal .delete").addEventListener("click", () => this.onRemoveEl());
         document.querySelector("#options_modal .edit").addEventListener("click", () => this.onOpenEdit());
@@ -97,171 +104,12 @@ class VueDashboard {
         });
         this.removeCron_modalConfirm.addEventListener("click", () => this.onConfirmRemoveCron());
     }
-
-    onInputTextarea(element) {
-        const data = element.value;
-        const channels_wrapper = element.parentNode.querySelector(".channels_wrapper");
-        const users_wrapper = element.parentNode.querySelector(".users_wrapper");
-        if (data.charAt(data.length-1) == "@") {
-            users_wrapper.classList.remove("scale-out");
-            users_wrapper.classList.add("scale-in");
-            this.sortUsers(element, true);
-        } else if (data.charAt(data.length-1) == "#") { 
-            channels_wrapper.classList.remove("scale-out");
-            channels_wrapper.classList.add("scale-in");
-            this.sortUsers(element, true);
-        } else if ((data.charAt(data.length-1) == " " || data == "") && channels_wrapper.classList.contains("scale-in")) {
-            channels_wrapper.classList.remove("scale-in");
-            channels_wrapper.classList.add("scale-out");
-            this.sortUsers(element, true);
-        } else if ((data.charAt(data.length-1) == " " || data == "") && users_wrapper.classList.contains("scale-in")) {
-            users_wrapper.classList.remove("scale-in");
-            users_wrapper.classList.add("scale-out");
-            this.sortUsers(element, true);
-            if (users_wrapper.querySelector(".selected"))
-                users_wrapper.querySelector(".selected").classList.remove("selected");
-        } else if (channels_wrapper.classList.contains("scale-in")) {
-            this.sortChannels(element);
-        } else if (users_wrapper.classList.contains("scale-in")) {
-            this.sortUsers(element);
-            if (channels_wrapper.querySelector(".selected"))
-                channels_wrapper.querySelector(".selected").classList.remove("selected");
-        }
-    }
     onInputAutoComplete(e) {
         //Bug patched for selecting :
         if (e.target.value in this.timezoneSelector.options.data || " " + e.target.value in this.timezoneSelector.options.data)
             this.addTimezone.classList.remove("disabled");
         else 
             this.addTimezone.classList.add("disabled");
-    }
-
-    onUserClick(element) {
-        const user = element.innerText;
-        const textarea = element.parentNode.parentNode.querySelector("textarea");
-        const users_wrapper = element.parentNode.parentNode.querySelector(".users_wrapper");
-        textarea.value = textarea.value.substring(0, textarea.value.lastIndexOf("@")) + user;
-        for (let el of document.users) {
-            const nickname = el.nickname || el.username;
-            if ("@"+nickname == user) {
-                document.users.push(el);
-                break;
-            }
-        }
-        M.textareaAutoResize(textarea);
-        users_wrapper.classList.remove("scale-in");
-        users_wrapper.classList.add("scale-out");
-        if (users_wrapper.querySelector(".selected"))
-            users_wrapper.querySelector(".selected").classList.remove("selected");
-    }
-    onChannelClick(element) {
-        const channel = element.innerText;
-        const textarea = element.parentNode.parentNode.querySelector("textarea");
-        const channels_wrapper = element.parentNode.parentNode.querySelector(".channels_wrapper");
-        textarea.value = textarea.value.substring(0, textarea.value.lastIndexOf("#")) + channel;
-        M.textareaAutoResize(textarea);
-        channels_wrapper.classList.remove("scale-in");
-        channels_wrapper.classList.add("scale-out");
-        if (channels_wrapper.querySelector(".selected")) 
-            channels_wrapper.querySelector(".selected").classList.remove("selected");
-    }
-
-    sortChannels(element, clear) {
-        const data = element.value;
-        const wrapper = element.parentNode.querySelector(".channels_wrapper");
-        const keyword = data.substring(data.lastIndexOf("#")+1, data.length);
-        if (!clear) {
-            const elsToHide = document.channels.filter(el => !el.name.toLowerCase().includes(keyword.toLowerCase()));
-            const elsToShow = document.channels.filter(el => el.name.toLowerCase().includes(keyword.toLowerCase()));
-            elsToHide.forEach(el => wrapper.querySelector('div[data-id="'+el.id+'"]').classList.add("hidden"));
-            elsToShow.forEach(el => wrapper.querySelector('div[data-id="'+el.id+'"]').classList.remove("hidden"));
-        } else {
-            wrapper.querySelectorAll(".hidden").forEach(el => el.classList.remove("hidden"));
-        }
-    }
-    sortUsers(element, clear) {
-        const data = element.value;
-        const wrapper = element.parentNode.querySelector(".users_wrapper");
-        const keyword = data.substring(data.lastIndexOf("@")+1, data.length);
-        if (!clear) {
-            const elsToHide = document.users.filter(el => el.nickname ? !el.nickname.toLowerCase().includes(keyword.toLowerCase()) : !el.username.toLowerCase().includes(keyword.toLowerCase()));
-            const elsToShow = document.users.filter(el => el.nickname ? el.nickname.toLowerCase().includes(keyword.toLowerCase()) : el.username.toLowerCase().includes(keyword.toLowerCase()));
-            elsToHide.forEach(el => wrapper.querySelector('div[data-id="'+el.id+'"]').classList.add("hidden"));
-            elsToShow.forEach(el => wrapper.querySelector('div[data-id="'+el.id+'"]').classList.remove("hidden"));
-        } else {
-            wrapper.querySelectorAll(".hidden").forEach(el => el.classList.remove("hidden"));
-        }
-    }
-
-    onKeyPressedTextarea(event, element) {
-        const tag_wrapper = element.parentNode.querySelector(".scale-in");
-        if (!tag_wrapper) return;   //Si la fenêtre est pas affiché on fait rien
-        //Sinon on fait un déplacement gauche/droite/haut/bas des flêches pour sélectionner les tags
-        if (event.keyCode == 40 || event.keyCode == 39) {
-            event.preventDefault();
-            this.moveTagRight(tag_wrapper);
-        } else if (event.keyCode == 38 || event.keyCode == 37) {
-            event.preventDefault();
-            this.moveTagLeft(tag_wrapper);
-        } else if (event.keyCode == 13) {
-            event.preventDefault();
-            tag_wrapper.querySelector(".selected").click();
-        }
-    } 
-
-    moveTagRight(tag_wrapper) {
-        const selected = tag_wrapper.querySelector(".selected");
-        if (selected) {
-            if (selected.nextElementSibling) {
-                for (let i = Array.prototype.indexOf.call(tag_wrapper.children, selected)+1; i < tag_wrapper.children.length; i++) {
-                    const el = tag_wrapper.children[i];
-                    if (!el.classList.contains("hidden")) {
-                        el.classList.add("selected");
-                        selected.classList.remove("selected");
-                        break;
-                    }
-                }
-            } else {
-                for (let el of tag_wrapper.children) {
-                    if (!el.classList.contains("hidden")) {
-                        selected.classList.remove("selected");
-                        el.classList.add("selected");
-                        break;
-                    }
-                }
-            }
-        } else {
-            //Si jamais l'utilisateur n'a pas encore appuyé sur une flèche alors le premier élément sera celui sans hidden
-            for (let el of tag_wrapper.children) {
-                if (!el.classList.contains("hidden")) {
-                    el.classList.add("selected");
-                    break;
-                }
-            }
-        }
-    }
-    moveTagLeft(tag_wrapper) {
-        const selected = tag_wrapper.querySelector(".selected");
-        if (selected) {
-            if (selected.previousElementSibling) {
-                for (let i = Array.prototype.indexOf.call(tag_wrapper.children, selected)-1; i >= 0; i--) {
-                    const el = tag_wrapper.children[i];
-                    if (!el.classList.contains("hidden")) {
-                        el.classList.add("selected");
-                        selected.classList.remove("selected");
-                        break;
-                    }
-                }
-            }
-        } else {
-            for (let i = tag_wrapper.children.length-1; i >= 0; i--) {
-                const el = tag_wrapper.children[i];
-                if (!el.classList.contains("hidden")) {
-                    el.classList.add("selected");
-                    break;
-                }
-            }
-        }
     }
 
     onChangeEachSelect() {
@@ -282,7 +130,7 @@ class VueDashboard {
 
     onConfirmAddCron() {
 		if (!this.form.checkValidity()) {
-			M.toast({html: "You message has to be more thicc!"});
+			M.toast({html: "You're message has to be more thicc!"});
 			return;
 		}
         const eachVal = this.eachSelect.value;
