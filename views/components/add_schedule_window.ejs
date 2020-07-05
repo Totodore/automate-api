@@ -6,7 +6,7 @@
                 <textarea id="content" name="content" class="materialize-textarea" required minlength="1"
                     maxlength="2000"></textarea>
                 <label for="content">Message's content</label>
-                <div class="users_wrapper scale-out">
+                <div class="users_wrapper scale-out tag_wrapper">
                     <% people_list.concat(roles_list).forEach((el, index) => { %>
                         <div class="user_el waves-effect waves-light" data-id="<%= el.id %>"
                             nickname="<%= (el.nickname || el.username) %>">
@@ -20,7 +20,7 @@
                         @here
                     </div>
                 </div>
-                <div class="channels_wrapper scale-out">
+                <div class="channels_wrapper scale-out tag_wrapper">
                     <% channel_list.forEach((el, index) => { %>
                         <div class="channel_el waves-effect waves-light" data-id="<%= el.id %>">
                             #<%= el.name %>

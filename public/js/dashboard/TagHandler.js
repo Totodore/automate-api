@@ -1,22 +1,21 @@
-/**
- * @param {Object} options
- * @param {Element} options.textarea
- * @param {Array} options.dataset
- * @param {Element} options.elementWrapper
- * @param {"channel"|"user"} options.type
- */
+const USER_TAG = "@";
+const CHANNEL_TAG = "#";
+const ROLE_TAG = "@&";
 class TagHandler {
     /**
-     * @param {Object} options
+     * Class to handle tags, the user type includes also roles
+     * @param {object} options
      * @param {Element} options.textarea
      * @param {Array} options.dataset
+     * @param {Array} [options.extentDataset]
      * @param {Element} options.elementWrapper
      * @param {"channel"|"user"} options.type
      */
     constructor(options) {
         this.type = options.type;
         this.wrapper = options.elementWrapper;
-        this.data = options.dataset;
+        this.data = options.extentDataset ? [...options.dataset, ...options.extentDataset] : options.dataset;
+        this.extentData = options.extentDataset;
         this.textarea = options.textarea;
 
         this.textarea.addEventListener("input", () => this.onInputTextarea(this.textarea.value));
@@ -32,7 +31,7 @@ class TagHandler {
      */
     onInputTextarea(data) {
         const lastChar = data.charAt(this.textarea.value.length-1); 
-        if ((this.type == "user" && lastChar == "@") || (this.type == "channel" && lastChar == "#")) {
+        if ((this.type == "user" && lastChar == USER_TAG) || (this.type == "channel" && lastChar == CHANNEL_TAG)) {
             this.wrapper.classList.remove("scale-out");
             this.wrapper.classList.add("scale-in");
             this.clear();
@@ -49,15 +48,19 @@ class TagHandler {
         }
     }
 
+    /**
+     * 
+     * @param {Event} event 
+     */
     onKeyPressedTextarea(event) {
         if (!this.wrapper.classList.contains("scale-in")) return;   //Si la fenêtre est pas affiché on fait rien
         //Sinon on fait un déplacement gauche/droite/haut/bas des flêches pour sélectionner les tags
         if (event.keyCode == 40 || event.keyCode == 39) {
             event.preventDefault();
-            this.moveTagRight(this.wrapper);
+            this.moveTagRight();
         } else if (event.keyCode == 38 || event.keyCode == 37) {
             event.preventDefault();
-            this.moveTagLeft(this.wrapper);
+            this.moveTagLeft();
         } else if (event.keyCode == 13) {
             event.preventDefault();
             this.wrapper.querySelector(".selected").click();
@@ -70,11 +73,12 @@ class TagHandler {
      */
     onElClick(element) {
         const text = element.innerText;
-        this.textarea.value = this.textarea.value.substring(0, this.textarea.value.lastIndexOf(this.type == "user" ? "@" : "#")) + text;
+        this.textarea.value = this.textarea.value.substring(0, this.textarea.value.lastIndexOf(this.type == "user" ? USER_TAG : CHANNEL_TAG)) + text;
         M.textareaAutoResize(this.textarea);
         this.wrapper.classList.remove("scale-in");
         this.wrapper.classList.add("scale-out");
-        this.wrapper.querySelector(".selected").classList.remove("selected");
+        if (this.wrapper.querySelector(".selected"))
+            this.wrapper.querySelector(".selected").classList.remove("selected");
     }
     /**
      * 
@@ -82,16 +86,17 @@ class TagHandler {
      * @param {string} textContent  
      */
     filter(textContent) {
-        const query = textContent.substring(textContent.lastIndexOf(this.type == "user" ? "@" : "#")+1, textContent.length);
+        const query = textContent.substring(textContent.lastIndexOf(this.type == "user" ? USER_TAG : CHANNEL_TAG)+1, textContent.length);
         console.log(this.data, query);
         const elsToHide = this.data.filter(el => {
-            const name = el.name || el.username || el.nickname;
+            const name = el.name || el.nickname || el.username;
             return !name.toLowerCase().includes(query.toLowerCase());
         });
         const elsToShow = this.data.filter(el => {
-            const name = el.name || el.username || el.nickname;
+            const name = el.name || el.nickname || el.username;
             return name.toLowerCase().includes(query.toLowerCase());
         });
+        console.log(elsToShow, elsToHide);
         elsToHide.forEach(el => this.wrapper.querySelector('div[data-id="'+el.id+'"]').classList.add("hidden"));
         elsToShow.forEach(el => this.wrapper.querySelector('div[data-id="'+el.id+'"]').classList.remove("hidden"));
     }
@@ -155,6 +160,24 @@ class TagHandler {
                 }
             }
         }
+    }
+
+    /**
+     * @param {string} textContent
+     * @returns {string} converted text
+     */
+    replaceTag(textContent) {
+        for (const el of this.data) {
+            if (this.type == "user") {
+                if (this.extentData.includes(el))  //If the el is in the extent data we put the roles
+                    textContent = textContent.replace(`@${el.nickname || el.username || el.name}`, `<${ROLE_TAG}${el.id}>`);
+                else
+                    textContent = textContent.replace(`@${el.nickname || el.username || el.name}`, `<${USER_TAG}${el.id}>`);
+            }
+            else    
+                textContent = textContent.replace(`#${el.nickname || el.username || el.name}`, `<${CHANNEL_TAG}${el.id}>`);
+        }
+        return textContent;
     }
 }
 export default TagHandler;

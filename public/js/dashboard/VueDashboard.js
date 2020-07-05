@@ -67,20 +67,33 @@ class VueDashboard {
             yearRange: 1,
             defaultDate: new Date(),
         });
-        document.querySelectorAll(".channels_wrapper").forEach(el => new TagHandler({
-            elementWrapper: el,
-            dataset: document.channels,
-            textarea: el.parentElement.querySelector("textarea"),
-            type: "channel"
-        }));
-        document.querySelectorAll(".users_wrapper").forEach(el => new TagHandler({
-            elementWrapper: el,
-            dataset: document.users,
-            textarea: el.parentElement.querySelector("textarea"),
-            type: "user"
-        }));
-        M.FormSelect.init(document.querySelectorAll("select")); 
+        M.FormSelect.init(document.querySelectorAll("select"));
+        this.initTagHandlers(); 
         this.addEventListener();
+    }
+
+    initTagHandlers() {
+        this.timerTagWrappers = [...document.querySelectorAll("#addTimer .channels_wrapper, #addTimer .users_wrapper")].map(el => new TagHandler({
+            elementWrapper: el,
+            dataset: el.classList.contains("channels_wrapper") ? document.channels : document.users,
+            textarea: el.parentElement.querySelector("textarea"),
+            type: el.classList.contains("channels_wrapper") ? "channel" : "user",
+            extentDataset: el.classList.contains("users_wrapper") ? document.roles : undefined,
+        }));
+        this.cronTagWrappers = [...document.querySelectorAll("#add_cron .channels_wrapper, #add_cron .users_wrapper")].map(el => new TagHandler({
+            elementWrapper: el,
+            dataset: el.classList.contains("channels_wrapper") ? document.channels : document.users,
+            textarea: el.parentElement.querySelector("textarea"),
+            type: el.classList.contains("channels_wrapper") ? "channel" : "user",
+            extentDataset: el.classList.contains("users_wrapper") ? document.roles : undefined,  
+        }));
+        this.editMessageWrappers = [...document.querySelectorAll("#editMessage .channels_wrapper, #editMessage .users_wrapper")].map(el => new TagHandler({
+            elementWrapper: el,
+            dataset: el.classList.contains("channels_wrapper") ? document.channels : document.users,
+            textarea: el.parentElement.querySelector("textarea"),
+            type: el.classList.contains("channels_wrapper") ? "channel" : "user",
+            extentDataset: el.classList.contains("users_wrapper") ? document.roles : undefined,
+        }));
     }
 
     addEventListener() {
@@ -141,14 +154,11 @@ class VueDashboard {
             //Pour chaque element selectionné (on a juste le nom)
             this.daySelectWrapper.querySelectorAll(".selected").forEach((el) => {
                 //Pour chaque element proposé (nom + valeur)
-                console.log(el);
                 document.querySelectorAll("#daySelect option").forEach((inputEl) => {
-                    console.log(inputEl);
                     if (el.textContent == inputEl.textContent)
                         selectedDays[inputEl.value] = inputEl.textContent;
                 });
             });
-            console.log(selectedDays);
             if (selectedDays.length > 0) {
                 desc += " on " + Object.values(selectedDays).join(", ");
                 cron[4] = Object.keys(selectedDays).join(",");
@@ -200,16 +210,8 @@ class VueDashboard {
         const formData = new FormData();
         const content = this.form.elements.namedItem("content").value;
         let sysContent = content;
-        document.channels.forEach(el => {
-            sysContent = sysContent.replace("#"+el.name, "<#"+el.id+">");
-        });
-        document.users.forEach(el => {
-            const name = el.nickname || el.username;
-            sysContent = sysContent.replace("@"+name, "<@"+el.id+">");
-        });
-        document.roles.forEach(el => {
-            sysContent = sysContent.replace("@"+el.username, "<@&"+el.id+">");
-        });
+        for (const tagHandler of this.cronTagWrappers)
+            sysContent = tagHandler.replaceTag(sysContent);
         formData.append("frequency", desc);
         formData.append("cron", cron.join(" "));
         formData.append("content", content);
@@ -278,16 +280,8 @@ class VueDashboard {
         const channel_id = this.formTimer.elements.namedItem("channelSelectTimer").value;
 
         let sysContent = content;
-        document.channels.forEach(el => {
-            sysContent = sysContent.replace("#"+el.name, "<#"+el.id+">");
-        });
-        document.users.forEach(el => {
-            const name = el.nickname || el.username;
-            sysContent = sysContent.replace("@"+name, "<@"+el.id+">");
-        });
-        document.roles.forEach(el => {
-            sysContent = sysContent.replace("@"+el.username, "<@&"+el.id+">");
-        });
+        for (const tagHandler of this.timerTagWrappers)
+            sysContent = tagHandler.replaceTag(sysContent);
         formData.append("content", content);
         formData.append("sys_content", sysContent);
 		formData.append("timestamp", timestamp);
@@ -379,21 +373,14 @@ class VueDashboard {
         document.querySelector(".guild-timezone h5").textContent = "Timezone : " + timezone;
         this.timezoneModal.close();
     }
+
     async onConfirmUpdateMessage() {
         const message = document.querySelector("#contentEdit").value;
         const formData = new FormData();
 
         let sysContent = message;
-        document.channels.forEach(el => {
-            sysContent = sysContent.replace("#"+el.name, "<#"+el.id+">");
-        });
-        document.users.forEach(el => {
-            const name = el.nickname || el.username;
-            sysContent = sysContent.replace("@"+name, "<@"+el.id+">");
-        });
-        document.roles.forEach(el => {
-            sysContent = sysContent.replace("@"+el.username, "<@&"+el.id+">");
-        });
+        for(const el of this.editMessageWrappers)
+            sysContent = el.replaceTag(sysContent);
 
         formData.append("content", message);
         formData.append("msg_id", this.idToRemove);
@@ -413,5 +400,7 @@ class VueDashboard {
         document.getElementById(this.idToRemove).querySelector(".description").textContent = message;
     }
 }
-
-window.addEventListener("DOMContentLoaded", e => new VueDashboard());
+(function() {
+    "use strict";
+    window.addEventListener("DOMContentLoaded", e => new VueDashboard());
+})();

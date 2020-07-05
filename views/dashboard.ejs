@@ -29,9 +29,8 @@
             <% include ../public/images/timezone.svg %>
             <h5 style="max-width: 80%;">
                 <% if (guildTimezone) {%> 
-                    <span>Timezone :</span> <%= guildTimezone%> 
+                    <%= guildTimezone%> 
                 <% } else {%> 
-                    <span>Timezone :</span>
                     No timezone has been set ! Default set to UTC 
                 <% } %>
             </h5>
