@@ -4,7 +4,7 @@
 <head>
     <% include partials/head.ejs %>
     <link rel="stylesheet" href="/stylesheets/dashboard.css">
-    <script src="/js/viewDashboard.js"></script>
+    <script src="/js/dashboard/VueDashboard.js" type="module"></script>
     <script>
         document.channels = <%- JSON.stringify(channel_list) %>;
         document.users = <%- JSON.stringify(people_list) %>;
@@ -29,9 +29,8 @@
             <% include ../public/images/timezone.svg %>
             <h5 style="max-width: 80%;">
                 <% if (guildTimezone) {%> 
-                    <span>Timezone :</span> <%= guildTimezone%> 
+                    <%= guildTimezone%> 
                 <% } else {%> 
-                    <span>Timezone :</span>
                     No timezone has been set ! Default set to UTC 
                 <% } %>
             </h5>

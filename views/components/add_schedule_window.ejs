@@ -6,7 +6,7 @@
                 <textarea id="content" name="content" class="materialize-textarea" required minlength="1"
                     maxlength="2000"></textarea>
                 <label for="content">Message's content</label>
-                <div class="users_wrapper scale-out">
+                <div class="users_wrapper scale-out tag_wrapper">
                     <% people_list.concat(roles_list).forEach((el, index) => { %>
                         <div class="user_el waves-effect waves-light" data-id="<%= el.id %>"
                             nickname="<%= (el.nickname || el.username) %>">
@@ -20,7 +20,7 @@
                         @here
                     </div>
                 </div>
-                <div class="channels_wrapper scale-out">
+                <div class="channels_wrapper scale-out tag_wrapper">
                     <% channel_list.forEach((el, index) => { %>
                         <div class="channel_el waves-effect waves-light" data-id="<%= el.id %>">
                             #<%= el.name %>
@@ -68,7 +68,9 @@
     </div>
     <div class="modal-footer footer">
         <button href="#!" class="modal-close waves-effect waves-light btn-flat grey-text text-lighten-2">Cancel</button>
-        <button href="#!" class="modal-confirm waves-effect waves-light btn grey darken-3">Add the message <i
-                class="material-icons right">send</i></button>
+        <button href="#!" class="modal-confirm waves-effect waves-light btn grey darken-3">
+            <span>Add message</span>
+            <i class="material-icons right">send</i>
+        </button>
     </div>
 </div>
