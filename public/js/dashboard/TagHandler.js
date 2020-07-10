@@ -87,7 +87,6 @@ class TagHandler {
      */
     filter(textContent) {
         const query = textContent.substring(textContent.lastIndexOf(this.type == "user" ? USER_TAG : CHANNEL_TAG)+1, textContent.length);
-        console.log(this.data, query);
         const elsToHide = this.data.filter(el => {
             const name = el.name || el.nickname || el.username;
             return !name.toLowerCase().includes(query.toLowerCase());
@@ -96,7 +95,6 @@ class TagHandler {
             const name = el.name || el.nickname || el.username;
             return name.toLowerCase().includes(query.toLowerCase());
         });
-        console.log(elsToShow, elsToHide);
         elsToHide.forEach(el => this.wrapper.querySelector('div[data-id="'+el.id+'"]').classList.add("hidden"));
         elsToShow.forEach(el => this.wrapper.querySelector('div[data-id="'+el.id+'"]').classList.remove("hidden"));
     }

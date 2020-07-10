@@ -1,4 +1,5 @@
 import TagHandler from "./TagHandler.js";
+import QueryHandler from "./QueryHandler.js";
 class VueDashboard {
     constructor() {
         this.months = [
@@ -73,21 +74,21 @@ class VueDashboard {
     }
 
     initTagHandlers() {
-        this.timerTagWrappers = [...document.querySelectorAll("#addTimer .channels_wrapper, #addTimer .users_wrapper")].map(el => new TagHandler({
+        this.timerTagWrapper = [...document.querySelectorAll("#addTimer .tag_wrapper")].map(el => new TagHandler({
             elementWrapper: el,
             dataset: el.classList.contains("channels_wrapper") ? document.channels : document.users,
             textarea: el.parentElement.querySelector("textarea"),
             type: el.classList.contains("channels_wrapper") ? "channel" : "user",
             extentDataset: el.classList.contains("users_wrapper") ? document.roles : undefined,
         }));
-        this.cronTagWrappers = [...document.querySelectorAll("#add_cron .channels_wrapper, #add_cron .users_wrapper")].map(el => new TagHandler({
+        this.cronTagWrapper = [...document.querySelectorAll("#add_cron .tag_wrapper")].map(el => new TagHandler({
             elementWrapper: el,
             dataset: el.classList.contains("channels_wrapper") ? document.channels : document.users,
             textarea: el.parentElement.querySelector("textarea"),
             type: el.classList.contains("channels_wrapper") ? "channel" : "user",
-            extentDataset: el.classList.contains("users_wrapper") ? document.roles : undefined,  
+            extentDataset: el.classList.contains("users_wrapper") ? document.roles : undefined,
         }));
-        this.editMessageWrappers = [...document.querySelectorAll("#editMessage .channels_wrapper, #editMessage .users_wrapper")].map(el => new TagHandler({
+        this.editTagWrapper = [...document.querySelectorAll("#editMessage .tag_wrapper")].map(el => new TagHandler({
             elementWrapper: el,
             dataset: el.classList.contains("channels_wrapper") ? document.channels : document.users,
             textarea: el.parentElement.querySelector("textarea"),
@@ -102,13 +103,15 @@ class VueDashboard {
         document.querySelector(".timer-add-btn").addEventListener("click", () => this.addTimerModal.open());
         document.querySelector(".guild-timezone").addEventListener("click", () => this.timezoneModal.open());
         document.querySelector(".autocomplete").addEventListener("change", (e) => this.onInputAutoComplete(e));
-        document.querySelector("#setTimezone .modal-confirm").addEventListener("click", () => this.onConfirmSetTimer());
+        document.querySelector("#setTimezone .modal-confirm").addEventListener("click", () => this.onConfirmSetTimezone());
         document.querySelector("#options_modal .delete").addEventListener("click", () => this.onRemoveEl());
         document.querySelector("#options_modal .edit").addEventListener("click", () => this.onOpenEdit());
-        document.querySelector("#editMessage .modal-confirm").addEventListener("click", () => this.onConfirmUpdateMessage());
+        document.querySelector("#editMessage .modal-confirm").addEventListener("click", () => this.onConfirmUpdateMessage(
+            document.querySelector("#editMessage .modal-confirm span")
+        ));
         this.eachSelect.addEventListener("change", () => this.onChangeEachSelect());
-		this.addCron_modalConfirm.addEventListener("click", () => this.onConfirmAddCron());
-        this.addTimer_modalConfirm.addEventListener("click", () => this.onConfirmAddTimer());
+		this.addCron_modalConfirm.addEventListener("click", e => this.onConfirmAddCron(this.addCron_modalConfirm.querySelector("span")));
+        this.addTimer_modalConfirm.addEventListener("click", e => this.onConfirmAddTimer(this.addTimer_modalConfirm.querySelector("span")));
 		
         this.tableLines.forEach(el => {
             el.addEventListener("click", () => this.onElClick(el)); 
@@ -117,6 +120,7 @@ class VueDashboard {
         });
         this.removeCron_modalConfirm.addEventListener("click", () => this.onConfirmRemoveCron());
     }
+
     onInputAutoComplete(e) {
         //Bug patched for selecting :
         if (e.target.value in this.timezoneSelector.options.data || " " + e.target.value in this.timezoneSelector.options.data)
@@ -141,11 +145,228 @@ class VueDashboard {
         }
     }
 
-    onConfirmAddCron() {
+    onRemoveEl(el) {
+        if (el)
+            this.idToRemove = el.getAttribute("id");
+        this.optionsModal.close();
+        this.removeCronModal.open();
+    }
+    onElClick(el) {
+        if (window.innerWidth < 1000) {
+            this.idToRemove = el.getAttribute("id"); 
+            this.optionsModal.open();
+        }
+    }
+    onOpenEdit(el) {
+        console.log(this.idToRemove, document.getElementById(this.idToRemove));
+        if (el)
+            this.idToRemove = el.getAttribute("id");
+        document.querySelector("#contentEdit").value = document.getElementById(this.idToRemove).querySelector(".description").innerText;
+        M.textareaAutoResize(document.querySelector("#contentEdit"));
+        M.updateTextFields();
+        this.optionsModal.close();
+        this.editMessageModal.open();
+    }
+
+    /**
+     * Function triggered when the user click on 'add message' cron
+     * @param {Element} button 
+     */
+    onConfirmAddCron(button) {
 		if (!this.form.checkValidity()) {
 			M.toast({html: "You're message has to be more thicc!"});
 			return;
-		}
+        }
+        button.innerHTML = "Adding message...";
+        const converted = this.convertCron();
+        const cron = converted[0];
+        const desc = converted[1];
+        const channel_id = this.form.elements.namedItem("channelSelect").value;
+        const content = this.form.elements.namedItem("content").value;
+        let sysContent = content;
+        for (const tagHandler of this.cronTagWrapper)
+            sysContent = tagHandler.replaceTag(sysContent);
+
+        QueryHandler.addCron({
+            frequency: desc,
+            cron: cron,
+            content: content,
+            sys_content: sysContent,
+            channel_id: channel_id,
+            guild_id: this.guild_id
+        }, response => {
+            button.innerHTML = "Add message";
+            if (response.status != 200 && response.status != 403) {
+                M.toast({html: "Error : This message could not be set"}, 5000);
+                console.log("Error ", response.status, " : ", response.statusText);
+            } else if (response.status == 403) {
+                M.toast({html: "Reccuring messages are limited to 5 per server"}, 5000);
+            } else response.text().then((responseText) => {
+				let name;
+				document.channels.forEach(element => {if(element.id == channel_id) name = element.name;});
+                    document.querySelector("tbody").insertAdjacentHTML("afterbegin", `
+                    <tr id="${responseText}" channel_id="${channel_id}">
+                        <td>${desc}</td>
+                        <td>#${name}</td>
+                        <td class="message">
+                            <div>
+                                <p class="description">${content}</p>
+                                <div class="options">
+                                    <i class="material-icons waves-effect edit">edit</i>
+                                    <span class="divider"></span>
+                                    <i class="material-icons waves-effect delete">delete</i>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>`);
+                const el = document.getElementById(responseText);
+                el.addEventListener("click", () => this.onElClick(el)); 
+                el.querySelector(".edit").addEventListener("click", () => this.onOpenEdit(el));
+                el.querySelector(".delete").addEventListener("click", () => this.onRemoveEl(el));                
+				this.form.reset();
+                M.toast({html: "This message has successfully been set"}, 5000);
+            });
+            this.addCronModal.close();
+        });
+	}
+    
+    /**
+     * Function triggered when the user click on add message timer
+     * @param {Element} button 
+     */
+	onConfirmAddTimer(button) {
+		if (!this.formTimer.checkValidity()) {
+			M.toast({html: "You message has to be more thicc!"});
+			return;
+        }
+        button.innerHTML = "Adding message...";
+		const content = this.formTimer.elements.namedItem("contentTimer").value;
+		const date_string = this.datePicker.toString().split(" ");
+		const time_string = !this.timePickerTimer.time || this.timePickerTimer.time == "00:00" ? [new Date().getHours().toString(), String(new Date().getMinutes()+2)] : this.timePickerTimer.time.split(":");
+        const date = new Date();
+		date.setFullYear(date_string[6], this.months.indexOf(date_string[5]), date_string[3]);
+		date.setHours(time_string[0], time_string[1]);
+        const timestamp = Math.floor((date.getTime()/1000)/60);	//timestamp en minutes
+        if (timestamp < Math.floor((Date.now()/1000)/60)) {
+            M.toast({html: "We haven't found a way to send messages in past yet, we are waiting for Marty and Doc to come back !"});
+            return;
+        }
+		const desc = `${this.datePicker.toString()} at ${time_string.join(":")}`;
+        const channel_id = this.formTimer.elements.namedItem("channelSelectTimer").value;
+
+        let sysContent = content;
+        for (const tagHandler of this.timerTagWrapper)
+            sysContent = tagHandler.replaceTag(sysContent);
+
+		QueryHandler.addTimer({
+            channel_id: channel_id,
+            content: content,
+            description: desc,
+            guild_id: this.guild_id,
+            sys_content: sysContent,
+            timestamp: timestamp
+        }, response => {
+            button.innerHTML = "Add message";
+			if (response.status != 200) {
+                M.toast({html: "Error : This message could not be set"}, 5000);
+                console.log("Error ", response.status, " : ", response.statusText);
+            } else response.text().then((responseText) => {
+				let name;
+				document.channels.forEach(element => {if(element.id == channel_id) name = element.name;});
+                document.querySelector("tbody").insertAdjacentHTML("afterbegin", `
+                <tr id="${responseText}" channel_id="${channel_id}">
+                    <td>${desc}</td>
+                    <td>#${name}</td>
+                    <td class="message">
+                        <div>
+                            <p class="description">${content}</p>
+                            <div class="options">
+                                <i class="material-icons waves-effect edit">edit</i>
+                                <span class="divider"></span>
+                                <i class="material-icons waves-effect delete">delete</i>
+                            </div>
+                        </div>
+                    </td>
+                </tr>`);
+                const el = document.getElementById(responseText);
+                el.addEventListener("click", () => this.onElClick(el)); 
+                el.querySelector(".edit").addEventListener("click", () => this.onOpenEdit(el));
+                el.querySelector(".delete").addEventListener("click", () => this.onRemoveEl(el));  
+                //Suppression du message automatiquement si la date est dépassée.
+                setTimeout(() => {document.getElementById(responseText).remove();}, timestamp*60*1000 - Date.now());
+				this.formTimer.reset();
+                M.toast({html: "This message has successfully been set"}, 5000);
+			});
+			this.addTimerModal.close();
+        });
+    }
+
+    async onConfirmRemoveCron() {
+        const response = await QueryHandler.removeMsg({
+            guild_id: this.guild_id,
+            id: this.idToRemove 
+        });
+        if (response.status != 200) {
+            console.log("Error : ", response.status, " ", responseText);
+            M.toast({html: "Error : This message could not be deleted"}, 5000);
+        } else response.text().then((responseText) => {
+            M.toast({html: responseText}, 5000);
+            document.getElementById(this.idToRemove).remove();
+            this.removeCronModal.close();
+        });
+    }
+    async onConfirmSetTimezone() {
+        const timezone = document.querySelector(".autocomplete").value;
+        const offset = timezone.split("UTC")[1];
+        const response = await QueryHandler.setTimezone({
+            guild_id: this.guild_id,
+            timezone: timezone,
+            utc_offset: offset
+        });
+        if (response.status != 200) {
+            console.log("Error : ", response.status, " ", response.statusText);
+            M.toast({html: "Error : Impossible to set this timezone"}, 5000);
+            return;
+        }
+        M.toast({html: "The timezone has been succesfully set !"}, 5000);
+        document.querySelector(".guild-timezone h5").textContent = "Timezone : " + timezone;
+        this.timezoneModal.close();
+    }
+
+    /**
+     * Function triggered when the user create change a message content
+     * @param {Element} button
+     */
+    async onConfirmUpdateMessage(button) {
+        button.innerHTML = "Editing message...";
+        const message = document.querySelector("#contentEdit").value;
+        let sysContent = message;
+        for(const el of this.editTagWrapper)
+            sysContent = el.replaceTag(sysContent);
+
+        const req = await QueryHandler.updateMsg({
+            content: message,
+            sys_content: sysContent,
+            guild_id: this.guild_id,
+            msg_id: this.idToRemove 
+        });
+        button.innerHTML = "Edit message";
+        if (req.status != 200) {
+            console.log("Error : ", req.status, " ", req.statusText);
+            M.toast({html: "Error : Impossible to set this message"}, 5000);
+            return;
+        }
+        this.editMessageModal.close();
+        M.toast({html: "Message updated !"});
+        document.getElementById(this.idToRemove).querySelector(".description").textContent = message;
+        this.idToRemove = undefined;
+    }
+
+    /**
+     * create a cron expression from the user selection
+     * @returns {Array<string>} cron expression and cron description
+     */
+    convertCron() {
         const eachVal = this.eachSelect.value;
         let desc = "Every " + eachVal;
         let cron = ["*", "*", "*", "*", "*"];
@@ -205,201 +426,10 @@ class VueDashboard {
                 cron[0] = "00";
             }
 		}
-		
-        const channel_id = this.form.elements.namedItem("channelSelect").value;
-        const formData = new FormData();
-        const content = this.form.elements.namedItem("content").value;
-        let sysContent = content;
-        for (const tagHandler of this.cronTagWrappers)
-            sysContent = tagHandler.replaceTag(sysContent);
-        formData.append("frequency", desc);
-        formData.append("cron", cron.join(" "));
-        formData.append("content", content);
-        formData.append("sys_content", sysContent);
-        formData.append("channel_id", channel_id);
-        formData.append("guild_id", this.guild_id);
-        
-        
-        var self = this;
-        fetch("/ajax/add_schedule", {
-            method: "POST",
-			body: formData,
-        }).then(response => {
-            if (response.status != 200 && response.status != 403) {
-                M.toast({html: "Error : This message could not be set"}, 5000);
-                console.log("Error ", response.status, " : ", response.statusText);
-            } else if (response.status == 403) {
-                M.toast({html: "Reccuring messages are limited to 5 per server"}, 5000);
-            } else response.text().then((responseText) => {
-				let name;
-				document.channels.forEach(element => {if(element.id == channel_id) name = element.name;});
-                    document.querySelector("tbody").insertAdjacentHTML("afterbegin", `
-                    <tr id="${responseText}" channel_id="${channel_id}">
-                        <td>${desc}</td>
-                        <td>#${name}</td>
-                        <td class="message">
-                            <div>
-                                <p class="description">${content}</p>
-                                <div class="options">
-                                    <i class="material-icons waves-effect edit">edit</i>
-                                    <span class="divider"></span>
-                                    <i class="material-icons waves-effect delete">delete</i>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>`);
-                const el = document.getElementById(responseText);
-                el.addEventListener("click", () => this.onElClick(el)); 
-                el.querySelector(".edit").addEventListener("click", () => this.onOpenEdit(el));
-                el.querySelector(".delete").addEventListener("click", () => this.onRemoveEl(el));                
-				this.form.reset();
-                M.toast({html: "This message has successfully been set"}, 5000);
-            });
-            this.addCronModal.close();
-        });
-	}
-	
-	onConfirmAddTimer() {
-		if (!this.formTimer.checkValidity()) {
-			M.toast({html: "You message has to be more thicc!"});
-			return;
-		}
-		const formData = new FormData();
-		const content = this.formTimer.elements.namedItem("contentTimer").value;
-		const date_string = this.datePicker.toString().split(" ");
-		const time_string = !this.timePickerTimer.time || this.timePickerTimer.time == "00:00" ? [new Date().getHours().toString(), String(new Date().getMinutes()+2)] : this.timePickerTimer.time.split(":");
-        const date = new Date();
-		date.setFullYear(date_string[6], this.months.indexOf(date_string[5]), date_string[3]);
-		date.setHours(time_string[0], time_string[1]);
-        const timestamp = Math.floor((date.getTime()/1000)/60);	//timestamp en minutes
-        if (timestamp < Math.floor((Date.now()/1000)/60)) {
-            M.toast({html: "We haven't found a way to send messages in past yet, we are waiting for Marty and Doc to come back !"});
-            return;
-        }
-		const desc = `${this.datePicker.toString()} at ${time_string.join(":")}`;
-        const channel_id = this.formTimer.elements.namedItem("channelSelectTimer").value;
-
-        let sysContent = content;
-        for (const tagHandler of this.timerTagWrappers)
-            sysContent = tagHandler.replaceTag(sysContent);
-        formData.append("content", content);
-        formData.append("sys_content", sysContent);
-		formData.append("timestamp", timestamp);
-		formData.append("description", desc);
-		formData.append("channel_id", channel_id);
-        formData.append("guild_id", this.guild_id);
-        
-        var self = this;
-		fetch("/ajax/add_timer", {
-			method: "POST",
-			body: formData,
-		}).then(response => {
-			if (response.status != 200) {
-                M.toast({html: "Error : This message could not be set"}, 5000);
-                console.log("Error ", response.status, " : ", response.statusText);
-            } else response.text().then((responseText) => {
-				let name;
-				document.channels.forEach(element => {if(element.id == channel_id) name = element.name;});
-                document.querySelector("tbody").insertAdjacentHTML("afterbegin", `
-                <tr id="${responseText}" channel_id="${channel_id}">
-                    <td>${desc}</td>
-                    <td>#${name}</td>
-                    <td class="message">
-                        <div>
-                            <p class="description">${content}</p>
-                            <div class="options">
-                                <i class="material-icons waves-effect edit">edit</i>
-                                <span class="divider"></span>
-                                <i class="material-icons waves-effect delete">delete</i>
-                            </div>
-                        </div>
-                    </td>
-                </tr>`);
-                const el = document.getElementById(responseText);
-                el.addEventListener("click", () => this.onElClick(el)); 
-                el.querySelector(".edit").addEventListener("click", () => this.onOpenEdit(el));
-                el.querySelector(".delete").addEventListener("click", () => this.onRemoveEl(el));  
-                //Suppression du message automatiquement si la date est dépassée.
-                setTimeout(() => {document.getElementById(responseText).remove();}, timestamp*60*1000 - Date.now());
-				this.formTimer.reset();
-                M.toast({html: "This message has successfully been set"}, 5000);
-			});
-			this.addTimerModal.close();
-        });
-    }
-    onRemoveEl(el) {
-        if (el)
-            this.idToRemove = el.getAttribute("id");
-        this.optionsModal.close();
-        this.removeCronModal.open();
-    }
-    onElClick(el) {
-        if (window.innerWidth < 1000) {
-            this.idToRemove = el.getAttribute("id"); 
-            this.optionsModal.open();
-        }
-    }
-    onOpenEdit(el) {
-        if (el)
-            this.idToRemove = el.getAttribute("id");
-        document.querySelector("#contentEdit").textContent = document.getElementById(this.idToRemove).querySelector(".description").innerText;
-        M.textareaAutoResize(document.querySelector("#contentEdit"));
-        M.updateTextFields();
-        this.optionsModal.close();
-        this.editMessageModal.open();
-    }
-    onConfirmRemoveCron() {
-        fetch(`/ajax/remove_message?id=${this.idToRemove}&guild_id=${this.guild_id}`).then((response) => {
-            if (response.status != 200) {
-                console.log("Error : ", response.status, " ", responseText);
-                M.toast({html: "Error : This message could not be deleted"}, 5000);
-            } else response.text().then((responseText) => {
-                M.toast({html: responseText}, 5000);
-                document.getElementById(this.idToRemove).remove();
-                this.removeCronModal.close();
-            });
-        });
-    }
-    async onConfirmSetTimer() {
-        const timezone = document.querySelector(".autocomplete").value;
-        const offset = timezone.split("UTC")[1];
-        const response = await fetch(`/ajax/set_timezone?guild_id=${this.guild_id}&utc_offset=${offset}&timezone=${timezone}`);
-        if (response.status != 200) {
-            console.log("Error : ", response.status, " ", response.statusText);
-            M.toast({html: "Error : Impossible to set this timezone"}, 5000);
-            return;
-        }
-        M.toast({html: "The timezone has been succesfully set !"}, 5000);
-        document.querySelector(".guild-timezone h5").textContent = "Timezone : " + timezone;
-        this.timezoneModal.close();
-    }
-
-    async onConfirmUpdateMessage() {
-        const message = document.querySelector("#contentEdit").value;
-        const formData = new FormData();
-
-        let sysContent = message;
-        for(const el of this.editMessageWrappers)
-            sysContent = el.replaceTag(sysContent);
-
-        formData.append("content", message);
-        formData.append("msg_id", this.idToRemove);
-        formData.append("guild_id", this.guild_id);
-        formData.append("sys_content", sysContent);
-        const req = await fetch("/ajax/set_message", {
-            body: formData,
-            method: "POST"
-        });
-        if (req.status != 200) {
-            console.log("Error : ", req.status, " ", req.statusText);
-            M.toast({html: "Error : Impossible to set this message"}, 5000);
-            return;
-        }
-        this.editMessageModal.close();
-        M.toast({html: "Message updated !"});
-        document.getElementById(this.idToRemove).querySelector(".description").textContent = message;
+        return [cron.join(" "), desc];
     }
 }
+
 (function() {
     "use strict";
     window.addEventListener("DOMContentLoaded", e => new VueDashboard());
