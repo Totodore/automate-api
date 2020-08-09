@@ -127,8 +127,8 @@ async function checkTokens() {
 }
 
 async function restartApp() {
-    console.log("Restarting app...");
-    pm2.restart("app", () => {
+    console.log("Restarting Automate...");
+    pm2.restart("automate", () => {
         console.error("Error restarting automatically restart app");
     });
 }
