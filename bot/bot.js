@@ -86,7 +86,7 @@ class Bot {
 
                 guildData.freq.forEach((freqEvent) => {
                     if (freqEvent.cron.split(" ")[0] == "60")
-                        freqEvent.cron[0] = "0"; 
+                        return;
                     const cronInstance = new Cron({timezone: guildData.timezone_code});
                     cronInstance.fromString(freqEvent.cron);
                     const scheduler = cronInstance.schedule();
