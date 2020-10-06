@@ -1,6 +1,7 @@
 import { Message } from "discord.js";
+import { Model } from "sequelize/types";
 
-export default interface MessageModel {
+interface MessageDataModel {
     id: string;
     channel_id: string;
     cron?: string;
@@ -14,4 +15,15 @@ export default interface MessageModel {
 enum MessageType {
     Frequential,
     Ponctual
+}
+
+class MessageModel extends Model<MessageDataModel> implements MessageDataModel {
+    public id: string;
+    public channel_id: string;
+    public cron?: string;
+    public timestamp?: number;
+    public message: string;
+    public description: string;
+    public sys_content: string;
+    public type: MessageType.Frequential|MessageType.Ponctual;
 }
