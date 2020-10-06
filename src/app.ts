@@ -4,7 +4,6 @@ import * as path from "path";
 import * as cookieParser from "cookie-parser";
 import * as logger from "morgan";
 import * as session from "express-session";
-import * as fs from "fs";
 import * as formidable from "express-formidable";
 import Bot from "./Bot";
 import * as dotenv from "dotenv";
@@ -18,6 +17,8 @@ import DashboardRouter from "./routes/dashboard";
 import LoadUserData from "./middlewares/LoadUserData";
 import CheckUserLogin from "./middlewares/CheckUserLogin";
 import checkTokens from "./utils/CheckTokens";
+import routesList from "./RoutesList";
+import LoadDB from "./middlewares/LoadDB";
 
 dotenv.config();
 const app = express();
@@ -33,17 +34,21 @@ app.use(cookieParser());
 app.use(session({ secret: "CoderLab=<3", resave: false, saveUninitialized: true, }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Fonction pour détecter si l'utilisateur est connecté ou pas
+//MiddelWare qui detecte si l'utilisateur est connecté ou pas
 app.use(CheckUserLogin);
 
-//Fonction pour charger la photo de profile sur le header
+//MiddleWare de chargement de la photo de profil
 app.use(LoadUserData);
 
-app.use('/', IndexRouter);
-app.use('/connect', ConnectRouter);
-app.use('/oauth', OauthRouter);
-app.use('/ajax', AjaxRouter);
-app.use("/dashboard", DashboardRouter);
+//Regex qui prend tt sauf connect
+//Middelware de gestion des données
+app.use(`/\b(?!${routesList.connect})\b\S+/g`, LoadDB);
+
+app.use(routesList.index, IndexRouter);
+app.use(routesList.connect, ConnectRouter);
+app.use(routesList.oauth, OauthRouter);
+app.use(routesList.ajax, AjaxRouter);
+app.use(routesList.dashboard, DashboardRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

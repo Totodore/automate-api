@@ -18,6 +18,8 @@ var dashboard_1 = require("./routes/dashboard");
 var LoadUserData_1 = require("./middlewares/LoadUserData");
 var CheckUserLogin_1 = require("./middlewares/CheckUserLogin");
 var CheckTokens_1 = require("./utils/CheckTokens");
+var RoutesList_1 = require("./RoutesList");
+var LoadDB_1 = require("./middlewares/LoadDB");
 dotenv.config();
 var app = express();
 // view engine setup
@@ -31,15 +33,18 @@ app.use(logger('dev'));
 app.use(cookieParser());
 app.use(session({ secret: "CoderLab=<3", resave: false, saveUninitialized: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-//Fonction pour détecter si l'utilisateur est connecté ou pas
+//MiddelWare qui detecte si l'utilisateur est connecté ou pas
 app.use(CheckUserLogin_1["default"]);
-//Fonction pour charger la photo de profile sur le header
+//MiddleWare de chargement de la photo de profil
 app.use(LoadUserData_1["default"]);
-app.use('/', index_1["default"]);
-app.use('/connect', connect_1["default"]);
-app.use('/oauth', oauth_1["default"]);
-app.use('/ajax', ajax_1["default"]);
-app.use("/dashboard", dashboard_1["default"]);
+//Regex qui prend tt sauf connect
+//Middelware de gestion des données
+app.use("/\b(?!" + RoutesList_1["default"].connect + ")\bS+/g", LoadDB_1["default"]);
+app.use(RoutesList_1["default"].index, index_1["default"]);
+app.use(RoutesList_1["default"].connect, connect_1["default"]);
+app.use(RoutesList_1["default"].oauth, oauth_1["default"]);
+app.use(RoutesList_1["default"].ajax, ajax_1["default"]);
+app.use(RoutesList_1["default"].dashboard, dashboard_1["default"]);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     next(createError(404));
