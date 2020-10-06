@@ -1,4 +1,3 @@
-import { Message } from "discord.js";
 import { Model } from "sequelize/types";
 
 interface MessageDataModel {
@@ -27,3 +26,5 @@ class MessageModel extends Model<MessageDataModel> implements MessageDataModel {
     public sys_content: string;
     public type: MessageType.Frequential|MessageType.Ponctual;
 }
+
+export default MessageModel;

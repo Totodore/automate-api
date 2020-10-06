@@ -1,10 +1,16 @@
-import * as mysql from "mysql";
 import {Sequelize} from "sequelize";
 import Logger from "./logger";
+import GuildModel from "../models/GuildModel";
+import UserModel from "../models/UserModel";
+import MessageModel from "../models/MessageModel";
 
 export default class DBManager extends Logger {
     
-    private sequelize;
+    private sequelize: Sequelize;
+    
+    public user: UserModel;
+    public guild: GuildModel;
+    public Message: MessageModel;
     
     constructor() {
         super("DBManager");
@@ -17,6 +23,6 @@ export default class DBManager extends Logger {
     }
     
     public async init() {
-        await this.init();
+        await this.sequelize.sync();
     }
 }

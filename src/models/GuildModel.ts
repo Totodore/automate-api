@@ -1,3 +1,4 @@
+import { Guild } from "discord.js";
 import Model from "sequelize/types/lib/model";
 
 interface GuildDataModel {
@@ -23,5 +24,6 @@ class GuildModel extends Model<GuildDataModel> implements GuildDataModel {
     public timezone_code: string;
     public timezone: string;
     public id: string;
-    
 }
+
+export default GuildModel;  
