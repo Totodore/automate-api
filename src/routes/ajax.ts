@@ -1,17 +1,19 @@
-const express = require('express');
-const fs = require("fs");
-const uniqid = require("uniqid");
-const router = express.Router();
-const momentTz = require("moment-timezone");
+import {Request, Router} from 'express';
+import * as fs from "fs"
+import * as uniqid from "uniqid";
+import * as momentTz from "moment-timezone";
+import SessionRequest from '../requests/SessionRequest';
 
 const MAX_MESSAGE = 10;
+
+const router = Router();
 
 router.get('/', (req, res) => {
 	res.redirect("../");
 });
 
-router.get('/deconnectUser', (req, res) => {
-	req.session.destroy();
+router.get('/deconnectUser', (req: SessionRequest, res) => {
+	delete req.session;
 	res.clearCookie("userId");
 	res.sendStatus(200);
 });
@@ -22,7 +24,7 @@ router.get("/remove_message", (req, res) => {
 		res.status(520).send("Error args not given bad request");
 	}
 	try {
-		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${req.query.guild_id}/data.json`));
+		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${req.query.guild_id}/data.json`).toString());
 		guildData.freq.forEach((element, index) => {
 			if (element.id == req.query.id)
 				guildData.freq.splice(index, 1);
@@ -41,16 +43,17 @@ router.get("/remove_message", (req, res) => {
 	res.send("This message has successfully been deleted");
 });
 
-router.post("/add_schedule", (req, res) => {
+router.post("/add_schedule", (req: Request, res) => {
 	const msg_id = uniqid();
-	const query = req.fields; 
+	const query = req.body; 
+	console.log(query);
 	if (!query.content || query.content.length < 1 || !query.frequency || !query.cron || !query.channel_id || !query.guild_id || !query.sys_content) {
 		res.status(520);
 		res.send("Error params not given");
 		return;
 	}
 	try {
-		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`));
+		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`).toString());
 		if (guildData.freq.length >= MAX_MESSAGE) {
 			res.status(403);
 			res.send("Message not allowed");
@@ -75,13 +78,14 @@ router.post("/add_schedule", (req, res) => {
 
 router.post("/add_timer", (req, res) => {
 	const msg_id = uniqid();
-	const query = req.fields; 
+	const query = req.body;
+	console.log(query); 
 	if (!query.content || query.content.length < 1 || !query.timestamp || !query.description || !query.channel_id || !query.guild_id || !query.sys_content) {
 		res.status(400).send("Bad request : Params not given");
 		return;
 	}
 	try {
-		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`));
+		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`).toString());
 		guildData.ponctual.push({
 			id: msg_id,
 			channel_id: query.channel_id,
@@ -106,8 +110,8 @@ router.get("/set_timezone", (req, res) => {
 		return;
 	}
 	try {
-		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`));
-		const utc_offset = parseInt(query.utc_offset)*60;
+		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`).toString());
+		const utc_offset = parseInt(query.utc_offset.toString())*60;
 		guildData.timezone_code = momentTz.tz.names().filter(el => 
 			momentTz.tz.zone(el).utcOffset(new Date().getTime()) == utc_offset)[0];
 		guildData.timezone = query.timezone;
@@ -121,13 +125,14 @@ router.get("/set_timezone", (req, res) => {
 });
 
 router.post("/set_message", (req, res) => {
-	const query = req.fields;
+	const query = req.body;
+	console.log(query);
 	if (!query.content || query.content.length < 1 || !query.msg_id || !query.guild_id || !query.sys_content) {
 		res.status(400).send("Error bad request : params not given");
 		return;
 	}
 	try {
-		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`));
+		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`).toString());
 		guildData.freq.forEach((el, index) => {
 			if (el.id == query.msg_id) {
 				el.message = query.content;
@@ -148,4 +153,5 @@ router.post("/set_message", (req, res) => {
 		return;
 	}
 });
-module.exports = router;
+
+export default router;

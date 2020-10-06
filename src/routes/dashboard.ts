@@ -1,10 +1,11 @@
-const express = require('express');
-const fs = require("fs");
-const Cron = require("cron-converter");
-const momentTz = require("moment-timezone");
-const router = express.Router();
+import {Router} from "express"
+import * as fs from "fs";
+import * as Cron from "cron-converter";
+import * as momentTz from "moment-timezone";
+import SessionRequest from "../requests/SessionRequest";
+const router = Router();
 
-router.get('/', async (req, res, next) => {
+router.get('/', async (req: SessionRequest, res, next) => {
     let db, table;
     const guild_id = req.query.id;
     //On envoie une requête pour avoir la liste des channels
@@ -13,7 +14,7 @@ router.get('/', async (req, res, next) => {
     let channelRes;
     let rolesRes;
     try {
-        db = JSON.parse(fs.readFileSync(__dirname + "/../data/guilds/" + req.query.id + "/data.json"));
+        db = JSON.parse(fs.readFileSync(__dirname + "/../data/guilds/" + req.query.id + "/data.json").toString());
         table = db.freq.concat(db.ponctual);
 
         const bot = req.app.get("bot");
@@ -104,4 +105,4 @@ router.get('/', async (req, res, next) => {
     });
 });
 
-module.exports = router;
+export default router;

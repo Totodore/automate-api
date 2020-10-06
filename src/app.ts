@@ -1,28 +1,29 @@
-const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const session = require("express-session");
-const fs = require("fs");
-const fetch = require("node-fetch");
-const fork = require("child_process").fork;
-const formidable = require("express-formidable");
-const pm2 = require('pm2');
-const Bot = require("./bot/bot");
-require("dotenv").config();
+import * as createError from "http-errors";
+import * as express from "express";
+import * as path from "path";
+import * as cookieParser from "cookie-parser";
+import * as logger from "morgan";
+import * as session from "express-session";
+import * as fs from "fs";
+import fetch from "node-fetch";
+import * as formidable from "express-formidable";
+import Bot from "./Bot";
+import * as dotenv from "dotenv";
+import * as ejs from "ejs";
+import SessionRequest from "./requests/SessionRequest";
 
-const indexRouter = require('./routes/index');
-const connectRouter = require('./routes/connect');
-const oauthRouter = require("./routes/oauth");
-const ajaxRouter = require("./routes/ajax");
-const dashboardRouter = require("./routes/dashboard");
+dotenv.config();
+import IndexRouter from "./routes/index";
+import ConnectRouter from './routes/connect';
+import OauthRouter from "./routes/oauth";
+import AjaxRouter from "./routes/ajax"; 
+import DashboardRouter from "./routes/dashboard";
 
 const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.engine("ejs", require("ejs").__express);
+app.engine("ejs", ejs.renderFile);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(formidable());
@@ -31,18 +32,8 @@ app.use(cookieParser());
 app.use(session({ secret: "CoderLab=<3", resave: false, saveUninitialized: true, }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-try {
-    const io = require("@pm2/io");
-    io.init({
-        transactions: true, // will enable the transaction tracing
-        http: true // will enable metrics about the http server (optional)
-    });
-} catch (e) {
-    console.log("Tracing request not enabled");
-}
-
 //Fonction pour détecter si l'utilisateur est connecté ou pas
-app.use((req, res, next) => {
+app.use((req: SessionRequest, res, next) => {
     if (!req.session.userId && req.cookies.userId) {
         req.session.userId = req.cookies.userId;
         next();
@@ -53,9 +44,9 @@ app.use((req, res, next) => {
 });
 
 //Fonction pour charger la photo de profile sur le header
-app.use(async (req, res, next) => {
+app.use(async (req: SessionRequest, res, next) => {
     if (req.session.userId) {
-        const userData = JSON.parse(fs.readFileSync(__dirname + process.env.DB_FILE))[req.session.userId];
+        const userData = JSON.parse(fs.readFileSync(__dirname + process.env.DB_FILE).toString())[req.session.userId];
         const reqUser = await fetch("https://discordapp.com/api/users/@me", {
             headers: {
                 'Content-Type': 'application/json',
@@ -76,11 +67,11 @@ app.use(async (req, res, next) => {
     next();
 });
 
-app.use('/', indexRouter);
-app.use('/connect', connectRouter);
-app.use('/oauth', oauthRouter);
-app.use('/ajax', ajaxRouter);
-app.use("/dashboard", dashboardRouter);
+app.use('/', IndexRouter);
+app.use('/connect', ConnectRouter);
+app.use('/oauth', OauthRouter);
+app.use('/ajax', AjaxRouter);
+app.use("/dashboard", DashboardRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -105,11 +96,10 @@ app.listen(3000, () => {
     console.log("Checking tokens expiration every hour...");
     checkTokens();
     setInterval(checkTokens, 1000*60*60); //Toutes les heures le bot check les tokens des gens pour vérifier qu'il est à jour
-    setTimeout(restartApp, 1000*60*60*3 + 3*1000);   //Toutes les trois heures on redémarre le bot (+ 3 seconde pour que ca redémarre pas en même temps que l'envoie des stats)
 });
 
 async function checkTokens() {
-    const userData = JSON.parse(fs.readFileSync(`${__dirname}/data/users.json`));
+    const userData = JSON.parse(fs.readFileSync(`${__dirname}/data/users.json`).toString());
     const keysToDelete = [];
     try {
         for (const key of Object.keys(userData)) {
@@ -126,10 +116,4 @@ async function checkTokens() {
     fs.writeFileSync(`${__dirname}/data/users.json`, JSON.stringify(userData));
 }
 
-async function restartApp() {
-    console.log("Restarting Automate...");
-    pm2.restart("automate", () => {
-        console.error("Error restarting automatically restart app");
-    });
-}
-module.exports = app;
+export default app;

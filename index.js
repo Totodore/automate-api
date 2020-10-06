@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('./bin/app.js').default;
 var debug = require('debug')('schedule-message-discord-v3:server');
 var http = require('http');
 

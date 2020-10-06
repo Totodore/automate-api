@@ -1,10 +1,10 @@
-const express = require('express');
-const router = express.Router();
-const fetch = require('node-fetch');
-const FormData = require("form-data");
-const fs = require("fs");
+import {Router} from "express";
+const router = Router();
+import fetch from "node-fetch";
+import * as fs from "fs";
+import SessionRequest from "../requests/SessionRequest";
 
-router.get('/', async (req, res, next) => {
+router.get('/', async (req: SessionRequest, res, next) => {
     console.log("Oauth requested");
     //Si on a pas recu le code on redirige avec un msg d'erreur
     if (!req.query.code) {
@@ -22,8 +22,8 @@ router.get('/', async (req, res, next) => {
         'code': req.query.code,
         'scope': "identify email connections"
     };
-    const formData = new FormData();
-    Object.entries(dataToSend).forEach(el => formData.append(el[0], el[1]));
+    const formData = new URLSearchParams();
+    Object.entries(dataToSend).forEach(el => formData.append(el[0], el[1].toString()));
     const reqToken = await fetch(process.env.API_ENDPOINT+"/oauth2/token", {
         method: "POST",
         body: formData
@@ -52,7 +52,7 @@ router.get('/', async (req, res, next) => {
     const resUser = JSON.parse(await reqUser.text());
     //Si l'id existe déjà dans la bdd on affiche juste un msg de reconnexion sinon on 
     //écrit les donnée dans la db
-    let userDB = JSON.parse(fs.readFileSync(__dirname+"/../data/users.json"));
+    let userDB = JSON.parse(fs.readFileSync(__dirname+"/../data/users.json").toString());
     if (Object.keys(userDB).includes(resUser.id)) {
         req.session.userId = resUser.id;
         res.cookie("userId", resUser.id, {
@@ -103,8 +103,8 @@ router.get("/bot", async (req, res, next) => {
             'code': req.query.code,
             'scope': "bot"
         };
-        const formData = new FormData();
-        Object.entries(dataToSend).forEach(el => formData.append(el[0], el[1]));
+        const formData = new URLSearchParams();
+        Object.entries(dataToSend).forEach(el => formData.append(el[0], el[1].toString()));
         const reqToken = await fetch(`${process.env.API_ENDPOINT}/oauth2/token`, {
             method: "POST",
             body: formData
@@ -130,4 +130,5 @@ router.get("/bot", async (req, res, next) => {
         res.redirect("../dashboard/?id="+req.query.guild_id);
     }
 });
-module.exports = router;
+
+export default router;
