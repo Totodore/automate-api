@@ -1,5 +1,6 @@
 "use strict";
 exports.__esModule = true;
+//TODO: REGEX FOR ROUTE SELECTION
 function default_1(req, res, next) {
     if (!req.session.userId && req.cookies.userId) {
         req.session.userId = req.cookies.userId;

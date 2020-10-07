@@ -66,19 +66,19 @@ router.get('/', function (req, res, next) { return __awaiter(_this, void 0, void
             case 2:
                 guildRes = _b.apply(_a, [_c.sent()]);
                 try {
-                    guildRes = guildRes.filter(function (el) {
+                    guildRes = guildRes ? .filter(function (el) {
                         if (el.permissions & ADMINISTRATOR || el.permissions & MANAGE_GUILD)
                             return true;
                         else
                             return false;
-                    });
+                    }) : ;
                 }
                 catch (e) {
                     console.log("Erreur lors de la guildRes.filter");
                     res.render('index', { header: req.headerData, error: "I didn't manage to collect all your channels, sniffu..." });
                     return [2 /*return*/];
                 }
-                guildRes.forEach(function (element) { return element.added = fs.existsSync(__dirname + "/../data/guilds/" + element.id + "/data.json"); });
+                guildRes.forEach(function (element) { return element.added = req.hasGuild(element.id); });
                 guildRes.sort(function (a, b) { if (a.added)
                     return -1;
                 else if (b.added)

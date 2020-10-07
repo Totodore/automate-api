@@ -37,106 +37,114 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 exports.__esModule = true;
 var express_1 = require("express");
-var fs = require("fs");
 var Cron = require("cron-converter");
 var momentTz = require("moment-timezone");
+var Logger_1 = require("src/utils/Logger");
 var router = express_1.Router();
 router.get('/', function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-    var db, table, guild_id, guildRes, peopleRes, channelRes, rolesRes, bot, zones, _i, _a, el, zoneEl, offset, zoneName, name_1;
+    var logger, guild_id, guildDB, table, guildRes, peopleRes, channelRes, rolesRes, bot, e_1, zones, _i, _a, el, zoneEl, offset, zoneName, name_1, peopleData, rolesData, channelData;
     return __generator(this, function (_b) {
-        guild_id = req.query.id;
-        try {
-            db = JSON.parse(fs.readFileSync(__dirname + "/../data/guilds/" + req.query.id + "/data.json").toString());
-            table = db.freq.concat(db.ponctual);
-            bot = req.app.get("bot");
-            guildRes = bot.getGuild(guild_id);
-            peopleRes = bot.getPeople(guild_id);
-            channelRes = bot.getChannels(guild_id).filter(function (element) {
-                if (!element.deleted && (element.type == "text" || element.type == "news"))
-                    return true;
-                else
-                    return false;
-            });
-            rolesRes = bot.getRoles(guild_id);
+        switch (_b.label) {
+            case 0:
+                logger = new Logger_1["default"]("Dashboard");
+                guild_id = req.query.id.toString();
+                return [4 /*yield*/, req.dbManager.Guild.findOne({ where: { id: guild_id } })];
+            case 1:
+                guildDB = (_b.sent()).get();
+                table = [];
+                _b.label = 2;
+            case 2:
+                _b.trys.push([2, 4, , 5]);
+                return [4 /*yield*/, req.dbManager.Message.findAll({ where: { guild_id: req.query.id } })];
+            case 3:
+                table = (_b.sent());
+                bot = req.app.get("bot");
+                guildRes = bot.getGuild(guild_id);
+                peopleRes = bot.getPeople(guild_id);
+                channelRes = bot.getChannels(guild_id);
+                rolesRes = bot.getRoles(guild_id);
+                return [3 /*break*/, 5];
+            case 4:
+                e_1 = _b.sent();
+                logger.log("Error loading datas : " + e_1);
+                res.redirect("../?msg=" + encodeURI("Whoops ! It seems like an error has occured during the dashboard's loading. Sniffu..."));
+                return [2 /*return*/];
+            case 5:
+                //On donne un nom aux channels dans lesquels il y a des messages prévus
+                table.forEach(function (element) {
+                    channelRes.forEach(function (channel) {
+                        if (channel.id == element.channel_id)
+                            element.channel_name = channel.name;
+                    });
+                });
+                //Sort message in the chronologic way
+                table.sort(function (a, b) {
+                    var timestamp_a, timestamp_b;
+                    if (a.timestamp)
+                        timestamp_a = a.timestamp;
+                    else {
+                        var cronInstance = new Cron();
+                        cronInstance.fromString(a.cron);
+                        var scheduler = cronInstance.schedule();
+                        timestamp_a = Math.floor(scheduler.next().unix() / 60);
+                    }
+                    if (b.timestamp)
+                        timestamp_b = b.timestamp;
+                    else {
+                        var cronInstance = new Cron();
+                        cronInstance.fromString(b.cron);
+                        var scheduler = cronInstance.schedule();
+                        timestamp_b = Math.floor(scheduler.next().unix() / 60);
+                    }
+                    if (timestamp_a < timestamp_b)
+                        return -1;
+                    else
+                        return 1;
+                });
+                zones = {};
+                for (_i = 0, _a = momentTz.tz.names(); _i < _a.length; _i++) {
+                    el = _a[_i];
+                    zoneEl = momentTz.tz.zone(el);
+                    offset = zoneEl.utcOffset(new Date().getTime());
+                    zoneName = zoneEl.name.split("/");
+                    name_1 = (zoneName[zoneName.length - 2] || "") + " : " + zoneName[zoneName.length - 1] + " \u2192 UTC" + (Math.floor(offset / 60) > 0 ? "+" : "") + Math.floor(offset / 60);
+                    zones[name_1] = offset;
+                }
+                peopleData = peopleRes.map(function (val, index) {
+                    return {
+                        username: val.user.username,
+                        id: val.user.id,
+                        nickname: val.nickname
+                    };
+                });
+                rolesData = rolesRes.map(function (val, index) {
+                    if (val.name[0] == "@")
+                        val.name = val.name.substring(1, val.name.length);
+                    return {
+                        username: val.name,
+                        id: val.id
+                    };
+                }).filter(function (el, index) { return el.username != "everyone"; });
+                channelData = channelRes.map(function (val, index) {
+                    return {
+                        name: val.name,
+                        id: val.id
+                    };
+                });
+                res.render('dashboard', {
+                    header: req.headerData,
+                    table: table,
+                    channel_list: channelData,
+                    people_list: peopleData,
+                    roles_list: rolesData,
+                    guild_data: guildRes,
+                    cdn: process.env.CDN_ENDPOINT,
+                    now_hour: String(new Date().getHours()) + ":" + String(new Date().getMinutes() + 2),
+                    timezone_data: zones,
+                    guildTimezone: guildDB.timezone
+                });
+                return [2 /*return*/];
         }
-        catch (e) {
-            console.log("Error loading datas : " + e);
-            res.redirect("../?msg=" + encodeURI("Whoops ! It seems like an error has occured during the dashboard's loading. Sniffu..."));
-            return [2 /*return*/];
-        }
-        table.forEach(function (element) {
-            channelRes.forEach(function (channel, index) {
-                if (channel.id == element.channel_id)
-                    element.channel_name = channel.name;
-            });
-        });
-        table.sort(function (a, b) {
-            var timestamp_a, timestamp_b;
-            if (a.timestamp)
-                timestamp_a = a.timestamp;
-            else {
-                var cronInstance = new Cron();
-                cronInstance.fromString(a.cron);
-                var scheduler = cronInstance.schedule();
-                timestamp_a = Math.floor(scheduler.next().unix() / 60);
-            }
-            if (b.timestamp)
-                timestamp_b = b.timestamp;
-            else {
-                var cronInstance = new Cron();
-                cronInstance.fromString(b.cron);
-                var scheduler = cronInstance.schedule();
-                timestamp_b = Math.floor(scheduler.next().unix() / 60);
-            }
-            if (timestamp_a < timestamp_b)
-                return -1;
-            else
-                return 1;
-        });
-        zones = {};
-        for (_i = 0, _a = momentTz.tz.names(); _i < _a.length; _i++) {
-            el = _a[_i];
-            zoneEl = momentTz.tz.zone(el);
-            offset = zoneEl.utcOffset(new Date().getTime());
-            zoneName = zoneEl.name.split("/");
-            name_1 = (zoneName[zoneName.length - 2] || "") + " : " + zoneName[zoneName.length - 1] + " \u2192 UTC" + (Math.floor(offset / 60) > 0 ? "+" : "") + Math.floor(offset / 60);
-            zones[name_1] = offset;
-        }
-        peopleRes = peopleRes.map(function (val, index) {
-            return {
-                username: val.user.username,
-                id: val.user.id,
-                nickname: val.nickname
-            };
-        });
-        //We remove the @ if they start by a @ because they are manually added later in the html
-        rolesRes = rolesRes.map(function (val, index) {
-            if (val.name[0] == "@")
-                val.name = val.name.substring(1, val.name.length);
-            return {
-                username: val.name,
-                id: val.id
-            };
-        }).filter(function (el, index) { return el.username != "everyone"; }); //We remove everyone role because it is already manually added in the html
-        channelRes = channelRes.map(function (val, index) {
-            return {
-                name: val.name,
-                id: val.id
-            };
-        });
-        res.render('dashboard', {
-            header: req.headerData,
-            table: table,
-            channel_list: channelRes,
-            people_list: peopleRes,
-            roles_list: rolesRes,
-            guild_data: guildRes,
-            cdn: process.env.CDN_ENDPOINT,
-            now_hour: String(new Date().getHours()) + ":" + String(new Date().getMinutes() + 2),
-            timezone_data: zones,
-            guildTimezone: db.timezone
-        });
-        return [2 /*return*/];
     });
 }); });
 exports["default"] = router;

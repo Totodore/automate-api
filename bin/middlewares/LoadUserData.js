@@ -35,22 +35,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var fs = require("fs");
 function default_1(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var userData, reqUser, resUser, _a, _b;
         return __generator(this, function (_c) {
             switch (_c.label) {
                 case 0:
-                    if (!req.session.userId) return [3 /*break*/, 3];
-                    userData = JSON.parse(fs.readFileSync(__dirname + process.env.DB_FILE).toString())[req.session.userId];
+                    if (!req.session.userId) return [3 /*break*/, 4];
+                    return [4 /*yield*/, req.getUser(req.session.userId)];
+                case 1:
+                    userData = _c.sent();
                     return [4 /*yield*/, fetch("https://discordapp.com/api/users/@me", {
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': "Bearer " + userData.access_token
                             }
                         })];
-                case 1:
+                case 2:
                     reqUser = _c.sent();
                     if (reqUser.status != 200) {
                         console.log("Error : " + reqUser.status + " " + reqUser.statusText);
@@ -59,14 +60,14 @@ function default_1(req, res, next) {
                     }
                     _b = (_a = JSON).parse;
                     return [4 /*yield*/, reqUser.text()];
-                case 2:
+                case 3:
                     resUser = _b.apply(_a, [_c.sent()]);
                     req.headerData = {
                         username: resUser.username,
                         avatar: process.env.CDN_ENDPOINT + "/avatars/" + req.session.userId + "/" + resUser.avatar + ".png?size=64"
                     };
-                    _c.label = 3;
-                case 3:
+                    _c.label = 4;
+                case 4:
                     next();
                     return [2 /*return*/];
             }

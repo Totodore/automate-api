@@ -48,18 +48,21 @@ exports.__esModule = true;
 var Discord = require("discord.js");
 var Cron = require("cron-converter");
 var fs = require("fs");
-var logger_1 = require("./utils/logger");
-var messageSent = 0;
+var Logger_1 = require("./utils/Logger");
+var DBManager_1 = require("./utils/DBManager");
+var MessageModel_1 = require("./models/MessageModel");
 var STAT_CHANNEL = "702970284034097192";
 var Bot = /** @class */ (function (_super) {
     __extends(Bot, _super);
     function Bot() {
         var _this = _super.call(this, "Bot") || this;
         _this.bot = new Discord.Client();
+        _this.messageSent = 0;
         _this.bot.login(process.env.TOKEN_BOT);
         _this.bot.on("ready", function () { return _this.ready(); });
         _this.bot.on("guildCreate", function (guild) { return _this.guildDelete(guild); });
         _this.bot.on("guildDelete", function (guild) { return _this.guildDelete(guild); });
+        _this.bot.on("channelDelete", function (channel) { return _this.channelDelete(channel); });
         _this.bot.setInterval(function () { return _this.sendStats(); }, 1000 * 60 * 60 * 24); //Stats toutes les jours
         return _this;
     }
@@ -100,72 +103,69 @@ var Bot = /** @class */ (function (_super) {
             this.log("Added this.bot but no systemChannel has been specified...");
         }
     };
+    Bot.prototype.channelDelete = function (channel) {
+    };
     /**
      * Send all messages supposed to be sended, every minutes
      */
     Bot.prototype.cronWatcher = function () {
-        var _this = this;
-        var date = new Date();
-        fs.readdir(__dirname + "/.." + process.env.DB_GUILDS + "/", {}, function (err, files) {
-            var i = 0;
-            files.forEach(function (guildId) { return fs.readFile(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", function (err, file) {
-                //Pour chaque guild on regarde si on doit envoyer un message
-                var guildData = JSON.parse(file.toString());
-                var indexToDeletePonctual = [];
-                var timestamp = Math.floor(Date.now() / 1000 / 60);
-                guildData.ponctual.forEach(function (ponctualEvent, index) {
-                    if (ponctualEvent.timestamp == timestamp) {
-                        try {
-                            var channel = _this.bot.channels.cache.get(ponctualEvent.channel_id);
-                            channel.send(ponctualEvent.sys_content || ponctualEvent.message).then(function (message) {
-                                _this.log("New punctual message sent at " + date.getUTCDate() + "/" + date.getUTCMonth() + "/" + date.getUTCFullYear() + " " + date.getUTCHours() + ":" + date.getUTCMinutes());
-                                i++;
-                            })["catch"](function (e) {
-                                _this.log("Error sending message (probably admin rights) to channel : " + ponctualEvent.channel_id);
-                            });
+        return __awaiter(this, void 0, void 0, function () {
+            var _this = this;
+            var i, dbManager, date, messagesData, _loop_1, this_1, _i, messagesData_1, message, state_1;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        i = 0;
+                        dbManager = new DBManager_1["default"]();
+                        date = new Date();
+                        return [4 /*yield*/, dbManager.Message.findAll()];
+                    case 1:
+                        messagesData = _a.sent();
+                        _loop_1 = function (message) {
+                            var timestamp = Math.floor(Date.now() / 1000 / 60);
+                            var data = message.get();
+                            if (data.type == MessageModel_1.MessageType.Ponctual && data.timestamp == timestamp) {
+                                var channel = this_1.bot.channels.cache.get(data.channel_id);
+                                channel.send(data.sys_content || data.message).then(function (message) {
+                                    _this.log("New punctual message sent at " + date.getUTCDate() + "/" + date.getUTCMonth() + "/" + date.getUTCFullYear() + " " + date.getUTCHours() + ":" + date.getUTCMinutes());
+                                    i++;
+                                })["catch"](function (e) {
+                                    _this.log("Error sending message (probably admin rights) to channel : " + data.channel_id);
+                                    _this.error(e);
+                                });
+                            }
+                            else if (data.type == MessageModel_1.MessageType.Frequential) {
+                                if (data.cron.split(" ")[0] == "60")
+                                    return { value: void 0 };
+                                var cronInstance = new Cron({ timezone: data.timezone_code });
+                                cronInstance.fromString(data.cron);
+                                var scheduler = cronInstance.schedule();
+                                var timestampToExec = Math.floor(scheduler.next().unix() / 60);
+                                if (timestampToExec == timestamp) {
+                                    var channel_1 = this_1.bot.channels.cache.get(data.channel_id);
+                                    channel_1.send(data.sys_content || data.message).then(function (message) {
+                                        console.info("New frequential message sent to " + channel_1.name + " in " + channel_1.guild.name);
+                                        i++;
+                                    })["catch"](function (e) {
+                                        _this.log("Error sending message (probably admin rights) to channel : " + data.channel_id);
+                                    });
+                                }
+                            }
+                            setTimeout(function () {
+                                _this.log("<----------- Sent " + i + " messages ----------->");
+                                _this.messageSent += i; //Calcul de moyenne de messages envoyé chaque minute
+                            }, 1000 * 50); //30 secondes après (le temps que tout s'envoie on affiche le nombre de message envoyé et on calcul la moyenne) 
+                        };
+                        this_1 = this;
+                        for (_i = 0, messagesData_1 = messagesData; _i < messagesData_1.length; _i++) {
+                            message = messagesData_1[_i];
+                            state_1 = _loop_1(message);
+                            if (typeof state_1 === "object")
+                                return [2 /*return*/, state_1.value];
                         }
-                        catch (e) {
-                            _this.removeDeletedChannels(guildId, ponctualEvent.channel_id);
-                        }
-                        indexToDeletePonctual.push(index);
-                    }
-                });
-                guildData.freq.forEach(function (freqEvent) {
-                    if (freqEvent.cron.split(" ")[0] == "60")
-                        return;
-                    var cronInstance = new Cron({ timezone: guildData.timezone_code });
-                    cronInstance.fromString(freqEvent.cron);
-                    var scheduler = cronInstance.schedule();
-                    var timestampToExec = Math.floor(scheduler.next().unix() / 60);
-                    if (timestampToExec == timestamp) {
-                        try {
-                            var channel_1 = _this.bot.channels.cache.get(freqEvent.channel_id);
-                            channel_1.send(freqEvent.sys_content || freqEvent.message).then(function (message) {
-                                console.info("New frequential message sent to " + channel_1.name + " in " + channel_1.guild.name);
-                                i++;
-                            })["catch"](function (e) {
-                                _this.log("Error sending message (probably admin rights) to channel : " + freqEvent.channel_id);
-                            });
-                        }
-                        catch (e) {
-                            _this.removeDeletedChannels(guildId, freqEvent.channel_id);
-                        }
-                    }
-                });
-                indexToDeletePonctual.forEach(function (index) {
-                    var ponctualEvent = guildData.ponctual[index];
-                    delete guildData.ponctual[index];
-                    guildData.deleted.push(ponctualEvent);
-                });
-                if (indexToDeletePonctual.length > 0) {
-                    guildData.ponctual = guildData.ponctual.filter(function (element) { return element != null; });
-                    fs.writeFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", JSON.stringify(guildData));
+                        return [2 /*return*/];
                 }
-            }); });
-            setTimeout(function () {
-                _this.log("<----------- Sent " + i + " messages ----------->");
-                messageSent += i; //Calcul de moyenne de messages envoyé chaque minute
-            }, 1000 * 30); //30 secondes après (le temps que tout s'envoie on affiche le nombre de message envoyé et on calcul la moyenne) 
+            });
         });
     };
     /**
@@ -173,42 +173,40 @@ var Bot = /** @class */ (function (_super) {
      */
     Bot.prototype.sendStats = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var channel, lengthServer, lengthUsers;
+            var dbManager, channel, lengthServer, lengthUsers, lengthMessages;
             return __generator(this, function (_a) {
+                dbManager = new DBManager_1["default"]();
                 channel = this.bot.channels.cache.get(STAT_CHANNEL);
-                lengthServer = fs.readdirSync(__dirname + "/.." + process.env.DB_GUILDS).length;
-                lengthUsers = Object.keys(JSON.parse(fs.readFileSync(__dirname + "/../data/users.json").toString())).length;
+                lengthServer = dbManager.Guild.count();
+                lengthUsers = dbManager.User.count();
+                lengthMessages = dbManager.Message.count();
                 channel.send("Nombre de serveurs : **" + lengthServer + "**");
                 channel.send("Nombre d'utilisateurs : **" + lengthUsers + "**");
-                channel.send("Messages envoy\u00E9 en une heure : **" + messageSent + "**");
-                messageSent = 0;
+                channel.send("Messages program\u00E9s : **" + lengthMessages + "**");
+                channel.send("Messages envoy\u00E9 en une heure : **" + this.messageSent + "**");
+                this.messageSent = 0;
                 return [2 /*return*/];
             });
         });
     };
-    Bot.prototype.removeDeletedChannels = function (guildId, channelId) {
-        this.log("Removing channel : " + channelId + " in guild : " + guildId);
-        var data = JSON.parse(fs.readFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json").toString());
-        //On supprime le channel correspondant au channelid dans freq et ponctual
-        data.freq = data.freq.map(function (el) { return el.channel_id != channelId ? el : null; });
-        data.freq = data.freq.filter(function (element) { return element != null; }); //On supprime les index null
-        data.ponctual = data.ponctual.map(function (el) { return el.channel_id != channelId ? el : null; });
-        data.ponctual = data.ponctual.filter(function (element) { return element != null; });
-        fs.writeFileSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guildId + "/data.json", JSON.stringify(data));
-    };
     /**
      * Get channels from a guild id
+     * Filter channels remove deleted ones and other than text or news channel
      */
     Bot.prototype.getChannels = function (id) {
         if (!id)
             return;
         try {
-            var dataToSend = this.bot.guilds.cache.get(id).channels.cache;
+            var dataToSend = this.bot.guilds.cache.get(id).channels.cache.filter(function (element) {
+                if (!element.deleted && (element.type == "text" || element.type == "news"))
+                    return true;
+                else
+                    return false;
+            });
             return dataToSend;
         }
         catch (e) {
             this.log(e);
-            return false;
         }
     };
     /**
@@ -223,7 +221,6 @@ var Bot = /** @class */ (function (_super) {
         }
         catch (e) {
             this.log(e);
-            return false;
         }
     };
     /**
@@ -238,7 +235,6 @@ var Bot = /** @class */ (function (_super) {
         }
         catch (e) {
             this.log(e);
-            return false;
         }
     };
     /**
@@ -253,9 +249,8 @@ var Bot = /** @class */ (function (_super) {
         }
         catch (e) {
             this.log(e);
-            return false;
         }
     };
     return Bot;
-}(logger_1["default"]));
+}(Logger_1["default"]));
 exports["default"] = Bot;

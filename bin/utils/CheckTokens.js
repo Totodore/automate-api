@@ -36,10 +36,12 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 var fs = require("fs");
+var Logger_1 = require("./Logger");
 function checkTokens() {
     return __awaiter(this, void 0, void 0, function () {
-        var userData, keysToDelete, _i, _a, key, value;
+        var logger, userData, keysToDelete, _i, _a, key, value;
         return __generator(this, function (_b) {
+            logger = new Logger_1["default"]("CheckTokens");
             userData = JSON.parse(fs.readFileSync(__dirname + "/data/users.json").toString());
             keysToDelete = [];
             try {
@@ -49,11 +51,11 @@ function checkTokens() {
                     if (value.token_timestamp < Math.floor(Date.now() / 1000) - 60 * 60 * 24)
                         keysToDelete.push(key);
                 }
-                console.log("Checking token availability : " + keysToDelete.length + " user accounts expired");
+                logger.log("Checking token availability : " + keysToDelete.length + " user accounts expired");
                 keysToDelete.forEach(function (key) { return delete userData[key]; });
             }
             catch (e) {
-                console.error("Error function refresh token : " + e);
+                logger.error("Error function refresh token : " + e);
                 return [2 /*return*/];
             }
             fs.writeFileSync(__dirname + "/data/users.json", JSON.stringify(userData));

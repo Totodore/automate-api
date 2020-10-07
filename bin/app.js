@@ -38,7 +38,7 @@ app.use(CheckUserLogin_1["default"]);
 //MiddleWare de chargement de la photo de profil
 app.use(LoadUserData_1["default"]);
 //Regex qui prend tt sauf connect
-//Middelware de gestion des données
+//Middleware de gestion des données
 app.use("/\b(?!" + RoutesList_1["default"].connect + ")\bS+/g", LoadDB_1["default"]);
 app.use(RoutesList_1["default"].index, index_1["default"]);
 app.use(RoutesList_1["default"].connect, connect_1["default"]);

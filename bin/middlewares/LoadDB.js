@@ -38,9 +38,9 @@ exports.__esModule = true;
 var DBManager_1 = require("src/utils/DBManager");
 function default_1(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
-        var dbManager;
         return __generator(this, function (_a) {
-            dbManager = new DBManager_1["default"]();
+            req.dbManager = new DBManager_1["default"]();
+            req.dbManager.init();
             next();
             return [2 /*return*/];
         });
