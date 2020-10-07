@@ -38,8 +38,8 @@ var _this = this;
 exports.__esModule = true;
 var express_1 = require("express");
 var momentTz = require("moment-timezone");
-var MessageModel_1 = require("src/models/MessageModel");
-var Logger_1 = require("src/utils/Logger");
+var MessageModel_1 = require("../models/MessageModel");
+var Logger_1 = require("../utils/Logger");
 var router = express_1.Router();
 router.get('/', function (req, res) {
     res.redirect("../");

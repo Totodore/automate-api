@@ -30,5 +30,6 @@ interface DiscordRequest extends SessionRequest {
     getUserDiscord: (token: string) => Promise<any>;
     getDiscordToken: (data: any) => Promise<any>;
     addBotDiscord: (data: any) => Promise<any>;
+    getUserGuildsDiscord: (token: string) => Promise<any>;
 }
 export { SessionRequest, DiscordRequest };

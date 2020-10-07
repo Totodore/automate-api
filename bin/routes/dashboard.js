@@ -39,7 +39,7 @@ exports.__esModule = true;
 var express_1 = require("express");
 var Cron = require("cron-converter");
 var momentTz = require("moment-timezone");
-var Logger_1 = require("src/utils/Logger");
+var Logger_1 = require("../utils/Logger");
 var router = express_1.Router();
 router.get('/', function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
     var logger, guild_id, guildDB, table, guildRes, peopleRes, channelRes, rolesRes, bot, e_1, zones, _i, _a, el, zoneEl, offset, zoneName, name_1, peopleData, rolesData, channelData;

@@ -35,31 +35,24 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var fs = require("fs");
+var sequelize_1 = require("sequelize");
+var DBManager_1 = require("./DBManager");
 var Logger_1 = require("./Logger");
 function checkTokens() {
     return __awaiter(this, void 0, void 0, function () {
-        var logger, userData, keysToDelete, _i, _a, key, value;
+        var dbManager, logger, usersLength, _a;
         return __generator(this, function (_b) {
-            logger = new Logger_1["default"]("CheckTokens");
-            userData = JSON.parse(fs.readFileSync(__dirname + "/data/users.json").toString());
-            keysToDelete = [];
-            try {
-                for (_i = 0, _a = Object.keys(userData); _i < _a.length; _i++) {
-                    key = _a[_i];
-                    value = userData[key];
-                    if (value.token_timestamp < Math.floor(Date.now() / 1000) - 60 * 60 * 24)
-                        keysToDelete.push(key);
-                }
-                logger.log("Checking token availability : " + keysToDelete.length + " user accounts expired");
-                keysToDelete.forEach(function (key) { return delete userData[key]; });
+            switch (_b.label) {
+                case 0:
+                    dbManager = new DBManager_1["default"]();
+                    dbManager.init();
+                    logger = new Logger_1["default"]("CheckTokens");
+                    return [4 /*yield*/, dbManager.User.destroy({ where: { token_timestamp: (_a = {}, _a[sequelize_1.Op.lt] = Math.floor(Date.now() / 1000) - 60 * 60 * 24, _a) } })];
+                case 1:
+                    usersLength = _b.sent();
+                    logger.log(usersLength, "user removed");
+                    return [2 /*return*/];
             }
-            catch (e) {
-                logger.error("Error function refresh token : " + e);
-                return [2 /*return*/];
-            }
-            fs.writeFileSync(__dirname + "/data/users.json", JSON.stringify(userData));
-            return [2 /*return*/];
         });
     });
 }

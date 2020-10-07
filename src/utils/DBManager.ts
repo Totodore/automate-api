@@ -1,7 +1,7 @@
 import {ModelCtor, Sequelize} from "sequelize";
 import Logger from "./Logger";
-import GuildModel from "../models/GuildModel";
-import UserModel from "../models/UserModel";
+import {GuildModel} from "../models/GuildModel";
+import {UserModel} from "../models/UserModel";
 import {MessageModel} from "../models/MessageModel";
 
 export default class DBManager extends Logger {

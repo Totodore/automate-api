@@ -35,7 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-var DBManager_1 = require("src/utils/DBManager");
+var DBManager_1 = require("../utils/DBManager");
 function default_1(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {

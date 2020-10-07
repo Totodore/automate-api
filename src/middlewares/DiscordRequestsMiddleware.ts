@@ -4,7 +4,6 @@ import Logger from "../utils/Logger";
 
 export default async (req: DiscordRequest, res: Response, next: Function): Promise<any> => {
     const logger = new Logger("DiscordRequestMiddleware")
-
     req.getUserDiscord = async (token: string): Promise<any> =>  {
         const reqUser = await fetch(`${process.env.API_ENDPOINT}/users/@me`, {
             headers: {
@@ -18,6 +17,17 @@ export default async (req: DiscordRequest, res: Response, next: Function): Promi
             return;
         } else 
             return await reqUser.json();
+    }
+
+    req.getUserGuildsDiscord = async (token: string): Promise<any> => {
+        const guildReq = await fetch("https://discordapp.com/api/users/@me/guilds", {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        if (guildReq.status != 200) {
+            console.log(`Erreur : ${guildReq.status} ${guildReq.statusText}`);
+        } else await guildReq.json();
     }
 
     

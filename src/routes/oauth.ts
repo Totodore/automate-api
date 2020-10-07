@@ -1,7 +1,6 @@
 import {Router} from "express";
 const router = Router();
-import fetch from "node-fetch";
-import Logger from "src/utils/Logger";
+import Logger from "../utils/Logger";
 import { DiscordRequest } from "../requests/RequestsMiddleware";
 
 router.get('/', async (req: DiscordRequest, res, next) => {

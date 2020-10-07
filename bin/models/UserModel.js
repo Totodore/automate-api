@@ -10,8 +10,8 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 exports.__esModule = true;
-var types_1 = require("sequelize/types");
 var sequelize_1 = require("sequelize");
+var sequelize_2 = require("sequelize");
 var UserModel = /** @class */ (function (_super) {
     __extends(UserModel, _super);
     function UserModel() {
@@ -20,21 +20,21 @@ var UserModel = /** @class */ (function (_super) {
     UserModel.factory = function (sequelize) {
         var attributes = {
             access_token: {
-                type: sequelize_1.DataTypes.STRING,
+                type: sequelize_2.DataTypes.STRING,
                 allowNull: false,
                 unique: true
             },
             id: {
-                type: sequelize_1.DataTypes.STRING,
+                type: sequelize_2.DataTypes.STRING,
                 allowNull: false,
                 unique: true
             },
             token_timestamp: {
-                type: sequelize_1.DataTypes.INTEGER,
+                type: sequelize_2.DataTypes.INTEGER,
                 allowNull: false
             },
             refresh_token: {
-                type: sequelize_1.DataTypes.STRING,
+                type: sequelize_2.DataTypes.STRING,
                 allowNull: false
             }
         };
@@ -42,5 +42,5 @@ var UserModel = /** @class */ (function (_super) {
         return User;
     };
     return UserModel;
-}(types_1.Model));
+}(sequelize_1.Model));
 exports.UserModel = UserModel;

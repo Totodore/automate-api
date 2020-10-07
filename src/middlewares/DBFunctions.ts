@@ -2,7 +2,7 @@ import {MessageModel, MessageType} from "../models/MessageModel";
 import {GuildDataModel, GuildModel} from "../models/GuildModel";
 import {Response} from "express";
 import { SessionRequest } from "../requests/RequestsMiddleware";
-import { ModelCtor } from "sequelize/types";
+import { ModelCtor } from "sequelize";
 import {UserModel, UserDataModel} from "../models/UserModel";
 
 export default function(req: SessionRequest, res: Response) {

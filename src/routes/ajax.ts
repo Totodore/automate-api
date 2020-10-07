@@ -2,8 +2,8 @@ import {Router} from 'express';
 import * as fs from "fs"
 import * as momentTz from "moment-timezone";
 import { SessionRequest } from '../requests/RequestsMiddleware';
-import { MessageModel, MessageType } from 'src/models/MessageModel';
-import Logger from 'src/utils/Logger';
+import { MessageModel, MessageType } from '../models/MessageModel';
+import Logger from '../utils/Logger';
 
 const router = Router();
 

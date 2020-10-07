@@ -1,4 +1,4 @@
-import { Model, ModelCtor } from "sequelize/types";
+import { Model, ModelCtor } from "sequelize";
 import {Sequelize, DataTypes} from 'sequelize';
 import {SequelizeAttributes} from "../types"
 interface UserDataModel {

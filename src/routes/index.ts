@@ -1,34 +1,29 @@
 import * as express from "express";
-import fetch from "node-fetch";
-import * as fs from "fs";
-import { SessionRequest } from "../requests/RequestsMiddleware";
+import { DiscordRequest } from "../requests/RequestsMiddleware";
+import Logger from "../utils/Logger";
 const router = express.Router();
 
 const ADMINISTRATOR = 0x00000008;
 const MANAGE_GUILD = 0x00000020;
 /* GET home page. */
 
-router.get('/', async (req: SessionRequest, res, next) => {
-	const token = JSON.parse(fs.readFileSync(__dirname + "/../data/users.json").toString())[req.session.userId].access_token;
-	const guildReq = await fetch("https://discordapp.com/api/users/@me/guilds", {
-		headers: {
-			'Authorization': `Bearer ${token}`
-		}
-	});
-	if (guildReq.status != 200) {
-		console.log(`Erreur : ${guildReq.status} ${guildReq.statusText}`);
+router.get('/', async (req: DiscordRequest, res, next) => {
+	const logger = new Logger("Index");
+	const token = (await req.getUser(req.session.userId)).access_token
+	let guildRes = await req.getUserGuildsDiscord(token);
+
+	if (!guildRes) {
 		res.render('index', { header: req.headerData, error: "I didn't manage to collect all your channels, sniffu..." });
 		return;
 	}
-	let guildRes = JSON.parse(await guildReq.text());
 	try {
-		guildRes = guildRes?.filter((el) => {
+		guildRes = guildRes.filter((el) => {
 			if (el.permissions & ADMINISTRATOR || el.permissions & MANAGE_GUILD)
 				return true;
 			else return false;
 		});
 	} catch (e) {
-		console.log(`Erreur lors de la guildRes.filter`);
+		logger.log(`Erreur lors de la guildRes filter`);
 		res.render('index', { header: req.headerData, error: "I didn't manage to collect all your channels, sniffu..." });
 		return;
 	}

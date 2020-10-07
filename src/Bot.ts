@@ -68,6 +68,7 @@ class Bot extends Logger {
     private async cronWatcher() {
         let i: number = 0;
         const dbManager = new DBManager();
+        dbManager.init();
         const date = new Date();
         const messagesData = await dbManager.Message.findAll();
         for (const message of messagesData) {  
@@ -111,6 +112,7 @@ class Bot extends Logger {
      */
     private async sendStats(): Promise<void> {
         const dbManager = new DBManager();
+        dbManager.init();
         const channel = this.bot.channels.cache.get(STAT_CHANNEL) as Discord.TextChannel;
         const lengthServer = dbManager.Guild.count();
         const lengthUsers = dbManager.User.count();

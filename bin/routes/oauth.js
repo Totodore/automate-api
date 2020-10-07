@@ -46,7 +46,7 @@ var _this = this;
 exports.__esModule = true;
 var express_1 = require("express");
 var router = express_1.Router();
-var Logger_1 = require("src/utils/Logger");
+var Logger_1 = require("../utils/Logger");
 router.get('/', function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
     var logger, dataToSend, resToken, resUser, tokenTimestamp;
     return __generator(this, function (_a) {

@@ -37,44 +37,37 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 var _this = this;
 exports.__esModule = true;
 var express = require("express");
-var node_fetch_1 = require("node-fetch");
-var fs = require("fs");
+var Logger_1 = require("../utils/Logger");
 var router = express.Router();
 var ADMINISTRATOR = 0x00000008;
 var MANAGE_GUILD = 0x00000020;
 /* GET home page. */
 router.get('/', function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-    var token, guildReq, guildRes, _a, _b;
-    return __generator(this, function (_c) {
-        switch (_c.label) {
+    var logger, token, guildRes;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
             case 0:
-                token = JSON.parse(fs.readFileSync(__dirname + "/../data/users.json").toString())[req.session.userId].access_token;
-                return [4 /*yield*/, node_fetch_1["default"]("https://discordapp.com/api/users/@me/guilds", {
-                        headers: {
-                            'Authorization': "Bearer " + token
-                        }
-                    })];
+                logger = new Logger_1["default"]("Index");
+                return [4 /*yield*/, req.getUser(req.session.userId)];
             case 1:
-                guildReq = _c.sent();
-                if (guildReq.status != 200) {
-                    console.log("Erreur : " + guildReq.status + " " + guildReq.statusText);
+                token = (_a.sent()).access_token;
+                return [4 /*yield*/, req.getUserGuildsDiscord(token)];
+            case 2:
+                guildRes = _a.sent();
+                if (!guildRes) {
                     res.render('index', { header: req.headerData, error: "I didn't manage to collect all your channels, sniffu..." });
                     return [2 /*return*/];
                 }
-                _b = (_a = JSON).parse;
-                return [4 /*yield*/, guildReq.text()];
-            case 2:
-                guildRes = _b.apply(_a, [_c.sent()]);
                 try {
-                    guildRes = guildRes ? .filter(function (el) {
+                    guildRes = guildRes.filter(function (el) {
                         if (el.permissions & ADMINISTRATOR || el.permissions & MANAGE_GUILD)
                             return true;
                         else
                             return false;
-                    }) : ;
+                    });
                 }
                 catch (e) {
-                    console.log("Erreur lors de la guildRes.filter");
+                    logger.log("Erreur lors de la guildRes filter");
                     res.render('index', { header: req.headerData, error: "I didn't manage to collect all your channels, sniffu..." });
                     return [2 /*return*/];
                 }

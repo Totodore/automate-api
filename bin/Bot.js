@@ -117,6 +117,7 @@ var Bot = /** @class */ (function (_super) {
                     case 0:
                         i = 0;
                         dbManager = new DBManager_1["default"]();
+                        dbManager.init();
                         date = new Date();
                         return [4 /*yield*/, dbManager.Message.findAll()];
                     case 1:
@@ -176,6 +177,7 @@ var Bot = /** @class */ (function (_super) {
             var dbManager, channel, lengthServer, lengthUsers, lengthMessages;
             return __generator(this, function (_a) {
                 dbManager = new DBManager_1["default"]();
+                dbManager.init();
                 channel = this.bot.channels.cache.get(STAT_CHANNEL);
                 lengthServer = dbManager.Guild.count();
                 lengthUsers = dbManager.User.count();

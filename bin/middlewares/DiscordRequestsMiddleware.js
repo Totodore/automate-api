@@ -63,6 +63,28 @@ exports["default"] = (function (req, res, next) { return __awaiter(_this, void 0
                 }
             });
         }); };
+        req.getUserGuildsDiscord = function (token) { return __awaiter(_this, void 0, void 0, function () {
+            var guildReq;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, fetch("https://discordapp.com/api/users/@me/guilds", {
+                            headers: {
+                                'Authorization': "Bearer " + token
+                            }
+                        })];
+                    case 1:
+                        guildReq = _a.sent();
+                        if (!(guildReq.status != 200)) return [3 /*break*/, 2];
+                        console.log("Erreur : " + guildReq.status + " " + guildReq.statusText);
+                        return [3 /*break*/, 4];
+                    case 2: return [4 /*yield*/, guildReq.json()];
+                    case 3:
+                        _a.sent();
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
+                }
+            });
+        }); };
         req.getDiscordToken = function (data) { return __awaiter(_this, void 0, void 0, function () {
             var formData, reqToken, _a, _b, _c, _d;
             return __generator(this, function (_e) {

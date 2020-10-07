@@ -28,8 +28,8 @@ var DBManager = /** @class */ (function (_super) {
         return _this;
     }
     DBManager.prototype.init = function () {
-        this.User = UserModel_1["default"].factory(this.sequelize);
-        this.Guild = GuildModel_1["default"].factory(this.sequelize);
+        this.User = UserModel_1.UserModel.factory(this.sequelize);
+        this.Guild = GuildModel_1.GuildModel.factory(this.sequelize);
         this.Message = MessageModel_1.MessageModel.factory(this.sequelize);
     };
     return DBManager;

@@ -1,5 +1,5 @@
 import { DataTypes, Model, ModelCtor, Sequelize } from "sequelize";
-import { SequelizeAttributes } from "src/types";
+import { SequelizeAttributes } from "../types";
 import {v4 as uuid4} from "uuid";
 interface MessageDataModel {
     id?: string;

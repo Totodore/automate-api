@@ -10,14 +10,14 @@ var Logger = /** @class */ (function () {
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        console.log("[" + this._name + "]", args);
+        console.log.apply(console, ["[" + this._name + "]"].concat(args));
     };
     Logger.prototype.error = function () {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
             args[_i] = arguments[_i];
         }
-        console.error("[" + this._name + "]", args);
+        console.error.apply(console, ["[" + this._name + "]"].concat(args));
     };
     return Logger;
 }());

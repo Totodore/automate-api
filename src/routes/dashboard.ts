@@ -2,8 +2,8 @@ import {Router} from "express"
 import * as Cron from "cron-converter";
 import * as momentTz from "moment-timezone";
 import { SessionRequest } from "../requests/RequestsMiddleware";
-import Bot from "src/Bot";
-import Logger from "src/utils/Logger";
+import Bot from "../Bot";
+import Logger from "../utils/Logger";
 import { Collection, Guild, GuildChannel, Role, TextChannel, GuildMember } from "discord.js";
 import { MessageResponseModel } from "src/models/MessageModel";
 import {GuildDataModel} from "../models/GuildModel";
