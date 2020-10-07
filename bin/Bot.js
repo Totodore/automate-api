@@ -60,7 +60,7 @@ var Bot = /** @class */ (function (_super) {
         _this.messageSent = 0;
         _this.bot.login(process.env.TOKEN_BOT);
         _this.bot.on("ready", function () { return _this.ready(); });
-        _this.bot.on("guildCreate", function (guild) { return _this.guildDelete(guild); });
+        _this.bot.on("guildCreate", function (guild) { return _this.guildCreate(guild); });
         _this.bot.on("guildDelete", function (guild) { return _this.guildDelete(guild); });
         _this.bot.on("channelDelete", function (channel) { return _this.channelDelete(channel); });
         _this.bot.setInterval(function () { return _this.sendStats(); }, 1000 * 60 * 60 * 24); //Stats toutes les jours
@@ -97,7 +97,7 @@ var Bot = /** @class */ (function (_super) {
      */
     Bot.prototype.guildCreate = function (guild) {
         try {
-            guild.systemChannel.send("Hey ! I'm Automate, to give orders you need to go on this website : https://automatebot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)");
+            guild.systemChannel.send("Hey ! I'm Automate, to give me orders you need to go on this website : https://automatebot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)");
         }
         catch (e) {
             this.log("Added this.bot but no systemChannel has been specified...");

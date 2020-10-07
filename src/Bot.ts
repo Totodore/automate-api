@@ -17,7 +17,7 @@ class Bot extends Logger {
 
         this.bot.login(process.env.TOKEN_BOT);
         this.bot.on("ready", () => this.ready());
-        this.bot.on("guildCreate", (guild: Discord.Guild) => this.guildDelete(guild));
+        this.bot.on("guildCreate", (guild: Discord.Guild) => this.guildCreate(guild));
         this.bot.on("guildDelete", (guild: Discord.Guild) => this.guildDelete(guild));
         this.bot.on("channelDelete", (channel: Discord.Channel) => this.channelDelete(channel));
         this.bot.setInterval(() => this.sendStats(), 1000*60*60*24); //Stats toutes les jours
@@ -53,7 +53,7 @@ class Bot extends Logger {
      */
     private guildCreate(guild: Discord.Guild) {
         try {
-            guild.systemChannel.send(`Hey ! I'm Automate, to give orders you need to go on this website : https://automatebot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
+            guild.systemChannel.send(`Hey ! I'm Automate, to give me orders you need to go on this website : https://automatebot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
         } catch(e) {
             this.log("Added this.bot but no systemChannel has been specified...");
         }
