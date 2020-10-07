@@ -1,22 +1,18 @@
-import {Model, DataTypes, Sequelize} from "sequelize";
+import {Model, DataTypes, Sequelize, ModelCtor} from "sequelize";
 import { SequelizeAttributes } from "src/types";
 
 interface GuildDataModel {
-    ponctual: string[] //List of Id which refer to MessagesModel
-    freq: string[] //Same
     token: string;
     token_expires: number;
     refresh_token: string;
     guild_owner_id: string;
-    timezone_code: string;
-    timezone: string;
+    timezone_code?: string;
+    timezone?: string;
     id: string;
 }
 
 class GuildModel extends Model<GuildDataModel> implements GuildDataModel {
     
-    public ponctual: string[];
-    public freq: string[];
     public token: string;
     public token_expires: number;
     public refresh_token: string;
@@ -25,14 +21,8 @@ class GuildModel extends Model<GuildDataModel> implements GuildDataModel {
     public timezone: string;
     public id: string;
     
-    static async factory(sequelize: Sequelize): Promise<GuildModel> {
+    static factory(sequelize: Sequelize): ModelCtor<GuildModel> {
         const attributes: SequelizeAttributes<GuildDataModel> = {
-            ponctual: {
-                type: DataTypes.ARRAY,
-            },
-            freq: {
-                type: DataTypes.ARRAY,
-            },
             guild_owner_id: {
                 type: DataTypes.STRING,
             },
@@ -50,16 +40,18 @@ class GuildModel extends Model<GuildDataModel> implements GuildDataModel {
             },
             timezone: {
                 type: DataTypes.STRING,
+                allowNull: true,
             },
             timezone_code: {
-                type: DataTypes.STRING
+                type: DataTypes.STRING,
+                allowNull: true,
             }
         };
       
         const Guild = sequelize.define<GuildModel, GuildDataModel>('Guild', attributes);
 
-        return await Guild.sync();
+        return Guild;
     }
 }
 
-export default GuildModel;  
+export {GuildModel, GuildDataModel};  

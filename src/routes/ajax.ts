@@ -1,10 +1,9 @@
-import {Request, Router} from 'express';
+import {Router} from 'express';
 import * as fs from "fs"
-import * as uniqid from "uniqid";
 import * as momentTz from "moment-timezone";
-import SessionRequest from '../requests/SessionRequest';
-
-const MAX_MESSAGE = 10;
+import { SessionRequest } from '../requests/RequestsMiddleware';
+import { MessageModel, MessageType } from 'src/models/MessageModel';
+import Logger from 'src/utils/Logger';
 
 const router = Router();
 
@@ -18,137 +17,102 @@ router.get('/deconnectUser', (req: SessionRequest, res) => {
 	res.sendStatus(200);
 });
 
-router.get("/remove_message", (req, res) => {
-	if (!req.query.id || !req.query.guild_id) {
-		console.log("Error args not given");
+router.get("/remove_message", async (req: SessionRequest, res) => {
+	const logger = new Logger("RemoveMessage");
+	if (!req.query.id) {
+		logger.log("Error args not given");
 		res.status(520).send("Error args not given bad request");
 	}
 	try {
-		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${req.query.guild_id}/data.json`).toString());
-		guildData.freq.forEach((element, index) => {
-			if (element.id == req.query.id)
-				guildData.freq.splice(index, 1);
-		});
-		guildData.ponctual.forEach((element, index) => {
-			if (element.id == req.query.id)
-				guildData.ponctual.splice(index, 1);
-		});
-		fs.writeFileSync(`${__dirname}/../data/guilds/${req.query.guild_id}/data.json`, JSON.stringify(guildData));
+		(await req.dbManager.Guild.findOne({where: {id: req.query.id}})).destroy();
 	}
 	catch (error) {
-		console.log(`Error ajax remove schedule : ${error}`);
+		logger.log(`Error ajax remove schedule : ${error}`);
 		res.status(500).send("Error operating on db");
 		return;
 	}
 	res.send("This message has successfully been deleted");
 });
 
-router.post("/add_schedule", (req: Request, res) => {
-	const msg_id = uniqid();
+router.post("/add_schedule", async (req: SessionRequest, res) => {
+	const logger = new Logger("AddSchedule");
 	const query = req.body; 
-	console.log(query);
+	let addedID: string;
 	if (!query.content || query.content.length < 1 || !query.frequency || !query.cron || !query.channel_id || !query.guild_id || !query.sys_content) {
 		res.status(520);
 		res.send("Error params not given");
 		return;
 	}
 	try {
-		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`).toString());
-		if (guildData.freq.length >= MAX_MESSAGE) {
+		if (await req.isOverMessageLimit(query.guild_id)) {
 			res.status(403);
 			res.send("Message not allowed");
-			return;
+		} else {
+			addedID = await req.addMessage(query, MessageType.Frequential);
+			res.send(addedID);
 		}
-		guildData.freq.push({
-			id: msg_id,
-			channel_id: query.channel_id,
-			cron: query.cron,
-			message: query.content,
-			description: query.frequency,
-			sys_content: query.sys_content,
-		});
-		fs.writeFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`, JSON.stringify(guildData));
+	
 	} catch (error) {
-		console.log(`Error ajax add schedule : ${error}`);
-		res.status(500);
-		return;
+		logger.log(`Error ajax add schedule : ${error}`);
+		res.sendStatus(500);
 	}
-	res.send(msg_id);
 });
 
-router.post("/add_timer", (req, res) => {
-	const msg_id = uniqid();
+router.post("/add_timer", async (req: SessionRequest, res) => {
 	const query = req.body;
-	console.log(query); 
+	const logger = new Logger("AddTimer");
+	let addedID: string;
 	if (!query.content || query.content.length < 1 || !query.timestamp || !query.description || !query.channel_id || !query.guild_id || !query.sys_content) {
 		res.status(400).send("Bad request : Params not given");
 		return;
 	}
 	try {
-		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`).toString());
-		guildData.ponctual.push({
-			id: msg_id,
-			channel_id: query.channel_id,
-			timestamp: query.timestamp,
-			message: query.content,
-			description: query.description,
-			sys_content: query.sys_content
-		});
-		fs.writeFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`, JSON.stringify(guildData));
+		if (await req.isOverMessageLimit(query.guild_id)) {
+			res.status(403);
+			res.send("Message not allowed");
+		} else {
+			req.addMessage(query, MessageType.Ponctual);
+			res.send(addedID);
+		}
 	} catch (error) {
-		console.log(`Error ajax add ponctual : ${error}`);
-		res.status(500);
-		return;
+		logger.log(`Error ajax add ponctual : ${error}`);
+		res.sendStatus(500);
 	}
-	res.send(msg_id);
 });
 
-router.get("/set_timezone", (req, res) => {
+router.get("/set_timezone", async (req: SessionRequest, res) => {
 	const query = req.query;
+	const logger = new Logger("SetTimezone");
 	if (!query.guild_id || !query.utc_offset || !query.timezone) {
 		res.status(400).send("Bad request : Params not given");
 		return;
 	}
 	try {
-		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`).toString());
 		const utc_offset = parseInt(query.utc_offset.toString())*60;
-		guildData.timezone_code = momentTz.tz.names().filter(el => 
+		const timezone_code = momentTz.tz.names().filter(el => 
 			momentTz.tz.zone(el).utcOffset(new Date().getTime()) == utc_offset)[0];
-		guildData.timezone = query.timezone;
-		fs.writeFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`, JSON.stringify(guildData));
+
+		await req.updateTimezone(query.guild_id.toString(), timezone_code, query.timezone.toString());
 		res.send("This timezone has been successfully set !");
 	} catch (error) {
-		console.log(`Error ajax set timezone : ${error}`);
+		logger.log(`Error ajax set timezone : ${error}`);
 		res.status(500);
 		return;
 	}
 });
 
-router.post("/set_message", (req, res) => {
+router.post("/set_message", async (req: SessionRequest, res) => {
 	const query = req.body;
-	console.log(query);
+	const logger = new Logger("SetMessage");
 	if (!query.content || query.content.length < 1 || !query.msg_id || !query.guild_id || !query.sys_content) {
 		res.status(400).send("Error bad request : params not given");
 		return;
 	}
 	try {
-		const guildData = JSON.parse(fs.readFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`).toString());
-		guildData.freq.forEach((el, index) => {
-			if (el.id == query.msg_id) {
-				el.message = query.content;
-				el.sys_content = query.sys_content;
-			}
-		});
-		guildData.ponctual.forEach((el, index) => {
-			if (el.id == query.msg_id) {
-				el.message = query.content;
-				el.sys_content = query.sys_content;
-			}
-		});
-		fs.writeFileSync(`${__dirname}/../data/guilds/${query.guild_id}/data.json`, JSON.stringify(guildData));
+		await req.updateMessage(query.msg_id, query.content, query.sys_content);
 		res.send();
 	} catch (error) {
-		console.log(`Error ajax set message : ${error}`);
+		logger.log(`Error ajax set message : ${error}`);
 		res.status(500);
 		return;
 	}

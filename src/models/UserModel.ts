@@ -1,4 +1,4 @@
-import { Model } from "sequelize/types";
+import { Model, ModelCtor } from "sequelize/types";
 import {Sequelize, DataTypes} from 'sequelize';
 import {SequelizeAttributes} from "../types"
 interface UserDataModel {
@@ -14,7 +14,7 @@ class UserModel extends Model<UserDataModel> implements UserDataModel {
     public token_timestamp: number;
     public refresh_token: string;
 
-    static async factory(sequelize: Sequelize): Promise<UserModel> {
+    static factory(sequelize: Sequelize): ModelCtor<UserModel> {
         const attributes: SequelizeAttributes<UserDataModel> = {
             access_token: {
                 type: DataTypes.STRING,
@@ -37,10 +37,9 @@ class UserModel extends Model<UserDataModel> implements UserDataModel {
         };
       
         const User = sequelize.define<UserModel, UserDataModel>('User', attributes);
-
-        return await User.sync();
+        return User;
     }
 
 }
 
-export default UserModel;
+export { UserModel, UserDataModel} ;

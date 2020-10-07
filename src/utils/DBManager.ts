@@ -1,16 +1,16 @@
-import {Sequelize} from "sequelize";
-import Logger from "./logger";
+import {ModelCtor, Sequelize} from "sequelize";
+import Logger from "./Logger";
 import GuildModel from "../models/GuildModel";
 import UserModel from "../models/UserModel";
-import MessageModel from "../models/MessageModel";
+import {MessageModel} from "../models/MessageModel";
 
 export default class DBManager extends Logger {
     
     private sequelize: Sequelize;
     
-    public user: UserModel;
-    public guild: GuildModel;
-    public Message: MessageModel;
+    public User: ModelCtor<UserModel>;
+    public Guild: ModelCtor<GuildModel>;
+    public Message: ModelCtor<MessageModel>;
     
     constructor() {
         super("DBManager");
@@ -22,7 +22,9 @@ export default class DBManager extends Logger {
         })
     }
     
-    public async init() {
-        await this.sequelize.sync();
+    public init() {
+        this.User = UserModel.factory(this.sequelize);
+        this.Guild = GuildModel.factory(this.sequelize);
+        this.Message = MessageModel.factory(this.sequelize);
     }
 }

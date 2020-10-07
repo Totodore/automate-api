@@ -1,6 +1,7 @@
 import {Response} from "express";
-import SessionRequest from "../requests/SessionRequest";
+import { SessionRequest } from "../requests/RequestsMiddleware";
 
+//TODO: REGEX FOR ROUTE SELECTION
 export default function(req: SessionRequest, res: Response, next: Function) {
     if (!req.session.userId && req.cookies.userId) {
         req.session.userId = req.cookies.userId;

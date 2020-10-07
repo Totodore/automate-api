@@ -1,10 +1,10 @@
-import SessionRequest from "../requests/SessionRequest";
+import { SessionRequest } from "../requests/RequestsMiddleware";
 import * as fs from "fs";
 import {Response} from "express";
 
 export default async function(req: SessionRequest, res: Response, next: Function) {
     if (req.session.userId) {
-        const userData = JSON.parse(fs.readFileSync(__dirname + process.env.DB_FILE).toString())[req.session.userId];
+        const userData = await req.getUser(req.session.userId);
         const reqUser = await fetch("https://discordapp.com/api/users/@me", {
             headers: {
                 'Content-Type': 'application/json',

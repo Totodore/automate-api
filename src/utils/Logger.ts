@@ -5,7 +5,10 @@ export default class Logger {
         this._name = name;
     }
 
-    protected log(...args: string[]) {
+    public log(...args: string[]) {
         console.log(`[${this._name}]`, args);
+    }
+    public error(...args: string[]) {
+        console.error(`[${this._name}]`, args);
     }
 }

@@ -1,6 +1,8 @@
 import * as fs from "fs";
+import Logger from "./Logger";
 
 export default async function checkTokens() {
+    const logger = new Logger("CheckTokens")
     const userData = JSON.parse(fs.readFileSync(`${__dirname}/data/users.json`).toString());
     const keysToDelete = [];
     try {
@@ -9,10 +11,10 @@ export default async function checkTokens() {
             if (value.token_timestamp < Math.floor(Date.now()/1000) - 60*60*24)//si ca expire dans 1jours
                 keysToDelete.push(key);
         }
-        console.log(`Checking token availability : ${keysToDelete.length} user accounts expired`);
+        logger.log(`Checking token availability : ${keysToDelete.length} user accounts expired`);
         keysToDelete.forEach(key => delete userData[key]);
     } catch(e) {
-        console.error(`Error function refresh token : ${e}`);
+        logger.error(`Error function refresh token : ${e}`);
         return;
     }
     fs.writeFileSync(`${__dirname}/data/users.json`, JSON.stringify(userData));

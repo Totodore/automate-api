@@ -41,7 +41,7 @@ app.use(CheckUserLogin);
 app.use(LoadUserData);
 
 //Regex qui prend tt sauf connect
-//Middelware de gestion des données
+//Middleware de gestion des données
 app.use(`/\b(?!${routesList.connect})\b\S+/g`, LoadDB);
 
 app.use(routesList.index, IndexRouter);

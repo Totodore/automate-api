@@ -1,5 +1,5 @@
 import {Router} from "express";
-import SessionRequest from "../requests/SessionRequest";
+import {SessionRequest} from "../requests/RequestsMiddleware";
 
 const router = Router();
 /* GET home page. */
