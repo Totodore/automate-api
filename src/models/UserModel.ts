@@ -1,4 +1,4 @@
-import { Model, ModelCtor } from "sequelize";
+import { Model, ModelCtor, ModelOptions } from "sequelize";
 import { Sequelize, DataTypes } from 'sequelize';
 import { SequelizeAttributes } from "../types"
 interface UserDataModel {
@@ -14,7 +14,7 @@ class UserModel extends Model<UserDataModel> implements UserDataModel {
 	public token_timestamp: number;
 	public refresh_token: string;
 
-	static factory(sequelize: Sequelize): ModelCtor<UserModel> {
+	static factory(sequelize: Sequelize, options: ModelOptions<UserModel>): ModelCtor<UserModel> {
 		const attributes: SequelizeAttributes<UserDataModel> = {
 			access_token: {
 				type: DataTypes.STRING(40),
@@ -34,10 +34,10 @@ class UserModel extends Model<UserDataModel> implements UserDataModel {
 			refresh_token: {
 				type: DataTypes.STRING(40),
 				allowNull: false
-			}
+      }
 		};
 
-		const User = sequelize.define<UserModel, UserDataModel>('User', attributes, {timestamps: false});
+		const User = sequelize.define<UserModel, UserDataModel>('User', attributes, options);
 		return User;
 	}
 

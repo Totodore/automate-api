@@ -9,7 +9,7 @@ dotenv.config();
 
 const dbManager = new DBManager();
 
-dbManager.init().then(dlUsers);
+dbManager.init(true).then(dlUsers);
 process.chdir(path.join(process.cwd(), "temp/guilds"));
 
 
@@ -19,7 +19,7 @@ async function dlUsers() {
 	for (const userId of Object.keys(users)) {
     const user = users[userId];
     try {
-      await dbManager.User.upsert({
+      await dbManager.User.create({
         id: userId,
         ...user
       });
@@ -36,27 +36,34 @@ async function loadGuilds() {
 	for (const guildId of folders) {
 		const data = JSON.parse(fs.readFileSync(path.join(guildId, "data.json")).toString());
 		console.log("data size", data.toString().length);
-
-		await dbManager.Guild.upsert({
-			id: guildId,
-			guild_owner_id: data.guild_owner_id,
-			refresh_token: data.refresh_token,
-			timezone: data.timezone,
-			timezone_code: data.timezone_code,
-			token: data.token,
-			token_expires: data.token_expires
-		});
-		for (const message of data.ponctual) {
-			await dbManager.Message.create({
-				...message,
-				type: MessageType.Ponctual
-			})
-		}
-		for (const message of data.freq) {
-			await dbManager.Message.create({
-				...message,
-				type: MessageType.Frequential
-			})
-		}
+    try {
+      await dbManager.Guild.create({
+        id: guildId,
+        guild_owner_id: data.guild_owner_id,
+        refresh_token: data.refresh_token,
+        timezone: data.timezone,
+        timezone_code: data.timezone_code,
+        token: data.token,
+        token_expires: data.token_expires,
+      });
+      for (const message of data.ponctual) {
+        await dbManager.Message.create({
+          ...message,
+          guild_id: guildId,
+          type: MessageType.Ponctual,
+          timezone_code: data.timezone_code
+        })
+      }
+      for (const message of data.freq) {
+        await dbManager.Message.create({
+          ...message,
+          guild_id: guildId,
+          type: MessageType.Frequential,
+          timezone_code: data.timezone_code
+        })
+      }
+    } catch (e) {
+      console.log(e);
+    }
 	}
 }

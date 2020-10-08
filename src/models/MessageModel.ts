@@ -66,8 +66,8 @@ class MessageModel extends Model<MessageDataModel> implements MessageDataModel {
 				allowNull: false,
 			},
 			timezone_code: {
-				type: DataTypes.STRING(15),
-				allowNull: false,
+				type: DataTypes.STRING(50),
+				allowNull: true,
 			},
 			guild_id: {
 				type: DataTypes.STRING(40),
@@ -75,8 +75,7 @@ class MessageModel extends Model<MessageDataModel> implements MessageDataModel {
 			},
 			type: {
 				type: DataTypes.ENUM(...Object.values(MessageType)),
-				allowNull: false,
-				values: Object.keys(DataTypes),
+        allowNull: false,
 			}
 		};
 		const Message = sequelize.define<MessageModel, MessageDataModel>('Message', attributes);

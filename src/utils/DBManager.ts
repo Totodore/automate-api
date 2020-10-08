@@ -24,12 +24,12 @@ export default class DBManager extends Logger {
 		})
 	}
 
-	public async init() {
-		this.User = UserModel.factory(this.sequelize);
-		this.Guild = GuildModel.factory(this.sequelize);
-		this.Message = MessageModel.factory(this.sequelize);
+	public async init(removeOld = false) {
+		this.User = UserModel.factory(this.sequelize, {timestamps: false});
+		this.Guild = GuildModel.factory(this.sequelize, {timestamps: false});
+		this.Message = MessageModel.factory(this.sequelize, {timestamps: false});
 		try {
-			await this.sequelize.sync();
+			await this.sequelize.sync({force: removeOld});
 		} catch (e) {
 			this.log("Error syncinc model to DB", e);
 		}

@@ -1,4 +1,4 @@
-import { Model, DataTypes, Sequelize, ModelCtor } from "sequelize";
+import { Model, DataTypes, Sequelize, ModelCtor, ModelOptions } from "sequelize";
 import { SequelizeAttributes } from "src/types";
 
 interface GuildDataModel {
@@ -8,7 +8,8 @@ interface GuildDataModel {
 	guild_owner_id: string;
 	timezone_code?: string;
 	timezone?: string;
-	id: string;
+  id: string;
+  updated_at?: number;
 }
 
 class GuildModel extends Model<GuildDataModel> implements GuildDataModel {
@@ -21,7 +22,7 @@ class GuildModel extends Model<GuildDataModel> implements GuildDataModel {
 	public timezone: string;
 	public id: string;
 
-	static factory(sequelize: Sequelize): ModelCtor<GuildModel> {
+	static factory(sequelize: Sequelize, options: ModelOptions<GuildModel>): ModelCtor<GuildModel> {
 		const attributes: SequelizeAttributes<GuildDataModel> = {
 			guild_owner_id: {
 				type: DataTypes.STRING(40),
@@ -41,16 +42,21 @@ class GuildModel extends Model<GuildDataModel> implements GuildDataModel {
 				type: DataTypes.STRING(40),
 			},
 			timezone: {
-				type: DataTypes.STRING(50),
+				type: DataTypes.STRING(100),
 				allowNull: true,
 			},
 			timezone_code: {
-				type: DataTypes.STRING(20),
+				type: DataTypes.STRING(50),
 				allowNull: true,
-			}
+      },
+      updated_at: {
+        allowNull: true,
+        type: DataTypes.DATE,
+        defaultValue: new Date(),
+      }
 		};
 
-		const Guild = sequelize.define<GuildModel, GuildDataModel>('Guild', attributes, {timestamps: false});
+		const Guild = sequelize.define<GuildModel, GuildDataModel>('Guild', attributes, options);
 
 		return Guild;
 	}
