@@ -34,108 +34,110 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var _this = this;
 exports.__esModule = true;
+var node_fetch_1 = require("node-fetch");
 var Logger_1 = require("../utils/Logger");
-exports["default"] = (function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-    var _this = this;
-    var logger;
-    return __generator(this, function (_a) {
-        logger = new Logger_1["default"]("DiscordRequestMiddleware");
-        req.getUserDiscord = function (token) { return __awaiter(_this, void 0, void 0, function () {
-            var reqUser;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, fetch(process.env.API_ENDPOINT + "/users/@me", {
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Authorization': "Bearer " + token
-                            }
-                        })];
-                    case 1:
-                        reqUser = _a.sent();
-                        if (!(reqUser.status != 200)) return [3 /*break*/, 2];
-                        logger.log("Error : " + reqUser.status + " " + reqUser.statusText);
-                        res.redirect("../connect?msg=" + encodeURI("Whoops ! It seems like your connection to Discord is impossible!"));
-                        return [2 /*return*/];
-                    case 2: return [4 /*yield*/, reqUser.json()];
-                    case 3: return [2 /*return*/, _a.sent()];
-                }
-            });
-        }); };
-        req.getUserGuildsDiscord = function (token) { return __awaiter(_this, void 0, void 0, function () {
-            var guildReq;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0: return [4 /*yield*/, fetch("https://discordapp.com/api/users/@me/guilds", {
-                            headers: {
-                                'Authorization': "Bearer " + token
-                            }
-                        })];
-                    case 1:
-                        guildReq = _a.sent();
-                        if (!(guildReq.status != 200)) return [3 /*break*/, 2];
-                        console.log("Erreur : " + guildReq.status + " " + guildReq.statusText);
-                        return [3 /*break*/, 4];
-                    case 2: return [4 /*yield*/, guildReq.json()];
-                    case 3:
-                        _a.sent();
-                        _a.label = 4;
-                    case 4: return [2 /*return*/];
-                }
-            });
-        }); };
-        req.getDiscordToken = function (data) { return __awaiter(_this, void 0, void 0, function () {
-            var formData, reqToken, _a, _b, _c, _d;
-            return __generator(this, function (_e) {
-                switch (_e.label) {
-                    case 0:
-                        formData = new URLSearchParams();
-                        Object.entries(data).forEach(function (el) { return formData.append(el[0], el[1].toString()); });
-                        return [4 /*yield*/, fetch(process.env.API_ENDPOINT + "/oauth2/token", {
-                                method: "POST",
-                                body: formData
+function default_1(req, res, next) {
+    return __awaiter(this, void 0, void 0, function () {
+        var _this = this;
+        var logger;
+        return __generator(this, function (_a) {
+            logger = new Logger_1["default"]("DiscordRequestMiddleware");
+            req.getUserDiscord = function (token) { return __awaiter(_this, void 0, void 0, function () {
+                var reqUser;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, node_fetch_1["default"](process.env.API_ENDPOINT + "/users/@me", {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'Authorization': "Bearer " + token
+                                }
                             })];
-                    case 1:
-                        reqToken = _e.sent();
-                        if (!(reqToken.status != 200)) return [3 /*break*/, 4];
-                        logger.log("Error : " + reqToken.status + " " + reqToken.statusText);
-                        if (!(reqToken.status == 429 || reqToken.status == 400)) return [3 /*break*/, 3];
-                        _b = (_a = logger).error;
-                        _d = (_c = JSON).parse;
-                        return [4 /*yield*/, reqToken.text()];
-                    case 2:
-                        _b.apply(_a, [_d.apply(_c, [_e.sent()])]);
-                        _e.label = 3;
-                    case 3: return [3 /*break*/, 6];
-                    case 4: return [4 /*yield*/, reqToken.json()];
-                    case 5: return [2 /*return*/, _e.sent()];
-                    case 6: return [2 /*return*/];
-                }
-            });
-        }); };
-        req.addBotDiscord = function (data) { return __awaiter(_this, void 0, void 0, function () {
-            var formData, reqToken;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        formData = new URLSearchParams();
-                        Object.entries(data).forEach(function (el) { return formData.append(el[0], el[1].toString()); });
-                        return [4 /*yield*/, fetch(process.env.API_ENDPOINT + "/oauth2/token", {
-                                method: "POST",
-                                body: formData
+                        case 1:
+                            reqUser = _a.sent();
+                            if (!(reqUser.status != 200)) return [3 /*break*/, 2];
+                            logger.log("Error : " + reqUser.status + " " + reqUser.statusText);
+                            res.redirect("../connect?msg=" + encodeURI("Whoops ! It seems like your connection to Discord is impossible!"));
+                            return [2 /*return*/];
+                        case 2: return [4 /*yield*/, reqUser.json()];
+                        case 3: return [2 /*return*/, _a.sent()];
+                    }
+                });
+            }); };
+            req.getUserGuildsDiscord = function (token) { return __awaiter(_this, void 0, void 0, function () {
+                var guildReq;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0: return [4 /*yield*/, node_fetch_1["default"]("https://discordapp.com/api/users/@me/guilds", {
+                                headers: {
+                                    'Authorization': "Bearer " + token
+                                }
                             })];
-                    case 1:
-                        reqToken = _a.sent();
-                        if (!(reqToken.status != 200)) return [3 /*break*/, 2];
-                        logger.log("Error : " + reqToken.status + " " + reqToken.statusText);
-                        return [3 /*break*/, 4];
-                    case 2: return [4 /*yield*/, reqToken.json()];
-                    case 3: return [2 /*return*/, _a.sent()];
-                    case 4: return [2 /*return*/];
-                }
-            });
-        }); };
-        return [2 /*return*/];
+                        case 1:
+                            guildReq = _a.sent();
+                            if (!(guildReq.status != 200)) return [3 /*break*/, 2];
+                            logger.log("Erreur : " + guildReq.status + " " + guildReq.statusText);
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, guildReq.json()];
+                        case 3: return [2 /*return*/, _a.sent()];
+                        case 4: return [2 /*return*/];
+                    }
+                });
+            }); };
+            req.getDiscordToken = function (data) { return __awaiter(_this, void 0, void 0, function () {
+                var formData, reqToken, _a, _b, _c, _d;
+                return __generator(this, function (_e) {
+                    switch (_e.label) {
+                        case 0:
+                            formData = new URLSearchParams();
+                            Object.entries(data).forEach(function (el) { return formData.append(el[0], el[1].toString()); });
+                            return [4 /*yield*/, node_fetch_1["default"](process.env.API_ENDPOINT + "/oauth2/token", {
+                                    method: "POST",
+                                    body: formData
+                                })];
+                        case 1:
+                            reqToken = _e.sent();
+                            if (!(reqToken.status != 200)) return [3 /*break*/, 4];
+                            logger.log("Error : " + reqToken.status + " " + reqToken.statusText);
+                            if (!(reqToken.status == 429 || reqToken.status == 400)) return [3 /*break*/, 3];
+                            _b = (_a = logger).error;
+                            _d = (_c = JSON).parse;
+                            return [4 /*yield*/, reqToken.text()];
+                        case 2:
+                            _b.apply(_a, [_d.apply(_c, [_e.sent()])]);
+                            _e.label = 3;
+                        case 3: return [3 /*break*/, 6];
+                        case 4: return [4 /*yield*/, reqToken.json()];
+                        case 5: return [2 /*return*/, _e.sent()];
+                        case 6: return [2 /*return*/];
+                    }
+                });
+            }); };
+            req.addBotDiscord = function (data) { return __awaiter(_this, void 0, void 0, function () {
+                var formData, reqToken;
+                return __generator(this, function (_a) {
+                    switch (_a.label) {
+                        case 0:
+                            formData = new URLSearchParams();
+                            Object.entries(data).forEach(function (el) { return formData.append(el[0], el[1].toString()); });
+                            return [4 /*yield*/, node_fetch_1["default"](process.env.API_ENDPOINT + "/oauth2/token", {
+                                    method: "POST",
+                                    body: formData
+                                })];
+                        case 1:
+                            reqToken = _a.sent();
+                            if (!(reqToken.status != 200)) return [3 /*break*/, 2];
+                            logger.log("Error : " + reqToken.status + " " + reqToken.statusText);
+                            return [3 /*break*/, 4];
+                        case 2: return [4 /*yield*/, reqToken.json()];
+                        case 3: return [2 /*return*/, _a.sent()];
+                        case 4: return [2 /*return*/];
+                    }
+                });
+            }); };
+            next();
+            return [2 /*return*/];
+        });
     });
-}); });
+}
+exports["default"] = default_1;

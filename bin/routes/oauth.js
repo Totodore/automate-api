@@ -48,7 +48,7 @@ var express_1 = require("express");
 var router = express_1.Router();
 var Logger_1 = require("../utils/Logger");
 router.get('/', function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
-    var logger, dataToSend, resToken, resUser, tokenTimestamp;
+    var logger, dataToSend, resToken, resUser, tokenTimestamp, e_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -60,6 +60,7 @@ router.get('/', function (req, res, next) { return __awaiter(_this, void 0, void
                     res.redirect("../connect?msg=" + encodeURI("Whoops ! It seems like your connection to Discord is impossible!"));
                     return [2 /*return*/];
                 }
+                logger.log("code", req.query.code);
                 dataToSend = {
                     'client_id': process.env.CLIENT_ID,
                     'client_secret': process.env.CLIENT_SECRET,
@@ -71,40 +72,49 @@ router.get('/', function (req, res, next) { return __awaiter(_this, void 0, void
                 return [4 /*yield*/, req.getDiscordToken(dataToSend)];
             case 1:
                 resToken = _a.sent();
-                return [4 /*yield*/, req.getUserDiscord(resToken.access_token)];
-            case 2:
-                resUser = _a.sent();
-                if (!resToken || !resUser.id) {
+                if (!resToken) {
                     res.redirect("../connect?msg=" + encodeURI("Whoops ! It seems like your connection to Discord is impossible!"));
                     return [2 /*return*/];
                 }
-                //On fait une requete pour avoir l'id de la personne discord
+                return [4 /*yield*/, req.getUserDiscord(resToken.access_token)];
+            case 2:
+                resUser = _a.sent();
+                if (!resUser) {
+                    res.redirect("../connect?msg=" + encodeURI("Whoops ! It seems like your connection to Discord is impossible!"));
+                    return [2 /*return*/];
+                }
                 req.session.userId = resUser.id;
-                if (!req.hasUser(resUser.id)) return [3 /*break*/, 4];
+                return [4 /*yield*/, req.hasUser(resUser.id)];
+            case 3:
+                if (!_a.sent()) return [3 /*break*/, 5];
                 req.session.userId = resUser.id;
                 return [4 /*yield*/, req.getUser(resUser.id)];
-            case 3:
+            case 4:
                 tokenTimestamp = (_a.sent()).token_timestamp;
                 res.cookie("userId", resUser.id, {
                     maxAge: Math.floor(Date.now() / 1000) - tokenTimestamp - 60 * 60 * 24
                 });
                 res.redirect("../?msg=" + encodeURI("Nice to see you again!"));
-                return [3 /*break*/, 5];
-            case 4:
-                try {
-                    req.addUser(__assign({}, resToken, { token_timestamp: resToken.expires_in + Math.floor(Date.now() / 1000) }));
-                }
-                catch (e) {
-                    logger.error(e);
-                    res.redirect("../?msg=" + encodeURI("Whoops ! It seems like your connection to Discord is impossible!"));
-                }
+                return [3 /*break*/, 9];
+            case 5:
+                _a.trys.push([5, 7, , 8]);
+                return [4 /*yield*/, req.addUser(__assign({}, resToken, { id: resUser.id, token_timestamp: resToken.expires_in + Math.floor(Date.now() / 1000) }))];
+            case 6:
+                _a.sent();
+                return [3 /*break*/, 8];
+            case 7:
+                e_1 = _a.sent();
+                logger.error(e_1);
+                res.redirect("../?msg=" + encodeURI("Whoops ! It seems like your connection to Discord is impossible!"));
+                return [2 /*return*/];
+            case 8:
                 //La personne se reconnecte
                 res.cookie("userId", resUser.id, {
                     maxAge: resToken.expires_in - 60 * 60 * 24 //Le cookie va expirer un jour avant l'expiration du token
                 });
                 res.redirect("../?msg=" + encodeURI("Your account has been successfully synced!"));
-                _a.label = 5;
-            case 5: return [2 /*return*/];
+                _a.label = 9;
+            case 9: return [2 /*return*/];
         }
     });
 }); });
@@ -138,7 +148,9 @@ router.get("/bot", function (req, res, next) { return __awaiter(_this, void 0, v
                     res.redirect("../?msg=" + encodeURI("Whoops ! It seems like your connection to your server is impossible!"));
                     return [2 /*return*/];
                 }
-                if (!!req.hasGuild(req.query.guild_id.toString())) return [3 /*break*/, 3];
+                return [4 /*yield*/, req.hasGuild(req.query.guild_id.toString())];
+            case 2:
+                if (!!(_a.sent())) return [3 /*break*/, 4];
                 return [4 /*yield*/, req.addGuild({
                         token: resToken.access_token,
                         token_expires: resToken.expires_in,
@@ -146,10 +158,10 @@ router.get("/bot", function (req, res, next) { return __awaiter(_this, void 0, v
                         guild_owner_id: resToken.guild.owner_id,
                         id: req.query.guild_id.toString()
                     })];
-            case 2:
-                _a.sent();
-                _a.label = 3;
             case 3:
+                _a.sent();
+                _a.label = 4;
+            case 4:
                 res.redirect("/dashboard/?id=" + req.query.guild_id);
                 return [2 /*return*/];
         }

@@ -38,6 +38,9 @@ exports.__esModule = true;
 var sequelize_1 = require("sequelize");
 var DBManager_1 = require("./DBManager");
 var Logger_1 = require("./Logger");
+/**
+ * Remove users in which token timestamp expires in less than a day
+ */
 function checkTokens() {
     return __awaiter(this, void 0, void 0, function () {
         var dbManager, logger, usersLength, _a;
@@ -45,10 +48,12 @@ function checkTokens() {
             switch (_b.label) {
                 case 0:
                     dbManager = new DBManager_1["default"]();
-                    dbManager.init();
+                    return [4 /*yield*/, dbManager.init()];
+                case 1:
+                    _b.sent();
                     logger = new Logger_1["default"]("CheckTokens");
                     return [4 /*yield*/, dbManager.User.destroy({ where: { token_timestamp: (_a = {}, _a[sequelize_1.Op.lt] = Math.floor(Date.now() / 1000) - 60 * 60 * 24, _a) } })];
-                case 1:
+                case 2:
                     usersLength = _b.sent();
                     logger.log(usersLength, "user removed");
                     return [2 /*return*/];

@@ -43,6 +43,7 @@ var ADMINISTRATOR = 0x00000008;
 var MANAGE_GUILD = 0x00000020;
 /* GET home page. */
 router.get('/', function (req, res, next) { return __awaiter(_this, void 0, void 0, function () {
+    var _this = this;
     var logger, token, guildRes;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -58,20 +59,26 @@ router.get('/', function (req, res, next) { return __awaiter(_this, void 0, void
                     res.render('index', { header: req.headerData, error: "I didn't manage to collect all your channels, sniffu..." });
                     return [2 /*return*/];
                 }
-                try {
-                    guildRes = guildRes.filter(function (el) {
-                        if (el.permissions & ADMINISTRATOR || el.permissions & MANAGE_GUILD)
-                            return true;
-                        else
-                            return false;
-                    });
-                }
-                catch (e) {
-                    logger.log("Erreur lors de la guildRes filter");
-                    res.render('index', { header: req.headerData, error: "I didn't manage to collect all your channels, sniffu..." });
-                    return [2 /*return*/];
-                }
-                guildRes.forEach(function (element) { return element.added = req.hasGuild(element.id); });
+                guildRes = guildRes.filter(function (el) {
+                    if (el.permissions & ADMINISTRATOR || el.permissions & MANAGE_GUILD)
+                        return true;
+                    else
+                        return false;
+                });
+                guildRes.forEach(function (element) { return __awaiter(_this, void 0, void 0, function () { var _a, _b, _c; return __generator(this, function (_d) {
+                    switch (_d.label) {
+                        case 0:
+                            _a = element;
+                            return [4 /*yield*/, req.hasGuild(element.id)];
+                        case 1:
+                            _a.added = _d.sent();
+                            _c = (_b = logger).log;
+                            return [4 /*yield*/, req.hasGuild(element.id)];
+                        case 2:
+                            _c.apply(_b, [_d.sent()]);
+                            return [2 /*return*/];
+                    }
+                }); }); });
                 guildRes.sort(function (a, b) { if (a.added)
                     return -1;
                 else if (b.added)

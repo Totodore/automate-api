@@ -58,12 +58,15 @@ var Bot = /** @class */ (function (_super) {
         var _this = _super.call(this, "Bot") || this;
         _this.bot = new Discord.Client();
         _this.messageSent = 0;
-        _this.bot.login(process.env.TOKEN_BOT);
-        _this.bot.on("ready", function () { return _this.ready(); });
-        _this.bot.on("guildCreate", function (guild) { return _this.guildCreate(guild); });
-        _this.bot.on("guildDelete", function (guild) { return _this.guildDelete(guild); });
-        _this.bot.on("channelDelete", function (channel) { return _this.channelDelete(channel); });
-        _this.bot.setInterval(function () { return _this.sendStats(); }, 1000 * 60 * 60 * 24); //Stats toutes les jours
+        _this.dbManager = new DBManager_1["default"]();
+        _this.dbManager.init().then(function () {
+            _this.bot.login(process.env.TOKEN_BOT);
+            _this.bot.on("ready", function () { return _this.ready(); });
+            _this.bot.on("guildCreate", function (guild) { return _this.guildCreate(guild); });
+            _this.bot.on("guildDelete", function (guild) { return _this.guildDelete(guild); });
+            _this.bot.on("channelDelete", function (channel) { return _this.channelDelete(channel); });
+            _this.bot.setInterval(function () { return _this.sendStats(); }, 1000 * 60 * 60 * 24); //Stats toutes les jours
+        });
         return _this;
     }
     /**
@@ -103,7 +106,23 @@ var Bot = /** @class */ (function (_super) {
             this.log("Added this.bot but no systemChannel has been specified...");
         }
     };
+    /**
+     * On channel delete, make sure to remove all message supposed to be send to the channel
+     * @param channel deleted channel
+     */
     Bot.prototype.channelDelete = function (channel) {
+        return __awaiter(this, void 0, void 0, function () {
+            var messageLength;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.dbManager.Message.destroy({ where: { channel_id: channel.id } })];
+                    case 1:
+                        messageLength = _a.sent();
+                        this.log("Channel deleted,", messageLength, "messages removed from DB");
+                        return [2 /*return*/];
+                }
+            });
+        });
     };
     /**
      * Send all messages supposed to be sended, every minutes
@@ -111,15 +130,13 @@ var Bot = /** @class */ (function (_super) {
     Bot.prototype.cronWatcher = function () {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
-            var i, dbManager, date, messagesData, _loop_1, this_1, _i, messagesData_1, message, state_1;
+            var i, date, messagesData, _loop_1, this_1, _i, messagesData_1, message, state_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         i = 0;
-                        dbManager = new DBManager_1["default"]();
-                        dbManager.init();
                         date = new Date();
-                        return [4 /*yield*/, dbManager.Message.findAll()];
+                        return [4 /*yield*/, this.dbManager.Message.findAll()];
                     case 1:
                         messagesData = _a.sent();
                         _loop_1 = function (message) {
@@ -145,7 +162,7 @@ var Bot = /** @class */ (function (_super) {
                                 if (timestampToExec == timestamp) {
                                     var channel_1 = this_1.bot.channels.cache.get(data.channel_id);
                                     channel_1.send(data.sys_content || data.message).then(function (message) {
-                                        console.info("New frequential message sent to " + channel_1.name + " in " + channel_1.guild.name);
+                                        _this.log("New frequential message sent to " + channel_1.name + " in " + channel_1.guild.name);
                                         i++;
                                     })["catch"](function (e) {
                                         _this.log("Error sending message (probably admin rights) to channel : " + data.channel_id);
@@ -174,14 +191,12 @@ var Bot = /** @class */ (function (_super) {
      */
     Bot.prototype.sendStats = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var dbManager, channel, lengthServer, lengthUsers, lengthMessages;
+            var channel, lengthServer, lengthUsers, lengthMessages;
             return __generator(this, function (_a) {
-                dbManager = new DBManager_1["default"]();
-                dbManager.init();
                 channel = this.bot.channels.cache.get(STAT_CHANNEL);
-                lengthServer = dbManager.Guild.count();
-                lengthUsers = dbManager.User.count();
-                lengthMessages = dbManager.Message.count();
+                lengthServer = this.dbManager.Guild.count();
+                lengthUsers = this.dbManager.User.count();
+                lengthMessages = this.dbManager.Message.count();
                 channel.send("Nombre de serveurs : **" + lengthServer + "**");
                 channel.send("Nombre d'utilisateurs : **" + lengthUsers + "**");
                 channel.send("Messages program\u00E9s : **" + lengthMessages + "**");

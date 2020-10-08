@@ -16,21 +16,15 @@ router.get('/', async (req: DiscordRequest, res, next) => {
 		res.render('index', { header: req.headerData, error: "I didn't manage to collect all your channels, sniffu..." });
 		return;
 	}
-	try {
-		guildRes = guildRes.filter((el) => {
-			if (el.permissions & ADMINISTRATOR || el.permissions & MANAGE_GUILD)
-				return true;
-			else return false;
-		});
-	} catch (e) {
-		logger.log(`Erreur lors de la guildRes filter`);
-		res.render('index', { header: req.headerData, error: "I didn't manage to collect all your channels, sniffu..." });
-		return;
-	}
-	
-	guildRes.forEach(element => element.added = req.hasGuild(element.id));
+	guildRes = guildRes.filter((el) => {
+		if (el.permissions & ADMINISTRATOR || el.permissions & MANAGE_GUILD)
+			return true;
+		else return false;
+	});
+
+	guildRes.forEach(async element => { element.added = await req.hasGuild(element.id); logger.log(await req.hasGuild(element.id))});
 	guildRes.sort((a, b) => { if (a.added) return -1; else if (b.added) return 1; else return 0; });
-	
+
 	if (guildRes.length > 0)
 		res.render('index', { header: req.headerData, guilds: guildRes, bot_link: process.env.BOT_LINK });
 	else

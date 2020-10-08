@@ -35,6 +35,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
+var node_fetch_1 = require("node-fetch");
 function default_1(req, res, next) {
     return __awaiter(this, void 0, void 0, function () {
         var userData, reqUser, resUser, _a, _b;
@@ -45,7 +46,7 @@ function default_1(req, res, next) {
                     return [4 /*yield*/, req.getUser(req.session.userId)];
                 case 1:
                     userData = _c.sent();
-                    return [4 /*yield*/, fetch("https://discordapp.com/api/users/@me", {
+                    return [4 /*yield*/, node_fetch_1["default"]("https://discordapp.com/api/users/@me", {
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Authorization': "Bearer " + userData.access_token

@@ -20,25 +20,26 @@ var UserModel = /** @class */ (function (_super) {
     UserModel.factory = function (sequelize) {
         var attributes = {
             access_token: {
-                type: sequelize_2.DataTypes.STRING,
+                type: sequelize_2.DataTypes.STRING(40),
                 allowNull: false,
                 unique: true
             },
             id: {
-                type: sequelize_2.DataTypes.STRING,
+                type: sequelize_2.DataTypes.STRING(40),
                 allowNull: false,
-                unique: true
+                unique: true,
+                primaryKey: true
             },
             token_timestamp: {
                 type: sequelize_2.DataTypes.INTEGER,
                 allowNull: false
             },
             refresh_token: {
-                type: sequelize_2.DataTypes.STRING,
+                type: sequelize_2.DataTypes.STRING(40),
                 allowNull: false
             }
         };
-        var User = sequelize.define('User', attributes);
+        var User = sequelize.define('User', attributes, { timestamps: false });
         return User;
     };
     return UserModel;

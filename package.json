@@ -1,9 +1,11 @@
 {
   "name": "automate",
-  "version": "2.4.1",
+  "version": "3.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node index.js",
+    "server": "tsc --watch",
+    "transferDB": "node ./bin/scripts/transferDB.js"
   },
   "nodemonConfig": {
     "ignore": [
@@ -34,7 +36,9 @@
     "moment-timezone": "^0.5.31",
     "morgan": "^1.9.1",
     "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
     "node-fetch": "^2.6.1",
+    "node-wget": "^0.4.3",
     "nodemon": "^2.0.4",
     "pm2": "^4.4.0",
     "sequelize": "^6.3.5",

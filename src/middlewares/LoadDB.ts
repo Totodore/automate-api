@@ -1,9 +1,7 @@
 import { SessionRequest } from "../requests/RequestsMiddleware";
-import {Response} from "express";
-import DBManager from "../utils/DBManager";
+import { Response } from "express";
 
-export default async function(req: SessionRequest, res: Response, next: Function) {
-    req.dbManager = new DBManager();
-    req.dbManager.init();
-    next();
+export default async function (req: SessionRequest, res: Response, next: Function) {
+  req.dbManager = req.app.get("dbManager");
+  next();
 }

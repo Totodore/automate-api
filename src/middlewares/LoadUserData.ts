@@ -1,6 +1,6 @@
 import { SessionRequest } from "../requests/RequestsMiddleware";
-import * as fs from "fs";
 import {Response} from "express";
+import fetch from "node-fetch";
 
 export default async function(req: SessionRequest, res: Response, next: Function) {
     if (req.session.userId) {

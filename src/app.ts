@@ -6,7 +6,6 @@ import * as logger from "morgan";
 import * as session from "express-session";
 import * as formidable from "express-formidable";
 import Bot from "./Bot";
-import * as dotenv from "dotenv";
 import * as ejs from "ejs";
 
 import IndexRouter from "./routes/index";
@@ -19,11 +18,13 @@ import CheckUserLogin from "./middlewares/CheckUserLogin";
 import checkTokens from "./utils/CheckTokens";
 import routesList from "./RoutesList";
 import LoadDB from "./middlewares/LoadDB";
+import DBFunctions from "./middlewares/DBFunctions";
+import DiscordRequestsMiddleware from "./middlewares/DiscordRequestsMiddleware";
+import DBManager from "./utils/DBManager";
 
-dotenv.config();
 const app = express();
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', process.cwd() + '/views');
 app.set('view engine', 'ejs');
 app.engine("ejs", ejs.renderFile);
 app.use(express.json());
@@ -32,17 +33,21 @@ app.use(formidable());
 app.use(logger('dev'));
 app.use(cookieParser());
 app.use(session({ secret: "CoderLab=<3", resave: false, saveUninitialized: true, }));
-app.use(express.static(path.join(__dirname, 'public')));
-
-//MiddelWare qui detecte si l'utilisateur est connecté ou pas
-app.use(CheckUserLogin);
-
-//MiddleWare de chargement de la photo de profil
-app.use(LoadUserData);
+app.use(express.static(path.join(process.cwd(), "public")));
 
 //Regex qui prend tt sauf connect
 //Middleware de gestion des données
-app.use(`/\b(?!${routesList.connect})\b\S+/g`, LoadDB);
+app.use(LoadDB);
+app.use(DBFunctions);
+//MiddelWare qui detecte si l'utilisateur est connecté ou pas
+//Pour les routes qui on besoin d'être logger on check le user login
+app.use([routesList.dashboard, routesList.index], CheckUserLogin, LoadUserData);
+
+//MiddleWare de chargement de la photo de profil
+//Pour les routes où c'est requis
+// app.use(`/\b(${routesList.dashboard}|${routesList.index})\b/g`, LoadUserData):,;
+
+app.use([routesList.index, routesList.oauth], DiscordRequestsMiddleware);
 
 app.use(routesList.index, IndexRouter);
 app.use(routesList.connect, ConnectRouter);
@@ -68,11 +73,18 @@ app.use(function (err, req, res, next) {
 
 app.set("bot", new Bot());
 
-app.listen(3000, () => {
+const dbManager = new DBManager()
+dbManager.init().then(() => {
+  app.set("dbManager", dbManager);
+  const PORT = process.env.PORT || 3000;
+
+  app.listen(PORT, () => {
+    console.log("Listening on port " + PORT)
     console.log("Server started, starting bot...");
     console.log("Checking tokens expiration every hour...");
     checkTokens();
-    setInterval(checkTokens, 1000*60*60); //Toutes les heures le bot check les tokens des gens pour vérifier qu'il est à jour
+    setInterval(checkTokens, 1000 * 60 * 60); //Toutes les heures le bot check les tokens des gens pour vérifier qu'il est à jour
+  });
+  
 });
-
-export default app;
+export default app

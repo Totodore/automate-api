@@ -1,20 +1,20 @@
 {
-    "compilerOptions": {
+	"compilerOptions": {
 
-        "allowJs": true,
-        "pretty": false,
-        "sourceMap": false,
-        "target": "ES2020",
-        "baseUrl": ".",
-        "alwaysStrict": true,
-        "module": "CommonJS",
+		"allowJs": true,
+		"pretty": false,
+		"sourceMap": false,
+		"target": "es2019",
+		"baseUrl": ".",
+		"alwaysStrict": true,
+		"module": "CommonJS",
 		"outDir": "./bin/",
-        "experimentalDecorators": true,
-        "typeRoots": [
-            "./custom_typings",
-            "./node_modules/@types"
-        ],
-    },
-    "include": ["./src/"],
-    "exclude": ["node_modules"],
+		"experimentalDecorators": true,
+		"typeRoots": [
+			"./custom_typings",
+			"./node_modules/@types"
+		],
+	},
+	"include": ["./src/", "./scripts/"],
+	"exclude": ["node_modules"],
 }

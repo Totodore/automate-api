@@ -43,7 +43,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
-function default_1(req, res) {
+function default_1(req, res, next) {
     var _this = this;
     var Message = req.dbManager.Message;
     var Guild = req.dbManager.Guild;
@@ -61,7 +61,7 @@ function default_1(req, res) {
                     _b = (_a = Message).create;
                     _c = [{}, query];
                     _d = { type: type };
-                    return [4 /*yield*/, req.dbManager.Guild.findOne({ where: { id: query.guild_id }, attributes: { include: ["timezone_code"] } })];
+                    return [4 /*yield*/, Guild.findOne({ where: { id: query.guild_id }, attributes: { include: ["timezone_code"] } })];
                 case 1: return [4 /*yield*/, _b.apply(_a, [__assign.apply(void 0, _c.concat([(_d.timezone_code = (_e.sent()).timezone_code, _d)]))])];
                 case 2: return [2 /*return*/, (_e.sent()).getDataValue("id")];
             }
@@ -159,5 +159,6 @@ function default_1(req, res) {
             }
         });
     }); };
+    next();
 }
 exports["default"] = default_1;

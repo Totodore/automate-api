@@ -19,30 +19,32 @@ var GuildModel = /** @class */ (function (_super) {
     GuildModel.factory = function (sequelize) {
         var attributes = {
             guild_owner_id: {
-                type: sequelize_1.DataTypes.STRING
+                type: sequelize_1.DataTypes.STRING(40)
             },
             token_expires: {
                 type: sequelize_1.DataTypes.INTEGER
             },
             token: {
-                type: sequelize_1.DataTypes.STRING
+                type: sequelize_1.DataTypes.STRING(40)
             },
             id: {
-                type: sequelize_1.DataTypes.STRING
+                type: sequelize_1.DataTypes.STRING(40),
+                primaryKey: true,
+                unique: true
             },
             refresh_token: {
-                type: sequelize_1.DataTypes.STRING
+                type: sequelize_1.DataTypes.STRING(40)
             },
             timezone: {
-                type: sequelize_1.DataTypes.STRING,
+                type: sequelize_1.DataTypes.STRING(50),
                 allowNull: true
             },
             timezone_code: {
-                type: sequelize_1.DataTypes.STRING,
+                type: sequelize_1.DataTypes.STRING(20),
                 allowNull: true
             }
         };
-        var Guild = sequelize.define('Guild', attributes);
+        var Guild = sequelize.define('Guild', attributes, { timestamps: false });
         return Guild;
     };
     return GuildModel;
