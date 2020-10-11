@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 //TODO: REGEX FOR ROUTE SELECTION
 function default_1(req, res, next) {
     if (!req.session.userId && req.cookies.userId) {
@@ -13,4 +13,4 @@ function default_1(req, res, next) {
     else
         next();
 }
-exports["default"] = default_1;
+exports.default = default_1;

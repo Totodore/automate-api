@@ -17,11 +17,15 @@ export default function (req: SessionRequest, res: Response, next: Function) {
 	 */
 	req.addMessage = async (query: any, type: MessageType): Promise<string> => {
 		return (await Message.create({
-			...query,
+      ...query,
 			type: type,
 			timezone_code: (await Guild.findOne({ where: { id: query.guild_id }, attributes: { include: ["timezone_code"] } })).timezone_code,
 		})).getDataValue("id");
-	};
+  };
+  
+  req.updateMessage = async (query: any): Promise<void> => {
+    await Message.update({ ...query }, { where: { id: query.msg_id } });
+  }
 
 	req.addUser = async (data: UserDataModel): Promise<void> => {
 		await User.create(data);

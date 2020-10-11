@@ -39,7 +39,7 @@ class MessageModel extends Model<MessageDataModel> implements MessageDataModel {
 		const attributes: SequelizeAttributes<MessageDataModel> = {
 			id: {
 				type: DataTypes.STRING(100),
-				allowNull: false,
+				allowNull: true,
 				unique: true,
 				primaryKey: true,
 			},

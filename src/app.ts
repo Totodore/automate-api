@@ -4,7 +4,7 @@ import * as path from "path";
 import * as cookieParser from "cookie-parser";
 import * as logger from "morgan";
 import * as session from "express-session";
-import * as formidable from "express-formidable";
+import * as formdata from "express-form-data";
 import Bot from "./Bot";
 import * as ejs from "ejs";
 
@@ -29,7 +29,11 @@ app.set('view engine', 'ejs');
 app.engine("ejs", ejs.renderFile);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(formidable());
+app.use(formdata.parse({
+	autoClean: true,
+}));
+app.use(formdata.format());
+app.use(cookieParser());
 app.use(logger('dev'));
 app.use(cookieParser());
 app.use(session({ secret: "CoderLab=<3", resave: false, saveUninitialized: true, }));

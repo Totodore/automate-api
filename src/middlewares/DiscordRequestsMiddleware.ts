@@ -2,6 +2,7 @@ import { DiscordRequest } from "../requests/RequestsMiddleware";
 import { Response } from "express";
 import fetch from "node-fetch";
 import Logger from "../utils/Logger";
+import DiscordGuildResponse from "src/interfaces/DiscordGuildResponse";
 
 export default async function (req: DiscordRequest, res: Response, next: Function): Promise<any> {
 	const logger = new Logger("DiscordRequestMiddleware");
@@ -21,7 +22,7 @@ export default async function (req: DiscordRequest, res: Response, next: Functio
 			return await reqUser.json();
 	}
 
-	req.getUserGuildsDiscord = async (token: string): Promise<any> => {
+	req.getUserGuildsDiscord = async (token: string): Promise<DiscordGuildResponse[]> => {
 		const guildReq = await fetch("https://discordapp.com/api/users/@me/guilds", {
 			headers: {
 				'Authorization': `Bearer ${token}`

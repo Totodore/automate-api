@@ -1,4 +1,5 @@
 import * as express from "express";
+import DiscordGuildResponse from "src/interfaces/DiscordGuildResponse";
 import { DiscordRequest } from "../requests/RequestsMiddleware";
 import Logger from "../utils/Logger";
 const router = express.Router();
@@ -9,8 +10,8 @@ const MANAGE_GUILD = 0x00000020;
 
 router.get('/', async (req: DiscordRequest, res, next) => {
 	const logger = new Logger("Index");
-	const token = (await req.getUser(req.session.userId)).access_token
-	let guildRes = await req.getUserGuildsDiscord(token);
+  const token = (await req.getUser(req.session.userId)).access_token;
+  let guildRes: DiscordGuildResponse[] = await req.getUserGuildsDiscord(token);
 
 	if (!guildRes) {
 		res.render('index', { header: req.headerData, error: "I didn't manage to collect all your channels, sniffu..." });
@@ -22,7 +23,7 @@ router.get('/', async (req: DiscordRequest, res, next) => {
 		else return false;
 	});
 
-	guildRes.forEach(async element => { element.added = await req.hasGuild(element.id); logger.log(await req.hasGuild(element.id))});
+  guildRes = await Promise.all(guildRes.map(async element => { element.added = await req.hasGuild(element.id); return element }));
 	guildRes.sort((a, b) => { if (a.added) return -1; else if (b.added) return 1; else return 0; });
 
 	if (guildRes.length > 0)

@@ -20,8 +20,9 @@ export default class DBManager extends Logger {
 			port: parseInt(process.env.DB_PORT),
 			username: process.env.DB_USER,
 			password: process.env.DB_PASS,
-			dialect: "mysql"
-		})
+      dialect: "mysql",
+      logging: false
+    });
 	}
 
 	public async init(removeOld = false) {

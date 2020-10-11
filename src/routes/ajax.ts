@@ -2,7 +2,7 @@ import {Router} from 'express';
 import * as fs from "fs"
 import * as momentTz from "moment-timezone";
 import { SessionRequest } from '../requests/RequestsMiddleware';
-import { MessageModel, MessageType } from '../models/MessageModel';
+import { MessageType } from '../models/MessageModel';
 import Logger from '../utils/Logger';
 
 const router = Router();
@@ -24,7 +24,7 @@ router.get("/remove_message", async (req: SessionRequest, res) => {
 		res.status(520).send("Error args not given bad request");
 	}
 	try {
-		(await req.dbManager.Guild.findOne({where: {id: req.query.id}})).destroy();
+		(await req.dbManager.Message.findOne({where: {id: req.query.id}})).destroy();
 	}
 	catch (error) {
 		logger.log(`Error ajax remove schedule : ${error}`);
@@ -38,8 +38,9 @@ router.post("/add_schedule", async (req: SessionRequest, res) => {
 	const logger = new Logger("AddSchedule");
 	const query = req.body; 
 	let addedID: string;
-	if (!query.content || query.content.length < 1 || !query.frequency || !query.cron || !query.channel_id || !query.guild_id || !query.sys_content) {
-		res.status(520);
+  logger.log(req.body);
+	if (!query.message || query.message.length < 1 || !query.description || !query.cron || !query.channel_id || !query.guild_id || !query.sys_content) {
+    res.status(520);
 		res.send("Error params not given");
 		return;
 	}
@@ -62,7 +63,7 @@ router.post("/add_timer", async (req: SessionRequest, res) => {
 	const query = req.body;
 	const logger = new Logger("AddTimer");
 	let addedID: string;
-	if (!query.content || query.content.length < 1 || !query.timestamp || !query.description || !query.channel_id || !query.guild_id || !query.sys_content) {
+	if (!query.message || query.message.length < 1 || !query.timestamp || !query.description || !query.channel_id || !query.guild_id || !query.sys_content) {
 		res.status(400).send("Bad request : Params not given");
 		return;
 	}
@@ -104,12 +105,12 @@ router.get("/set_timezone", async (req: SessionRequest, res) => {
 router.post("/set_message", async (req: SessionRequest, res) => {
 	const query = req.body;
 	const logger = new Logger("SetMessage");
-	if (!query.content || query.content.length < 1 || !query.msg_id || !query.guild_id || !query.sys_content) {
+	if (!query.message || query.message.length < 1 || !query.msg_id || !query.sys_content) {
 		res.status(400).send("Error bad request : params not given");
 		return;
 	}
 	try {
-		await req.updateMessage(query.msg_id, query.content, query.sys_content);
+		await req.updateMessage(query);
 		res.send();
 	} catch (error) {
 		logger.log(`Error ajax set message : ${error}`);

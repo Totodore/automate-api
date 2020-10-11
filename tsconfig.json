@@ -15,6 +15,6 @@
 			"./node_modules/@types"
 		],
 	},
-	"include": ["./src/", "./scripts/"],
+	"include": ["./src/"],
 	"exclude": ["node_modules"],
 }
