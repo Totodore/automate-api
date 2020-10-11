@@ -1,6 +1,5 @@
 import DBManager from "../src/utils/DBManager";
 import * as path from "path";
-import fetch from "node-fetch";
 import * as fs from "fs";
 import { MessageType } from "../src/models/MessageModel";
 import * as dotenv from "dotenv";
@@ -15,7 +14,7 @@ process.chdir(path.join(process.cwd(), "temp/guilds"));
 
 
 async function dlUsers() {
-	const users = await (await fetch("https://automatebot.app/users.json")).json();
+  const users = JSON.parse(fs.readFileSync("../users.json").toString());
 	for (const userId of Object.keys(users)) {
     const user = users[userId];
     try {
