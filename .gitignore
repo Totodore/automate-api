@@ -5,3 +5,5 @@ data/
 .sass-cache
 **.map
 **.log
+data/**
+temp/**

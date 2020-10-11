@@ -1,43 +1,50 @@
-const express = require('express');
-const fs = require("fs");
-const Cron = require("cron-converter");
-const momentTz = require("moment-timezone");
-const router = express.Router();
+import {Router} from "express"
+import * as Cron from "cron-converter";
+import * as momentTz from "moment-timezone";
+import { SessionRequest } from "../requests/RequestsMiddleware";
+import Bot from "../Bot";
+import Logger from "../utils/Logger";
+import { Collection, Guild, GuildChannel, Role, TextChannel, GuildMember } from "discord.js";
+import { MessageResponseModel } from "src/models/MessageModel";
+import {GuildDataModel} from "../models/GuildModel";
 
-router.get('/', async (req, res, next) => {
-    let db, table;
-    const guild_id = req.query.id;
-    //On envoie une requête pour avoir la liste des channels
-    let guildRes;
-    let peopleRes;
-    let channelRes;
-    let rolesRes;
+const router = Router();
+
+router.get('/', async (req: SessionRequest, res, next) => {
+    const logger = new Logger("Dashboard");
+    const guild_id: string = req.query.id.toString();
+    const guildDB: GuildDataModel = (await req.dbManager.Guild.findOne({where: {id: guild_id}})).get(); 
+    let table: MessageResponseModel[] = [];
+
+    //On récupère le informations sur les gens, les channels, les roles et du serveur 
+    let guildRes: Guild;
+    let peopleRes: Collection<string, GuildMember>;
+    let channelRes: Collection<string, GuildChannel>;
+    let rolesRes: Collection<string, Role>;
+
     try {
-        db = JSON.parse(fs.readFileSync(__dirname + "/../data/guilds/" + req.query.id + "/data.json"));
-        table = db.freq.concat(db.ponctual);
+        table = (await req.dbManager.Message.findAll({where: {guild_id: req.query.id}}));
+        const bot: Bot = req.app.get("bot");
 
-        const bot = req.app.get("bot");
         guildRes = bot.getGuild(guild_id);
         peopleRes = bot.getPeople(guild_id);
-        channelRes = bot.getChannels(guild_id).filter((element) => {
-            if (!element.deleted && (element.type == "text" || element.type == "news"))
-                return true;
-            else return false;
-        });
+        channelRes = bot.getChannels(guild_id);
         rolesRes = bot.getRoles(guild_id);
     } catch(e) {
-        console.log(`Error loading datas : ${e}`);
+        logger.log(`Error loading datas : ${e}`);
         res.redirect("../?msg=" + encodeURI("Whoops ! It seems like an error has occured during the dashboard's loading. Sniffu..."));
         return;
     }
+    //On donne un nom aux channels dans lesquels il y a des messages prévus
     table.forEach(element => {
-        channelRes.forEach((channel, index) => {
+        channelRes.forEach((channel: TextChannel) => {
             if (channel.id == element.channel_id)
                 element.channel_name = channel.name;
         });
     });
+    //Sort message in the chronologic way
     table.sort((a, b) => {
-        let timestamp_a, timestamp_b;
+        let timestamp_a: number, timestamp_b: number;
         if (a.timestamp) timestamp_a = a.timestamp;
         else {
             const cronInstance = new Cron();
@@ -57,8 +64,9 @@ router.get('/', async (req, res, next) => {
         else
             return 1;
     });
+
     //We get all the available zones
-    let zones = {};
+    const zones = {};
     for (const el of momentTz.tz.names()) {
         const zoneEl = momentTz.tz.zone(el);
         const offset = zoneEl.utcOffset(new Date().getTime());
@@ -68,7 +76,7 @@ router.get('/', async (req, res, next) => {
         zones[name] = offset;
     }
 
-    peopleRes = peopleRes.map((val, index) => {
+    const peopleData = peopleRes.map((val, index) => {
         return {
             username: val.user.username,
             id: val.user.id,
@@ -76,7 +84,7 @@ router.get('/', async (req, res, next) => {
         };
     });
     //We remove the @ if they start by a @ because they are manually added later in the html
-    rolesRes = rolesRes.map((val, index) => {
+    const rolesData = rolesRes.map((val, index) => {
         if (val.name[0] == "@")
             val.name = val.name.substring(1, val.name.length);
         return {
@@ -84,24 +92,25 @@ router.get('/', async (req, res, next) => {
             id: val.id
         };
     }).filter((el, index) => el.username != "everyone");   //We remove everyone role because it is already manually added in the html
-    channelRes = channelRes.map((val, index) => {
+    const channelData = channelRes.map((val, index) => {
         return {
             name: val.name,
             id: val.id
         };
     });
+
     res.render('dashboard', {
         header: req.headerData,
         table: table, 
-        channel_list: channelRes, 
-        people_list: peopleRes,
-        roles_list: rolesRes,
+        channel_list: channelData, 
+        people_list: peopleData,
+        roles_list: rolesData,
         guild_data: guildRes, 
         cdn: process.env.CDN_ENDPOINT,
         now_hour: String(new Date().getHours())+":"+String(new Date().getMinutes()+2),
         timezone_data: zones,
-        guildTimezone: db.timezone
+        guildTimezone: guildDB.timezone
     });
 });
 
-module.exports = router;
+export default router;

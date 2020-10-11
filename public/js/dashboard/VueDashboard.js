@@ -188,9 +188,9 @@ class VueDashboard {
             sysContent = tagHandler.replaceTag(sysContent);
 
         QueryHandler.addCron({
-            frequency: desc,
+            description: desc,
             cron: cron,
-            content: content,
+            message: content,
             sys_content: sysContent,
             channel_id: channel_id,
             guild_id: this.guild_id
@@ -260,7 +260,7 @@ class VueDashboard {
 
 		QueryHandler.addTimer({
             channel_id: channel_id,
-            content: content,
+            message: content,
             description: desc,
             guild_id: this.guild_id,
             sys_content: sysContent,
@@ -303,7 +303,6 @@ class VueDashboard {
 
     async onConfirmRemoveCron() {
         const response = await QueryHandler.removeMsg({
-            guild_id: this.guild_id,
             id: this.idToRemove 
         });
         if (response.status != 200) {
@@ -345,7 +344,7 @@ class VueDashboard {
             sysContent = el.replaceTag(sysContent);
 
         const req = await QueryHandler.updateMsg({
-            content: message,
+            message: message,
             sys_content: sysContent,
             guild_id: this.guild_id,
             msg_id: this.idToRemove 
