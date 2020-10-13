@@ -139,6 +139,8 @@ var Bot = /** @class */ (function (_super) {
                     case 0: return [4 /*yield*/, this.dbManager.Message.findAll()];
                     case 1:
                         messagesData = _a.sent();
+                        freqPromise = [];
+                        ponctualPromise = [];
                         _loop_1 = function (message) {
                             var timestamp = Math.floor(Date.now() / 1000 / 60);
                             var data = message.get();

@@ -80,8 +80,8 @@ class Bot extends Logger {
 	 */
 	private async cronWatcher() {
 		const messagesData = await this.dbManager.Message.findAll();
-		let freqPromise: Promise<Discord.Message>[];
-		let ponctualPromise: Promise<Discord.Message>[];
+		let freqPromise: Promise<Discord.Message>[] = [];
+		let ponctualPromise: Promise<Discord.Message>[] = [];
 		for (const message of messagesData) {
 			const timestamp = Math.floor(Date.now() / 1000 / 60);
 			const data = message.get();
