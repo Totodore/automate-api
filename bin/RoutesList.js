@@ -1,5 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
+exports.__esModule = true;
 var RouteList;
 (function (RouteList) {
     RouteList["index"] = "/";
@@ -8,4 +8,4 @@ var RouteList;
     RouteList["ajax"] = "/ajax";
     RouteList["dashboard"] = "/dashboard";
 })(RouteList || (RouteList = {}));
-exports.default = RouteList;
+exports["default"] = RouteList;
