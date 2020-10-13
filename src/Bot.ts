@@ -126,12 +126,12 @@ class Bot extends Logger {
 	}
 
 	private async onMessageSend(messageType: MessageType, message: Discord.Message): Promise<void> {
-		this.log(new Date().toDateString(),`New ${messageType} message sent to ${message.guild.id}`);
+		this.log(new Date().toDateString(), new Date().toTimeString(),`New ${messageType} message sent to ${message.guild.id}`);
 		this.messageSentBatch++;
 	}
 
 	private async onMessageError(messageType: MessageType, channelId: string, e: Error): Promise<void> {
-		this.log(`Error sending ${messageType} message to channel : ${channelId}`);
+		this.log(new Date().toDateString(), new Date().toTimeString(), `Error sending ${messageType} message to channel : ${channelId}`);
 		this.error(e);
 	}
 	/**
