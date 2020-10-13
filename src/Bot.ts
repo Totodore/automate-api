@@ -15,7 +15,7 @@ class Bot extends Logger {
 	private messageSentBatch: number = 0;
 
 	constructor() {
-		super("Bot");
+		super("Bot", true);
 
 		this.dbManager = new DBManager();
 		this.dbManager.init().then(() => {

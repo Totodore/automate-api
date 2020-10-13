@@ -1,9 +1,9 @@
 "use strict";
-exports.__esModule = true;
-var Logger_1 = require("../utils/Logger");
+Object.defineProperty(exports, "__esModule", { value: true });
+const Logger_1 = require("../utils/Logger");
 function default_1(req, res, next) {
-    var logger = new Logger_1["default"]("Request");
+    const logger = new Logger_1.default("Request");
     logger.log(req.method, req.path, "requested");
     next();
 }
-exports["default"] = default_1;
+exports.default = default_1;
