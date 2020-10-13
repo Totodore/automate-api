@@ -12,6 +12,7 @@ class Bot extends Logger {
 	private bot: Discord.Client = new Discord.Client();
 	private messageSent: number = 0;
 	private dbManager: DBManager;
+	private messageSentBatch: number = 0;
 
 	constructor() {
 		super("Bot");
@@ -40,7 +41,7 @@ class Bot extends Logger {
 		const intervalId = setInterval(() => {
 			//Si on est passé à une nouvelle minute on lance le cronWatcher
 			if (Math.floor((new Date().getTime() / 1000) / 60) * 60 > oldMinute) {
-				this.log(`\n\nNew minute detected, Starting cron Watcher at minute ${new Date().getMinutes()}`);
+				this.log(`!!! New minute detected, Starting cron Watcher at minute ${new Date().getMinutes()} !!!`);
 				this.cronWatcher();
 				this.bot.setInterval(() => this.cronWatcher(), 1000 * 60);
 				clearInterval(intervalId);
@@ -74,23 +75,28 @@ class Bot extends Logger {
 	}
 	/**
 	 * Send all messages supposed to be sended, every minutes
+	 * Store all promises message to two array and await the resolving of all the message sending
+	 * TO then print logs every hour
 	 */
 	private async cronWatcher() {
-		let i: number = 0;
-		const date = new Date();
 		const messagesData = await this.dbManager.Message.findAll();
+		let freqPromise: Promise<Discord.Message>[];
+		let ponctualPromise: Promise<Discord.Message>[];
 		for (const message of messagesData) {
 			const timestamp = Math.floor(Date.now() / 1000 / 60);
 			const data = message.get();
+
 			if (data.type == MessageType.Ponctual && data.timestamp == timestamp) {
 				const channel = this.bot.channels.cache.get(data.channel_id) as Discord.TextChannel;
-				channel.send(data.sys_content || data.message).then(message => {
-					this.log(`New punctual message sent at ${date.getUTCDate()}/${date.getUTCMonth()}/${date.getUTCFullYear()} ${date.getUTCHours()}:${date.getUTCMinutes()}`);
-					i++;
-				}).catch(e => {
-					this.log(`Error sending message (probably admin rights) to channel : ${data.channel_id}`);
-					this.error(e);
-				});
+				try {
+					const promise: Promise<Discord.Message> = channel.send(data.sys_content || data.message);
+					promise.then((message: Discord.Message) => this.onMessageSend(MessageType.Ponctual, message));
+					promise.catch((e) => this.onMessageError(MessageType.Ponctual, channel.id, e));
+					
+					freqPromise.push(promise);
+				} catch(e) {
+					this.onMessageError(MessageType.Ponctual, channel.id, new Error("Before sending Ponctual Message error"));
+				}
 			} else if (data.type == MessageType.Frequential) {
 				if (data.cron.split(" ")[0] == "60")
 					return;
@@ -101,28 +107,41 @@ class Bot extends Logger {
 
 				if (timestampToExec == timestamp) {
 					const channel = this.bot.channels.cache.get(data.channel_id) as Discord.TextChannel;
-					channel.send(data.sys_content || data.message).then(message => {
-						this.log(`New frequential message sent to ${channel.name} in ${channel.guild.name}`);
-						i++;
-					}).catch(e => {
-						this.log(`Error sending message (probably admin rights) to channel : ${data.channel_id}`);
-					});
+					try {
+						const promise: Promise<Discord.Message> = channel.send(data.sys_content || data.message);
+						promise.then((message: Discord.Message) => this.onMessageSend(MessageType.Frequential, message));
+						promise.catch((e) => this.onMessageError(MessageType.Frequential, channel.id, e));
+						ponctualPromise.push(promise);
+					} catch(e) {
+						this.onMessageError(MessageType.Frequential, channel.id, new Error("Before sending Frequencial message error"));
+					}
 				}
 			}
-			setTimeout(() => {
-				this.log(`<----------- Sent ${i} messages ----------->`);
-				this.messageSent += i; //Calcul de moyenne de messages envoyé chaque minute
-			}, 1000 * 50); //30 secondes après (le temps que tout s'envoie on affiche le nombre de message envoyé et on calcul la moyenne) 
 		}
+		await Promise.all(freqPromise);
+		await Promise.all(ponctualPromise);
+		this.log(`<----------- Sent ${this.messageSentBatch} messages ----------->`);
+		this.messageSent += this.messageSentBatch; //Calcul du nombre de messages envoyés par heure
+		this.messageSentBatch = 0;
+	}
+
+	private async onMessageSend(messageType: MessageType, message: Discord.Message): Promise<void> {
+		this.log(new Date().toDateString(),`New ${messageType} message sent to ${message.guild.id}`);
+		this.messageSentBatch++;
+	}
+
+	private async onMessageError(messageType: MessageType, channelId: string, e: Error): Promise<void> {
+		this.log(`Error sending ${messageType} message to channel : ${channelId}`);
+		this.error(e);
 	}
 	/**
 	 * Send stats to logs channel function
 	 */
 	private async sendStats(): Promise<void> {
 		const channel = this.bot.channels.cache.get(STAT_CHANNEL) as Discord.TextChannel;
-		const lengthServer = this.dbManager.Guild.count();
-		const lengthUsers = this.dbManager.User.count();
-		const lengthMessages = this.dbManager.Message.count();
+		const lengthServer = await this.dbManager.Guild.count();
+		const lengthUsers = await this.dbManager.User.count();
+		const lengthMessages = await this.dbManager.Message.count();
 		channel.send(`Nombre de serveurs : **${lengthServer}**`);
 		channel.send(`Nombre d'utilisateurs : **${lengthUsers}**`);
 		channel.send(`Messages programés : **${lengthMessages}**`);

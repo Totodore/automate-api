@@ -1,6 +1,6 @@
 {
   "name": "automate",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "private": true,
   "scripts": {
     "start": "node index.js",
@@ -39,7 +39,6 @@
     "node-fetch": "^2.6.1",
     "node-wget": "^0.4.3",
     "nodemon": "^2.0.4",
-    "pm2": "^4.4.0",
     "sequelize": "^6.3.5",
     "socket.io": "^2.3.0",
     "uniqid": "^5.2.0",

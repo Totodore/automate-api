@@ -21,7 +21,7 @@ import LoadDB from "./middlewares/LoadDB";
 import DBFunctions from "./middlewares/DBFunctions";
 import DiscordRequestsMiddleware from "./middlewares/DiscordRequestsMiddleware";
 import DBManager from "./utils/DBManager";
-
+import LoggerRequest from "./middlewares/LoggerRequest";
 const app = express();
 // view engine setup
 app.set('views', process.cwd() + '/views');
@@ -34,13 +34,14 @@ app.use(formdata.parse({
 }));
 app.use(formdata.format());
 app.use(cookieParser());
-app.use(logger('dev'));
+process.env.NODE_ENV == "production" || app.use(logger('dev'));
 app.use(cookieParser());
 app.use(session({ secret: "CoderLab=<3", resave: false, saveUninitialized: true, }));
 app.use(express.static(path.join(process.cwd(), "public")));
 
 //Regex qui prend tt sauf connect
 //Middleware de gestion des données
+app.use(LoggerRequest);
 app.use(LoadDB);
 app.use(DBFunctions);
 //MiddelWare qui detecte si l'utilisateur est connecté ou pas
