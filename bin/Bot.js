@@ -201,7 +201,7 @@ var Bot = /** @class */ (function (_super) {
     Bot.prototype.onMessageSend = function (messageType, message) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                this.log(new Date().toDateString(), "New " + messageType + " message sent to " + message.guild.id);
+                this.log(new Date().toDateString(), new Date().toTimeString(), "New " + messageType + " message sent to " + message.guild.id);
                 this.messageSentBatch++;
                 return [2 /*return*/];
             });
@@ -210,7 +210,7 @@ var Bot = /** @class */ (function (_super) {
     Bot.prototype.onMessageError = function (messageType, channelId, e) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                this.log("Error sending " + messageType + " message to channel : " + channelId);
+                this.log(new Date().toDateString(), new Date().toTimeString(), "Error sending " + messageType + " message to channel : " + channelId);
                 this.error(e);
                 return [2 /*return*/];
             });
