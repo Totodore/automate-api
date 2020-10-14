@@ -2,20 +2,23 @@ import * as Discord from "discord.js";
 import * as Cron from "cron-converter";
 import * as fs from "fs";
 import Logger from "./utils/Logger";
+import FileLogger from "./utils/FileLogger";
 import DBManager from "./utils/DBManager";
 import { MessageType } from "./models/MessageModel";
 
 const STAT_CHANNEL = "702970284034097192";
 
-class Bot extends Logger {
+class Bot {
 
 	private bot: Discord.Client = new Discord.Client();
 	private messageSent: number = 0;
 	private dbManager: DBManager;
 	private messageSentBatch: number = 0;
-
+	private logger: Logger;
+	private fileLogger: FileLogger;
 	constructor() {
-		super("Bot", true);
+		this.logger = new Logger("BOT", true);
+		this.fileLogger = new FileLogger("BOT", true);
 
 		this.dbManager = new DBManager();
 		this.dbManager.init().then(() => {
@@ -32,16 +35,16 @@ class Bot extends Logger {
 	 * Handler triggered when the this.bot is ready and connected
 	 */
 	private ready(): void {
-		this.log(`Logged in as ${this.bot.user.tag} !\n`);
+		this.logger.log(`Logged in as ${this.bot.user.tag} !\n`);
 		//On attend le passage à la prochaine minute pour être le plus syncro possible
 		const oldMinute = Math.floor((new Date().getTime() / 1000) / 60) * 60;
-		this.log(`Actual minute : ${new Date().getMinutes()}`);
-		this.log("Waiting for new minute to start cron watcher");
+		this.logger.log(`Actual minute : ${new Date().getMinutes()}`);
+		this.logger.log("Waiting for new minute to start cron watcher");
 
 		const intervalId = setInterval(() => {
 			//Si on est passé à une nouvelle minute on lance le cronWatcher
 			if (Math.floor((new Date().getTime() / 1000) / 60) * 60 > oldMinute) {
-				this.log(`!!! New minute detected, Starting cron Watcher at minute ${new Date().getMinutes()} !!!`);
+				this.logger.log(`!!! New minute detected, Starting cron Watcher at minute ${new Date().getMinutes()} !!!`);
 				this.cronWatcher();
 				this.bot.setInterval(() => this.cronWatcher(), 1000 * 60);
 				clearInterval(intervalId);
@@ -61,7 +64,7 @@ class Bot extends Logger {
 		try {
 			guild.systemChannel.send(`Hey ! I'm Automate, to give me orders you need to go on this website : https://automatebot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
 		} catch (e) {
-			this.log("Added this.bot but no systemChannel has been specified...");
+			this.logger.log("Added this.bot but no systemChannel has been specified...");
 		}
 	}
 
@@ -71,7 +74,7 @@ class Bot extends Logger {
 	 */
 	private async channelDelete(channel: Discord.Channel) {
 		const messageLength = await this.dbManager.Message.destroy({ where: { channel_id: channel.id } });
-		this.log("Channel deleted,", messageLength, "messages removed from DB");
+		this.logger.log("Channel deleted,", messageLength, "messages removed from DB");
 	}
 	/**
 	 * Send all messages supposed to be sended, every minutes
@@ -82,8 +85,12 @@ class Bot extends Logger {
 		const messagesData = await this.dbManager.Message.findAll();
 		let freqPromise: Promise<Discord.Message>[] = [];
 		let ponctualPromise: Promise<Discord.Message>[] = [];
+		
+		this.fileLogger.log(`Number of messages ${messagesData.length}`);
+
+		const timestamp = Math.floor(Date.now() / 1000 / 60);
+		this.fileLogger.log(`Current Timestamp of ${timestamp}`);
 		for (const message of messagesData) {
-			const timestamp = Math.floor(Date.now() / 1000 / 60);
 			const data = message.get();
 			if (data.type == MessageType.Ponctual && data.timestamp == timestamp) {
 				const channel = this.bot.channels.cache.get(data.channel_id) as Discord.TextChannel;
@@ -103,7 +110,6 @@ class Bot extends Logger {
 				cronInstance.fromString(data.cron);
 				const scheduler = cronInstance.schedule();
 				const timestampToExec = Math.floor(scheduler.next().unix() / 60);
-
 				if (timestampToExec == timestamp) {
 					const channel = this.bot.channels.cache.get(data.channel_id) as Discord.TextChannel;
 					try {
@@ -119,19 +125,19 @@ class Bot extends Logger {
 		}
 		await Promise.all(freqPromise);
 		await Promise.all(ponctualPromise);
-		this.log(`<----------- Sent ${this.messageSentBatch} messages ----------->`);
+		this.logger.log(`<----------- Sent ${this.messageSentBatch} messages ----------->`);
 		this.messageSent += this.messageSentBatch; //Calcul du nombre de messages envoyés par heure
 		this.messageSentBatch = 0;
 	}
 
 	private async onMessageSend(messageType: MessageType, message: Discord.Message): Promise<void> {
-		this.log(new Date().toDateString(), new Date().toTimeString(),`New ${messageType} message sent to ${message.guild.id}`);
+		this.logger.log(new Date().toDateString(), new Date().toTimeString(),`New ${messageType} message sent to ${message.guild.id}`);
 		this.messageSentBatch++;
 	}
 
 	private async onMessageError(messageType: MessageType, channelId: string, e: Error): Promise<void> {
-		this.log(new Date().toDateString(), new Date().toTimeString(), `Error sending ${messageType} message to channel : ${channelId}`);
-		this.error(e);
+		this.logger.log(new Date().toDateString(), new Date().toTimeString(), `Error sending ${messageType} message to channel : ${channelId}`);
+		this.logger.error(e);
 	}
 	/**
 	 * Send stats to logs channel function
@@ -162,7 +168,7 @@ class Bot extends Logger {
 			});
 			return dataToSend;
 		} catch (e) {
-			this.log(e);
+			this.logger.log(e);
 		}
 	}
 	/**
@@ -174,7 +180,7 @@ class Bot extends Logger {
 			const dataToSend = this.bot.guilds.cache.get(id);
 			return dataToSend;
 		} catch (e) {
-			this.log(e);
+			this.logger.log(e);
 		}
 	}
 	/**
@@ -187,7 +193,7 @@ class Bot extends Logger {
 			const dataToSend = this.bot.guilds.cache.get(id).members.cache;
 			return dataToSend;
 		} catch (e) {
-			this.log(e);
+			this.logger.log(e);
 		}
 	}
 	/**
@@ -199,7 +205,7 @@ class Bot extends Logger {
 			const dataToSend = this.bot.guilds.cache.get(id).roles.cache;
 			return dataToSend;
 		} catch (e) {
-			this.log(e);
+			this.logger.log(e);
 		}
 	}
 }

@@ -2,6 +2,7 @@ import { Router } from "express";
 const router = Router();
 import Logger from "../utils/Logger";
 import { DiscordRequest, SessionRequest } from "../requests/RequestsMiddleware";
+import { Response } from "express-serve-static-core";
 
 router.get('/', async (req: DiscordRequest, res, next) => {
 	const logger = new Logger("Oauth");
@@ -101,20 +102,24 @@ router.get("/bot", async (req: DiscordRequest, res, next) => {
 	res.redirect(`/dashboard/?id=${req.query.guild_id}`);
 });
 
+/**
+ * If the client browser has a token, 
+ * it can reset it. If the token is expired we reset it
+ */
 router.get("/hasToken", async (req: SessionRequest, res: Response) => {
 	if (!req.query.id) {
 		res.sendStatus(400);
 		return;
 	}
-	const user = await req.getUser(req.query.id);
+	const user = await req.getUser(req.query.id.toString());
 	if (!user) {
 		res.sendStatus(301);
 		return;
 	}
 	if (user.token_timestamp - 1000*60*60 > Date.now()) {
-		
+		//TODO: reset token
 	}
-	req.session.userId = req.query.id;
+	req.session.userId = req.query.id.toString();
 	res.sendStatus(200);
 });
 

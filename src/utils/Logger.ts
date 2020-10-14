@@ -11,8 +11,8 @@ export default class Logger {
         console.error(`[${this._name}] ${this._datetime ? this.getTime() : ""}`, ...args);
     }
 
-    private getTime(): string {
+    protected getTime(): string {
         const date = new Date();
-        return `{${date.toDateString()} ${date.toTimeString()}}`;
+        return `{${date.toUTCString()}`;
     }
 }
