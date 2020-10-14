@@ -16,6 +16,8 @@ class Bot {
 	private messageSentBatch: number = 0;
 	private logger: Logger;
 	private fileLogger: FileLogger;
+	private cronWatcherId: NodeJS.Timer;
+
 	constructor() {
 		this.logger = new Logger("BOT", true);
 		this.fileLogger = new FileLogger("BOT", true);
@@ -37,16 +39,24 @@ class Bot {
 	private ready(): void {
 		this.logger.log(`Logged in as ${this.bot.user.tag} !\n`);
 		//On attend le passage à la prochaine minute pour être le plus syncro possible
-		const oldMinute = Math.floor((new Date().getTime() / 1000) / 60) * 60;
 		this.logger.log(`Actual minute : ${new Date().getMinutes()}`);
 		this.logger.log("Waiting for new minute to start cron watcher");
+		this.launchCronWatcher();
+		setInterval(() => this.launchCronWatcher(), 1000*60*60*6);
+	}
 
+	/**
+	 * Launch cron watcher by detecting new minute modification
+	 */
+	private launchCronWatcher(): void {
+		const oldMinute = Math.floor((new Date().getTime() / 1000) / 60) * 60;
 		const intervalId = setInterval(() => {
 			//Si on est passé à une nouvelle minute on lance le cronWatcher
 			if (Math.floor((new Date().getTime() / 1000) / 60) * 60 > oldMinute) {
-				this.logger.log(`!!! New minute detected, Starting cron Watcher at minute ${new Date().getMinutes()} !!!`);
+				this.fileLogger.log(`!!! New minute detected, Starting cron Watcher at minute ${new Date().getMinutes()} !!!`);
 				this.cronWatcher();
-				this.bot.setInterval(() => this.cronWatcher(), 1000 * 60);
+				this.cronWatcherId && clearInterval(this.cronWatcherId);
+				this.cronWatcherId = this.bot.setInterval(() => this.cronWatcher(), 1000 * 60);
 				clearInterval(intervalId);
 			}
 		}, 10);
@@ -89,7 +99,7 @@ class Bot {
 		this.fileLogger.log(`Number of messages ${messagesData.length}`);
 
 		const timestamp = Math.floor(Date.now() / 1000 / 60);
-		this.fileLogger.log(`Current Timestamp of ${timestamp}`);
+		this.fileLogger.log(`Current Timestamp of ${timestamp} ${new Date(timestamp)}`);
 		for (const message of messagesData) {
 			const data = message.get();
 			if (data.type == MessageType.Ponctual && data.timestamp == timestamp) {
