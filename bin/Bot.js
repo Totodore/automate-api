@@ -121,7 +121,7 @@ class Bot {
                         ponctualPromise.push(promise);
                     }
                     catch (e) {
-                        this.onMessageError(MessageModel_1.MessageType.Frequential, channel.id, new Error("Before sending Frequencial message error"));
+                        this.onMessageError(MessageModel_1.MessageType.Frequential, channel === null || channel === void 0 ? void 0 : channel.id, new Error("Before sending Frequencial message error"));
                     }
                 }
             }

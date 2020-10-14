@@ -25,7 +25,7 @@ class Bot {
 		this.dbManager = new DBManager();
 		this.dbManager.init().then(async () => {
 			await this.fileLogger.init();
-			
+
 			this.bot.login(process.env.TOKEN_BOT);
 			this.bot.on("ready", () => this.ready());
 			this.bot.on("guildCreate", (guild: Discord.Guild) => this.guildCreate(guild));
@@ -130,7 +130,7 @@ class Bot {
 						promise.catch((e) => this.onMessageError(MessageType.Frequential, channel.id, e));
 						ponctualPromise.push(promise);
 					} catch(e) {
-						this.onMessageError(MessageType.Frequential, channel.id, new Error("Before sending Frequencial message error"));
+						this.onMessageError(MessageType.Frequential, channel?.id, new Error("Before sending Frequencial message error"));
 					}
 				}
 			}
