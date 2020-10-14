@@ -96,4 +96,24 @@ router.get("/bot", async (req, res, next) => {
     }
     res.redirect(`/dashboard/?id=${req.query.guild_id}`);
 });
+/**
+ * If the client browser has a token,
+ * it can reset it. If the token is expired we reset it
+ */
+router.get("/hasToken", async (req, res) => {
+    if (!req.query.id) {
+        res.sendStatus(400);
+        return;
+    }
+    const user = await req.getUser(req.query.id.toString());
+    if (!user) {
+        res.sendStatus(301);
+        return;
+    }
+    if (user.token_timestamp - 1000 * 60 * 60 > Date.now()) {
+        //TODO: reset token
+    }
+    req.session.userId = req.query.id.toString();
+    res.sendStatus(200);
+});
 exports.default = router;

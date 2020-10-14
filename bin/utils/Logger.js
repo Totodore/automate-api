@@ -13,7 +13,7 @@ class Logger {
     }
     getTime() {
         const date = new Date();
-        return `{${date.toDateString()} ${date.toTimeString()}}`;
+        return `{${date.toUTCString()}`;
     }
 }
 exports.default = Logger;
