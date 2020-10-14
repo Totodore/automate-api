@@ -1,7 +1,7 @@
 import { Router } from "express";
 const router = Router();
 import Logger from "../utils/Logger";
-import { DiscordRequest } from "../requests/RequestsMiddleware";
+import { DiscordRequest, SessionRequest } from "../requests/RequestsMiddleware";
 
 router.get('/', async (req: DiscordRequest, res, next) => {
 	const logger = new Logger("Oauth");
@@ -99,6 +99,23 @@ router.get("/bot", async (req: DiscordRequest, res, next) => {
 		});
 	}
 	res.redirect(`/dashboard/?id=${req.query.guild_id}`);
+});
+
+router.get("/hasToken", async (req: SessionRequest, res: Response) => {
+	if (!req.query.id) {
+		res.sendStatus(400);
+		return;
+	}
+	const user = await req.getUser(req.query.id);
+	if (!user) {
+		res.sendStatus(301);
+		return;
+	}
+	if (user.token_timestamp - 1000*60*60 > Date.now()) {
+		
+	}
+	req.session.userId = req.query.id;
+	res.sendStatus(200);
 });
 
 export default router;

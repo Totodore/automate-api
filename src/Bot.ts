@@ -85,7 +85,6 @@ class Bot extends Logger {
 		for (const message of messagesData) {
 			const timestamp = Math.floor(Date.now() / 1000 / 60);
 			const data = message.get();
-
 			if (data.type == MessageType.Ponctual && data.timestamp == timestamp) {
 				const channel = this.bot.channels.cache.get(data.channel_id) as Discord.TextChannel;
 				try {
