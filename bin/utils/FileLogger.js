@@ -8,7 +8,7 @@ class FileLogger extends Logger_1.default {
     async init() {
         const folderPath = path_1.join(process.cwd(), "logs");
         if (!fs_1.existsSync(folderPath)) {
-            fs.mkdir(folderPath);
+            await fs.mkdir(folderPath);
         }
         this._logFile = await fs.open(path_1.join(folderPath, `${this._name}.log`), "w");
     }

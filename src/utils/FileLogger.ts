@@ -10,7 +10,7 @@ export default class FileLogger extends Logger {
     public async init() {
         const folderPath = join(process.cwd(), "logs");
         if (!existsSync(folderPath)) {
-            fs.mkdir(folderPath);
+            await fs.mkdir(folderPath);
         }
         this._logFile = await fs.open(join(folderPath, `${this._name}.log`), "w");
     }
