@@ -1,5 +1,6 @@
 import Logger from "./Logger";
 import * as fs from "fs/promises";
+import {existsSync} from "fs";
 import {join} from "path";
 
 export default class FileLogger extends Logger {
@@ -15,7 +16,11 @@ export default class FileLogger extends Logger {
     }
 
     private async init() {
-        this._logFile = await fs.open(join(process.cwd(), "logs", `${name}.log`), "w");
+        const folderPath = join(process.cwd(), "logs");
+        if (!existsSync(folderPath)) {
+            fs.mkdir(folderPath);
+        }
+        this._logFile = await fs.open(join(folderPath, `${name}.log`), "w");
     }
 
     public log(...args: any[]) {
