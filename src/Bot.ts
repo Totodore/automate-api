@@ -23,8 +23,9 @@ class Bot {
 		this.fileLogger = new FileLogger("BOT", true);
 
 		this.dbManager = new DBManager();
-		this.dbManager.init().then(() => {
-
+		this.dbManager.init().then(async () => {
+			await this.fileLogger.init();
+			
 			this.bot.login(process.env.TOKEN_BOT);
 			this.bot.on("ready", () => this.ready());
 			this.bot.on("guildCreate", (guild: Discord.Guild) => this.guildCreate(guild));

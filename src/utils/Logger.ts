@@ -1,7 +1,7 @@
 export default class Logger {
     constructor(
-        private _name: string, 
-        private _datetime: boolean = false
+        protected _name: string, 
+        protected _datetime: boolean = false
     ) {}
 
     public log(...args: any[]) {

@@ -16,7 +16,8 @@ class Bot {
         this.logger = new Logger_1.default("BOT", true);
         this.fileLogger = new FileLogger_1.default("BOT", true);
         this.dbManager = new DBManager_1.default();
-        this.dbManager.init().then(() => {
+        this.dbManager.init().then(async () => {
+            await this.fileLogger.init();
             this.bot.login(process.env.TOKEN_BOT);
             this.bot.on("ready", () => this.ready());
             this.bot.on("guildCreate", (guild) => this.guildCreate(guild));
@@ -35,6 +36,7 @@ class Bot {
         this.logger.log("Waiting for new minute to start cron watcher");
         this.launchCronWatcher();
         setInterval(() => this.launchCronWatcher(), 1000 * 60 * 60 * 6);
+        //Reset cronWatch every 6hour
     }
     /**
      * Launch cron watcher by detecting new minute modification

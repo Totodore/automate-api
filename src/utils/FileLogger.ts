@@ -7,20 +7,12 @@ export default class FileLogger extends Logger {
     
     private _logFile: fs.FileHandle;
 
-    constructor(
-        name: string,
-        datetime: boolean,
-    ) {
-        super(name, datetime);
-        this.init();
-    }
-
-    private async init() {
+    public async init() {
         const folderPath = join(process.cwd(), "logs");
         if (!existsSync(folderPath)) {
             fs.mkdir(folderPath);
         }
-        this._logFile = await fs.open(join(folderPath, `${name}.log`), "w");
+        this._logFile = await fs.open(join(folderPath, `${this._name}.log`), "w");
     }
 
     public log(...args: any[]) {
@@ -34,9 +26,13 @@ export default class FileLogger extends Logger {
     }
 
     private logFile(type: LogType, ...args: any[]) {
-        const lines = args.join(" ").split("\n");
-        for (const line of lines)
-            this._logFile.write(`\r\n${type} ${this.getTime()} ${line}`);
+        try {
+            const lines = args.join(" ").split("\n");
+            for (const line of lines)
+                this._logFile.write(`\r\n${type} ${this.getTime()} ${line}`);
+        } catch(e) {
+            this.log("Error Writing logs");
+        }
     }
 }
 enum LogType {
