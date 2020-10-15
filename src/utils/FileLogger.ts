@@ -29,7 +29,7 @@ export default class FileLogger extends Logger {
         try {
             const lines = args.join(" ").split("\n");
             for (const line of lines)
-                this._logFile.write(`\r\n${type} ${this.getTime()} ${line}`);
+                this._logFile.write(`\r\n${type} ${this.getTime()} ${line}`, );
         } catch(e) {
             this.log("Error Writing logs");
         }

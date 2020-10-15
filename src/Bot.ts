@@ -31,7 +31,6 @@ class Bot {
 			this.bot.on("guildCreate", (guild: Discord.Guild) => this.guildCreate(guild));
 			this.bot.on("guildDelete", (guild: Discord.Guild) => this.guildDelete(guild));
 			this.bot.on("channelDelete", (channel: Discord.Channel) => this.channelDelete(channel));
-			this.bot.setInterval(() => this.sendStats(), 1000 * 60 * 60 * 24); //Stats toutes les jours
 		});
 	}
 	/**
@@ -93,7 +92,9 @@ class Bot {
 	 * Store all promises message to two array and await the resolving of all the message sending
 	 * TO then print logs every hour
 	 */
-	private async cronWatcher() {
+  private async cronWatcher() {
+    new Date().getHours() == 0 && new Date().getMinutes() == 0 && this.sendStats();
+
 		const messagesData = await this.dbManager.Message.findAll();
 		let freqPromise: Promise<Discord.Message>[] = [];
 		let ponctualPromise: Promise<Discord.Message>[] = [];
