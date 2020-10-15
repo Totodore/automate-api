@@ -4,7 +4,7 @@ This bot is perfect for reminding you of your grandma's birthday or spam your br
 If you want to contribute to this repository, you have to create a branch from master and make pull requests
 
 
-##This Project use :
+### This Project use :
   * NodeJS
   * ExpressJS
   * Typescript
