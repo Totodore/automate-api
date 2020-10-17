@@ -59,14 +59,14 @@ function default_1(req, res, next) {
      * @param guildId the guild id to check
      */
     req.hasGuild = async (guildId) => {
-        return await Guild.findOne({ where: { id: guildId } }) != null;
+        return await Guild.count({ where: { id: guildId } }) != 0;
     };
     /**
      * Check if the user exists in the database
      * @param userId  the user id to check
      */
     req.hasUser = async (userId) => {
-        return await req.getUser(userId) != null;
+        return await User.count({ where: { id: userId } }) != 0;
     };
     next();
 }

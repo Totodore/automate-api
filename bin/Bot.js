@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const Discord = require("discord.js");
 const Cron = require("cron-converter");
-const fs = require("fs");
 const Logger_1 = require("./utils/Logger");
 const FileLogger_1 = require("./utils/FileLogger");
 const DBManager_1 = require("./utils/DBManager");
@@ -23,7 +22,6 @@ class Bot {
             this.bot.on("guildCreate", (guild) => this.guildCreate(guild));
             this.bot.on("guildDelete", (guild) => this.guildDelete(guild));
             this.bot.on("channelDelete", (channel) => this.channelDelete(channel));
-            this.bot.setInterval(() => this.sendStats(), 1000 * 60 * 60 * 24); //Stats toutes les jours
         });
     }
     /**
@@ -34,8 +32,8 @@ class Bot {
         //On attend le passage à la prochaine minute pour être le plus syncro possible
         this.logger.log(`Actual minute : ${new Date().getMinutes()}`);
         this.logger.log("Waiting for new minute to start cron watcher");
-        this.launchCronWatcher();
-        setInterval(() => this.launchCronWatcher(), 1000 * 60 * 60 * 6);
+        // this.launchCronWatcher();
+        // setInterval(() => this.launchCronWatcher(), 1000*60*60*6);
         //Reset cronWatch every 6hour
     }
     /**
@@ -57,8 +55,14 @@ class Bot {
     /**
      * Handler for event when the this.bot is removed from a guild
      */
-    guildDelete(guild) {
-        fs.rmdirSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guild.id + "/", { recursive: true });
+    async guildDelete(guild) {
+        try {
+            await this.dbManager.Guild.destroy({ where: { id: guild.id } });
+            await this.dbManager.Message.destroy({ where: { guild_id: guild.id } });
+        }
+        catch (e) {
+            this.logger.error(e);
+        }
     }
     /**
      * Handler for event when the this.bot is added to a guild
@@ -68,7 +72,7 @@ class Bot {
             guild.systemChannel.send(`Hey ! I'm Automate, to give me orders you need to go on this website : https://automatebot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
         }
         catch (e) {
-            this.logger.log("Added this.bot but no systemChannel has been specified...");
+            this.logger.log("Added bot but no systemChannel has been specified...");
         }
     }
     /**
@@ -76,8 +80,8 @@ class Bot {
      * @param channel deleted channel
      */
     async channelDelete(channel) {
-        const messageLength = await this.dbManager.Message.destroy({ where: { channel_id: channel.id } });
-        this.logger.log("Channel deleted,", messageLength, "messages removed from DB");
+        const messageLength = await this.dbManager.Message.destroy({ where: { channel_id: channel.id }, force: true });
+        this.logger.log("Channel deleted, removing messages from DB");
     }
     /**
      * Send all messages supposed to be sended, every minutes
@@ -85,6 +89,7 @@ class Bot {
      * TO then print logs every hour
      */
     async cronWatcher() {
+        new Date().getHours() == 0 && new Date().getMinutes() == 0 && this.sendStats();
         const messagesData = await this.dbManager.Message.findAll();
         let freqPromise = [];
         let ponctualPromise = [];

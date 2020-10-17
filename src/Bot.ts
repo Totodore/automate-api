@@ -41,8 +41,8 @@ class Bot {
 		//On attend le passage à la prochaine minute pour être le plus syncro possible
 		this.logger.log(`Actual minute : ${new Date().getMinutes()}`);
 		this.logger.log("Waiting for new minute to start cron watcher");
-		this.launchCronWatcher();
-		setInterval(() => this.launchCronWatcher(), 1000*60*60*6);
+		// this.launchCronWatcher();
+		// setInterval(() => this.launchCronWatcher(), 1000*60*60*6);
 		//Reset cronWatch every 6hour
 	}
 
@@ -65,8 +65,13 @@ class Bot {
 	/**
 	 * Handler for event when the this.bot is removed from a guild
 	 */
-	private guildDelete(guild: Discord.Guild) {
-		fs.rmdirSync(__dirname + "/.." + process.env.DB_GUILDS + "/" + guild.id + "/", { recursive: true });
+	private async guildDelete(guild: Discord.Guild) {
+		try {
+			await this.dbManager.Guild.destroy({where: {id: guild.id}});
+			await this.dbManager.Message.destroy({where: {guild_id: guild.id}});
+		} catch (e) {
+			this.logger.error(e);
+		}
 	}
 	/**
 	 * Handler for event when the this.bot is added to a guild
@@ -75,17 +80,16 @@ class Bot {
 		try {
 			guild.systemChannel.send(`Hey ! I'm Automate, to give me orders you need to go on this website : https://automatebot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
 		} catch (e) {
-			this.logger.log("Added this.bot but no systemChannel has been specified...");
+			this.logger.log("Added bot but no systemChannel has been specified...");
 		}
 	}
-
 	/**
 	 * On channel delete, make sure to remove all message supposed to be send to the channel
 	 * @param channel deleted channel
 	 */
 	private async channelDelete(channel: Discord.Channel) {
-		const messageLength = await this.dbManager.Message.destroy({ where: { channel_id: channel.id } });
-		this.logger.log("Channel deleted,", messageLength, "messages removed from DB");
+		const messageLength = await this.dbManager.Message.destroy({ where: { channel_id: channel.id }, force: true });
+		this.logger.log("Channel deleted, removing messages from DB");
 	}
 	/**
 	 * Send all messages supposed to be sended, every minutes

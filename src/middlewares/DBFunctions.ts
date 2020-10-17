@@ -17,15 +17,15 @@ export default function (req: SessionRequest, res: Response, next: Function) {
 	 */
 	req.addMessage = async (query: any, type: MessageType): Promise<string> => {
 		return (await Message.create({
-      ...query,
+			...query,
 			type: type,
 			timezone_code: (await Guild.findOne({ where: { id: query.guild_id }, attributes: { include: ["timezone_code"] } })).timezone_code,
 		})).getDataValue("id");
-  };
-  
-  req.updateMessage = async (query: any): Promise<void> => {
-    await Message.update({ ...query }, { where: { id: query.msg_id } });
-  }
+	};
+
+	req.updateMessage = async (query: any): Promise<void> => {
+		await Message.update({ ...query }, { where: { id: query.msg_id } });
+	}
 
 	req.addUser = async (data: UserDataModel): Promise<void> => {
 		await User.create(data);
@@ -71,15 +71,15 @@ export default function (req: SessionRequest, res: Response, next: Function) {
 	 * @param guildId the guild id to check
 	 */
 	req.hasGuild = async (guildId: string): Promise<boolean> => {
-		return await Guild.findOne({ where: { id: guildId } }) != null;
+		return await Guild.count({ where: { id: guildId } }) != 0;
 	}
 	/**
 	 * Check if the user exists in the database
 	 * @param userId  the user id to check
 	 */
 	req.hasUser = async (userId: string): Promise<boolean> => {
-		return await req.getUser(userId) != null;
-  }
-  
-  next();
+		return await User.count({where: {id: userId}}) != 0;
+	}
+
+	next();
 }

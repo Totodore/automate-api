@@ -20,7 +20,10 @@ router.get('/', async (req, res, next) => {
         else
             return false;
     });
-    guildRes = await Promise.all(guildRes.map(async (element) => { element.added = await req.hasGuild(element.id); return element; }));
+    guildRes = await Promise.all(guildRes.map(async (element) => {
+        element.added = await req.hasGuild(element.id);
+        return element;
+    }));
     guildRes.sort((a, b) => { if (a.added)
         return -1;
     else if (b.added)

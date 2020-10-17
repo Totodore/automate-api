@@ -1,7 +1,7 @@
 import { SessionRequest } from "../requests/RequestsMiddleware";
 import {Response} from "express";
 import fetch from "node-fetch";
-import Logger from "src/utils/Logger";
+import Logger from "../utils/Logger";
 
 export default async function(req: SessionRequest, res: Response, next: Function) {
     const logger = new Logger("GetUserInfos");

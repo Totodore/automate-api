@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const node_fetch_1 = require("node-fetch");
+const Logger_1 = require("../utils/Logger");
 async function default_1(req, res, next) {
+    const logger = new Logger_1.default("GetUserInfos");
     if (req.session.userId) {
         const userData = await req.getUser(req.session.userId);
         const reqUser = await node_fetch_1.default("https://discordapp.com/api/users/@me", {
@@ -11,7 +13,7 @@ async function default_1(req, res, next) {
             }
         });
         if (reqUser.status != 200) {
-            console.log(`Error : ${reqUser.status} ${reqUser.statusText}`);
+            logger.log(`Error : ${reqUser.status} ${reqUser.statusText}`);
             res.redirect("../connect?msg=" + encodeURI("Whoops ! It seems like your connection to Discord is impossible!"));
             return;
         }
