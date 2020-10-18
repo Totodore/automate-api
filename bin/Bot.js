@@ -32,8 +32,8 @@ class Bot {
         //On attend le passage à la prochaine minute pour être le plus syncro possible
         this.logger.log(`Actual minute : ${new Date().getMinutes()}`);
         this.logger.log("Waiting for new minute to start cron watcher");
-        // this.launchCronWatcher();
-        // setInterval(() => this.launchCronWatcher(), 1000*60*60*6);
+        this.launchCronWatcher();
+        setInterval(() => this.launchCronWatcher(), 1000 * 60 * 60 * 6);
         //Reset cronWatch every 6hour
     }
     /**
