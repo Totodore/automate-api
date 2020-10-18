@@ -34,7 +34,7 @@ class Bot {
         this.logger.log("Waiting for new minute to start cron watcher");
         this.launchCronWatcher();
         setInterval(() => this.launchCronWatcher(), 1000 * 60 * 60 * 6);
-        //Reset cronWatch every 6hour
+        // Reset cronWatch every 6hour
     }
     /**
      * Launch cron watcher by detecting new minute modification

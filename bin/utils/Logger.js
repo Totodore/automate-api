@@ -6,10 +6,10 @@ class Logger {
         this._datetime = _datetime;
     }
     log(...args) {
-        console.log(`[${this._name}] ${this._datetime && this.getTime()}`, ...args);
+        console.log(`[${this._name}] ${this._datetime ? this.getTime() : ""}`, ...args);
     }
     error(...args) {
-        console.error(`[${this._name}] ${this._datetime && this.getTime()}`, ...args);
+        console.error(`[${this._name}] ${this._datetime ? this.getTime() : ""}`, ...args);
     }
     getTime() {
         const date = new Date();
