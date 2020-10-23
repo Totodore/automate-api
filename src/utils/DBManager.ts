@@ -28,7 +28,7 @@ export default class DBManager extends Logger {
 	public async init(removeOld = false) {
 		this.User = UserModel.factory(this.sequelize, {timestamps: false});
 		this.Guild = GuildModel.factory(this.sequelize, {timestamps: false});
-		this.Message = MessageModel.factory(this.sequelize, {timestamps: false});
+		this.Message = MessageModel.factory(this.sequelize, { timestamps: false });
 		try {
 			await this.sequelize.sync({force: removeOld});
 		} catch (e) {
