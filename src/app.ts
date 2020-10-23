@@ -3,7 +3,6 @@ import * as express from "express";
 import * as path from "path";
 import * as cookieParser from "cookie-parser";
 import * as logger from "morgan";
-import * as session from "express-session";
 import * as formdata from "express-form-data";
 import Bot from "./Bot";
 import * as ejs from "ejs";
@@ -36,7 +35,6 @@ app.use(formdata.format());
 app.use(cookieParser());
 process.env.NODE_ENV == "production" || app.use(logger('dev'));
 app.use(cookieParser());
-app.use(session({ secret: "CoderLab=<3", resave: false, saveUninitialized: true, }));
 app.use(express.static(path.join(process.cwd(), "public")));
 
 //Regex qui prend tt sauf connect

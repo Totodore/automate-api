@@ -9,7 +9,6 @@ router.get('/', (req, res) => {
     res.redirect("../");
 });
 router.get('/deconnectUser', (req, res) => {
-    delete req.session;
     res.clearCookie("userId");
     res.sendStatus(200);
 });

@@ -5,8 +5,8 @@ import Logger from "../utils/Logger";
 
 export default async function(req: SessionRequest, res: Response, next: Function) {
     const logger = new Logger("GetUserInfos");
-    if (req.session.userId) {
-        const userData = await req.getUser(req.session.userId);
+    if (req.cookies.userId) {
+        const userData = await req.getUser(req.cookies.userId);
         const reqUser = await fetch("https://discordapp.com/api/users/@me", {
             headers: {
                 'Content-Type': 'application/json',
@@ -22,7 +22,7 @@ export default async function(req: SessionRequest, res: Response, next: Function
         const resUser = JSON.parse(await reqUser.text());
         req.headerData = {
             username: resUser.username,
-            avatar: `${process.env.CDN_ENDPOINT}/avatars/${req.session.userId}/${resUser.avatar}.png?size=64`
+            avatar: `${process.env.CDN_ENDPOINT}/avatars/${req.cookies.userId}/${resUser.avatar}.png?size=64`
         };
     } 
     next();

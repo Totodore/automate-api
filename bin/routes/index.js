@@ -8,7 +8,7 @@ const MANAGE_GUILD = 0x00000020;
 /* GET home page. */
 router.get('/', async (req, res, next) => {
     const logger = new Logger_1.default("Index");
-    const token = (await req.getUser(req.session.userId)).access_token;
+    const token = (await req.getUser(req.cookies.userId)).access_token;
     let guildRes = await req.getUserGuildsDiscord(token);
     if (!guildRes) {
         res.render('index', { header: req.headerData, error: "I didn't manage to collect all your channels, sniffu..." });

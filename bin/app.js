@@ -5,7 +5,6 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const session = require("express-session");
 const formdata = require("express-form-data");
 const Bot_1 = require("./Bot");
 const ejs = require("ejs");
@@ -37,7 +36,6 @@ app.use(formdata.format());
 app.use(cookieParser());
 process.env.NODE_ENV == "production" || app.use(logger('dev'));
 app.use(cookieParser());
-app.use(session({ secret: "CoderLab=<3", resave: false, saveUninitialized: true, }));
 app.use(express.static(path.join(process.cwd(), "public")));
 //Regex qui prend tt sauf connect
 //Middleware de gestion des données

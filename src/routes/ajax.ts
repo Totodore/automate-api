@@ -12,7 +12,6 @@ router.get('/', (req, res) => {
 });
 
 router.get('/deconnectUser', (req: SessionRequest, res) => {
-	delete req.session;
 	res.clearCookie("userId");
 	res.sendStatus(200);
 });

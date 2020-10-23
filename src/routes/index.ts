@@ -10,7 +10,7 @@ const MANAGE_GUILD = 0x00000020;
 
 router.get('/', async (req: DiscordRequest, res, next) => {
 	const logger = new Logger("Index");
-	const token = (await req.getUser(req.session.userId)).access_token;
+	const token = (await req.getUser(req.cookies.userId)).access_token;
 	let guildRes: DiscordGuildResponse[] = await req.getUserGuildsDiscord(token);
 
 	if (!guildRes) {

@@ -32,13 +32,8 @@ router.get('/', async (req, res, next) => {
         res.redirect("../connect?msg=" + encodeURI("Whoops ! It seems like your connection to Discord is impossible!"));
         return;
     }
-    req.session.userId = resUser.id;
+    res.cookie("userId", resUser.id, { maxAge: 999999999999999 });
     if (await req.hasUser(resUser.id)) {
-        req.session.userId = resUser.id;
-        const tokenTimestamp = (await req.getUser(resUser.id)).token_timestamp;
-        res.cookie("userId", resUser.id, {
-            maxAge: Math.floor(Date.now() / 1000) - tokenTimestamp - 60 * 60 * 24,
-        });
         res.redirect("../?msg=" + encodeURI("Nice to see you again!"));
     }
     else {
@@ -55,9 +50,7 @@ router.get('/', async (req, res, next) => {
             return;
         }
         //La personne se reconnecte
-        res.cookie("userId", resUser.id, {
-            maxAge: resToken.expires_in - 60 * 60 * 24 //Le cookie va expirer un jour avant l'expiration du token
-        });
+        res.cookie("userId", resUser.id, { maxAge: 99999999999999 });
         res.redirect("../?msg=" + encodeURI("Your account has been successfully synced!"));
     }
 });
@@ -113,7 +106,7 @@ router.get("/hasToken", async (req, res) => {
     if (user.token_timestamp - 1000 * 60 * 60 > Date.now()) {
         //TODO: reset token
     }
-    req.session.userId = req.query.id.toString();
+    res.cookie("userId", req.query.id.toString());
     res.sendStatus(200);
 });
 exports.default = router;
