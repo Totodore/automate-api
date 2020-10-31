@@ -89,16 +89,19 @@ class Bot {
      * TO then print logs every hour
      */
     async cronWatcher() {
-        new Date().getHours() == 0 && new Date().getMinutes() == 0 && this.sendStats();
+        if (new Date().getHours() == 0 && new Date().getMinutes() == 0)
+            this.sendStats();
         const messagesData = await this.dbManager.Message.findAll();
         let freqPromise = [];
         let ponctualPromise = [];
+        let messagesToBeSent = 0;
         this.fileLogger.log(`Number of messages ${messagesData.length}`);
         const timestamp = Math.floor(Date.now() / 1000 / 60);
         this.fileLogger.log(`Current Timestamp of ${timestamp} ${new Date(timestamp)}`);
         for (const message of messagesData) {
             const data = message.get();
             if (data.type == MessageModel_1.MessageType.Ponctual && data.timestamp == timestamp) {
+                messagesToBeSent++;
                 const channel = this.bot.channels.cache.get(data.channel_id);
                 try {
                     const promise = channel.send(data.sys_content || data.message);
@@ -118,6 +121,7 @@ class Bot {
                 const scheduler = cronInstance.schedule();
                 const timestampToExec = Math.floor(scheduler.next().unix() / 60);
                 if (timestampToExec == timestamp) {
+                    messagesToBeSent++;
                     const channel = this.bot.channels.cache.get(data.channel_id);
                     try {
                         const promise = channel.send(data.sys_content || data.message);
@@ -133,7 +137,7 @@ class Bot {
         }
         await Promise.all(freqPromise);
         await Promise.all(ponctualPromise);
-        this.logger.log(`<----------- Sent ${this.messageSentBatch} messages ----------->`);
+        this.logger.log(`<----------- Sent ${this.messageSentBatch}/${messagesToBeSent} messages ----------->`);
         this.messageSent += this.messageSentBatch; //Calcul du nombre de messages envoyés par heure
         this.messageSentBatch = 0;
     }

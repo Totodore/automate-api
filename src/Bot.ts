@@ -96,12 +96,14 @@ class Bot {
 	 * Store all promises message to two array and await the resolving of all the message sending
 	 * TO then print logs every hour
 	 */
-  private async cronWatcher() {
-    new Date().getHours() == 0 && new Date().getMinutes() == 0 && this.sendStats();
+  	private async cronWatcher() {
+		if (new Date().getHours() == 0 && new Date().getMinutes() == 0)
+			this.sendStats();
 
 		const messagesData = await this.dbManager.Message.findAll();
 		let freqPromise: Promise<Discord.Message>[] = [];
 		let ponctualPromise: Promise<Discord.Message>[] = [];
+		let messagesToBeSent = 0;
 		
 		this.fileLogger.log(`Number of messages ${messagesData.length}`);
 
@@ -109,7 +111,9 @@ class Bot {
 		this.fileLogger.log(`Current Timestamp of ${timestamp} ${new Date(timestamp)}`);
 		for (const message of messagesData) {
 			const data = message.get();
+
 			if (data.type == MessageType.Ponctual && data.timestamp == timestamp) {
+				messagesToBeSent++;
 				const channel = this.bot.channels.cache.get(data.channel_id) as Discord.TextChannel;
 				try {
 					const promise: Promise<Discord.Message> = channel.send(data.sys_content || data.message);
@@ -120,6 +124,7 @@ class Bot {
 				} catch(e) {
 					this.onMessageError(MessageType.Ponctual, channel.id, new Error("Before sending Ponctual Message error"));
 				}
+
 			} else if (data.type == MessageType.Frequential) {
 				if (data.cron.split(" ")[0] == "60")
 					return;
@@ -127,7 +132,10 @@ class Bot {
 				cronInstance.fromString(data.cron);
 				const scheduler = cronInstance.schedule();
 				const timestampToExec = Math.floor(scheduler.next().unix() / 60);
+
 				if (timestampToExec == timestamp) {
+
+					messagesToBeSent++;
 					const channel = this.bot.channels.cache.get(data.channel_id) as Discord.TextChannel;
 					try {
 						const promise: Promise<Discord.Message> = channel.send(data.sys_content || data.message);
@@ -137,12 +145,13 @@ class Bot {
 					} catch(e) {
 						this.onMessageError(MessageType.Frequential, channel?.id, new Error("Before sending Frequencial message error"));
 					}
+
 				}
 			}
 		}
 		await Promise.all(freqPromise);
 		await Promise.all(ponctualPromise);
-		this.logger.log(`<----------- Sent ${this.messageSentBatch} messages ----------->`);
+		this.logger.log(`<----------- Sent ${this.messageSentBatch}/${messagesToBeSent} messages ----------->`);
 		this.messageSent += this.messageSentBatch; //Calcul du nombre de messages envoyés par heure
 		this.messageSentBatch = 0;
 	}

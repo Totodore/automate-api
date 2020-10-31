@@ -4,3 +4,4 @@ data/
 tsconfig.json
 bot.log
 bin/**
+.github/**
