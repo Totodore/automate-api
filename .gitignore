@@ -7,3 +7,4 @@ data/
 **.log
 data/**
 temp/**
+bin/**

@@ -3,4 +3,4 @@ data/
 .gitignore
 tsconfig.json
 bot.log
-src/
+bin/**
