@@ -49,7 +49,7 @@ app.use([routesList.dashboard, routesList.index], CheckUserLogin, LoadUserData);
 //MiddleWare de chargement de la photo de profil
 //Pour les routes où c'est requis
 // app.use(`/\b(${routesList.dashboard}|${routesList.index})\b/g`, LoadUserData):,;
-
+ 
 app.use([routesList.index, routesList.oauth], DiscordRequestsMiddleware);
 
 app.use(routesList.index, IndexRouter);

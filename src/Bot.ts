@@ -111,7 +111,6 @@ class Bot {
 		this.fileLogger.log(`Current Timestamp of ${timestamp} ${new Date(timestamp)}`);
 		for (const message of messagesData) {
 			const data = message.get();
-
 			if (data.type == MessageType.Ponctual && data.timestamp == timestamp) {
 				messagesToBeSent++;
 				const channel = this.bot.channels.cache.get(data.channel_id) as Discord.TextChannel;
@@ -176,7 +175,8 @@ class Bot {
 		channel.send(`Nombre de serveurs : **${lengthServer}**`);
 		channel.send(`Nombre d'utilisateurs : **${lengthUsers}**`);
 		channel.send(`Messages programés : **${lengthMessages}**`);
-		channel.send(`Messages envoyé en une heure : **${this.messageSent}**`);
+		channel.send(`Messages envoyés en une journée : **${this.messageSent}**`);
+		channel.send(`Moyenne des messages envoyés en une heure : **${this.messageSent/12}**`);
 		this.messageSent = 0;
 	}
 
