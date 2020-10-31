@@ -39,7 +39,7 @@ router.post("/add_schedule", async (req, res) => {
         return;
     }
     try {
-        if (await req.isOverMessageLimit(query.guild_id)) {
+        if (await req.isOverMessageLimit(query.guild_id) === true) {
             res.status(403);
             res.send("Message not allowed");
         }

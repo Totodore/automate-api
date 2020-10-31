@@ -30,7 +30,7 @@ function default_1(req, res, next) {
      * @param guildId
      */
     req.isOverMessageLimit = async (guildId) => {
-        return await Message.count({ where: { guild_id: guildId } }) > parseInt(process.env.MAX_MESSAGE);
+        return await Message.count({ where: { guild_id: guildId } }) >= parseInt(process.env.MAX_MESSAGE);
     };
     /**
      * Update the timezone of a guild, also update all the messages timezonese concerned by this guild

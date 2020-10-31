@@ -109,6 +109,7 @@ router.get('/', async (req: SessionRequest, res, next) => {
         cdn: process.env.CDN_ENDPOINT,
         now_hour: String(new Date().getHours())+":"+String(new Date().getMinutes()+2),
         timezone_data: zones,
+        max_message: process.env.MAX_MESSAGE,
         guildTimezone: guildDB.timezone
     });
 });

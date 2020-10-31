@@ -39,7 +39,7 @@ export default function (req: SessionRequest, res: Response, next: Function) {
 	 * @param guildId 
 	 */
 	req.isOverMessageLimit = async (guildId: string): Promise<boolean> => {
-		return await Message.count({ where: { guild_id: guildId } }) > parseInt(process.env.MAX_MESSAGE);
+		return await Message.count({ where: { guild_id: guildId } }) >= parseInt(process.env.MAX_MESSAGE);
 	}
 
 	/**

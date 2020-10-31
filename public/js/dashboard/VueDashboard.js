@@ -200,7 +200,7 @@ class VueDashboard {
                 M.toast({html: "Error : This message could not be set"}, 5000);
                 console.log("Error ", response.status, " : ", response.statusText);
             } else if (response.status == 403) {
-                M.toast({html: "Reccuring messages are limited to 5 per server"}, 5000);
+                M.toast({html: "Reccuring messages are limited to "+ document["max_message"] +" per server"}, 5000);
             } else response.text().then((responseText) => {
 				let name;
 				document.channels.forEach(element => {if(element.id == channel_id) name = element.name;});
