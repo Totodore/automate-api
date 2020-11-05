@@ -7,7 +7,9 @@ COPY . .
 EXPOSE 3000
 
 RUN npm install
-RUN npm install typescript -g
+RUN npm install typescript sass -g
+
 RUN tsc
+RUN sass .:.
 
 CMD npm start

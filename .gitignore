@@ -4,7 +4,8 @@ data/
 bot.log
 bin/**
 .github/**
-*.css
+**.css
+**.map
 *.log
 .vscode/**
 .env
