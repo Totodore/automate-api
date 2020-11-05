@@ -4,7 +4,7 @@ import fetch from "node-fetch";
 import Logger from "../utils/Logger";
 
 export default async function(req: SessionRequest, res: Response, next: Function) {
-    const logger = new Logger("GetUserInfos");
+    const logger = new Logger("LoadUserData");
     if (req.cookies.userId) {
         const userData = await req.getUser(req.cookies.userId);
         const reqUser = await fetch("https://discordapp.com/api/users/@me", {

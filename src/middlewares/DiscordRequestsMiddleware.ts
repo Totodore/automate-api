@@ -15,21 +15,22 @@ export default async function (req: DiscordRequest, res: Response, next: Functio
 			}
 		});
 		if (reqUser.status != 200) {
-			logger.log(`Error : ${reqUser.status} ${reqUser.statusText}`);
+			logger.log(`Error getUserDiscord: ${reqUser.status} ${reqUser.statusText}`);
 			res.redirect("../connect?msg=" + encodeURI("Whoops ! It seems like your connection to Discord is impossible!"));
 			return;
 		} else
 			return await reqUser.json();
 	}
 
-	req.getUserGuildsDiscord = async (token: string): Promise<DiscordGuildResponse[]> => {
+  req.getUserGuildsDiscord = async (token: string): Promise<DiscordGuildResponse[]> => {
+    console.log(token);
 		const guildReq = await fetch("https://discordapp.com/api/users/@me/guilds", {
 			headers: {
 				'Authorization': `Bearer ${token}`
 			}
     });
 		if (guildReq.status != 200) {
-			logger.log(`Erreur : ${guildReq.status} ${guildReq.statusText}`);
+			logger.log(`Erreur getUserGuildsDiscord: ${guildReq.status} ${guildReq.statusText}`);
 		} else return await guildReq.json();
 	}
 
@@ -61,7 +62,7 @@ export default async function (req: DiscordRequest, res: Response, next: Functio
 			body: formData
 		});
 		if (reqToken.status != 200) {
-			logger.log(`Error : ${reqToken.status} ${reqToken.statusText}`);
+			logger.log(`Error addBotDiscord: ${reqToken.status} ${reqToken.statusText}`);
 		} else return await reqToken.json();
   }
   

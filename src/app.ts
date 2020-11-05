@@ -21,6 +21,7 @@ import DBFunctions from "./middlewares/DBFunctions";
 import DiscordRequestsMiddleware from "./middlewares/DiscordRequestsMiddleware";
 import DBManager from "./utils/DBManager";
 import LoggerRequest from "./middlewares/LoggerRequest";
+
 const app = express();
 // view engine setup
 app.set('views', process.cwd() + '/views');
@@ -42,21 +43,19 @@ app.use(express.static(path.join(process.cwd(), "public")));
 app.use(LoggerRequest);
 app.use(LoadDB);
 app.use(DBFunctions);
+app.use(DiscordRequestsMiddleware);
+
+app.use(routesList.connect, ConnectRouter);
+app.use(routesList.oauth, OauthRouter);
+
+
 //MiddelWare qui detecte si l'utilisateur est connecté ou pas
 //Pour les routes qui on besoin d'être logger on check le user login
 app.use([routesList.dashboard, routesList.index], CheckUserLogin, LoadUserData);
 
-//MiddleWare de chargement de la photo de profil
-//Pour les routes où c'est requis
-// app.use(`/\b(${routesList.dashboard}|${routesList.index})\b/g`, LoadUserData):,;
- 
-app.use([routesList.index, routesList.oauth], DiscordRequestsMiddleware);
-
-app.use(routesList.index, IndexRouter);
-app.use(routesList.connect, ConnectRouter);
-app.use(routesList.oauth, OauthRouter);
-app.use(routesList.ajax, AjaxRouter);
 app.use(routesList.dashboard, DashboardRouter);
+app.use(routesList.index, IndexRouter);
+app.use(routesList.ajax, AjaxRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
