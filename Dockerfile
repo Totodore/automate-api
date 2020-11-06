@@ -12,6 +12,4 @@ RUN npm install typescript sass -g
 RUN tsc
 RUN sass .:.
 
-RUN echo | ls -R | grep ":$" | sed -e 's/:$//' -e 's/[^-][^\/]*\//--/g' -e 's/^/   /' -e 's/-/|/'
-
 CMD npm start
