@@ -88,9 +88,9 @@ router.get("/set_timezone", async (req: SessionRequest, res) => {
 		return;
 	}
 	try {
-		const utc_offset = parseInt(query.utc_offset.toString())*60;
-		const timezone_code = momentTz.tz.names().filter(el => 
-			momentTz.tz.zone(el).utcOffset(new Date().getTime()) == utc_offset)[0];
+    const utc_offset = parseInt(query.utc_offset.toString()) * 60 * -1;
+		const timezone_code = momentTz.tz.names().filter(el => momentTz.tz.zone(el).utcOffset(new Date().getTime()) == utc_offset)[0];
+    logger.log("UTC Offset :", utc_offset);
 
 		await req.updateTimezone(query.guild_id.toString(), timezone_code, query.timezone.toString());
 		res.send("This timezone has been successfully set !");

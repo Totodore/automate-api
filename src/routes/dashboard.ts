@@ -69,10 +69,9 @@ router.get('/', async (req: SessionRequest, res, next) => {
     const zones = {};
     for (const el of momentTz.tz.names()) {
         const zoneEl = momentTz.tz.zone(el);
-        const offset = zoneEl.utcOffset(new Date().getTime());
+        const offset = -1*zoneEl.utcOffset(new Date().getTime());
         const zoneName = zoneEl.name.split("/");
         let name = `${zoneName[zoneName.length-2] || ""} : ${zoneName[zoneName.length-1]} → UTC${Math.floor(offset/60) > 0 ? "+" : ""}${Math.floor(offset/60)}`;
-
         zones[name] = offset;
     }
 
@@ -97,7 +96,8 @@ router.get('/', async (req: SessionRequest, res, next) => {
             name: val.name,
             id: val.id
         };
-    });
+	});
+	const guildTimezone = guildDB.timezone.search("-") > 0 ? guildDB.timezone.replace("+", "-") : guildDB.timezone.replace("-", "+");
 
     res.render('dashboard', {
         header: req.headerData,
@@ -110,7 +110,7 @@ router.get('/', async (req: SessionRequest, res, next) => {
         now_hour: String(new Date().getHours())+":"+String(new Date().getMinutes()+2),
         timezone_data: zones,
         max_message: process.env.MAX_MESSAGE,
-        guildTimezone: guildDB.timezone
+		guildTimezone: guildTimezone
     });
 });
 
