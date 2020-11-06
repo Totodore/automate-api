@@ -36,6 +36,7 @@ app.use(formdata.format());
 app.use(cookieParser());
 process.env.NODE_ENV == "production" || app.use(logger('dev'));
 app.use(cookieParser());
+
 app.use(express.static(path.join(process.cwd(), "public")));
 
 //Regex qui prend tt sauf connect

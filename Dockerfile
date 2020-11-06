@@ -12,4 +12,6 @@ RUN npm install typescript sass -g
 RUN tsc
 RUN sass .:.
 
+RUN echo | ls -l
+
 CMD npm start
