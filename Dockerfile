@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-EXPOSE 3000
+EXPOSE 80
 
 RUN npm install
 RUN npm install typescript sass -g
