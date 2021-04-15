@@ -42,7 +42,10 @@ class Bot {
 		this.logger.log(`Actual minute : ${new Date().getMinutes()}`);
     this.logger.log("Waiting for new minute to start cron watcher");
     await this.bot.user.setStatus("online");
-    await this.bot.user.setActivity({ url: "https://github.com/Totodore/automate", name: "Automate is an open source bot :)", type: "CUSTOM_STATUS" });
+    await this.bot.user.setPresence({
+      activity: { url: "https://github.com/Totodore/automate", name: "Automate is an open source bot :)", type: "CUSTOM_STATUS" },
+      status: "online",
+    });
     this.launchCronWatcher();
 		setInterval(() => this.launchCronWatcher(), 1000*60*60*6); 
 		// Reset cronWatch every 6hour
