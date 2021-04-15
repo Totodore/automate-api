@@ -36,11 +36,12 @@ class Bot {
 	/**
 	 * Handler triggered when the this.bot is ready and connected
 	 */
-	private ready(): void {
+	private async ready(): Promise<void> {
 		this.logger.log(`Logged in as ${this.bot.user.tag} !\n`);
 		//On attend le passage à la prochaine minute pour être le plus syncro possible
 		this.logger.log(`Actual minute : ${new Date().getMinutes()}`);
-		this.logger.log("Waiting for new minute to start cron watcher");
+    this.logger.log("Waiting for new minute to start cron watcher");
+    await this.bot.user.setActivity({ url: "https://github.com/Totodore/automate", name: "Automate is an open source bot :)" });
 		this.launchCronWatcher(); 
 		setInterval(() => this.launchCronWatcher(), 1000*60*60*6); 
 		// Reset cronWatch every 6hour
