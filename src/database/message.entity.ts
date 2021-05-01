@@ -1,7 +1,7 @@
+import { File } from './file.entity';
 import { Guild } from './guild.entity';
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from './user.entity';
-
 
 export enum MessageType {
   PONCTUAL,
@@ -20,8 +20,8 @@ export class Message extends BaseEntity {
   @Column({ length: 14, nullable: true })
   public cron: string;
 
-  @Column("timestamp", { nullable: true })
-  public timestamp: number;
+  @Column("datetime", { nullable: true })
+  public date: Date;
 
   @Column("text")
   public parsedMessage: string;
@@ -42,4 +42,8 @@ export class Message extends BaseEntity {
   @ManyToOne(() => User)
   @JoinColumn()
   public creator: User;
+
+  @OneToMany(() => File, file => file.message, { nullable: true, cascade: true })
+  @JoinColumn()
+  public files: File[];
 }
