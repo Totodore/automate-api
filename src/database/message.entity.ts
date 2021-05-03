@@ -1,6 +1,6 @@
 import { File } from './file.entity';
 import { Guild } from './guild.entity';
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from './user.entity';
 
 export enum MessageType {
@@ -46,4 +46,7 @@ export class Message extends BaseEntity {
   @OneToMany(() => File, file => file.message, { nullable: true, cascade: true })
   @JoinColumn()
   public files: File[];
+
+  @UpdateDateColumn()
+  public updatedDate: Date;
 }
