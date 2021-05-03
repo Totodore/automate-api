@@ -8,6 +8,7 @@ import { GuildController } from './controllers/guild.controller';
 import { UserController } from './controllers/user.controller';
 import { PassportModule } from '@nestjs/passport';
 import { OauthService } from './services/oauth.service';
+import { HttpModule } from "@nestjs/common";
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { OauthService } from './services/oauth.service';
       entities: ["**/*.entity.js"],
       synchronize: process.env.NODE_ENV === "dev",
     }),
-    PassportModule.register({})
+    PassportModule.register({}),
+    HttpModule
   ],
   controllers: [GuildController, UserController],
   providers: [FileService, BotService, OauthService],
