@@ -1,3 +1,6 @@
+import { Profile } from 'passport-discord';
+import { OauthService } from './../services/oauth.service';
+import { CurrentUser } from './../decorators/current-user.decorator';
 import { File } from './../database/file.entity';
 import { FileService } from './../services/file.service';
 import { Message, MessageType } from './../database/message.entity';
@@ -10,15 +13,19 @@ import { Guild } from 'src/database/guild.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { v4 as uuid } from "uuid";
+import { UserGuard } from 'src/guards/user.guard';
+import { User } from 'src/database/user.entity';
+import { CurrentProfile } from 'src/decorators/current-profile.decorator';
 
 @Controller('guild')
-@UseGuards(AuthGuard("discord"))
+@UseGuards(UserGuard)
 export class GuildController {
 
   constructor(
     private readonly logger: AppLogger,
     private readonly bot: BotService,
-    private readonly fileService: FileService
+    private readonly fileService: FileService,
+    private readonly oauth: OauthService
   ) { }
   
   @Get(":id")
@@ -27,6 +34,16 @@ export class GuildController {
     const guildInfo = await this.bot.getGuild(id);
 
     return new GuildOutModel(guild, guildInfo);
+  }
+
+  @Get("last")
+  public async getLastMessages(@CurrentProfile(true) profile: Profile): Promise<Message[]> {
+    const guilds = profile.guilds.filter(guild =>
+      (guild.permissions & 0x8) === 8
+      || (guild.permissions & 0x10) === 10
+      || (guild.permissions & 0x20) === 20
+    ).map(guild => Guild.create({id: guild.id}));
+    return await Message.find({ where: { guild: guilds }, take: 20, order: { updatedDate: "DESC" } });
   }
 
   @Get(":id/members")
