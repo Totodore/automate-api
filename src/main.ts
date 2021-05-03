@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
-  app.enableCors({ origin: "https://automatebot.app" });
+  app.enableCors();
   
   const config = new DocumentBuilder()
     .setTitle('Automate API')
