@@ -14,7 +14,7 @@ export class User extends BaseEntity {
   public refreshToken: string;
 
   @Column("timestamp")
-  public tokenExpires: number;
+  public tokenExpires: Date;
 
   @OneToMany(() => Message, message => message.creator, { cascade: true })
   public messages: Message[];
