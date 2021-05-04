@@ -49,4 +49,6 @@ export class Message extends BaseEntity {
 
   @UpdateDateColumn()
   public updatedDate: Date;
+
+  public channelName?: string;
 }
