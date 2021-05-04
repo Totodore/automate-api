@@ -1,5 +1,5 @@
 import { AppLogger } from './utils/app-logger.util';
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FileService } from './services/file.service';
@@ -14,8 +14,10 @@ import { HttpModule } from "@nestjs/common";
   imports: [
     AppLogger,
     ConfigModule.forRoot(),
+    CacheModule.register({ ttl: 5 * 60 }),
     TypeOrmModule.forRoot({
       type: 'mysql',
+      logging: ["error"],
       host: process.env.DB_HOST,
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
