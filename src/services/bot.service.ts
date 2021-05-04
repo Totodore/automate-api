@@ -17,9 +17,9 @@ export class BotService implements OnModuleInit {
     this.bot.on("guildCreate", (guild) => this.onGuildCreate(guild));
     this.bot.on("guildDelete", (guild) => this.onGuildDelete(guild));
     this.bot.on("channelDelete", (channel) => this.onChannelDelete(channel));
-    // await this.bot.login(process.env.TOKEN_BOT);
-    // await new Promise<void>((resolve) => this.bot.on("ready", resolve));
-    // this.logger.log(this.bot.user.username, "successfully logged in !");
+    await this.bot.login(process.env.TOKEN_BOT);
+    await new Promise<void>((resolve) => this.bot.on("ready", resolve));
+    this.logger.log(this.bot.user.username, "successfully logged in !");
   }
 
   /**
@@ -45,6 +45,15 @@ export class BotService implements OnModuleInit {
 
   public async getRoles(guildId: string): Promise<Discord.Role[]> {
     return (await this.bot.guilds.fetch(guildId)).roles.cache.array();
+  }
+
+  public async getChannel(channelId: string): Promise<Discord.GuildChannel> {
+    const channel = await this.bot.channels.fetch(channelId);
+    if (channel instanceof Discord.GuildChannel)
+      return channel;
+  }
+  public async getUser(userId: string): Promise<Discord.User> {
+    return this.bot.users.fetch(userId);
   }
 
   private async onGuildCreate(guild: Discord.Guild) {
