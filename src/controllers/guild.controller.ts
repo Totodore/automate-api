@@ -1,6 +1,5 @@
 import { Profile } from 'passport-discord';
 import { OauthService } from './../services/oauth.service';
-import { CurrentUser } from './../decorators/current-user.decorator';
 import { File } from './../database/file.entity';
 import { FileService } from './../services/file.service';
 import { Message, MessageType } from './../database/message.entity';
@@ -8,14 +7,12 @@ import { PostFreqMessageInModel, PostPonctMessageInModel, DataMessageModel, Patc
 import { GuildOutModel, MemberOutModel } from './../models/out/guild.out.model';
 import { BotService } from './../services/bot.service';
 import { AppLogger } from './../utils/app-logger.util';
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, CacheInterceptor, Controller, Delete, Get, Param, Patch, Post, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Guild } from 'src/database/guild.entity';
-import { AuthGuard } from '@nestjs/passport';
-import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { v4 as uuid } from "uuid";
 import { UserGuard } from 'src/guards/user.guard';
-import { User } from 'src/database/user.entity';
-import { CurrentProfile } from 'src/decorators/current-profile.decorator';
+import { createQueryBuilder } from 'typeorm';
 
 @Controller('guild')
 @UseGuards(UserGuard)
@@ -28,6 +25,30 @@ export class GuildController {
     private readonly oauth: OauthService
   ) { }
   
+  
+  @Post("last")
+  public async getLastMessages(@Body() profile: Profile): Promise<Message[]> {
+    const guilds = profile.guilds.filter(guild =>
+      (guild.permissions & 0x8) === 8
+      || (guild.permissions & 0x10) === 10
+      || (guild.permissions & 0x20) === 20
+    ).map(guild => guild.id);
+    return Promise.all((await createQueryBuilder(Message, "msg")
+      .where("msg.guildId IN (:guilds)", { guilds })
+      .orderBy("msg.updatedDate", "DESC").take(10)
+      .leftJoinAndSelect("msg.guild", "guild")
+      .leftJoinAndSelect("msg.creator", "creator")
+      .getMany())
+      .map(async (msg: Message) => {
+        msg.channelName = (await this.bot.getChannel(msg.channelId)).name;
+        const creator = (await this.bot.getUser(msg.creator.id));
+        msg.creator.name = creator.username;
+        msg.creator.profile = creator.avatar;
+        return msg;
+      })
+    );
+  }
+  
   @Get(":id")
   public async getOne(@Param('id') id: string): Promise<GuildOutModel> {
     const guild = await Guild.findOne(id, { relations: ["messages"] });
@@ -35,17 +56,7 @@ export class GuildController {
 
     return new GuildOutModel(guild, guildInfo);
   }
-
-  @Get("last")
-  public async getLastMessages(@CurrentProfile(true) profile: Profile): Promise<Message[]> {
-    const guilds = profile.guilds.filter(guild =>
-      (guild.permissions & 0x8) === 8
-      || (guild.permissions & 0x10) === 10
-      || (guild.permissions & 0x20) === 20
-    ).map(guild => Guild.create({id: guild.id}));
-    return await Message.find({ where: { guild: guilds }, take: 20, order: { updatedDate: "DESC" } });
-  }
-
+    
   @Get(":id/members")
   public async getMembers(@Query("q") query: string, @Param("id") id: string): Promise<MemberOutModel[]> {
     const members = (await (await this.bot.getGuild(id)).members.fetch({ query, limit: 50 })).array();
