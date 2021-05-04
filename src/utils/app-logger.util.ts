@@ -7,15 +7,19 @@ import { Injectable, Logger, Module } from '@nestjs/common';
 export class AppLogger extends Logger {
 
   log(...message: any[]) {
-    super.log(message.join(" "), "AppLogger");
+    super.log(message.join(" "), this.context || "AppLogger");
   }
   warn(...message: any[]) {
-    super.warn(message.join(" "), "AppLogger");
+    super.warn(message.join(" "), this.context || "AppLogger");
   }
   debug(...message: any[]) {
-    super.debug(message.join(" "), "AppLogger")
+    super.debug(message.join(" "), this.context || "AppLogger")
   }
   verbose(...message: any[]) {
-    super.verbose(message.join(" "), "AppLogger");
+    super.verbose(message.join(" "), this.context || "AppLogger");
   }
+  error(...message: any[]) {
+    super.error(message.join(" "), null, this.context || "AppLogger");
+  }
+  
 }
