@@ -11,15 +11,18 @@ export class GuildOutModel {
   public timezoneCode: string;
   public name: string;
   public roles: GuildElement[];
-  
-  public readonly maxMessages = process.env.MAX_MESSAGE;
+  public id: string;
+  public scope: boolean;
+  public readonly maxMessages = parseInt(process.env.MAX_MESSAGE);
 
   constructor(
     guild: Guild,
     guildInfo: Discord.Guild
   ) {
+    this.id = guildInfo.id;
     this.messages = guild.messages;
     this.timezone = guild.timezone;
+    this.scope = guild.scope;
     this.timezoneCode = guild.timezoneCode;
     this.channels = guildInfo.channels.cache.array().map(el => ({ name: el.name, id: el.id }));
     this.roles = guildInfo.roles.cache.array().map(el => ({ name: el.name, id: el.id }));

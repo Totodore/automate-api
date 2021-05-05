@@ -118,4 +118,9 @@ export class GuildController {
   public async patchFreq(@Param("id") id: string, @Body() body: PatchFreqMessageInModel) {
     await Message.update(id, body);
   }
+
+  @Patch(":id/scope")
+  public async patchScope(@Query("scope") scope: 'true' | 'false', @Param("id") id: string) {
+    await Guild.update(id, { scope: scope === 'true' });
+  }
 }

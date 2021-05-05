@@ -26,6 +26,9 @@ export class Guild extends BaseEntity {
   @Column()
   public timezoneCode: string;
 
+  @Column("boolean", { default: () => false })
+  public scope: boolean;
+
   @OneToMany(() => Message, message => message.guild, { cascade: true })
   public messages: Message[];
 
