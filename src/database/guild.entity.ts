@@ -28,4 +28,7 @@ export class Guild extends BaseEntity {
 
   @OneToMany(() => Message, message => message.guild, { cascade: true })
   public messages: Message[];
+
+  public name?: string;
+  public profile?: string;
 }

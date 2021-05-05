@@ -1,5 +1,7 @@
+import { createQueryBuilder } from 'typeorm';
+import { Guild } from './../database/guild.entity';
+import { BotService } from './../services/bot.service';
 import { CurrentProfile } from './../decorators/current-profile.decorator';
-import { OauthService } from './../services/oauth.service';
 import { Profile } from 'passport-discord';
 import { User } from 'src/database/user.entity';
 import { UserGuard } from './../guards/user.guard';
@@ -8,13 +10,24 @@ import { AuthGuard } from '@nestjs/passport';
 import { Request, Response } from 'express';
 import * as jwt from "jsonwebtoken";
 import { CurrentUser } from 'src/decorators/current-user.decorator';
+import { DiscordProfile } from 'src/models/out/user.out.model';
 @Controller('user')
 export class UserController {
+
+  constructor(
+    private readonly bot: BotService
+  ) {}
   
   @Get("me")
   @UseGuards(UserGuard)
   @UseInterceptors(CacheInterceptor)
-  public async getMe(@CurrentProfile(true) profile: Profile): Promise<Profile> {
+  public async getMe(@CurrentProfile(true) profile: DiscordProfile): Promise<Profile> {
+    const guildIds = (await createQueryBuilder(Guild, 'guild').where("guild.id IN (:...ids)", { ids: profile.guilds.map(el => el.id) }).getMany()).map(el => el.id);
+    profile.guilds.sort((a, b) => {
+      a.added = guildIds.includes(a.id);
+      b.added = guildIds.includes(b.id);
+      return guildIds.includes(a.id) ? -1 : 1
+    });
     return profile;
   }
   

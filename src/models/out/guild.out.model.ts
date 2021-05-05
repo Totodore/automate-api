@@ -1,3 +1,4 @@
+import { GuildInfo } from 'passport-discord';
 import { Guild } from 'src/database/guild.entity';
 import { Message } from 'src/database/message.entity';
 import * as Discord from "discord.js";
@@ -37,4 +38,8 @@ export class MemberOutModel {
 export interface GuildElement {
   name: string;
   id: string;
+}
+
+export interface GuildInfoProfile extends GuildInfo {
+  added: boolean;
 }

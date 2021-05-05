@@ -1,11 +1,11 @@
 import { AppLogger } from './../utils/app-logger.util';
-import { Profile } from 'passport-discord';
 import { User } from 'src/database/user.entity';
 import { createParamDecorator, SetMetadata, ExecutionContext, InternalServerErrorException, HttpException } from '@nestjs/common';
 import { Request } from 'express';
 import { decode } from 'jsonwebtoken';
 import { GuildInfo } from 'passport-discord';
 import axios, { AxiosError } from "axios";
+import { Profile } from 'passport-discord';
 
 export const CurrentProfile = createParamDecorator(async (selectGuilds: boolean, context: ExecutionContext) => {
 

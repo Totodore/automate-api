@@ -38,17 +38,21 @@ export class GuildController {
       .orderBy("msg.updatedDate", "DESC").take(10)
       .leftJoinAndSelect("msg.guild", "guild")
       .leftJoinAndSelect("msg.creator", "creator")
+      .leftJoinAndSelect("msg.files", "files")
       .getMany())
       .map(async (msg: Message) => {
         msg.channelName = (await this.bot.getChannel(msg.channelId)).name;
-        const creator = (await this.bot.getUser(msg.creator.id));
+        const creator = await this.bot.getUser(msg.creator.id);
+        const guild = await this.bot.getGuild(msg.guild.id);
         msg.creator.name = creator.username;
         msg.creator.profile = creator.avatar;
+        msg.guild.name = guild.name;
+        msg.guild.profile = guild.icon;
         return msg;
       })
     );
   }
-  
+
   @Get(":id")
   public async getOne(@Param('id') id: string): Promise<GuildOutModel> {
     const guild = await Guild.findOne(id, { relations: ["messages"] });

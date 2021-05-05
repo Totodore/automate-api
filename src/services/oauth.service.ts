@@ -2,7 +2,7 @@ import { DiscordUser } from './../models/oauth.model';
 import { User } from './../database/user.entity';
 import { Injectable, HttpService } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, Profile, GuildInfo } from "passport-discord";
+import { Strategy, Profile } from "passport-discord";
 
 @Injectable()
 export class OauthService extends PassportStrategy(Strategy, 'discord') {
