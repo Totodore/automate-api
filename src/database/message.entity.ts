@@ -47,6 +47,9 @@ export class Message extends BaseEntity {
   @JoinColumn()
   public files: File[];
 
+  @Column()
+  public activated: boolean;
+
   @UpdateDateColumn()
   public updatedDate: Date;
 

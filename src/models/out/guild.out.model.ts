@@ -8,7 +8,6 @@ export class GuildOutModel {
   public messages: Message[];
   public channels: GuildElement[];
   public timezone: string;
-  public timezoneCode: string;
   public name: string;
   public roles: GuildElement[];
   public id: string;
@@ -23,7 +22,6 @@ export class GuildOutModel {
     this.messages = guild.messages;
     this.timezone = guild.timezone;
     this.scope = guild.scope;
-    this.timezoneCode = guild.timezoneCode;
     this.channels = guildInfo.channels.cache.array().map(el => ({ name: el.name, id: el.id }));
     this.roles = guildInfo.roles.cache.array().map(el => ({ name: el.name, id: el.id }));
   }

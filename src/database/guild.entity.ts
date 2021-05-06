@@ -23,9 +23,6 @@ export class Guild extends BaseEntity {
   @Column()
   public timezone: string;
 
-  @Column()
-  public timezoneCode: string;
-
   @Column("boolean", { default: () => false })
   public scope: boolean;
 
