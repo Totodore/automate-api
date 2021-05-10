@@ -7,13 +7,16 @@ import { Guild } from 'src/database/guild.entity';
 @Injectable()
 export class BotService implements OnModuleInit {
   
-  private readonly bot = new Discord.Client();
+  private bot!: Discord.Client;
 
   constructor(
     private readonly logger: AppLogger
   ) {}
   
   public async onModuleInit() {
+    const intents = new Discord.Intents(Discord.Intents.NON_PRIVILEGED);
+    // intents.add("GUILD_MEMBERS");
+    this.bot = new Discord.Client({ ws: { intents } });
     this.bot.on("guildCreate", (guild) => this.onGuildCreate(guild));
     this.bot.on("guildDelete", (guild) => this.onGuildDelete(guild));
     this.bot.on("channelDelete", (channel) => this.onChannelDelete(channel));

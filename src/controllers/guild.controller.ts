@@ -63,16 +63,9 @@ export class GuildController {
       msg.creator.profile = creator.avatar;
     }
     const guildInfo = await this.bot.getGuild(id);
-
     return new GuildOutModel(guild, guildInfo);
   }
-    
-  @Get(":id/members")
-  public async getMembers(@Query("q") query: string, @Param("id") id: string): Promise<MemberOutModel[]> {
-    const members = (await (await this.bot.getGuild(id)).members.fetch({ query, limit: 50 })).array();
-    return members.map(el => new MemberOutModel(el.nickname, el.displayName, el.id));
-  }
-
+  
   @Post(":id/freq")
   @UseInterceptors(FilesInterceptor('files', 5, { limits: { fieldSize: 8 } }))
   public async postFreqMessage(@Body() body: PostFreqMessageInModel, @UploadedFiles() files: Express.Multer.File[]) {
@@ -88,7 +81,7 @@ export class GuildController {
       files: filesData
     }).save();
   }
-
+  
   @Post(":id/ponctual")
   @UseInterceptors(FilesInterceptor('files', 5, { limits: { fieldSize: 8 } }))
   public async postPonctualMessage(@Body() body: PostPonctMessageInModel, @UploadedFiles() files: Express.Multer.File[]) {
@@ -104,12 +97,25 @@ export class GuildController {
       files: filesData
     }).save();
   }
-
+  
   @Delete(":id")
   public async deleteMessage(@Param("id") id: string) {
     await Message.delete(id);
   }
-
+  
+  @Get(":id/members")
+  public async getSuggestions(@Query("q") query: string, @Param("id") id: string): Promise<MemberOutModel[]> {
+    const guild = await this.bot.getGuild(id);
+    if (query.startsWith("@")) {
+      query = query.substr(1);
+      const members = guild.members.cache.array()
+        .filter(el => el.nickname?.toLowerCase().includes(query.toLowerCase()) || el.displayName?.toLowerCase().includes(query.toLowerCase()))
+        .slice(0, 20);
+      return members.map(el => new MemberOutModel(el.displayName, el.nickname, el.id));
+    }
+      
+  }
+  
   @Patch(":id/content")
   public async patchContent(@Param("id") id: string, @Body() body: DataMessageModel) {
     await Message.update(id, body);

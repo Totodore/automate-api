@@ -22,7 +22,9 @@ export class GuildOutModel {
     this.messages = guild.messages;
     this.timezone = guild.timezone;
     this.scope = guild.scope;
-    this.channels = guildInfo.channels.cache.array().map(el => ({ name: el.name, id: el.id }));
+    this.channels = guildInfo.channels.cache.array()
+      .filter(el => el.type == "text" || el.type == "news")
+      .map(el => ({ name: el.name, id: el.id }));
     this.roles = guildInfo.roles.cache.array().map(el => ({ name: el.name, id: el.id }));
   }
 }
