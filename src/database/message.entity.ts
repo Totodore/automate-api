@@ -1,6 +1,7 @@
+import { FileService } from './../services/file.service';
 import { File } from './file.entity';
 import { Guild } from './guild.entity';
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { AfterRemove, BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from './user.entity';
 
 export enum MessageType {
@@ -10,6 +11,10 @@ export enum MessageType {
 
 @Entity()
 export class Message extends BaseEntity {
+
+  constructor(
+    private readonly fileService: FileService
+  ) { super() }
 
   @PrimaryGeneratedColumn("uuid")
   public id: string;
@@ -54,4 +59,11 @@ export class Message extends BaseEntity {
   public updatedDate: Date;
 
   public channelName?: string;
+
+  @AfterRemove()
+  onRemove() {
+    for (const file of this.files) {
+      this.fileService.removeFile(file.id);
+    }
+  }
 }

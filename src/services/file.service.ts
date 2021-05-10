@@ -17,8 +17,8 @@ export class FileService implements OnModuleInit {
 		this._logger.log("Base File Route", this._baseRoute);
   }
 
-	public getFile(id: string): Buffer {
-		return fs.readFileSync(path.join(this._baseRoute, id))
+	public async getFile(id: string): Promise<Buffer> {
+		return fs.readFile(path.join(this._baseRoute, id))
 	}
 
 	/**
@@ -28,7 +28,7 @@ export class FileService implements OnModuleInit {
   public async writeFile(file: Buffer, id: string): Promise<number> {
     const imgPath = path.join(this._baseRoute, id);
     try {
-      fs.writeFileSync(imgPath, file);
+      await fs.writeFile(imgPath, file);
       return file.length;
     } catch (e) {
       this._logger.error(e);
@@ -37,10 +37,10 @@ export class FileService implements OnModuleInit {
 	}
 
 	public removeFile(id: string) {
-		fs.removeSync(path.join(this._baseRoute, id.toString()));
+		return fs.remove(path.join(this._baseRoute, id.toString()));
 	}
 
-	public imageExist(id: string): boolean {
-		return fs.existsSync(path.join(this._baseRoute, id));
+	public async imageExist(id: string): Promise<boolean> {
+		return fs.pathExists(path.join(this._baseRoute, id));
   }
 }
