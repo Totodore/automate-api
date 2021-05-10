@@ -4,12 +4,8 @@ WORKDIR /app
 
 COPY . .
 
-EXPOSE 80
-
 RUN npm install
-RUN npm install typescript sass -g
 
-RUN tsc
-RUN sass .:.
+RUN npm run build
 
-CMD npm start
+CMD npm run start:prod
