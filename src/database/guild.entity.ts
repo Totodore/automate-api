@@ -12,7 +12,7 @@ export class Guild extends BaseEntity {
   @Exclude()
   public token: string;
 
-  @Column("timestamp")
+  @Column()
   @Exclude()
   public tokenExpires: number;
 

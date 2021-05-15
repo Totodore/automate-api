@@ -5,8 +5,8 @@ import { AfterRemove, BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToMa
 import { User } from './user.entity';
 
 export enum MessageType {
-  PONCTUAL,
-  FREQUENTIAL
+  PONCTUAL = 0,
+  FREQUENTIAL = 1
 }
 
 @Entity()
@@ -22,7 +22,7 @@ export class Message extends BaseEntity {
   @Column({ length: 18 })
   public channelId: string;
 
-  @Column({ length: 14, nullable: true })
+  @Column({ nullable: true })
   public cron: string;
 
   @Column("datetime", { nullable: true })
@@ -32,13 +32,13 @@ export class Message extends BaseEntity {
   public parsedMessage: string;
 
   @Column("text")
-  public rawMessage: string;
+  public message: string;
 
   @Column("text")
   public description: string;
 
-  @Column({ type: "enum", enum: MessageType })
-  public type: MessageType;
+  @Column()
+  public typeEnum: number;
 
   @ManyToOne(() => Guild)
   @JoinColumn()
@@ -65,5 +65,9 @@ export class Message extends BaseEntity {
     for (const file of this.files) {
       this.fileService.removeFile(file.id);
     }
+  }
+
+  public get type(): MessageType {
+    return MessageType[MessageType[this.typeEnum]];
   }
 }
