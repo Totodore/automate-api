@@ -8,6 +8,7 @@ import { Guild } from 'src/database/guild.entity';
 export class BotService implements OnModuleInit {
   
   private bot!: Discord.Client;
+  public readonly automateGuildID = "702623012465278978";
 
   constructor(
     private readonly logger: AppLogger
@@ -57,6 +58,9 @@ export class BotService implements OnModuleInit {
   }
   public async getUser(userId: string): Promise<Discord.User> {
     return this.bot.users.fetch(userId);
+  }
+  public async isInAutomateDiscord(userId: string): Promise<boolean> {
+    return (await this.getGuild(this.automateGuildID)).member(userId) != null;
   }
 
   private async onGuildCreate(guild: Discord.Guild) {

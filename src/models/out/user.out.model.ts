@@ -10,6 +10,7 @@ export class AuthOutModel {
 
 export interface DiscordProfile extends Profile {
   guilds: DiscordGuild[];
+  joinedServer: boolean;
 }
 
 export interface DiscordGuild extends GuildInfo {

@@ -22,12 +22,19 @@ export class UserController {
   @UseGuards(UserGuard)
   @UseInterceptors(CacheInterceptor)
   public async getMe(@CurrentProfile(true) profile: DiscordProfile): Promise<Profile> {
-    const guildIds = (await createQueryBuilder(Guild, 'guild').where("guild.id IN (:...ids)", { ids: profile.guilds.map(el => el.id) }).getMany()).map(el => el.id);
-    profile.guilds.sort((a, b) => {
+    const guilds = (await createQueryBuilder(Guild, 'guild').where("guild.id IN (:...ids)", { ids: profile.guilds.map(el => el.id) }).getMany());
+    const guildIds = guilds.map(el => el.id);
+    profile.guilds = profile.guilds.filter(guild =>
+      ((guild.permissions & 0x8) === 8
+        || (guild.permissions & 0x10) === 10
+        || (guild.permissions & 0x20) === 20)
+      || guilds.find(el => el.id == guild.id)?.scope == true
+    ).sort((a, b) => {
       a.added = guildIds.includes(a.id);
       b.added = guildIds.includes(b.id);
       return guildIds.includes(a.id) ? -1 : 1
     });
+    profile.joinedServer = await this.bot.isInAutomateDiscord(profile.id);
     return profile;
   }
   
