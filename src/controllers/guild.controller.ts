@@ -1,3 +1,4 @@
+import { User } from './../database/user.entity';
 import { Profile } from 'passport-discord';
 import { OauthService } from './../services/oauth.service';
 import { File } from './../database/file.entity';
@@ -14,6 +15,7 @@ import { v4 as uuid } from "uuid";
 import { UserGuard } from 'src/guards/user.guard';
 import { createQueryBuilder } from 'typeorm';
 import { TIMEZONES } from 'src/utils/timezones.util';
+import { CurrentUser } from 'src/decorators/current-user.decorator';
 
 @Controller('guild')
 @UseGuards(UserGuard)
@@ -66,23 +68,30 @@ export class GuildController {
     return new GuildOutModel(guild, guildInfo);
   }
   
-  @Post(":id/freq")
+  @Post(":id/message/freq")
   @UseInterceptors(FilesInterceptor('files', 5, { limits: { fieldSize: 8 } }))
-  public async postFreqMessage(@Body() body: PostFreqMessageInModel, @UploadedFiles() files: Express.Multer.File[]) {
+  public async postFreqMessage(
+    @Body() body: PostFreqMessageInModel,
+    @UploadedFiles() files: Express.Multer.File[],
+    @Param("id") id: string,
+    @CurrentUser() creator: User
+  ): Promise<Message> {
     const filesData: File[] = [];
-    for (const file of files) {
+    for (const file of (files || [])) {
       const id = uuid();
       this.fileService.writeFile(file.buffer, id);
       filesData.push(File.create({ id }));
     }
-    await Message.create({
+    return await Message.create({
       ...body,
+      guild: Guild.create({ id }),
+      creator,
       type: MessageType.FREQUENTIAL,
       files: filesData
     }).save();
   }
   
-  @Post(":id/ponctual")
+  @Post(":id/message/ponctual")
   @UseInterceptors(FilesInterceptor('files', 5, { limits: { fieldSize: 8 } }))
   public async postPonctualMessage(@Body() body: PostPonctMessageInModel, @UploadedFiles() files: Express.Multer.File[]) {
     const filesData: File[] = [];

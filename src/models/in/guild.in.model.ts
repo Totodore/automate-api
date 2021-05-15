@@ -2,16 +2,13 @@ import { IsDateString, isDateString, IsString, Length, Matches, MaxLength } from
 
 export class DataMessageModel {
   @MaxLength(2000)
-  public rawMessage: string;
+  public message: string;
 
   @MaxLength(2000)
   public parsedMessage: string;
 }
 
 abstract class PostMessageModel extends DataMessageModel {
-  @Length(18, 18)
-  public guildId: string;
-
   @Length(18, 18)
   public channelId: string;
 
