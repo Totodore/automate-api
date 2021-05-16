@@ -1,3 +1,4 @@
+import { AuthGuard } from '@nestjs/passport';
 import { User } from './../database/user.entity';
 import { Profile } from 'passport-discord';
 import { OauthService } from './../services/oauth.service';
@@ -8,7 +9,7 @@ import { PostFreqMessageInModel, PostPonctMessageInModel, DataMessageModel, Patc
 import { GuildOutModel, MemberOutModel } from './../models/out/guild.out.model';
 import { BotService } from './../services/bot.service';
 import { AppLogger } from './../utils/app-logger.util';
-import { BadRequestException, Body, CacheInterceptor, Controller, Delete, Get, Param, Patch, Post, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, CacheInterceptor, Controller, Delete, Get, MessageEvent, Param, Patch, Post, Query, Req, Sse, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Guild } from 'src/database/guild.entity';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { v4 as uuid } from "uuid";
@@ -16,18 +17,16 @@ import { UserGuard } from 'src/guards/user.guard';
 import { createQueryBuilder } from 'typeorm';
 import { TIMEZONES } from 'src/utils/timezones.util';
 import { CurrentUser } from 'src/decorators/current-user.decorator';
+import { Observable, Observer, Subscriber } from 'rxjs';
 
 @Controller('guild')
 @UseGuards(UserGuard)
 export class GuildController {
 
   constructor(
-    private readonly logger: AppLogger,
     private readonly bot: BotService,
     private readonly fileService: FileService,
-    private readonly oauth: OauthService
   ) { }
-  
   
   @Post("last")
   public async getLastMessages(@Body() profile: Profile): Promise<Message[]> {
@@ -66,6 +65,18 @@ export class GuildController {
     }
     const guildInfo = await this.bot.getGuild(id);
     return new GuildOutModel(guild, guildInfo);
+  }
+
+  @Sse(":id/add")
+  public onAddOne(@Param("id") id: string): Observable<MessageEvent> {
+    const listener = (observer: Subscriber<MessageEvent>) => {
+      observer.next({ id, data: id });
+      this.bot.newGuildEmitter.removeListener(id, listener);
+      observer.complete();
+    };
+    return new Observable(observer => {
+      this.bot.newGuildEmitter.addListener(id, () => listener(observer));
+    });
   }
   
   @Post(":id/message/freq")
@@ -155,5 +166,11 @@ export class GuildController {
   @Patch(":id/message/:msgId/state")
   public async patchMessageState(@Query("state") state: "true" | "false", @Param("msgId") id: string) {
     await Message.update(id, { activated: state === "true" });
+  }
+
+  @Delete(":id")
+  public async removeAutomateFromGuild(@Param("id") id: string) {
+    await this.bot.deleteGuild(id);
+    await Guild.delete(id);
   }
 }

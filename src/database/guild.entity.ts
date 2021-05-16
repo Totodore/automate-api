@@ -8,19 +8,8 @@ export class Guild extends BaseEntity {
   @PrimaryColumn({ length: 18 })
   public id: string;
   
-  @Column({ length: 30 })
-  @Exclude()
-  public token: string;
 
-  @Column()
-  @Exclude()
-  public tokenExpires: number;
-
-  @Column({ length: 30 })
-  @Exclude()
-  public refreshToken: string;
-
-  @Column()
+  @Column({ nullable: true })
   public timezone: string;
 
   @Column("boolean", { default: () => false })

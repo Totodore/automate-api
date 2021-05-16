@@ -7,9 +7,9 @@ export class UserGuard implements CanActivate {
   /** 
    * Guard which verify the user jwt token 
    */
-   public canActivate(context: ExecutionContext) {
-    const auth: string = context.switchToHttp().getRequest().headers.authorization;
-    const token = auth?.startsWith("Bearer ") ? auth.substring(7) : "";
+  public canActivate(context: ExecutionContext) {
+    const auth: string = context.switchToHttp().getRequest().headers.authorization || context.switchToHttp().getRequest().query.token;
+    const token = auth?.startsWith("Bearer ") ? auth.substring(7) : auth;
     try {
       verify(token, process.env.JWT_SECRET);
     } catch (e) {

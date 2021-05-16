@@ -3,13 +3,14 @@ import { Message } from './../database/message.entity';
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import * as Discord from "discord.js";
 import { Guild } from 'src/database/guild.entity';
+import { EventEmitter } from 'events';
 
 @Injectable()
 export class BotService implements OnModuleInit {
   
   private bot!: Discord.Client;
   public readonly automateGuildID = "702623012465278978";
-
+  public readonly newGuildEmitter = new EventEmitter();
   constructor(
     private readonly logger: AppLogger
   ) {}
@@ -63,8 +64,14 @@ export class BotService implements OnModuleInit {
     return (await this.getGuild(this.automateGuildID)).member(userId) != null;
   }
 
+  public async deleteGuild(guildId: string) {
+    return await (await this.bot.guilds.fetch(guildId)).delete();
+  }
+
   private async onGuildCreate(guild: Discord.Guild) {
     await guild.systemChannel?.send(`Hey ! I'm Automate, to give me orders you need to go on this website : https://automatebot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
+    await Guild.create({ id: guild.id }).save();
+    this.newGuildEmitter.emit(guild.id);
   }
 
   private async onGuildDelete(guild: Discord.Guild) {
