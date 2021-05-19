@@ -168,9 +168,4 @@ export class GuildController {
     await Message.update(id, { activated: state === "true" });
   }
 
-  @Delete(":id")
-  public async removeAutomateFromGuild(@Param("id") id: string) {
-    await this.bot.deleteGuild(id);
-    await Guild.delete(id);
-  }
 }
