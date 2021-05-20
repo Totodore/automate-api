@@ -8,6 +8,4 @@ RUN npm install
 
 RUN npm run build
 
-VOLUME [ "/data" ]
-
 CMD npm run start:prod
