@@ -1,15 +1,12 @@
-import { AuthGuard } from '@nestjs/passport';
 import { User } from './../database/user.entity';
 import { Profile } from 'passport-discord';
-import { OauthService } from './../services/oauth.service';
 import { File } from './../database/file.entity';
 import { FileService } from './../services/file.service';
 import { Message, MessageType } from './../database/message.entity';
 import { PostFreqMessageInModel, PostPonctMessageInModel, DataMessageModel, PatchPonctMessageInModel, PatchFreqMessageInModel } from './../models/in/guild.in.model';
 import { GuildOutModel, MemberOutModel } from './../models/out/guild.out.model';
 import { BotService } from './../services/bot.service';
-import { AppLogger } from './../utils/app-logger.util';
-import { BadRequestException, Body, CacheInterceptor, Controller, Delete, Get, MessageEvent, Param, Patch, Post, Query, Req, Sse, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, MessageEvent, Param, Patch, Post, Query, Sse, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Guild } from 'src/database/guild.entity';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { v4 as uuid } from "uuid";
@@ -17,7 +14,7 @@ import { UserGuard } from 'src/guards/user.guard';
 import { createQueryBuilder } from 'typeorm';
 import { TIMEZONES } from 'src/utils/timezones.util';
 import { CurrentUser } from 'src/decorators/current-user.decorator';
-import { Observable, Observer, Subscriber } from 'rxjs';
+import { Observable, Subscriber } from 'rxjs';
 
 @Controller('guild')
 @UseGuards(UserGuard)
@@ -97,7 +94,7 @@ export class GuildController {
       ...body,
       guild: Guild.create({ id }),
       creator,
-      type: MessageType.FREQUENTIAL,
+      typeEnum: MessageType.FREQUENTIAL,
       files: filesData
     }).save();
   }
@@ -113,7 +110,7 @@ export class GuildController {
     }
     await Message.create({
       ...body,
-      type: MessageType.PONCTUAL,
+      typeEnum: MessageType.PONCTUAL,
       files: filesData
     }).save();
   }
