@@ -3,7 +3,7 @@ import { Profile } from 'passport-discord';
 import { File } from './../database/file.entity';
 import { FileService } from './../services/file.service';
 import { Message, MessageType } from './../database/message.entity';
-import { PostFreqMessageInModel, PostPonctMessageInModel, DataMessageModel, PatchPonctMessageInModel, PatchFreqMessageInModel } from './../models/in/guild.in.model';
+import { PostFreqMessageInModel, PostPonctMessageInModel, PatchPonctMessageInModel, PatchFreqMessageInModel, DataMessageModel } from './../models/in/guild.in.model';
 import { GuildOutModel, MemberOutModel } from './../models/out/guild.out.model';
 import { BotService } from './../services/bot.service';
 import { BadRequestException, Body, Controller, Delete, Get, MessageEvent, Param, Patch, Post, Query, Sse, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
