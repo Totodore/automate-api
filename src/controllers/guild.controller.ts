@@ -101,7 +101,12 @@ export class GuildController {
   
   @Post(":id/message/ponctual")
   @UseInterceptors(FilesInterceptor('files', 5, { limits: { fieldSize: 8 } }))
-  public async postPonctualMessage(@Body() body: PostPonctMessageInModel, @UploadedFiles() files: Express.Multer.File[]) {
+  public async postPonctualMessage(
+    @Body() body: PostFreqMessageInModel,
+    @UploadedFiles() files: Express.Multer.File[],
+    @Param("id") id: string,
+    @CurrentUser() creator: User
+  ) {
     const filesData: File[] = [];
     for (const file of (files || [])) {
       const id = uuid();
@@ -110,6 +115,8 @@ export class GuildController {
     }
     return await Message.create({
       ...body,
+      guild: Guild.create({ id }),
+      creator,
       typeEnum: MessageType.PONCTUAL,
       files: filesData
     }).save();
