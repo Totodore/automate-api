@@ -25,7 +25,6 @@ export class BotService implements OnModuleInit {
     this.bot.on("channelDelete", (channel) => this.onChannelDelete(channel));
     try {
       await this.bot.login(process.env.TOKEN_BOT);
-      await new Promise<void>((resolve) => this.bot.on("ready", resolve));
       this.logger.log(this.bot.user.username, "successfully logged in !");
     } catch (e) {
       this.logger.error(e);

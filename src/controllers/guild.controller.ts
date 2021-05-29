@@ -125,9 +125,7 @@ export class GuildController {
     const guild = await this.bot.getGuild(id);
     if (query.startsWith("@")) {
       query = query.substr(1);
-      const members = guild.members.cache.array()
-        .filter(el => el.nickname?.toLowerCase().includes(query.toLowerCase()) || el.displayName?.toLowerCase().includes(query.toLowerCase()))
-        .slice(0, 20);
+      const members = (await guild.members.fetch({ query, limit: 20 })).array();
       return members.map(el => new MemberOutModel(el.displayName, el.nickname, el.id));
     }
       
