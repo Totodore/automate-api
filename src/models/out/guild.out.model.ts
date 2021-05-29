@@ -12,7 +12,6 @@ export class GuildOutModel {
   public roles: GuildElement[];
   public id: string;
   public scope: boolean;
-  public readonly maxMessages = parseInt(process.env.MAX_MESSAGE);
 
   constructor(
     guild: Guild,
