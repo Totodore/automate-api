@@ -158,6 +158,11 @@ export class GuildController {
     await Guild.update(id, { scope: scope === 'true' });
   }
 
+  @Patch(":id/onetime")
+  public async patchPonctualMessages(@Query("delete") deleteOneTime: 'true' | 'false', @Param("id") id: string) {
+    await Guild.update(id, { removeOneTimeMessage: deleteOneTime === 'true' });
+  }
+
   @Patch(":id/timezone")
   public async patchTimezone(@Query("timezone") timezone: string, @Param("id") id: string) {
     if (!TIMEZONES.includes(timezone))

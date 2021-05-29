@@ -12,6 +12,9 @@ export class GuildOutModel {
   public roles: GuildElement[];
   public id: string;
   public scope: boolean;
+  public monthlyQuota: number;
+  public removeOneTimeMessage: boolean;
+  
 
   constructor(
     guild: Guild,
@@ -20,6 +23,8 @@ export class GuildOutModel {
     this.id = guildInfo.id;
     this.messages = guild.messages;
     this.timezone = guild.timezone;
+    this.monthlyQuota = guild.monthlyQuota;
+    this.removeOneTimeMessage = guild.removeOneTimeMessage;
     this.scope = guild.scope;
     this.channels = guildInfo.channels.cache.array()
       .filter(el => el.type == "text" || el.type == "news")

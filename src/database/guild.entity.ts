@@ -15,8 +15,11 @@ export class Guild extends BaseEntity {
   @Column("boolean", { default: () => false })
   public scope: boolean;
 
+  @Column("boolean", { default: () => true })
+  public removeOneTimeMessage: boolean;
+
   @Column()
-  public dailyQuota: number = parseInt(process.env.DEFAULT_QUOTA);
+  public monthlyQuota: number = parseInt(process.env.DEFAULT_QUOTA);
 
   @OneToMany(() => Message, message => message.guild, { cascade: true })
   public messages: Message[];
