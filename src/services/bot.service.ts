@@ -17,14 +17,19 @@ export class BotService implements OnModuleInit {
   
   public async onModuleInit() {
     const intents = new Discord.Intents(Discord.Intents.NON_PRIVILEGED);
-    // intents.add("GUILD_MEMBERS");
+    intents.add("GUILD_MEMBERS");
     this.bot = new Discord.Client({ ws: { intents } });
     this.bot.on("guildCreate", (guild) => this.onGuildCreate(guild));
     this.bot.on("guildDelete", (guild) => this.onGuildDelete(guild));
+    this.bot.on("error", this.logger.error);
     this.bot.on("channelDelete", (channel) => this.onChannelDelete(channel));
-    await this.bot.login(process.env.TOKEN_BOT);
-    await new Promise<void>((resolve) => this.bot.on("ready", resolve));
-    this.logger.log(this.bot.user.username, "successfully logged in !");
+    try {
+      await this.bot.login(process.env.TOKEN_BOT);
+      await new Promise<void>((resolve) => this.bot.on("ready", resolve));
+      this.logger.log(this.bot.user.username, "successfully logged in !");
+    } catch (e) {
+      this.logger.error(e);
+    }
   }
 
   /**
