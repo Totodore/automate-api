@@ -25,7 +25,7 @@ export class GuildOutModel {
     this.messages = guild.messages;
     this.timezone = guild.timezone;
     this.maxQuota = guild.monthlyQuota;
-    this.currentQuota = guild.quotas.find(el => el.date.getTime() >= new Date(new Date().getFullYear(), new Date().getMonth()).getTime()).monthlyQuota;
+    this.currentQuota = guild.quotas.find(el => el.date.getTime() >= new Date(new Date().getFullYear(), new Date().getMonth()).getTime())?.monthlyQuota || 0;
     this.removeOneTimeMessage = guild.removeOneTimeMessage;
     this.scope = guild.scope;
     this.channels = guildInfo.channels.cache.array()
