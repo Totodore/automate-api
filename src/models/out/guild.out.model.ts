@@ -12,7 +12,8 @@ export class GuildOutModel {
   public roles: GuildElement[];
   public id: string;
   public scope: boolean;
-  public monthlyQuota: number;
+  public currentQuota: number;
+  public maxQuota: number;
   public removeOneTimeMessage: boolean;
   
 
@@ -23,7 +24,8 @@ export class GuildOutModel {
     this.id = guildInfo.id;
     this.messages = guild.messages;
     this.timezone = guild.timezone;
-    this.monthlyQuota = guild.monthlyQuota;
+    this.maxQuota = guild.monthlyQuota;
+    this.currentQuota = guild.quotas.find(el => el.date.getTime() >= new Date(new Date().getFullYear(), new Date().getMonth()).getTime()).monthlyQuota;
     this.removeOneTimeMessage = guild.removeOneTimeMessage;
     this.scope = guild.scope;
     this.channels = guildInfo.channels.cache.array()

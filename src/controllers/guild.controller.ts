@@ -54,7 +54,13 @@ export class GuildController {
 
   @Get(":id")
   public async getOne(@Param('id') id: string): Promise<GuildOutModel> {
-    const guild = await Guild.findOne(id, { relations: ["messages", "messages.creator", "messages.files"] });
+    const guild = await createQueryBuilder(Guild, "guild")
+      .where("guild.id = :id", { id })
+      .leftJoinAndSelect("guild.messages", "msg")
+      .leftJoinAndSelect("msg.creator", "creator")
+      .leftJoinAndSelect("msg.files", "files")
+      .leftJoinAndSelect("guild.quotas", "quotas", "quotas.date >= :date", { date: new Date(new Date().getUTCFullYear(), new Date().getUTCMonth()) }).getOne();
+    console.log(guild);
     for (const msg of guild.messages) {
       const creator = await this.bot.getUser(msg.creator.id);
       msg.creator.name = creator.username;

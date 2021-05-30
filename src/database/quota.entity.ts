@@ -1,5 +1,5 @@
 import { Guild } from './guild.entity';
-import { Column, ManyToOne } from 'typeorm';
+import { AfterLoad, Column, ManyToOne } from 'typeorm';
 import { PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity, Entity } from 'typeorm';
 
@@ -17,4 +17,11 @@ export class Quota extends BaseEntity {
 
   @ManyToOne(() => Guild)
   public guild: Guild;
+
+  @AfterLoad()
+  public patchDateFormat() {
+    if (typeof this.date == "string") {
+      this.date = new Date(this.date);
+    }
+  }
 }
