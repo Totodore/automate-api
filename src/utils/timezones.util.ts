@@ -1,4 +1,4 @@
-
+export const monthDate = () => new Date(new Date().getUTCFullYear(), new Date().getUTCMonth());
 
 export const TIMEZONES = [
   'Europe/Andorra',
