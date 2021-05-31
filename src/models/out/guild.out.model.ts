@@ -1,3 +1,4 @@
+import { monthDate } from './../../utils/timezones.util';
 import { GuildInfo } from 'passport-discord';
 import { Guild } from 'src/database/guild.entity';
 import { Message } from 'src/database/message.entity';
@@ -25,7 +26,7 @@ export class GuildOutModel {
     this.messages = guild.messages;
     this.timezone = guild.timezone;
     this.maxQuota = guild.monthlyQuota;
-    this.currentQuota = guild.quotas.find(el => el.date.getTime() >= new Date(new Date().getFullYear(), new Date().getMonth()).getTime())?.monthlyQuota || 0;
+    this.currentQuota = guild.quotas.find(el => el.date.getTime() >= monthDate().getTime())?.monthlyQuota || 0;
     this.removeOneTimeMessage = guild.removeOneTimeMessage;
     this.scope = guild.scope;
     this.channels = guildInfo.channels.cache.array()

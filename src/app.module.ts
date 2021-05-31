@@ -22,6 +22,7 @@ import { HttpModule } from "@nestjs/common";
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
+      dateStrings: false,
       entities: ["**/*.entity.js"],
       synchronize: process.env.NODE_ENV === "dev",
     }),

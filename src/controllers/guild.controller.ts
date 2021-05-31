@@ -1,3 +1,4 @@
+import { monthDate } from './../utils/timezones.util';
 import { User } from './../database/user.entity';
 import { Profile } from 'passport-discord';
 import { File } from './../database/file.entity';
@@ -59,8 +60,7 @@ export class GuildController {
       .leftJoinAndSelect("guild.messages", "msg")
       .leftJoinAndSelect("msg.creator", "creator")
       .leftJoinAndSelect("msg.files", "files")
-      .leftJoinAndSelect("guild.quotas", "quotas", "quotas.date >= :date", { date: new Date(new Date().getUTCFullYear(), new Date().getUTCMonth()) }).getOne();
-    console.log(guild);
+      .leftJoinAndSelect("guild.quotas", "quotas", "quotas.date >= :date", { date: monthDate() }).getOne();
     for (const msg of guild.messages) {
       const creator = await this.bot.getUser(msg.creator.id);
       msg.creator.name = creator.username;

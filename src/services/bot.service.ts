@@ -1,9 +1,12 @@
+import { monthDate } from './../utils/timezones.util';
+import { Quota } from './../database/quota.entity';
 import { AppLogger } from './../utils/app-logger.util';
 import { Message } from './../database/message.entity';
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import * as Discord from "discord.js";
 import { Guild } from 'src/database/guild.entity';
 import { EventEmitter } from 'events';
+import { LessThan } from 'typeorm';
 
 @Injectable()
 export class BotService implements OnModuleInit {
@@ -70,12 +73,14 @@ export class BotService implements OnModuleInit {
 
   private async onGuildCreate(guild: Discord.Guild) {
     await guild.systemChannel?.send(`Hey ! I'm Automate, to give me orders you need to go on this website : https://automatebot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
-    await Guild.create({ id: guild.id }).save();
+    await Guild.create({ id: guild.id, deletedDate: null }).save();
     this.newGuildEmitter.emit(guild.id);
   }
 
   private async onGuildDelete(guild: Discord.Guild) {
-    await (await Guild.findOne(guild.id))?.remove();
+    const guildEl = await Guild.softRemove(Guild.create({ id: guild.id }));
+    await Message.delete({ guild: guildEl });
+    await Quota.delete({ guild: guildEl, date: LessThan(monthDate()) });
   }
 
   private async onChannelDelete(channel: Discord.Channel) {
