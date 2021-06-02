@@ -40,7 +40,7 @@ export class UserController {
   }
 
   
-  @Post("me/last")
+  @Get("me/last")
   @UseGuards(UserGuard)
   @UseInterceptors(CacheInterceptor)
   public async getLastMessages(@CurrentProfile() profile: DiscordProfile): Promise<Message[]> {
