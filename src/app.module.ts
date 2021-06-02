@@ -9,6 +9,7 @@ import { UserController } from './controllers/user.controller';
 import { PassportModule } from '@nestjs/passport';
 import { OauthService } from './services/oauth.service';
 import { HttpModule } from "@nestjs/common";
+import { MessageController } from './controllers/message.controller';
 
 @Module({
   imports: [
@@ -29,7 +30,7 @@ import { HttpModule } from "@nestjs/common";
     PassportModule.register({}),
     HttpModule
   ],
-  controllers: [GuildController, UserController],
+  controllers: [GuildController, UserController, MessageController],
   providers: [FileService, BotService, OauthService],
 })
 export class AppModule {}
