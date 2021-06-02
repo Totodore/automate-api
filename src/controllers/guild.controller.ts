@@ -1,59 +1,29 @@
+import { OauthService } from './../services/oauth.service';
+import { GuildGuard } from './../guards/guild.guard';
+import { DiscordProfile } from 'src/models/out/user.out.model';
+import { CurrentProfile } from './../decorators/current-profile.decorator';
 import { monthDate } from './../utils/timezones.util';
-import { User } from './../database/user.entity';
-import { Profile } from 'passport-discord';
-import { File } from './../database/file.entity';
-import { FileService } from './../services/file.service';
-import { Message, MessageType } from './../database/message.entity';
-import { PostFreqMessageInModel, PostPonctMessageInModel, PatchPonctMessageInModel, PatchFreqMessageInModel, DataMessageModel } from './../models/in/guild.in.model';
+import { Message } from './../database/message.entity';
 import { GuildOutModel, MemberOutModel } from './../models/out/guild.out.model';
 import { BotService } from './../services/bot.service';
 import { BadRequestException, Body, Controller, Delete, Get, MessageEvent, Param, Patch, Post, Query, Sse, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
 import { Guild } from 'src/database/guild.entity';
-import { FilesInterceptor } from '@nestjs/platform-express';
-import { v4 as uuid } from "uuid";
 import { UserGuard } from 'src/guards/user.guard';
 import { createQueryBuilder } from 'typeorm';
 import { TIMEZONES } from 'src/utils/timezones.util';
-import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { Observable, Subscriber } from 'rxjs';
+import { Role } from 'src/decorators/role.decorator';
 
 @Controller('guild')
-@UseGuards(UserGuard)
+@UseGuards(UserGuard, GuildGuard)
 export class GuildController {
 
   constructor(
     private readonly bot: BotService,
-    private readonly fileService: FileService,
   ) { }
-  
-  @Post("last")
-  public async getLastMessages(@Body() profile: Profile): Promise<Message[]> {
-    const guilds = profile.guilds.filter(guild =>
-      (guild.permissions & 0x8) === 8
-      || (guild.permissions & 0x10) === 10
-      || (guild.permissions & 0x20) === 20
-    ).map(guild => guild.id);
-    return Promise.all((await createQueryBuilder(Message, "msg")
-      .where("msg.guildId IN (:guilds)", { guilds })
-      .orderBy("msg.updatedDate", "DESC").take(10)
-      .leftJoinAndSelect("msg.guild", "guild")
-      .leftJoinAndSelect("msg.creator", "creator")
-      .leftJoinAndSelect("msg.files", "files")
-      .getMany())
-      .map(async (msg: Message) => {
-        msg.channelName = (await this.bot.getChannel(msg.channelId)).name;
-        const creator = await this.bot.getUser(msg.creator.id);
-        const guild = await this.bot.getGuild(msg.guild.id);
-        msg.creator.name = creator.username;
-        msg.creator.profile = creator.avatar;
-        msg.guild.name = guild.name;
-        msg.guild.profile = guild.icon;
-        return msg;
-      })
-    );
-  }
 
   @Get(":id")
+  @Role("member")
   public async getOne(@Param('id') id: string): Promise<GuildOutModel> {
     const guild = await createQueryBuilder(Guild, "guild")
       .where("guild.id = :id", { id })
@@ -71,6 +41,7 @@ export class GuildController {
   }
 
   @Sse(":id/add")
+  @Role("member")
   public onAddOne(@Param("id") id: string): Observable<MessageEvent> {
     const listener = (observer: Subscriber<MessageEvent>) => {
       observer.next({ id, data: id });
@@ -82,58 +53,8 @@ export class GuildController {
     });
   }
   
-  @Post(":id/message/freq")
-  @UseInterceptors(FilesInterceptor('files', 5, { limits: { fieldSize: 8 } }))
-  public async postFreqMessage(
-    @Body() body: PostFreqMessageInModel,
-    @UploadedFiles() files: Express.Multer.File[],
-    @Param("id") id: string,
-    @CurrentUser() creator: User
-  ): Promise<Message> {
-    const filesData: File[] = [];
-    for (const file of (files || [])) {
-      const id = uuid();
-      this.fileService.writeFile(file.buffer, id);
-      filesData.push(File.create({ id }));
-    }
-    return await Message.create({
-      ...body,
-      guild: Guild.create({ id }),
-      creator,
-      typeEnum: MessageType.FREQUENTIAL,
-      files: filesData
-    }).save();
-  }
-  
-  @Post(":id/message/ponctual")
-  @UseInterceptors(FilesInterceptor('files', 5, { limits: { fieldSize: 8 } }))
-  public async postPonctualMessage(
-    @Body() body: PostFreqMessageInModel,
-    @UploadedFiles() files: Express.Multer.File[],
-    @Param("id") id: string,
-    @CurrentUser() creator: User
-  ) {
-    const filesData: File[] = [];
-    for (const file of (files || [])) {
-      const id = uuid();
-      this.fileService.writeFile(file.buffer, id);
-      filesData.push(File.create({ id }));
-    }
-    return await Message.create({
-      ...body,
-      guild: Guild.create({ id }),
-      creator,
-      typeEnum: MessageType.PONCTUAL,
-      files: filesData
-    }).save();
-  }
-  
-  @Delete(":id")
-  public async deleteMessage(@Param("id") id: string) {
-    await Message.delete(id);
-  }
-  
   @Get(":id/members")
+  @Role("admin")
   public async getSuggestions(@Query("q") query: string, @Param("id") id: string): Promise<MemberOutModel[]> {
     const guild = await this.bot.getGuild(id);
     if (query.startsWith("@")) {
@@ -143,42 +64,25 @@ export class GuildController {
     }
       
   }
-  
-  @Patch(":id/content")
-  public async patchContent(@Param("id") id: string, @Body() body: DataMessageModel) {
-    await Message.update(id, body);
-  }
-
-  @Patch(":id/ponctual")
-  public async patchCron(@Param("id") id: string, @Body() body: PatchPonctMessageInModel) {
-    await Message.update(id, body);
-  }
-
-  @Patch(":id/freq")
-  public async patchFreq(@Param("id") id: string, @Body() body: PatchFreqMessageInModel) {
-    await Message.update(id, body);
-  }
 
   @Patch(":id/scope")
+  @Role("admin")
   public async patchScope(@Query("scope") scope: 'true' | 'false', @Param("id") id: string) {
     await Guild.update(id, { scope: scope === 'true' });
   }
 
   @Patch(":id/onetime")
+  @Role("admin")
   public async patchPonctualMessages(@Query("delete") deleteOneTime: 'true' | 'false', @Param("id") id: string) {
     await Guild.update(id, { removeOneTimeMessage: deleteOneTime === 'true' });
   }
 
   @Patch(":id/timezone")
+  @Role("admin")
   public async patchTimezone(@Query("timezone") timezone: string, @Param("id") id: string) {
     if (!TIMEZONES.includes(timezone))
       throw new BadRequestException();
     await Guild.update(id, { timezone });
-  }
-
-  @Patch(":id/message/:msgId/state")
-  public async patchMessageState(@Query("state") state: "true" | "false", @Param("msgId") id: string) {
-    await Message.update(id, { activated: state === "true" });
   }
 
 }

@@ -1,18 +1,22 @@
+import { Const } from './../utils/const.util';
 import { AppLogger } from './../utils/app-logger.util';
 import { DiscordUser, TokenResponse } from './../models/oauth.model';
 import { User } from './../database/user.entity';
-import { Injectable, HttpService, OnModuleInit } from '@nestjs/common';
+import { Injectable, HttpService, OnModuleInit, HttpException, InternalServerErrorException, Inject, CACHE_MANAGER } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, Profile } from "passport-discord";
+import { Strategy, Profile, GuildInfo } from "passport-discord";
 import { LessThan } from 'typeorm';
 import { AxiosResponse, AxiosError } from "axios";
+import axios from "axios";
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class OauthService extends PassportStrategy(Strategy, 'discord') implements OnModuleInit {
 
   constructor(
     private readonly http: HttpService,
-    private readonly logger: AppLogger
+    private readonly logger: AppLogger,
+    @Inject(CACHE_MANAGER) private readonly cache: Cache 
   ) {
     super({
       clientID: process.env.CLIENT_ID,
@@ -23,6 +27,7 @@ export class OauthService extends PassportStrategy(Strategy, 'discord') implemen
   }
 
   public onModuleInit() {
+    Const.cache = this.cache;
     setInterval(() => this.refreshToken(), 3600_000);
     this.refreshToken();
     this.logger.log("Oauth refresh token service started!");
@@ -44,6 +49,16 @@ export class OauthService extends PassportStrategy(Strategy, 'discord') implemen
       await user.save();
     }
     return [profile, user];
+  }
+
+  public async getProfile(user: User): Promise<Profile> {
+    const cache: Profile = await this.cache.get(user.id);
+    if (cache) return cache;
+    const profile: Profile = await new Promise((resolve, reject) =>
+      this.userProfile(user.token, (err, profile) => err ? reject(err) : resolve(profile))
+    );
+    await this.cache.set(user.id, profile);
+    return profile;
   }
 
   public async refreshToken() {
@@ -71,6 +86,34 @@ export class OauthService extends PassportStrategy(Strategy, 'discord') implemen
         this.logger.error((e as AxiosError).message);
         console.error((e as AxiosError).response.data);
       }
+    }
+  }
+
+  public static async getProfile(user: User): Promise<Profile> {
+    const cache: Profile = await Const.cache.get(user.id);
+    if (cache)
+      return cache;
+    const logger = new AppLogger("GetProfile");
+    let profile: Profile;
+    try {
+      profile = (await axios.get<Profile>(`${process.env.API_ENDPOINT}/users/@me`, {
+        headers: { Authorization: `Bearer ${user.token}` }
+      })).data;
+      profile.guilds = (await axios.get<GuildInfo[]>(`${process.env.API_ENDPOINT}/users/@me/guilds`, {
+        headers: { Authorization: `Bearer ${user.token}` }
+      })).data;
+      return profile;
+    } catch (e) {
+      const error = e as AxiosError;
+      logger.error(e, error.response.data.message, "retry in :",error.response.data.retry_after, "s");
+      if (profile?.guilds)
+        return profile;
+      else if (error.response.status === 429)
+        throw new HttpException("Discord API too many requests", 429);
+      else
+        throw new InternalServerErrorException();
+    } finally {
+      await Const.cache.set(user.id, profile);
     }
   }
 }
