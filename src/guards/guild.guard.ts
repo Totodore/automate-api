@@ -20,7 +20,6 @@ export class GuildGuard implements CanActivate {
   public async canActivate(context: ExecutionContext) {
     const req = context.switchToHttp().getRequest();
     const userStatus: "admin" | "member" = this.reflector.get("role", context.getHandler());
-    console.log(userStatus);
     try {
       const user: User = req.user;
       if (!req.profile) {
