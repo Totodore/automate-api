@@ -62,7 +62,7 @@ export class Message extends BaseEntity {
 
   @AfterRemove()
   onRemove() {
-    for (const file of this.files) {
+    for (const file of this.files || []) {
       this.fileService.removeFile(file.id);
     }
   }
