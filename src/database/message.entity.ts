@@ -1,3 +1,4 @@
+import { StateDataModel, Tab } from './../models/cron.model';
 import { FileService } from './../services/file.service';
 import { File } from './file.entity';
 import { Guild } from './guild.entity';
@@ -39,6 +40,12 @@ export class Message extends BaseEntity {
 
   @Column()
   public typeEnum: number;
+
+  @Column("json")
+  public cronState: Partial<StateDataModel>;
+
+  @Column("enum", { enum: Tab })
+  public cronTab: Tab;
 
   @ManyToOne(() => Guild)
   @JoinColumn()
