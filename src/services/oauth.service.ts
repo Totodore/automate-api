@@ -52,7 +52,7 @@ export class OauthService extends PassportStrategy(Strategy, 'discord') implemen
   }
 
   public async getProfile(user: User): Promise<Profile> {
-    const cache: Profile = await this.cache.get(user.id);
+    const cache: Profile = await this.cache.get(user?.id);
     if (cache) return cache;
     const profile: Profile = await new Promise((resolve, reject) =>
       this.userProfile(user.token, (err, profile) => err ? reject(err) : resolve(profile))
