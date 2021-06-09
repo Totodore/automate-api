@@ -5,7 +5,7 @@ import { UserGuard } from 'src/guards/user.guard';
 import { Body, Controller, Delete, Param, Patch, Post, Query, UploadedFiles, UseGuards, UseInterceptors, BadRequestException } from '@nestjs/common';
 import { Role } from "../decorators/role.decorator";
 import { FilesInterceptor } from '@nestjs/platform-express';
-import { DataMessageModel, PatchFreqMessageInModel, PatchPonctMessageInModel, PostFreqMessageInModel } from 'src/models/in/guild.in.model';
+import { PostFreqMessageInModel } from 'src/models/in/guild.in.model';
 import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { Message, MessageType } from 'src/database/message.entity';
 import { User } from 'src/database/user.entity';
