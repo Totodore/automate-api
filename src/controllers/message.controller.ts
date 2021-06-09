@@ -1,7 +1,8 @@
+import { PostPonctMessageInModel } from './../models/in/guild.in.model';
 import { FileService } from './../services/file.service';
 import { GuildGuard } from './../guards/guild.guard';
 import { UserGuard } from 'src/guards/user.guard';
-import { Body, Controller, Delete, Param, Patch, Post, Query, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Patch, Post, Query, UploadedFiles, UseGuards, UseInterceptors, BadRequestException } from '@nestjs/common';
 import { Role } from "../decorators/role.decorator";
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { DataMessageModel, PatchFreqMessageInModel, PatchPonctMessageInModel, PostFreqMessageInModel } from 'src/models/in/guild.in.model';
@@ -76,22 +77,12 @@ export class MessageController {
   }
 
   
-  @Patch(":msgId/content")
+  @Patch(":msgId")
   @Role("admin")
-  public async patchContent(@Param("msgId") id: string, @Body() body: DataMessageModel) {
-    await Message.update(id, body);
-  }
-
-  @Patch(":msgId/ponctual")
-  @Role("admin")
-  public async patchCron(@Param("msgId") id: string, @Body() body: PatchPonctMessageInModel) {
-    await Message.update(id, body);
-  }
-
-  @Patch(":msgId/freq")
-  @Role("admin")
-  public async patchFreq(@Param("msgId") id: string, @Body() body: PatchFreqMessageInModel) {
-    await Message.update(id, body);
+  public async patchContent(@Param("msgId") id: string, @Body() body: PostPonctMessageInModel & PostFreqMessageInModel) {
+    if ((body.date && body.cron) || (body.cron && !body.cronState))
+      throw new BadRequestException();
+    await Message.update(id, { ...body, typeEnum: body.date ? 0 : 1 });
   }
   
   
