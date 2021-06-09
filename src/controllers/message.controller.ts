@@ -80,7 +80,7 @@ export class MessageController {
   @Patch(":msgId")
   @Role("admin")
   public async patchContent(@Param("msgId") id: string, @Body() body: PostPonctMessageInModel & PostFreqMessageInModel) {
-    if ((body.date && body.cron) || (body.cron && !body.cronState))
+    if ((body.date && body.cron) || !body.cronState)
       throw new BadRequestException();
     await Message.update(id, { ...body, typeEnum: body.date ? 0 : 1 });
   }
