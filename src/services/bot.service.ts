@@ -74,7 +74,7 @@ export class BotService implements OnModuleInit {
   }
 
   private async onGuildCreate(guild: Discord.Guild) {
-    await guild.systemChannel?.send(`Hey ! I'm Automate, to give me orders you need to go on this website : https://automatebot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
+    await guild.systemChannel?.send(`Hey ! I'm Automate@beta, to give me orders you need to go on this website : https://beta.automatebot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
     await Guild.create({ id: guild.id, deletedDate: null }).save();
     this.newGuildEmitter.emit(guild.id);
   }
