@@ -83,7 +83,7 @@ export class BotService implements OnModuleInit {
     const guildEl = await Guild.softRemove(Guild.create({ id: guild.id }));
     await Message.delete({ guild: guildEl });
     await Quota.delete({ guild: guildEl, date: LessThan(monthDate()) });
-    this.cache.removeGuildFromCache(guild.id);
+    this.cache.removeWhereGuild(guild.id);
   }
 
   private async onChannelDelete(channel: Discord.Channel) {

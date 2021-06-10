@@ -1,5 +1,4 @@
-import { Cache } from "cache-manager";
-
+import { CacheService } from './../services/cache.service';
 export class Const {
-  public static cache: Cache;
+  public static cache: CacheService;
 }

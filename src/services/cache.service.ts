@@ -10,12 +10,11 @@ export class CacheService implements OnModuleInit {
   ) { }
   
   private readonly profiles = new Map<string, [number, Profile]>();
-  private readonly guilds = new Map<string, [number, Profile]>();
   private readonly ttl = 60_000 * 5;
 
   public onModuleInit() {
     setInterval(() => this.ttlWatcher(), 1000);
-    this.logger.log("Starting cache service with ttl of: ", this.ttl);
+    this.logger.log("Starting cache service with ttl of", this.ttl / 60_000, "minutes");
   }
 
 
@@ -31,20 +30,21 @@ export class CacheService implements OnModuleInit {
     this.profiles.delete(key);
   }
 
-  public removeGuildFromCache(guildId: string) {
+  /**
+   * Remove all cached users where they have the specified guild
+   * @param guildId that guild to find to delete users
+   */
+  public removeWhereGuild(guildId: string) {
     for (const [key, [ttl, val]] of this.profiles.entries()) {
-      const guild = val.guilds.find(el => el.id == guildId);
-      if (guild) {
-        val.guilds.splice(val.guilds.indexOf(guild), 1);
-        this.profiles.set(key, [ttl, val]);
-      }
+      if (val.guilds.find(el => el.id == guildId))
+        this.profiles.delete(key);
     }
   }
 
 
   public ttlWatcher() {
     for (const [key, [ttl, val]] of this.profiles.entries()) {
-      if (Date.now() < ttl + 60_000 * 5)
+      if (Date.now() > ttl + this.ttl)
         this.profiles.delete(key);
     }
   }

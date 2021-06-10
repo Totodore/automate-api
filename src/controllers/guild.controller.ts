@@ -5,7 +5,7 @@ import { CurrentProfile } from './../decorators/current-profile.decorator';
 import { monthDate } from './../utils/timezones.util';
 import { GuildOutModel, MemberOutModel } from './../models/out/guild.out.model';
 import { BotService } from './../services/bot.service';
-import { BadRequestException, Body, Controller, Delete, Get, MessageEvent, Param, Patch, Post, Query, Sse, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, MessageEvent, Param, Patch, Post, Query, Sse, UploadedFiles, UseGuards, UseInterceptors, CacheInterceptor } from '@nestjs/common';
 import { Guild } from 'src/database/guild.entity';
 import { UserGuard } from 'src/guards/user.guard';
 import { createQueryBuilder } from 'typeorm';
@@ -56,6 +56,7 @@ export class GuildController {
   
   @Get(":id/members")
   @Role("admin")
+  @UseInterceptors(CacheInterceptor)
   public async getSuggestions(@Query("q") query: string, @Param("id") id: string): Promise<MemberOutModel[]> {
     const guild = await this.bot.getGuild(id);
     if (query.startsWith("@")) {

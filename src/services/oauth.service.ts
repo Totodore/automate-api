@@ -3,13 +3,12 @@ import { Const } from './../utils/const.util';
 import { AppLogger } from './../utils/app-logger.util';
 import { DiscordUser, TokenResponse } from './../models/oauth.model';
 import { User } from './../database/user.entity';
-import { Injectable, HttpService, OnModuleInit, HttpException, InternalServerErrorException, Inject, CACHE_MANAGER } from '@nestjs/common';
+import { Injectable, HttpService, OnModuleInit, HttpException, InternalServerErrorException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, Profile, GuildInfo } from "passport-discord";
 import { LessThan } from 'typeorm';
 import { AxiosResponse, AxiosError } from "axios";
 import axios from "axios";
-import { Cache } from 'cache-manager';
 
 @Injectable()
 export class OauthService extends PassportStrategy(Strategy, 'discord') implements OnModuleInit {

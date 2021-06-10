@@ -21,7 +21,6 @@ export class UserController {
   
   @Get("me")
   @UseGuards(UserGuard)
-  @UseInterceptors(CacheInterceptor)
   public async getMe(@CurrentProfile() profile: DiscordProfile): Promise<Profile> {
     const guilds = (await createQueryBuilder(Guild, 'guild').where("guild.id IN (:...ids)", { ids: profile.guilds.map(el => el.id) }).getMany());
     const guildIds = guilds.map(el => el.id);
@@ -42,7 +41,6 @@ export class UserController {
   
   @Get("me/last")
   @UseGuards(UserGuard)
-  @UseInterceptors(CacheInterceptor)
   public async getLastMessages(@CurrentProfile() profile: DiscordProfile): Promise<Message[]> {
     const adminGuildsId = profile.guilds.filter(guild =>
       (guild.permissions & 0x8) === 0x8
