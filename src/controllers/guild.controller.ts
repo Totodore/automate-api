@@ -1,9 +1,8 @@
-import { OauthService } from './../services/oauth.service';
+import { CacheService } from './../services/cache.service';
+import { Profile } from 'passport-discord';
 import { GuildGuard } from './../guards/guild.guard';
-import { DiscordProfile } from 'src/models/out/user.out.model';
 import { CurrentProfile } from './../decorators/current-profile.decorator';
 import { monthDate } from './../utils/timezones.util';
-import { Message } from './../database/message.entity';
 import { GuildOutModel, MemberOutModel } from './../models/out/guild.out.model';
 import { BotService } from './../services/bot.service';
 import { BadRequestException, Body, Controller, Delete, Get, MessageEvent, Param, Patch, Post, Query, Sse, UploadedFiles, UseGuards, UseInterceptors } from '@nestjs/common';
@@ -20,6 +19,7 @@ export class GuildController {
 
   constructor(
     private readonly bot: BotService,
+    private readonly cache: CacheService
   ) { }
 
   @Get(":id")
@@ -42,10 +42,11 @@ export class GuildController {
 
   @Sse(":id/add")
   @Role("member")
-  public onAddOne(@Param("id") id: string): Observable<MessageEvent> {
+  public onAddOne(@Param("id") id: string, @CurrentProfile() profile: Profile): Observable<MessageEvent> {
     const listener = (observer: Subscriber<MessageEvent>) => {
       observer.next({ id, data: id });
       this.bot.newGuildEmitter.removeListener(id, listener);
+      this.cache.del(profile.id); //Delete user cache for this profile (as it is outdated)
       observer.complete();
     };
     return new Observable(observer => {

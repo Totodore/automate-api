@@ -1,3 +1,4 @@
+import { CacheService } from './cache.service';
 import { Const } from './../utils/const.util';
 import { AppLogger } from './../utils/app-logger.util';
 import { DiscordUser, TokenResponse } from './../models/oauth.model';
@@ -16,7 +17,7 @@ export class OauthService extends PassportStrategy(Strategy, 'discord') implemen
   constructor(
     private readonly http: HttpService,
     private readonly logger: AppLogger,
-    @Inject(CACHE_MANAGER) private readonly cache: Cache 
+    private readonly cache: CacheService 
   ) {
     super({
       clientID: process.env.CLIENT_ID,
@@ -63,7 +64,7 @@ export class OauthService extends PassportStrategy(Strategy, 'discord') implemen
     const profile: Profile = await new Promise((resolve, reject) =>
       this.userProfile(user.token, (err, profile) => err ? reject(err) : resolve(profile))
     );
-    await this.cache.set(user.id, profile);
+    this.cache.set(user.id, profile);
     return profile;
   }
 

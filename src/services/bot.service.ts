@@ -1,3 +1,4 @@
+import { CacheService } from './cache.service';
 import { monthDate } from './../utils/timezones.util';
 import { Quota } from './../database/quota.entity';
 import { AppLogger } from './../utils/app-logger.util';
@@ -15,7 +16,8 @@ export class BotService implements OnModuleInit {
   public readonly automateGuildID = "702623012465278978";
   public readonly newGuildEmitter = new EventEmitter();
   constructor(
-    private readonly logger: AppLogger
+    private readonly logger: AppLogger,
+    private readonly cache: CacheService
   ) {}
   
   public async onModuleInit() {
@@ -81,6 +83,7 @@ export class BotService implements OnModuleInit {
     const guildEl = await Guild.softRemove(Guild.create({ id: guild.id }));
     await Message.delete({ guild: guildEl });
     await Quota.delete({ guild: guildEl, date: LessThan(monthDate()) });
+    this.cache.removeGuildFromCache(guild.id);
   }
 
   private async onChannelDelete(channel: Discord.Channel) {
@@ -88,6 +91,4 @@ export class BotService implements OnModuleInit {
     if (infos.affected > 0)
       this.logger.log(`Channel removed, ${infos.affected} messages removed`);
   }
-
-
 }

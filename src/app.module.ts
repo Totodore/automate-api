@@ -1,5 +1,5 @@
 import { AppLogger } from './utils/app-logger.util';
-import { CacheModule, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FileService } from './services/file.service';
@@ -10,12 +10,12 @@ import { PassportModule } from '@nestjs/passport';
 import { OauthService } from './services/oauth.service';
 import { HttpModule } from "@nestjs/common";
 import { MessageController } from './controllers/message.controller';
+import { CacheService } from './services/cache.service';
 
 @Module({
   imports: [
     AppLogger,
     ConfigModule.forRoot(),
-    CacheModule.register({ ttl: 5 * 60 }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       logging: ["error"],
@@ -31,6 +31,6 @@ import { MessageController } from './controllers/message.controller';
     HttpModule
   ],
   controllers: [GuildController, UserController, MessageController],
-  providers: [FileService, BotService, OauthService],
+  providers: [FileService, BotService, OauthService, CacheService],
 })
 export class AppModule {}
