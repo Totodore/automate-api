@@ -51,6 +51,12 @@ export class OauthService extends PassportStrategy(Strategy, 'discord') implemen
     return [profile, user];
   }
 
+  /**
+   * Get the profile of a user, if the value is in cache it is directly returned.
+   * If not we get the user profile from the discord api
+   * @param user 
+   * @returns 
+   */
   public async getProfile(user: User): Promise<Profile> {
     const cache: Profile = await this.cache.get(user?.id);
     if (cache) return cache;

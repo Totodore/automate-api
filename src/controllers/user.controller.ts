@@ -26,10 +26,11 @@ export class UserController {
     const guilds = (await createQueryBuilder(Guild, 'guild').where("guild.id IN (:...ids)", { ids: profile.guilds.map(el => el.id) }).getMany());
     const guildIds = guilds.map(el => el.id);
     profile.guilds = profile.guilds.filter(guild =>
-      ((guild.permissions & 0x8) === 0x8
-        || (guild.permissions & 0x10) === 0x10
-        || (guild.permissions & 0x20) === 0x20)
-      || guilds.find(el => el.id == guild.id)?.scope == true
+      (((guild.permissions & 0x8) === 0x8
+          || (guild.permissions & 0x10) === 0x10
+          || (guild.permissions & 0x20) === 0x20)
+        || guilds.find(el => el.id == guild.id)?.scope == true)
+      && guildIds.includes(guild.id)  //This condition is to prevent the issue with guild cached when the guild is removed
     ).sort((a, b) => {
       a.added = guildIds.includes(a.id);
       b.added = guildIds.includes(b.id);
