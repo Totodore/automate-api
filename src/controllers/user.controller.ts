@@ -30,7 +30,6 @@ export class UserController {
           || (guild.permissions & 0x10) === 0x10
           || (guild.permissions & 0x20) === 0x20)
         || guilds.find(el => el.id == guild.id)?.scope == true)
-      && guildIds.includes(guild.id)  //This condition is to prevent the issue with guild cached when the guild is removed
     ).sort((a, b) => {
       a.added = guildIds.includes(a.id);
       b.added = guildIds.includes(b.id);
