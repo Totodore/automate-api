@@ -4,7 +4,7 @@
   "compilerOptions": {
     "plugins": [{"name": "@nestjs/swagger", "options": {
       "introspectComments": true,
-      "dtoFileNameSuffix": [".out.model.ts"]
+      "dtoFileNameSuffix": [".in.model.ts"]
     }}]
   }
 }
