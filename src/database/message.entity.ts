@@ -29,7 +29,7 @@ export class Message extends BaseEntity {
   @Column("datetime", { nullable: true })
   public date: Date;
 
-  @Column("text")
+  @Column("varchar", { length: 2000 })
   public parsedMessage: string;
 
   @Column("text")
