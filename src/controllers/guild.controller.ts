@@ -5,7 +5,7 @@ import { CurrentProfile } from './../decorators/current-profile.decorator';
 import { monthDate } from './../utils/timezones.util';
 import { GuildOutModel, MemberOutModel } from './../models/out/guild.out.model';
 import { BotService } from './../services/bot.service';
-import { BadRequestException, Body, Controller, Delete, Get, MessageEvent, Param, Patch, Post, Query, Sse, UploadedFiles, UseGuards, UseInterceptors, CacheInterceptor } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, MessageEvent, Param, Patch, Post, Query, Sse, UploadedFiles, UseGuards, UseInterceptors, CacheInterceptor, InternalServerErrorException } from '@nestjs/common';
 import { Guild } from 'src/database/guild.entity';
 import { UserGuard } from 'src/guards/user.guard';
 import { createQueryBuilder } from 'typeorm';
@@ -31,6 +31,8 @@ export class GuildController {
       .leftJoinAndSelect("msg.creator", "creator")
       .leftJoinAndSelect("msg.files", "files")
       .leftJoinAndSelect("guild.quotas", "quotas", "quotas.date >= :date", { date: monthDate() }).getOne();
+    if (!guild)
+      throw new InternalServerErrorException("Impossible to get the guild infos!");
     for (const msg of guild.messages) {
       const creator = await this.bot.getUser(msg.creator.id);
       msg.creator.name = creator.username;
@@ -41,16 +43,18 @@ export class GuildController {
   }
 
   @Sse(":id/add")
-  @Role("member")
+  @Role("admin")
   public onAddOne(@Param("id") id: string, @CurrentProfile() profile: Profile): Observable<MessageEvent> {
-    const listener = (observer: Subscriber<MessageEvent>) => {
-      observer.next({ id, data: id });
+    let observerEl: Subscriber<MessageEvent>;
+    const listener = () => {
+      observerEl.next({ id, data: id });
       this.bot.newGuildEmitter.removeListener(id, listener);
       this.cache.del(profile.id); //Delete user cache for this profile (as it is outdated)
-      observer.complete();
+      observerEl.complete();
     };
     return new Observable(observer => {
-      this.bot.newGuildEmitter.addListener(id, () => listener(observer));
+      observerEl = observer;
+      this.bot.newGuildEmitter.addListener(id, listener);
     });
   }
   
