@@ -6,15 +6,15 @@ import { User } from './../database/user.entity';
 import { Injectable, HttpService, OnModuleInit, HttpException, InternalServerErrorException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, Profile, GuildInfo } from "passport-discord";
-import { LessThan } from 'typeorm';
-import { AxiosResponse, AxiosError } from "axios";
+import { Between, LessThan } from 'typeorm';
+import { AxiosError } from "axios";
 import axios from "axios";
+import * as refreshDiscordToken from "passport-oauth2-refresh";
 
 @Injectable()
 export class OauthService extends PassportStrategy(Strategy, 'discord') implements OnModuleInit {
 
   constructor(
-    private readonly http: HttpService,
     private readonly logger: AppLogger,
     private readonly cache: CacheService 
   ) {
@@ -22,8 +22,9 @@ export class OauthService extends PassportStrategy(Strategy, 'discord') implemen
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       callbackURL: process.env.CALLBACK_URL,
-      scope: ["identify", "guilds"]
+      scope: ["identify", "guilds"],
     });
+    refreshDiscordToken.use(this);
   }
 
   public onModuleInit() {
@@ -68,29 +69,21 @@ export class OauthService extends PassportStrategy(Strategy, 'discord') implemen
   }
 
   public async refreshToken() {
-    const users = await User.find({ tokenExpires: LessThan(new Date(Date.now() + 6 * 3600_000)) });
+    const users = await User.find({ tokenExpires: Between(new Date(), new Date(Date.now() + 6 * 3600_000)) });
     for (const user of users) {
       try {
-        const res: AxiosResponse<TokenResponse> = await this.http.post(`https://discord.com/api/oauth2/token`, 
-          new URLSearchParams(Object.entries({
-            client_id: process.env.CLIENT_ID,
-            client_secret: process.env.CLIENT_SECRET,
-            grant_type: 'refresh_token',
-            refresh_token: user.refreshToken
-          }))
-        , { headers: { 'Content-Type': 'application/x-www-form-urlencoded'} }).toPromise();
-        if (res.status === 200) {
-          user.token = res.data.access_token;
-          user.refreshToken = res.data.refresh_token;
-          user.tokenExpires = new Date(Date.now() + res.data.expires_in * 1000);
-        } else {
-          this.logger.error("Could not refresh token for user:", user.name);
-        }
+        const [accessToken, refreshToken] = await new Promise(
+          (resolve, reject) => refreshDiscordToken.requestNewAccessToken('discord', user.refreshToken,
+            (err, accessToken, refreshToken) => err ? reject(err) : resolve([accessToken, refreshToken])
+          )
+        );
+        user.token = accessToken;
+        user.refreshToken = refreshToken;
+        user.tokenExpires = new Date(Date.now() + 1000 * 3600 * 24 * 7);
         await user.save();
       } catch (e) {
-        this.logger.error("Could not refresh token for user:", user.name);
-        this.logger.error((e as AxiosError).message);
-        console.error((e as AxiosError).response.data);
+        this.logger.error("Could not refresh token for user:", user.id);
+        console.error(e);
       }
     }
   }
