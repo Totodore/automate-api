@@ -3,6 +3,6 @@ import { createParamDecorator, SetMetadata, ExecutionContext, InternalServerErro
 
 export const CurrentProfile = createParamDecorator(async (data: null, context: ExecutionContext) => {
   const req = context.switchToHttp().getRequest();
-  return req.profile || await OauthService.getProfile(req.user);
+  return req.profile || await OauthService.instance.getProfile(req.user);
   
 });
