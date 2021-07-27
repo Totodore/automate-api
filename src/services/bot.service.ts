@@ -70,7 +70,11 @@ export class BotService implements OnModuleInit {
     return this.bot.users.fetch(userId);
   }
   public async isInAutomateDiscord(userId: string): Promise<boolean> {
-    return (await this.getGuild(this.automateGuildID)).member(userId) != null;
+	  try {
+      return (await this.getGuild(this.automateGuildID)).member(userId) != null;
+    } catch(e) {
+      return false;
+    }
   }
 
   private async onGuildCreate(guild: Discord.Guild) {
