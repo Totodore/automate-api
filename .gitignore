@@ -11,3 +11,4 @@ bin/**
 .env
 **.scssc
 dist/
+package-lock.json
