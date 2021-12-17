@@ -4,6 +4,7 @@ import { File } from './file.entity';
 import { Guild } from './guild.entity';
 import { AfterRemove, BaseEntity, Column, DeepPartial, Entity, JoinColumn, ManyToOne, ObjectType, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { User } from './user.entity';
+import { Webhook } from './webhook.entity';
 
 export enum MessageType {
   PONCTUAL = 0,
@@ -58,6 +59,10 @@ export class Message extends BaseEntity {
   @OneToMany(() => File, file => file.message, { nullable: true, cascade: true })
   @JoinColumn()
   public files: File[];
+
+  @ManyToOne(() => Webhook, { nullable: true })
+  @JoinColumn()
+  public webhook?: Webhook;
 
   @Column("boolean", { default: true })
   public activated: boolean;

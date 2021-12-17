@@ -1,3 +1,4 @@
+import { Webhook } from './../database/webhook.entity';
 import { PostPonctMessageInModel } from './../models/in/guild.in.model';
 import { FileService } from './../services/file.service';
 import { GuildGuard } from './../guards/guild.guard';
@@ -12,13 +13,15 @@ import { User } from 'src/database/user.entity';
 import { v4 as uuid } from "uuid";
 import { File } from "src/database/file.entity";
 import { Guild } from 'src/database/guild.entity';
+import { BotService } from 'src/services/bot.service';
 
 @Controller('guild/:id/message')
 @UseGuards(UserGuard, GuildGuard)
 export class MessageController {
 
   constructor(
-    private readonly fileService: FileService
+    private readonly fileService: FileService,
+    private readonly botService: BotService
   ) {}
   
   @Post("freq")
@@ -31,17 +34,29 @@ export class MessageController {
     @CurrentUser() creator: User
   ): Promise<Message> {
     const filesData: File[] = [];
+    const guild = Guild.create({ id });
     for (const file of (files || [])) {
       const id = uuid();
       this.fileService.writeFile(file.buffer, id);
       filesData.push(File.create({ id }));
+    }
+    let webhook = await Webhook.findOne({ where: { guild, channelId: body.channelId } });
+    if (!webhook) {
+      const discordWebhook = await this.botService.createWebhook(body.channelId);
+      webhook = await Webhook.create({
+        guild,
+        channelId: body.channelId,
+        id: discordWebhook.id,
+        url: discordWebhook.url
+      }).save();
     }
     return await Message.create({
       ...body,
       guild: Guild.create({ id }),
       creator,
       typeEnum: MessageType.FREQUENTIAL,
-      files: filesData
+      files: filesData,
+      webhook
     }).save();
   }
   
@@ -55,10 +70,21 @@ export class MessageController {
     @CurrentUser() creator: User
   ) {
     const filesData: File[] = [];
+    const guild = Guild.create({ id });
     for (const file of (files || [])) {
       const id = uuid();
       this.fileService.writeFile(file.buffer, id);
       filesData.push(File.create({ id }));
+    }
+    let webhook = await Webhook.findOne({ where: { guild, channelId: body.channelId } });
+    if (!webhook) {
+      const discordWebhook = await this.botService.createWebhook(body.channelId);
+      webhook = await Webhook.create({
+        guild,
+        channelId: body.channelId,
+        id: discordWebhook.id,
+        url: discordWebhook.url
+      }).save();
     }
     return await Message.create({
       ...body,

@@ -7,7 +7,8 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import * as Discord from "discord.js";
 import { Guild } from 'src/database/guild.entity';
 import { EventEmitter } from 'events';
-import { LessThan } from 'typeorm';
+import { createQueryBuilder, LessThan } from 'typeorm';
+import { Webhook } from 'src/database/webhook.entity';
 
 @Injectable()
 export class BotService implements OnModuleInit {
@@ -26,6 +27,7 @@ export class BotService implements OnModuleInit {
     this.bot = new Discord.Client({ ws: { intents } });
     this.bot.on("guildCreate", (guild) => this.onGuildCreate(guild));
     this.bot.on("guildDelete", (guild) => this.onGuildDelete(guild));
+    this.bot.on("webhookUpdate", (channel) => this.onWebhookUpdate(channel));
     this.bot.on("error", this.logger.error);
     this.bot.on("channelDelete", (channel) => this.onChannelDelete(channel));
     try {
@@ -76,6 +78,12 @@ export class BotService implements OnModuleInit {
       return false;
     }
   }
+  public async createWebhook(channelId: string): Promise<Discord.Webhook | null> {
+    const channel = await this.getChannel(channelId);
+    if (channel instanceof Discord.TextChannel) {
+      return await channel.createWebhook(`Automate@beta`);
+    }
+  }
 
   private async onGuildCreate(guild: Discord.Guild) {
     await guild.systemChannel?.send(`Hey ! I'm Automate@beta, to give me orders you need to go on this website : https://beta.automatebot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
@@ -88,6 +96,20 @@ export class BotService implements OnModuleInit {
     await Message.delete({ guild: guildEl });
     await Quota.delete({ guild: guildEl, date: LessThan(monthDate()) });
     this.cache.removeWhereGuild(guild.id);
+  }
+
+  /**
+   * If a webhook is removed we remove all the webhookId and the webhook that don't exist anymore
+   */
+  private async onWebhookUpdate(channel: Discord.TextChannel) {
+    let webhookIds = (await channel.fetchWebhooks())?.map(el => el.id);
+    //If the array is empty we set a random value to avoid a typeorm error
+    if (webhookIds?.length == 0)
+      webhookIds = ['0'];
+    await createQueryBuilder(Message).update().set({ webhook: null })
+      .where("channelId = :channelId AND webhookId NOT IN (:...ids)", { channelId: channel.id, ids: webhookIds })
+      .execute();
+    await createQueryBuilder(Webhook).delete().where("id NOT IN (:...ids)", { ids: webhookIds }).execute();
   }
 
   private async onChannelDelete(channel: Discord.Channel) {
