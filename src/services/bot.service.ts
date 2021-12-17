@@ -81,7 +81,7 @@ export class BotService implements OnModuleInit {
   public async createWebhook(channelId: string): Promise<Discord.Webhook | null> {
     const channel = await this.getChannel(channelId);
     if (channel instanceof Discord.TextChannel) {
-      return await channel.createWebhook(`Automate@beta`);
+      return await channel.createWebhook(this.bot.user.username, { avatar: this.bot.user.avatarURL() });
     }
   }
 
