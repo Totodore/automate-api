@@ -1,6 +1,7 @@
 import { Quota } from './quota.entity';
 import { Message } from './message.entity';
 import { BaseEntity, Column, DeleteDateColumn, Entity, OneToMany, PrimaryColumn } from "typeorm";
+import { Webhook } from './webhook.entity';
 
 @Entity()
 export class Guild extends BaseEntity {
@@ -28,6 +29,9 @@ export class Guild extends BaseEntity {
 
   @DeleteDateColumn()
   public deletedDate: Date
+
+  @OneToMany(() => Webhook, webhooks => webhooks.guild, { cascade: true })
+  public webhooks: Webhook[];
   
   public name?: string;
   public profile?: string;

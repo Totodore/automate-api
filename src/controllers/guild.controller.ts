@@ -28,6 +28,7 @@ export class GuildController {
     const guild = await createQueryBuilder(Guild, "guild")
       .where("guild.id = :id", { id })
       .leftJoinAndSelect("guild.messages", "msg")
+      .leftJoinAndSelect("guild.webhooks", "webhooks")
       .leftJoinAndSelect("msg.creator", "creator")
       .leftJoinAndSelect("msg.files", "files")
       .leftJoinAndSelect("guild.quotas", "quotas", "quotas.date >= :date", { date: monthDate() }).getOne();
@@ -38,8 +39,10 @@ export class GuildController {
       msg.creator.name = creator.username;
       msg.creator.profile = creator.avatar;
     }
+    const webhookIds = guild.webhooks.map(el => el.id);
     const guildInfo = await this.bot.getGuild(id);
-    return new GuildOutModel(guild, guildInfo);
+    const webhooks = (await guildInfo.fetchWebhooks()).filter((_, key) => webhookIds.includes(key)).array();
+    return new GuildOutModel(guild, guildInfo, webhooks);
   }
 
   @Sse(":id/add")
