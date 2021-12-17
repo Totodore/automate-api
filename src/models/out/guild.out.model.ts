@@ -36,7 +36,7 @@ export class GuildOutModel {
       .filter(el => el.type == "text" || el.type == "news")
       .map(el => ({ name: el.name, id: el.id, type: TagType.Channel }));
     this.roles = guildInfo.roles.cache.array().map(el => ({ name: el.name, id: el.id, type: TagType.Role }));
-    this.webhooks = guildWebhooks.map(el => ({ channel: el.channelID, avatar: el.avatarURL({ size: 64, format: "jpeg" }), id: el.id, name: el.name, url: el.url }));
+    this.webhooks = guildWebhooks.map(el => ({ channel: el.channelID, avatar: el.avatarURL({ size: 256, format: "jpeg" }), id: el.id, name: el.name, url: el.url }));
   }
 }
 
