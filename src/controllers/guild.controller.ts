@@ -3,15 +3,17 @@ import { Profile } from 'passport-discord';
 import { GuildGuard } from './../guards/guild.guard';
 import { CurrentProfile } from './../decorators/current-profile.decorator';
 import { monthDate } from './../utils/timezones.util';
-import { GuildOutModel, MemberOutModel } from './../models/out/guild.out.model';
+import { GuildOutModel, MemberOutModel, WebhookInfo } from './../models/out/guild.out.model';
 import { BotService } from './../services/bot.service';
-import { BadRequestException, Body, Controller, Delete, Get, MessageEvent, Param, Patch, Post, Query, Sse, UploadedFiles, UseGuards, UseInterceptors, CacheInterceptor, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, MessageEvent, Param, Patch, Post, Query, Sse, UploadedFiles, UseGuards, UseInterceptors, CacheInterceptor, InternalServerErrorException, UploadedFile } from '@nestjs/common';
 import { Guild } from 'src/database/guild.entity';
 import { UserGuard } from 'src/guards/user.guard';
 import { createQueryBuilder } from 'typeorm';
 import { TIMEZONES } from 'src/utils/timezones.util';
 import { Observable, Subscriber } from 'rxjs';
 import { Role } from 'src/decorators/role.decorator';
+import { PatchWebhookInModel } from 'src/models/in/guild.in.model';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('guild')
 @UseGuards(UserGuard, GuildGuard)
@@ -92,6 +94,33 @@ export class GuildController {
     if (!TIMEZONES.includes(timezone))
       throw new BadRequestException();
     await Guild.update(id, { timezone });
+  }
+
+  @Patch(":id/webhook/:webhookId")
+  @Role("admin")
+  @UseInterceptors(FileInterceptor('image', {
+    limits: { files: 1, fileSize: 8_000_000 }, //8MB max
+    fileFilter: (req, file, cb) =>
+      ['image/jpg', 'image/jpeg', 'image/png'].includes(file.mimetype) ? cb(null, true) : cb(new BadRequestException('Bad file mimetype'), false)
+  }))
+  public async patchWebhook(
+    @Body() body: PatchWebhookInModel,
+    @Param("id") id: string,
+    @Param("webhookId") webhookId: string,
+    @UploadedFile() image: Express.Multer.File
+  ): Promise<WebhookInfo> {
+    const guild = await this.bot.getGuild(id);
+    let webhook = (await guild.fetchWebhooks()).find(el => el.id === webhookId);
+    if (!webhook)
+      throw new BadRequestException();
+    webhook = await webhook.edit({ ...body, avatar: image?.buffer });
+    return { 
+      id: webhook.id,
+      avatar: webhook.avatarURL({ size: 256, format: "jpeg" }),
+      name: webhook.name,
+      url: webhook.url,
+      channel: webhook.channelID
+    };
   }
 
 }

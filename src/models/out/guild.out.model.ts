@@ -60,7 +60,7 @@ export interface GuildInfoProfile extends GuildInfo {
   added: boolean;
 }
 
-export interface WebhookInfo {
+export class WebhookInfo {
   id: string;
   name: string;
   avatar: string;

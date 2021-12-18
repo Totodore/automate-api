@@ -53,3 +53,10 @@ export class PostPonctMessageInModel {
   public cronState: Partial<StateDataModel>;
 
 }
+
+export class PatchWebhookInModel {
+  
+  @Length(2, 32)
+  public name: string;
+  
+}
