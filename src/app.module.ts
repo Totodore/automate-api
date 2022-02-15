@@ -8,13 +8,12 @@ import { GuildController } from './controllers/guild.controller';
 import { UserController } from './controllers/user.controller';
 import { PassportModule } from '@nestjs/passport';
 import { OauthService } from './services/oauth.service';
-import { HttpModule } from "@nestjs/common";
+import { HttpModule } from "@nestjs/axios";
 import { MessageController } from './controllers/message.controller';
 import { CacheService } from './services/cache.service';
 
 @Module({
   imports: [
-    AppLogger,
     ConfigModule.forRoot(),
     CacheModule.register({ ttl: 5 * 60 }),
     TypeOrmModule.forRoot({
@@ -32,6 +31,6 @@ import { CacheService } from './services/cache.service';
     HttpModule
   ],
   controllers: [GuildController, UserController, MessageController],
-  providers: [FileService, BotService, OauthService, CacheService],
+  providers: [FileService, BotService, OauthService, CacheService, AppLogger],
 })
 export class AppModule {}
