@@ -1,28 +1,35 @@
-import { createQueryBuilder } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Guild } from './../database/guild.entity';
 import { BotService } from './../services/bot.service';
 import { CurrentProfile } from './../decorators/current-profile.decorator';
 import { Profile } from 'passport-discord';
 import { User } from 'src/database/user.entity';
 import { UserGuard } from './../guards/user.guard';
-import { Controller, Delete, Get, HttpService, Redirect, Req, Res, UseGuards, UseInterceptors, CacheInterceptor, Post } from '@nestjs/common';
+import { Controller, Delete, Get, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Request, Response } from 'express';
 import * as jwt from "jsonwebtoken";
 import { CurrentUser } from 'src/decorators/current-user.decorator';
 import { DiscordProfile } from 'src/models/out/user.out.model';
 import { Message } from 'src/database/message.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 @Controller('user')
 export class UserController {
 
   constructor(
-    private readonly bot: BotService
+    private readonly bot: BotService,
+    @InjectRepository(Guild)
+    private readonly guildRepo: Repository<Guild>,
+    @InjectRepository(Message)
+    private readonly messageRepo: Repository<Message>
   ) {}
   
   @Get("me")
   @UseGuards(UserGuard)
   public async getMe(@CurrentProfile() profile: DiscordProfile): Promise<Profile> {
-    const guilds = (await createQueryBuilder(Guild, 'guild').where("guild.id IN (:...ids)", { ids: profile.guilds.map(el => el.id) }).getMany());
+    const guilds = await this.guildRepo.createQueryBuilder('guild')
+      .where("guild.id IN (:...ids)", { ids: profile.guilds.map(el => el.id) })
+      .getMany();
     const guildIds = guilds.map(el => el.id);
     profile.guilds = profile.guilds.filter(guild =>
       (((guild.permissions & 0x8) === 0x8
@@ -47,7 +54,7 @@ export class UserController {
       || (guild.permissions & 0x10) === 0x10
       || (guild.permissions & 0x20) === 0x20
     ).map(guild => guild.id);
-    return Promise.all((await createQueryBuilder(Message, "msg")
+    return Promise.all((await this.messageRepo.createQueryBuilder("msg")
       .where("msg.guildId IN (:guilds)", { guilds: profile.guilds.map(el => el.id) })
       .orderBy("msg.updatedDate", "DESC").take(10)
       .leftJoinAndSelect("msg.guild", "guild")

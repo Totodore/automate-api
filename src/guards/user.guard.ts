@@ -16,7 +16,7 @@ export class UserGuard implements CanActivate {
       verify(token, process.env.JWT_SECRET);
       try {
         const userId = decode(token) as string;
-        req.user ??= await User.findOne(userId);
+        req.user ??= await User.findOne({ where: { id: userId } });
       } catch (e) {
         console.error(e);
         return false;

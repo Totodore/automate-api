@@ -1,11 +1,11 @@
 import { CacheService } from './cache.service';
 import { AppLogger } from './../utils/app-logger.util';
-import { DiscordUser, TokenResponse } from './../models/oauth.model';
+import { DiscordUser } from './../models/oauth.model';
 import { User } from './../database/user.entity';
-import { Injectable, HttpService, OnModuleInit, HttpException, InternalServerErrorException } from '@nestjs/common';
+import { Injectable, OnModuleInit, HttpException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, Profile, GuildInfo, InternalOAuthError } from "passport-discord";
-import { Between, LessThan } from 'typeorm';
+import { Strategy, Profile, InternalOAuthError } from "passport-discord";
+import { Between } from 'typeorm';
 import * as refreshDiscordToken from "passport-oauth2-refresh";
 
 @Injectable()
@@ -14,7 +14,7 @@ export class OauthService extends PassportStrategy(Strategy, 'discord') implemen
   public static instance: OauthService;
   constructor(
     private readonly logger: AppLogger,
-    private readonly cache: CacheService 
+    private readonly cache: CacheService
   ) {
     super({
       clientID: process.env.CLIENT_ID,
@@ -33,7 +33,7 @@ export class OauthService extends PassportStrategy(Strategy, 'discord') implemen
   }
 
   public async validate(accessToken: string, refreshToken: string, profile: Profile): Promise<DiscordUser> {
-    let user = await User.findOne(profile.id);
+    let user = await User.findOne({ where: { id: profile.id } });
     if (!user) {
       user = await User.create({
         token: accessToken,
@@ -78,7 +78,9 @@ export class OauthService extends PassportStrategy(Strategy, 'discord') implemen
   }
 
   public async refreshToken() {
-    const users = await User.find({ tokenExpires: Between(new Date(), new Date(Date.now() + 6 * 3600_000)) });
+    const users = await User.find({
+      where: { tokenExpires: Between(new Date(), new Date(Date.now() + 6 * 3600_000)) }
+    });
     for (const user of users) {
       try {
         const [accessToken, refreshToken] = await new Promise(

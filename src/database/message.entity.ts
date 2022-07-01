@@ -13,10 +13,6 @@ export enum MessageType {
 @Entity()
 export class Message extends BaseEntity {
 
-  constructor(
-    private readonly fileService: FileService
-  ) { super() }
-
   @PrimaryGeneratedColumn("uuid")
   public id: string;
 
@@ -69,9 +65,9 @@ export class Message extends BaseEntity {
 
   @AfterRemove()
   onRemove() {
-    for (const file of this.files || []) {
-      this.fileService.removeFile(file.id);
-    }
+    // for (const file of this.files || []) {
+      // this.fileService.removeFile(file.id);
+    // }
   }
 
   public get type(): MessageType {

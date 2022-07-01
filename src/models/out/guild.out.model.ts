@@ -29,10 +29,10 @@ export class GuildOutModel {
     this.currentQuota = guild.quotas.find(el => el.date.getTime() >= monthDate().getTime())?.monthlyQuota || 0;
     this.removeOneTimeMessage = guild.removeOneTimeMessage;
     this.scope = guild.scope;
-    this.channels = guildInfo.channels.cache.array()
-      .filter(el => el.type == "text" || el.type == "news")
+    this.channels = guildInfo.channels.cache
+      .filter(el => el.type == "GUILD_TEXT" || el.type == "GUILD_NEWS")
       .map(el => ({ name: el.name, id: el.id, type: TagType.Channel }));
-    this.roles = guildInfo.roles.cache.array().map(el => ({ name: el.name, id: el.id, type: TagType.Role }));
+    this.roles = guildInfo.roles.cache.map(el => ({ name: el.name, id: el.id, type: TagType.Role }));
   }
 }
 

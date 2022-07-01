@@ -11,6 +11,9 @@ import { OauthService } from './services/oauth.service';
 import { HttpModule } from "@nestjs/axios";
 import { MessageController } from './controllers/message.controller';
 import { CacheService } from './services/cache.service';
+import { Guild } from './database/guild.entity';
+import { Message } from './database/message.entity';
+import { User } from './database/user.entity';
 
 @Module({
   imports: [
@@ -18,7 +21,7 @@ import { CacheService } from './services/cache.service';
     CacheModule.register({ ttl: 5 * 60 }),
     TypeOrmModule.forRoot({
       type: 'mysql',
-      logging: ["error"],
+      logging: ["error", "warn"],
       host: process.env.DB_HOST,
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
@@ -27,7 +30,8 @@ import { CacheService } from './services/cache.service';
       entities: ["**/*.entity.js"],
       synchronize: process.env.NODE_ENV === "dev",
     }),
-    PassportModule.register({}),
+    TypeOrmModule.forFeature([Guild, Message, User]),
+    PassportModule.register({ }),
     HttpModule
   ],
   controllers: [GuildController, UserController, MessageController],

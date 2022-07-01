@@ -12,3 +12,4 @@ bin/**
 **.scssc
 dist/
 package-lock.json
+*.tsbuildinfo

@@ -21,9 +21,9 @@ export class BotService implements OnModuleInit {
   ) {}
   
   public async onModuleInit() {
-    const intents = new Discord.Intents(Discord.Intents.NON_PRIVILEGED);
-    intents.add("GUILD_MEMBERS");
-    this.bot = new Discord.Client({ ws: { intents } });
+    const intents = new Discord.Intents();
+    intents.add("GUILD_MEMBERS", "GUILD_MESSAGES", "GUILDS");
+    this.bot = new Discord.Client({ intents });
     this.bot.on("guildCreate", (guild) => this.onGuildCreate(guild));
     this.bot.on("guildDelete", (guild) => this.onGuildDelete(guild));
     this.bot.on("error", this.logger.error);
@@ -42,10 +42,9 @@ export class BotService implements OnModuleInit {
 	 */
   public async getChannels(guildId: string): Promise<(Discord.TextChannel | Discord.NewsChannel)[]> {
     try {
-      return (await this.getGuild(guildId))
-        ?.channels?.cache
-        ?.filter(el => !el.deleted && (el.type === "text" || el.type === "news"))
-        ?.array() as (Discord.TextChannel | Discord.NewsChannel)[];
+      return [...(await this.getGuild(guildId))?.channels
+        ?.cache
+        ?.filter(el => (el.type === "GUILD_TEXT" || el.type === "GUILD_NEWS")).values()] as (Discord.TextChannel | Discord.NewsChannel)[];
     } catch (error) { this.logger.error(error); }
   }
 
@@ -54,11 +53,11 @@ export class BotService implements OnModuleInit {
   }
 
   public async getPeople(guildId: string): Promise<Discord.GuildMember[]> {
-    return (await this.getGuild(guildId)).members.cache.array();
+    return [...(await this.getGuild(guildId)).members.cache.values()];
   }
 
   public async getRoles(guildId: string): Promise<Discord.Role[]> {
-    return (await this.bot.guilds.fetch(guildId)).roles.cache.array();
+    return [...(await this.bot.guilds.fetch(guildId)).roles.cache.values()];
   }
 
   public async getChannel(channelId: string): Promise<Discord.GuildChannel> {
@@ -71,7 +70,7 @@ export class BotService implements OnModuleInit {
   }
   public async isInAutomateDiscord(userId: string): Promise<boolean> {
 	  try {
-      return (await this.getGuild(this.automateGuildID)).member(userId) != null;
+      return (await this.getGuild(this.automateGuildID)).members.resolveId(userId) != null;
     } catch(e) {
       return false;
     }
@@ -85,8 +84,8 @@ export class BotService implements OnModuleInit {
 
   private async onGuildDelete(guild: Discord.Guild) {
     const guildEl = await Guild.softRemove(Guild.create({ id: guild.id }));
-    await Message.delete({ guild: guildEl });
-    await Quota.delete({ guild: guildEl, date: LessThan(monthDate()) });
+    await Message.delete({ guild: { id: guildEl.id } });
+    await Quota.delete({ guild: { id: guildEl.id }, date: LessThan(monthDate()) });
     this.cache.removeWhereGuild(guild.id);
   }
 

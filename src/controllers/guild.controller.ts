@@ -8,10 +8,11 @@ import { BotService } from './../services/bot.service';
 import { BadRequestException, Body, Controller, Delete, Get, MessageEvent, Param, Patch, Post, Query, Sse, UploadedFiles, UseGuards, UseInterceptors, CacheInterceptor, InternalServerErrorException } from '@nestjs/common';
 import { Guild } from 'src/database/guild.entity';
 import { UserGuard } from 'src/guards/user.guard';
-import { createQueryBuilder } from 'typeorm';
+import { Repository } from 'typeorm';
 import { TIMEZONES } from 'src/utils/timezones.util';
 import { Observable, Subscriber } from 'rxjs';
 import { Role } from 'src/decorators/role.decorator';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Controller('guild')
 @UseGuards(UserGuard, GuildGuard)
@@ -19,13 +20,15 @@ export class GuildController {
 
   constructor(
     private readonly bot: BotService,
-    private readonly cache: CacheService
+    private readonly cache: CacheService,
+    @InjectRepository(Guild)
+    private readonly guildRepo: Repository<Guild>
   ) { }
 
   @Get(":id")
   @Role("member")
   public async getOne(@Param('id') id: string): Promise<GuildOutModel> {
-    const guild = await createQueryBuilder(Guild, "guild")
+    const guild = await this.guildRepo.createQueryBuilder("guild")
       .where("guild.id = :id", { id })
       .leftJoinAndSelect("guild.messages", "msg")
       .leftJoinAndSelect("msg.creator", "creator")
@@ -64,8 +67,8 @@ export class GuildController {
   public async getSuggestions(@Query("q") query: string, @Param("id") id: string): Promise<MemberOutModel[]> {
     const guild = await this.bot.getGuild(id);
     if (query.startsWith("@")) {
-      query = query.substr(1);
-      const members = (await guild.members.fetch({ query, limit: 20 })).array();
+      query = query.substring(1);
+      const members = (await guild.members.fetch({ query, limit: 20 }));
       return members.map(el => new MemberOutModel(el.displayName, el.nickname, el.id));
     }
       

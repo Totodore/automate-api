@@ -11,10 +11,10 @@ export class Guild extends BaseEntity {
   @Column({ nullable: true })
   public timezone: string;
 
-  @Column("boolean", { default: () => false })
+  @Column("boolean", { default: false })
   public scope: boolean;
 
-  @Column("boolean", { default: () => true })
+  @Column("boolean", { default: true })
   public removeOneTimeMessage: boolean;
 
   @Column()

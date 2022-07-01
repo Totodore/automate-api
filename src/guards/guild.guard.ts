@@ -27,10 +27,11 @@ export class GuildGuard implements CanActivate {
       }
       const profile: Profile = req.profile;
       const perms = profile.guilds?.find(el => el.id == req.params.id)?.permissions;
-      return (userStatus == "admin" && ((perms & 0x8) === 0x8
-      || (perms & 0x10) === 0x10
-        || (perms & 0x20) === 0x20))
-        || (userStatus == "member" && perms != null);
+      return (userStatus == "admin" && (
+        (perms & 0x8) === 0x8 ||
+        (perms & 0x10) === 0x10 || 
+        (perms & 0x20) === 0x20)
+      ) || (userStatus == "member" && perms != null);
     } catch (e) {
       console.error(e);
       return false;

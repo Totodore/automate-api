@@ -73,7 +73,7 @@ export class MessageController {
   @Delete(":msgId")
   @Role("admin")
   public async deleteMessage(@Param("msgId") id: string) {
-    await (await Message.findOne(id))?.remove();
+    await (await Message.findOne({ where: { id } }))?.remove();
   }
 
   

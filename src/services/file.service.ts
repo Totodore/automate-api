@@ -3,7 +3,6 @@ import { Injectable, OnModuleInit } from '@nestjs/common';
 import * as fs from "fs-extra";
 import * as path from "path";
 import { AppLogger } from 'src/utils/app-logger.util';
-import * as FileType from "file-type";
 @Injectable()
 export class FileService implements OnModuleInit {
 

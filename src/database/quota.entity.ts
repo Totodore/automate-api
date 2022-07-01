@@ -12,7 +12,7 @@ export class Quota extends BaseEntity {
   @Column("date")
   public date: Date;
 
-  @Column({ default: () => 0 })
+  @Column({ default: 0 })
   public monthlyQuota: number;
 
   @ManyToOne(() => Guild)
