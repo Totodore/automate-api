@@ -13,7 +13,6 @@ import { LessThan } from 'typeorm';
 export class BotService implements OnModuleInit {
   
   private bot!: Discord.Client;
-  public readonly automateGuildID = "702623012465278978";
   public readonly newGuildEmitter = new EventEmitter();
   constructor(
     private readonly logger: AppLogger,
@@ -70,10 +69,16 @@ export class BotService implements OnModuleInit {
   }
   public async isInAutomateDiscord(userId: string): Promise<boolean> {
 	  try {
-      return (await this.getGuild(this.automateGuildID)).members.resolveId(userId) != null;
+      return (await (await this.getGuild(process.env.AUTOMATE_GUILD_ID)).members.fetch(userId)) != null;
     } catch(e) {
       return false;
     }
+  }
+
+  public async sendAdminChannelMessage(msg: string) {
+    const channel = await this.getChannel(process.env.AUTOMATE_ADMIN_CHANNEL);
+    if (channel instanceof Discord.TextChannel)
+      await channel.send(msg);
   }
 
   private async onGuildCreate(guild: Discord.Guild) {

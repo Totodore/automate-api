@@ -14,6 +14,7 @@ import { CacheService } from './services/cache.service';
 import { Guild } from './database/guild.entity';
 import { Message } from './database/message.entity';
 import { User } from './database/user.entity';
+import { StatsService } from './services/stats.service';
 
 @Module({
   imports: [
@@ -35,6 +36,6 @@ import { User } from './database/user.entity';
     HttpModule
   ],
   controllers: [GuildController, UserController, MessageController],
-  providers: [FileService, BotService, OauthService, CacheService, AppLogger],
+  providers: [FileService, BotService, OauthService, CacheService, StatsService, AppLogger],
 })
 export class AppModule {}
