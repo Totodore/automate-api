@@ -1,3 +1,4 @@
+import { AppLogger } from 'src/utils/app-logger.util';
 import { CacheService } from './../services/cache.service';
 import { Profile } from 'passport-discord';
 import { GuildGuard } from './../guards/guild.guard';
@@ -21,6 +22,7 @@ export class GuildController {
   constructor(
     private readonly bot: BotService,
     private readonly cache: CacheService,
+    private readonly logger: AppLogger,
     @InjectRepository(Guild)
     private readonly guildRepo: Repository<Guild>
   ) { }
@@ -36,13 +38,17 @@ export class GuildController {
       .leftJoinAndSelect("guild.quotas", "quotas", "quotas.date >= :date", { date: monthDate() }).getOne();
     if (!guild)
       throw new InternalServerErrorException("Impossible to get the guild infos!");
-    for (const msg of guild.messages) {
-      const creator = await this.bot.getUser(msg.creator.id);
-      msg.creator.name = creator.username;
-      msg.creator.profile = creator.avatar;
+    try {
+      for (const msg of guild.messages) {
+        const creator = await this.bot.getUser(msg.creator.id);
+        msg.creator.name = creator.username;
+        msg.creator.profile = creator.avatar;
+      }
+      const guildInfo = await this.bot.getGuild(id);
+      return new GuildOutModel(guild, guildInfo);
+    } catch (e) {
+      this.logger.error(`Error while getting guild infos [id=${id}]`, e);
     }
-    const guildInfo = await this.bot.getGuild(id);
-    return new GuildOutModel(guild, guildInfo);
   }
 
   @Sse(":id/add")
