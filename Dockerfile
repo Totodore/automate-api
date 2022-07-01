@@ -1,11 +1,24 @@
-FROM node:14.2.0-alpine
+FROM node:16.15.1-alpine as builder
 
 WORKDIR /app
 
 COPY . .
 
-RUN npm install
+RUN yarn
 
-RUN npm run build
+RUN yarn run build
 
-CMD npm run start:prod
+RUN yarn install --production --ignore-scripts --prefer-offline
+
+
+FROM node:16.15.1-alpine
+
+WORKDIR /app
+
+EXPOSE 3000
+
+COPY package.json .
+
+COPY --from=builder /app /app
+
+CMD ["yarn", "run", "start:prod"]
