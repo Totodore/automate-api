@@ -95,6 +95,12 @@ export class OauthService extends PassportStrategy(Strategy, 'discord') implemen
       } catch (e) {
         this.logger.error("Could not refresh token for user:", user.id);
         console.error(e);
+        try {
+          if (typeof e?.data === "string" && JSON.parse(e?.data)?.error == "invalid_grant") {
+            this.logger.error("Removing user because of invalid grant...");
+            await User.remove(user);
+          }
+        } catch { }
       }
     }
   }
