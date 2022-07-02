@@ -34,11 +34,11 @@ export class StatsService implements OnModuleInit {
       const dateMsgCount = await Message.count({ where: { date: Not(IsNull()) } });
       const guild = await Guild.count({ where: { deletedDate: IsNull() } });
       const users = await User.count();
-      await this.bot.sendAdminChannelMessage(`📊 Stats :\n\n
-      - ${cronMsgCount} cron messages\n
-      - ${dateMsgCount} date messages\n
-      - ${guild} guilds\n
-      - ${users} users\n
+      await this.bot.sendAdminChannelMessage(`📊 Stats :
+      - ${cronMsgCount} messages fréquentiels
+      - ${dateMsgCount} messages ponctuels
+      - ${guild} serveurs discord
+      - ${users} utilisateurs
       `);
     } catch (e) {
       this.logger.error("Error while sending stats : " + e);
