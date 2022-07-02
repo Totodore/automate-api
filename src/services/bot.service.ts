@@ -80,17 +80,18 @@ export class BotService implements OnModuleInit {
     await channel?.send(msg);
   }
 
+  public async onGuildDelete(guild: Discord.Guild | string) {
+    const id = typeof guild === "string" ? guild : guild.id;
+    await Guild.softRemove(Guild.create({ id }));
+    await Message.delete({ guild: { id } });
+    await Quota.delete({ guild: { id }, date: LessThan(monthDate()) });
+    this.cache.removeWhereGuild(id);
+  }
+
   private async onGuildCreate(guild: Discord.Guild) {
     await guild.systemChannel?.send(`Hey ! I'm Automate@beta, to give me orders you need to go on this website : https://beta.automatebot.app.\nI can send your messages at anytime of the day event when you're not here to supervise me ;)`);
     await Guild.create({ id: guild.id, deletedDate: null }).save();
     this.newGuildEmitter.emit(guild.id);
-  }
-
-  private async onGuildDelete(guild: Discord.Guild) {
-    const guildEl = await Guild.softRemove(Guild.create({ id: guild.id }));
-    await Message.delete({ guild: { id: guildEl.id } });
-    await Quota.delete({ guild: { id: guildEl.id }, date: LessThan(monthDate()) });
-    this.cache.removeWhereGuild(guild.id);
   }
 
   private async onChannelDelete(channel: Discord.Channel) {

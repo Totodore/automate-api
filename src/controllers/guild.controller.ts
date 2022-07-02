@@ -14,6 +14,7 @@ import { TIMEZONES } from 'src/utils/timezones.util';
 import { Observable, Subscriber } from 'rxjs';
 import { Role } from 'src/decorators/role.decorator';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DiscordAPIError } from 'discord.js';
 
 @Controller('guild')
 @UseGuards(UserGuard, GuildGuard)
@@ -47,7 +48,14 @@ export class GuildController {
       const guildInfo = await this.bot.getGuild(id);
       return new GuildOutModel(guild, guildInfo);
     } catch (e) {
-      this.logger.error(`Error while getting guild infos [id=${id}]`, e);
+      if (e instanceof DiscordAPIError && e.message == "Missing Access") {
+        this.logger.error(`Missing access when getting guild info [id=${id}], removing guild from database...`);
+        await this.bot.onGuildDelete(id);
+        throw new InternalServerErrorException({ type: "removed-guild" }, "No access to the guild anymore, it has been removed from the database.");
+      } else {
+        this.logger.error(`Error while getting guild infos [id=${id}]`, e);
+        throw new InternalServerErrorException("Impossible to get the guild infos!");
+      }
     }
   }
 
