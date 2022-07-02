@@ -14,17 +14,20 @@ export class StatsService implements OnModuleInit {
     private readonly logger: AppLogger,
   ) { }
   public async onModuleInit() {
-    // send stats each week
+    setInterval(() => new Date().getDay() == 0 && new Date().getHours() == 0 && this.sendStats(), 3600_000);
+    setTimeout(() => this.welcome(), 60_000);
+  }
+
+  private async welcome() {
     try {
       await this.bot.sendAdminChannelMessage("Redémarrage du bot...");
       await this.sendStats();
-      setInterval(() => new Date().getDay() == 0 && new Date().getHours() == 0 && this.sendStats(), 3600_000);
     } catch (e) {
       this.logger.error("Error while sending logs : " + e);
     }
   }
 
-  public async sendStats() {
+  private async sendStats() {
     this.logger.log("Sending stats...");
     try {
       const cronMsgCount = await Message.count({ where: { cron: Not(IsNull()) } });

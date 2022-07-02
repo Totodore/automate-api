@@ -77,7 +77,7 @@ export class BotService implements OnModuleInit {
 
   public async sendAdminChannelMessage(msg: string) {
     const channel = await this.getChannel(process.env.AUTOMATE_ADMIN_CHANNEL) as Discord.TextChannel;
-    await channel.send(msg);
+    await channel?.send(msg);
   }
 
   private async onGuildCreate(guild: Discord.Guild) {
