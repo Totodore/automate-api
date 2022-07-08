@@ -49,7 +49,7 @@ export class MessageController {
   @Role("admin")
   @UseInterceptors(FilesInterceptor('files', 5, { limits: { fieldSize: 8 } }))
   public async postPonctualMessage(
-    @Body() body: PostFreqMessageInModel,
+    @Body() body: PostPonctMessageInModel,
     @UploadedFiles() files: Express.Multer.File[],
     @Param("id") id: string,
     @CurrentUser() creator: User
