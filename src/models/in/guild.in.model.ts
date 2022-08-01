@@ -23,7 +23,7 @@ export class PostFreqMessageInModel {
   @MaxLength(2000)
   public parsedMessage: string;
 
-  @Length(255, 255)
+  @Length(18, 255)
   public channelId: string;
 
   @MaxLength(1000)
@@ -38,7 +38,7 @@ export class PostPonctMessageInModel {
   @IsDateString()
   public date: string;
 
-  @Length(255, 255)
+  @Length(18, 255)
   public channelId: string;
 
   @MaxLength(1000)
