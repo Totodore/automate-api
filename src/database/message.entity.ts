@@ -16,7 +16,7 @@ export class Message extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   public id: string;
 
-  @Column({ length: 18 })
+  @Column({ length: 255 })
   public channelId: string;
 
   @Column({ nullable: true })

@@ -5,7 +5,7 @@ import { BaseEntity, Column, DeleteDateColumn, Entity, OneToMany, PrimaryColumn 
 @Entity()
 export class Guild extends BaseEntity {
 
-  @PrimaryColumn({ length: 18 })
+  @PrimaryColumn({ length: 255 })
   public id: string;
 
   @Column({ nullable: true })

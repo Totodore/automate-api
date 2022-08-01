@@ -5,7 +5,7 @@ import { Exclude } from 'class-transformer';
 @Entity()
 export class User extends BaseEntity {
   
-  @PrimaryColumn({ length: 18 })
+  @PrimaryColumn({ length: 255 })
   public id: string;
 
   @Column({ length: 30 })
