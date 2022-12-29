@@ -67,11 +67,9 @@ export class OauthService extends PassportStrategy(Strategy, 'discord') implemen
       return profile;
     } catch (e) {
       console.error(e);
-      if (e instanceof InternalOAuthError) {
-        if (e?.oauthError?.statusCode == 429) {
-          this.logger.error("Discord rate limiting, retry after: " + e?.oauthError.data.retry_after);
-          throw new HttpException("Discord API too many requests", 429);
-        }
+      if (e?.oauthError?.statusCode == 429) {
+        this.logger.error("Discord rate limiting, retry after: " + e?.oauthError.data.retry_after);
+        throw new HttpException("Discord API too many requests", 429);
       } else
         throw e;
     }
