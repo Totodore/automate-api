@@ -8,6 +8,7 @@ import * as Discord from "discord.js";
 import { Guild } from 'src/database/guild.entity';
 import { EventEmitter } from 'events';
 import { LessThan } from 'typeorm';
+import { ChannelType } from 'discord.js';
 
 @Injectable()
 export class BotService implements OnModuleInit {
@@ -20,9 +21,10 @@ export class BotService implements OnModuleInit {
   ) {}
   
   public async onModuleInit() {
-    const intents = new Discord.Intents();
-    intents.add("GUILD_MEMBERS", "GUILD_MESSAGES", "GUILDS");
-    this.bot = new Discord.Client({ intents });
+    const intents = Discord.IntentsBitField.Flags.GuildMembers | 
+      Discord.IntentsBitField.Flags.GuildMessages | 
+      Discord.IntentsBitField.Flags.Guilds;
+    this.bot = new Discord.Client({ intents  });
     this.bot.on("guildCreate", (guild) => this.onGuildCreate(guild));
     this.bot.on("guildDelete", (guild) => this.onGuildDelete(guild));
     this.bot.on("error", this.logger.error);
@@ -43,7 +45,7 @@ export class BotService implements OnModuleInit {
     try {
       return [...(await this.getGuild(guildId))?.channels
         ?.cache
-        ?.filter(el => (el.type === "GUILD_TEXT" || el.type === "GUILD_NEWS")).values()] as (Discord.TextChannel | Discord.NewsChannel)[];
+        ?.filter(el => (el.type === ChannelType.GuildText || el.type === ChannelType.GuildAnnouncement)).values()] as (Discord.TextChannel | Discord.NewsChannel)[];
     } catch (error) { this.logger.error(error); }
   }
 

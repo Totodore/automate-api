@@ -3,6 +3,7 @@ import { GuildInfo } from 'passport-discord';
 import { Guild } from 'src/database/guild.entity';
 import { Message } from 'src/database/message.entity';
 import * as Discord from "discord.js";
+import { ChannelType } from 'discord.js';
 
 export class GuildOutModel {
   
@@ -30,7 +31,7 @@ export class GuildOutModel {
     this.removeOneTimeMessage = guild.removeOneTimeMessage;
     this.scope = guild.scope;
     this.channels = guildInfo.channels.cache
-      .filter(el => el.type == "GUILD_TEXT" || el.type == "GUILD_NEWS")
+      .filter(el => el.type == ChannelType.GuildText || el.type == ChannelType.GuildAnnouncement)
       .map(el => ({ name: el.name, id: el.id, type: TagType.Channel }));
     this.roles = guildInfo.roles.cache.map(el => ({ name: el.name, id: el.id, type: TagType.Role }));
   }

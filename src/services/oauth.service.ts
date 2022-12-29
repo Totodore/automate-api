@@ -83,7 +83,7 @@ export class OauthService extends PassportStrategy(Strategy, 'discord') implemen
     });
     for (const user of users) {
       try {
-        const [accessToken, refreshToken] = await new Promise(
+        const [accessToken, refreshToken] = await new Promise<[string, string]>(
           (resolve, reject) => refreshDiscordToken.requestNewAccessToken('discord', user.refreshToken,
             (err, accessToken, refreshToken) => err ? reject(err) : resolve([accessToken, refreshToken])
           )
