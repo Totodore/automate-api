@@ -12,6 +12,7 @@ import { User } from 'src/database/user.entity';
 import { v4 as uuid } from "uuid";
 import { File } from "src/database/file.entity";
 import { Guild } from 'src/database/guild.entity';
+import { diskStorage } from 'multer';
 
 @Controller('guild/:id/message')
 @UseGuards(UserGuard, GuildGuard)
@@ -19,23 +20,25 @@ export class MessageController {
 
   constructor(
     private readonly fileService: FileService
-  ) {}
-  
+  ) { }
+
   @Post("freq")
   @Role("admin")
-  @UseInterceptors(FilesInterceptor('files', 5, { limits: { fieldSize: 8 } }))
+  @UseInterceptors(FilesInterceptor('files', 10, {
+    limits: { fileSize: 8_000_000 },
+    storage: diskStorage({})
+  }))
   public async postFreqMessage(
     @Body() body: PostFreqMessageInModel,
     @UploadedFiles() files: Express.Multer.File[],
     @Param("id") id: string,
     @CurrentUser() creator: User
   ): Promise<Message> {
-    const filesData: File[] = [];
-    for (const file of (files || [])) {
+    const filesData: File[] = await Promise.all((files || []).map(async file => {
       const id = uuid();
-      this.fileService.writeFile(file.buffer, id);
-      filesData.push(File.create({ id }));
-    }
+      await this.fileService.moveFile(file.destination, id);
+      return File.create({ id });
+    }));
     return await Message.create({
       ...body,
       guild: Guild.create({ id }),
@@ -44,22 +47,24 @@ export class MessageController {
       files: filesData
     }).save();
   }
-  
+
   @Post("ponctual")
   @Role("admin")
-  @UseInterceptors(FilesInterceptor('files', 5, { limits: { fieldSize: 8 } }))
+  @UseInterceptors(FilesInterceptor('files', 10, {
+    limits: { fileSize: 8_000_000 },
+    storage: diskStorage({})
+  }))
   public async postPonctualMessage(
     @Body() body: PostPonctMessageInModel,
     @UploadedFiles() files: Express.Multer.File[],
     @Param("id") id: string,
     @CurrentUser() creator: User
   ) {
-    const filesData: File[] = [];
-    for (const file of (files || [])) {
+    const filesData: File[] = await Promise.all((files || []).map(async file => {
       const id = uuid();
-      this.fileService.writeFile(file.buffer, id);
-      filesData.push(File.create({ id }));
-    }
+      await this.fileService.moveFile(file.destination, id);
+      return File.create({ id });
+    }));
     return await Message.create({
       ...body,
       guild: Guild.create({ id }),
@@ -69,14 +74,14 @@ export class MessageController {
     }).save();
   }
 
-  
+
   @Delete(":msgId")
   @Role("admin")
   public async deleteMessage(@Param("msgId") id: string) {
     await (await Message.findOne({ where: { id } }))?.remove();
   }
 
-  
+
   @Patch(":msgId")
   @Role("admin")
   public async patchContent(@Param("msgId") id: string, @Body() body: PostPonctMessageInModel & PostFreqMessageInModel) {
@@ -84,8 +89,8 @@ export class MessageController {
       throw new BadRequestException();
     await Message.update(id, { ...body, typeEnum: body.date ? 0 : 1 });
   }
-  
-  
+
+
   @Patch(":msgId/state")
   @Role("admin")
   public async patchMessageState(@Query("state") state: "true" | "false", @Param("msgId") id: string) {
