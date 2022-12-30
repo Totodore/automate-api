@@ -51,8 +51,7 @@ export class Message extends BaseEntity {
   @JoinColumn()
   public creator: User;
 
-  @OneToMany(() => File, file => file.message, { nullable: true, cascade: true })
-  @JoinColumn()
+  @OneToMany(() => File, file => file.message, { nullable: true, cascade: ["insert", "update"] })
   public files: File[];
 
   @Column("boolean", { default: true })
@@ -62,13 +61,6 @@ export class Message extends BaseEntity {
   public updatedDate: Date;
 
   public channelName?: string;
-
-  @AfterRemove()
-  onRemove() {
-    // for (const file of this.files || []) {
-      // this.fileService.removeFile(file.id);
-    // }
-  }
 
   public get type(): MessageType {
     return MessageType[MessageType[this.typeEnum]];

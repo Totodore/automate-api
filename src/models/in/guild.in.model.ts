@@ -1,5 +1,6 @@
-import { IsDateString, isDateString, IsString, Length, Matches, MaxLength, ValidateIf } from "class-validator";
+import { IsArray, IsDateString, isDateString, IsString, Length, Matches, MaxLength, ValidateIf } from "class-validator";
 import { toString as cronDescriptor } from "cronstrue";
+import { File } from "src/database/file.entity";
 import { StateDataModel } from "../cron.model";
 export class DataMessageModel {
   @MaxLength(2000)
@@ -52,4 +53,9 @@ export class PostPonctMessageInModel {
 
   public cronState: Partial<StateDataModel>;
 
+}
+
+export class PatchMessageInModel {
+  @IsArray()
+  public removedFiles: string[];
 }
