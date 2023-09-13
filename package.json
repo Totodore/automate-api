@@ -1,6 +1,6 @@
 {
   "name": "automate-api",
-  "version": "3.2.0",
+  "version": "3.3.0",
   "description": "The API for the Automate bot",
   "author": "Théodore Prévot",
   "private": true,
