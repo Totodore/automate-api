@@ -1,5 +1,5 @@
 import { AppLogger } from './utils/app-logger.util';
-import { CacheModule, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FileService } from './services/file.service';
@@ -15,11 +15,12 @@ import { Guild } from './database/guild.entity';
 import { Message } from './database/message.entity';
 import { User } from './database/user.entity';
 import { StatsService } from './services/stats.service';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    CacheModule.register({ ttl: 5 * 60 }),
+    CacheModule.register({ ttl: 5 * 60 * 1000 }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       logging: ["error", "warn"],

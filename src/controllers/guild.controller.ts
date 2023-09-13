@@ -6,7 +6,7 @@ import { CurrentProfile } from './../decorators/current-profile.decorator';
 import { monthDate } from './../utils/timezones.util';
 import { GuildOutModel, MemberOutModel } from './../models/out/guild.out.model';
 import { BotService } from './../services/bot.service';
-import { BadRequestException, Body, Controller, Delete, Get, MessageEvent, Param, Patch, Post, Query, Sse, UploadedFiles, UseGuards, UseInterceptors, CacheInterceptor, InternalServerErrorException } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Delete, Get, MessageEvent, Param, Patch, Post, Query, Sse, UploadedFiles, UseGuards, UseInterceptors, InternalServerErrorException } from '@nestjs/common';
 import { Guild } from 'src/database/guild.entity';
 import { UserGuard } from 'src/guards/user.guard';
 import { Repository } from 'typeorm';
@@ -15,6 +15,7 @@ import { Observable, Subscriber } from 'rxjs';
 import { Role } from 'src/decorators/role.decorator';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DiscordAPIError } from 'discord.js';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @Controller('guild')
 @UseGuards(UserGuard, GuildGuard)
